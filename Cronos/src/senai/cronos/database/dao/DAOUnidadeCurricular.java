@@ -1,5 +1,6 @@
 package senai.cronos.database.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,10 +35,10 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
     }
 
     @Override
-    public void remove(Integer id) throws SQLException {
+    public void remove(Serializable id) throws SQLException {
         String query = Database.query("disciplina.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ps.execute();
         }
     }
@@ -90,12 +91,12 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
     }
 
     @Override
-    public UnidadeCurricular get(Integer id) throws SQLException {
+    public UnidadeCurricular get(Serializable id) throws SQLException {
         UnidadeCurricular uc = new UnidadeCurricular();
         String query = Database.query("disciplina.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

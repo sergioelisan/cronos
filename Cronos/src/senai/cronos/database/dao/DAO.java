@@ -1,5 +1,6 @@
 package senai.cronos.database.dao;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface DAO<T> {
      * remove um elemento do banco de dados
      * @param id 
      */
-    void remove(Integer id) throws SQLException;
+    void remove(Serializable id) throws SQLException;
     
     /**
      * altera um elemento do banco de dados
@@ -36,7 +37,7 @@ public interface DAO<T> {
      * @return
      * @throws Exception 
      */
-    T get(Integer id) throws SQLException;
+    T get(Serializable id) throws SQLException;
     
     /**
      * lista elementos de uma tabela do banco de dados

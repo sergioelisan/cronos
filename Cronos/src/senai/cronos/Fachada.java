@@ -1,5 +1,6 @@
 package senai.cronos;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
@@ -23,8 +24,7 @@ import senai.cronos.logica.Turmas;
  */
 public class Fachada {
     
-    private Fachada() {
-        
+    private Fachada() {        
     }
 
     /**
@@ -47,7 +47,7 @@ public class Fachada {
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public static void remove(Class c, Integer id) throws ClassNotFoundException, SQLException {
+    public static void remove(Class c, Serializable id) throws ClassNotFoundException, SQLException {
         DAO dao = DAOFactory.getDao(c);
         dao.remove(id);
     }
@@ -65,7 +65,7 @@ public class Fachada {
     }
 
     /**
-     * 
+     * retorna uma lista de objetos de uma determinada classe
      * @param <T>
      * @param c
      * @return
@@ -198,34 +198,68 @@ public class Fachada {
         return null;
     }
     
+    /**
+     * retorna o numero de aulas por dia
+     * @return 
+     */
     public static int getAulasDia() {
         return Preferencias.instance().getAulasDia();
     }
     
+    /**
+     * retorna se ha ou nao alternacia entre horarios
+     * @return 
+     */
     public static int getAlternancia() {
         return Preferencias.instance().getAlternancia();
     }
     
+    /**
+     * retorna o dia do inicio do calendario
+     * @return
+     * @throws ParseException 
+     */
     public static Date getInicioCalendario() throws ParseException {
         return Preferencias.instance().getInicioCalendario();
     }
     
+    /**
+     * retorna o dia do fim do calendario
+     * @return
+     * @throws ParseException 
+     */
     public static Date getFimCalendario() throws ParseException {
         return Preferencias.instance().getFimCalendario();
     }
     
+    /**
+     * set os dias de aula
+     * @param aulas 
+     */
     public static void setAulasDia(int aulas) {
         Preferencias.instance().setAulasDia(aulas);
     }
     
+    /**
+     * seta a alternancia dos horarios
+     * @param alternancia 
+     */
     public static void setAlternacia(int alternancia) {
         Preferencias.instance().setAlternancia(alternancia);
     }
     
+    /**
+     * seta o primeiro dia do calendario
+     * @param inicio 
+     */
     public static void setInicioCalendario(Date inicio) {
         Preferencias.instance().setInicioCalendario(inicio);
     }
     
+    /**
+     * configura o ultimo dia do calendario
+     * @param fim 
+     */
     public static void setFimCalendario(Date fim) {
         Preferencias.instance().setFimCalendario(fim);
     }
