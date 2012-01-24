@@ -2,12 +2,14 @@ package senai.cronos;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.Calendario;
+import senai.cronos.util.Feriado;
 
 /**
  *
@@ -22,13 +24,8 @@ public class Main {
             m.init();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "FAIL!\n" + e);
+            e.printStackTrace();
         }
-    }
-
-    /**
-     * Construtor
-     */
-    public Main() {
     }
 
     /**
@@ -51,8 +48,14 @@ public class Main {
         Date inicio = Fachada.getInicioCalendario();
         Date fim = Fachada.getFimCalendario();
 
-        List<Date> feriados = Fachada.<Date>get(Date.class);
-        calendario = new Calendario(inicio, fim, feriados);
+        List<Feriado> feriados = Fachada.<Feriado>get(Feriado.class);
+        
+        List<Date> diasDeFeriado = new ArrayList<>();
+        for(Feriado f : feriados) {
+            diasDeFeriado.add(f.getDia());
+        }
+        
+        calendario = new Calendario(inicio, fim, diasDeFeriado);
     }
 
     /**
@@ -73,8 +76,4 @@ public class Main {
      * objeto que armazena o calendario de dias uteis usados pela escola
      */
     public static Calendario calendario;
-    /**
-     * endereco do arquivo de configuracoes
-     */
-    public static final String config = "senai/cronos/properties/calendario";
 }

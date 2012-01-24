@@ -1,5 +1,6 @@
 package senai.cronos.database.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,10 +31,10 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
     }
 
     @Override
-    public void remove(Integer id) throws SQLException {
+    public void remove(Serializable id) throws SQLException {
         String query = Database.query("laboratorio.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ps.execute();
         }
     }
@@ -73,13 +74,13 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
     }
 
     @Override
-    public Laboratorio get(Integer id) throws SQLException {
+    public Laboratorio get(Serializable id) throws SQLException {
         Laboratorio lb = new Laboratorio();
 
         String query = Database.query("laboratorio.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ps.execute();
 
             ResultSet rs = ps.executeQuery();

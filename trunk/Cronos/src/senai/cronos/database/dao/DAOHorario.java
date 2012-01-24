@@ -1,5 +1,6 @@
 package senai.cronos.database.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,11 +44,11 @@ public class DAOHorario implements DAO<Horario> {
     }
 
     @Override
-    public void remove(Integer id) throws SQLException {
+    public void remove(Serializable id) throws SQLException {
         String query = Database.query("horario.delete");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ps.execute();
         }
     }
@@ -81,12 +82,12 @@ public class DAOHorario implements DAO<Horario> {
     }
 
     @Override
-    public Horario get(Integer id) throws SQLException {
+    public Horario get(Serializable id) throws SQLException {
         Horario h = new Horario();
         String query = Database.query("horario.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, id);
+            ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
             Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
@@ -102,7 +103,7 @@ public class DAOHorario implements DAO<Horario> {
             DAOLaboratorio daoLab = new DAOLaboratorio();
             List<Laboratorio> labs = daoLab.get();
             
-            Turma t = daoturma.get(id);
+            Turma t = daoturma.get((Integer) id);
 
             while (rs.next()) {
                 Date dia = rs.getDate("dia");

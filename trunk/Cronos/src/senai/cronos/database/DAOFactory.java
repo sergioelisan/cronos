@@ -1,9 +1,9 @@
 package senai.cronos.database;
 
 import java.sql.SQLException;
-import java.util.Date;
 import senai.cronos.database.dao.*;
 import senai.cronos.entidades.*;
+import senai.cronos.util.Feriado;
 
 /**
  *
@@ -41,7 +41,7 @@ public class DAOFactory {
         } else if (c.equals(UnidadeCurricular.class)) {
             return new DAOUnidadeCurricular();
             
-        } else if (c.equals(Date.class)) {
+        } else if (c.equals(Feriado.class)) {
             return new DAOFeriado();
             
         } else
