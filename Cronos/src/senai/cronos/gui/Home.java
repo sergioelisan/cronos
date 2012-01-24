@@ -102,6 +102,10 @@ public class Home extends javax.swing.JPanel {
         horariotile = new javax.swing.JPanel();
         lbhorarioicon = new javax.swing.JLabel();
         lbhorario = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         docentestile = new javax.swing.JPanel();
         lbdocentes = new javax.swing.JLabel();
         lbdocentesicon = new javax.swing.JLabel();
@@ -109,10 +113,13 @@ public class Home extends javax.swing.JPanel {
         lbturmas = new javax.swing.JLabel();
         cadastrotile = new javax.swing.JPanel();
         lbcadastro = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         disciplinastile = new javax.swing.JPanel();
         lbdisciplinas = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         reportstile = new javax.swing.JPanel();
         lbrelatorio = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         helptile = new javax.swing.JPanel();
         lbajuda = new javax.swing.JLabel();
         lbajudaicon = new javax.swing.JLabel();
@@ -122,20 +129,18 @@ public class Home extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1024, 728));
         setPreferredSize(new java.awt.Dimension(1366, 728));
 
-        lbtitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbtitle.setFont(new java.awt.Font("Segoe UI", 0, 24));
         lbtitle.setForeground(ColorManager.getColor("foreground"));
         lbtitle.setText("Home");
 
-        lbhora.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbhora.setFont(new java.awt.Font("Segoe UI", 1, 24));
         lbhora.setForeground(ColorManager.getColor("foreground"));
         lbhora.setText("carregando...");
 
-        lbdata.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbdata.setForeground(new java.awt.Color(0, 0, 0));
+        lbdata.setFont(new java.awt.Font("Segoe UI", 0, 16));
         lbdata.setText("carregando...");
 
-        lbuser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbuser.setForeground(new java.awt.Color(0, 0, 0));
+        lbuser.setFont(new java.awt.Font("Segoe UI", 0, 16));
         lbuser.setText("usuário");
 
         btConfig.setBackground(ColorManager.getColor("button"));
@@ -173,7 +178,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbhorarioicon.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        lbhorarioicon.setFont(new java.awt.Font("Segoe UI", 0, 36));
         lbhorarioicon.setForeground(new java.awt.Color(255, 255, 255));
         lbhorarioicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbhorarioicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/clock_2.png"))); // NOI18N
@@ -183,7 +188,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbhorario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbhorario.setFont(new java.awt.Font("Segoe UI", 0, 24));
         lbhorario.setForeground(new java.awt.Color(255, 255, 255));
         lbhorario.setText("horários");
         lbhorario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -192,15 +197,37 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("- exibir horário");
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("- gerar horário");
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("- imprimir horário");
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("- salvar horário");
+
         javax.swing.GroupLayout horariotileLayout = new javax.swing.GroupLayout(horariotile);
         horariotile.setLayout(horariotileLayout);
         horariotileLayout.setHorizontalGroup(
             horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, horariotileLayout.createSequentialGroup()
+            .addGroup(horariotileLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(horariotileLayout.createSequentialGroup()
+                        .addComponent(lbhorario)
+                        .addGap(111, 111, 111))
+                    .addGroup(horariotileLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(lbhorarioicon, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(lbhorario)
                 .addContainerGap())
         );
         horariotileLayout.setVerticalGroup(
@@ -208,13 +235,18 @@ public class Home extends javax.swing.JPanel {
             .addGroup(horariotileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, horariotileLayout.createSequentialGroup()
-                        .addGap(0, 109, Short.MAX_VALUE)
-                        .addComponent(lbhorario))
+                    .addComponent(lbhorarioicon)
                     .addGroup(horariotileLayout.createSequentialGroup()
-                        .addComponent(lbhorarioicon)
-                        .addGap(0, 13, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(lbhorario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pnApps.add(horariotile);
@@ -227,7 +259,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbdocentes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbdocentes.setFont(new java.awt.Font("Segoe UI", 0, 14));
         lbdocentes.setForeground(new java.awt.Color(255, 255, 255));
         lbdocentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbdocentes.setText("docentes");
@@ -237,7 +269,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbdocentesicon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbdocentesicon.setFont(new java.awt.Font("Segoe UI", 0, 14));
         lbdocentesicon.setForeground(new java.awt.Color(255, 255, 255));
         lbdocentesicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbdocentesicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/docente.png"))); // NOI18N
@@ -254,8 +286,8 @@ public class Home extends javax.swing.JPanel {
             .addGroup(docentestileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(docentestileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbdocentesicon, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
+                    .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addComponent(lbdocentesicon, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
                 .addContainerGap())
         );
         docentestileLayout.setVerticalGroup(
@@ -264,7 +296,7 @@ public class Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lbdocentesicon, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbdocentes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, Short.MAX_VALUE)
+                .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -278,7 +310,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbturmas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbturmas.setFont(new java.awt.Font("Segoe UI", 0, 24));
         lbturmas.setForeground(new java.awt.Color(255, 255, 255));
         lbturmas.setText("turmas");
         lbturmas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -292,7 +324,7 @@ public class Home extends javax.swing.JPanel {
         turmastileLayout.setHorizontalGroup(
             turmastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, turmastileLayout.createSequentialGroup()
-                .addContainerGap(280, Short.MAX_VALUE)
+                .addContainerGap(282, Short.MAX_VALUE)
                 .addComponent(lbturmas)
                 .addContainerGap())
         );
@@ -301,7 +333,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(turmastileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbturmas)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         pnApps.add(turmastile);
@@ -314,7 +346,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbcadastro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbcadastro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbcadastro.setForeground(new java.awt.Color(255, 255, 255));
         lbcadastro.setText("cadastro");
         lbcadastro.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -323,21 +355,30 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/people.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
         javax.swing.GroupLayout cadastrotileLayout = new javax.swing.GroupLayout(cadastrotile);
         cadastrotile.setLayout(cadastrotileLayout);
         cadastrotileLayout.setHorizontalGroup(
             cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(cadastrotileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbcadastro)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         cadastrotileLayout.setVerticalGroup(
             cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbcadastro)
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
 
         pnApps.add(cadastrotile);
@@ -350,7 +391,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbdisciplinas.setForeground(new java.awt.Color(255, 255, 255));
         lbdisciplinas.setText("disciplinas");
         lbdisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -359,21 +400,29 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/book1.png"))); // NOI18N
+
         javax.swing.GroupLayout disciplinastileLayout = new javax.swing.GroupLayout(disciplinastile);
         disciplinastile.setLayout(disciplinastileLayout);
         disciplinastileLayout.setHorizontalGroup(
             disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(disciplinastileLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(disciplinastileLayout.createSequentialGroup()
+                        .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(124, 124, 124))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, disciplinastileLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         disciplinastileLayout.setVerticalGroup(
             disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(disciplinastileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbdisciplinas)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
         );
 
         pnApps.add(disciplinastile);
@@ -386,7 +435,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbrelatorio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lbrelatorio.setFont(new java.awt.Font("Segoe UI", 0, 24));
         lbrelatorio.setForeground(new java.awt.Color(255, 255, 255));
         lbrelatorio.setText("relatórios");
         lbrelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -395,6 +444,8 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/relatorios (1).png"))); // NOI18N
+
         javax.swing.GroupLayout reportstileLayout = new javax.swing.GroupLayout(reportstile);
         reportstile.setLayout(reportstileLayout);
         reportstileLayout.setHorizontalGroup(
@@ -402,14 +453,21 @@ public class Home extends javax.swing.JPanel {
             .addGroup(reportstileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbrelatorio)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addContainerGap())
         );
         reportstileLayout.setVerticalGroup(
             reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(reportstileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbrelatorio)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addGroup(reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(reportstileLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbrelatorio))
+                    .addGroup(reportstileLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pnApps.add(reportstile);
@@ -422,7 +480,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbajuda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbajuda.setFont(new java.awt.Font("Segoe UI", 0, 14));
         lbajuda.setForeground(new java.awt.Color(255, 255, 255));
         lbajuda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbajuda.setText("ajuda");
@@ -432,7 +490,7 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbajudaicon.setFont(new java.awt.Font("Segoe UI", 0, 96)); // NOI18N
+        lbajudaicon.setFont(new java.awt.Font("Segoe UI", 0, 96));
         lbajudaicon.setForeground(new java.awt.Color(255, 255, 255));
         lbajudaicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbajudaicon.setText("?");
@@ -449,8 +507,8 @@ public class Home extends javax.swing.JPanel {
             .addGroup(helptileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(helptileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbajuda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(lbajudaicon, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
+                    .addComponent(lbajuda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                    .addComponent(lbajudaicon, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
                 .addContainerGap())
         );
         helptileLayout.setVerticalGroup(
@@ -458,7 +516,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helptileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbajudaicon, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(lbajuda)
                 .addContainerGap())
         );
@@ -478,14 +536,14 @@ public class Home extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(lbtitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1237, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1246, Short.MAX_VALUE)
                         .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1342, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbhora)
                         .addGap(18, 18, 18)
                         .addComponent(lbdata)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1036, Short.MAX_VALUE)
                         .addComponent(lbuser)))
                 .addContainerGap())
         );
@@ -497,7 +555,7 @@ public class Home extends javax.swing.JPanel {
                     .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbtitle))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbdata)
@@ -586,6 +644,13 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JPanel docentestile;
     private javax.swing.JPanel helptile;
     private javax.swing.JPanel horariotile;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbajuda;
     private javax.swing.JLabel lbajudaicon;
