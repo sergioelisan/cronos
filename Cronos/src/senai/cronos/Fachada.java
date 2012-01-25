@@ -7,12 +7,14 @@ import java.util.Date;
 import java.util.List;
 import senai.cronos.database.DAOFactory;
 import senai.cronos.database.dao.DAO;
-import senai.cronos.database.dao.DAOLaboratorio;
-import senai.cronos.database.dao.DAONucleo;
 import senai.cronos.entidades.*;
 import senai.cronos.logica.Disciplinas;
 import senai.cronos.logica.Docentes;
+import senai.cronos.logica.Laboratorios;
+import senai.cronos.logica.Nucleos;
 import senai.cronos.logica.Preferencias;
+import senai.cronos.logica.Repository;
+import senai.cronos.logica.RepositoryFactory;
 import senai.cronos.logica.Turmas;
 
 /**
@@ -81,8 +83,8 @@ public class Fachada {
      * @throws SQLException 
      */
     public static <T> List<T> get(Class c) throws ClassNotFoundException, SQLException {
-        DAO<T> dao = DAOFactory.getDao(c);
-        return dao.get();
+        Repository<T> repositorio = RepositoryFactory.getRepository(c);
+        return repositorio.get();
     }
 
     /**
@@ -95,8 +97,8 @@ public class Fachada {
      * @throws SQLException 
      */
     public static <T> T get(Class c, Integer id) throws ClassNotFoundException, SQLException {
-        DAO<T> dao = DAOFactory.getDao(c);
-        return dao.get(id);
+        Repository<T> repositorio = RepositoryFactory.getRepository(c);
+        return repositorio.get(c, id);
     }
 
     /**
@@ -105,7 +107,7 @@ public class Fachada {
      * @return 
      */
     public static Docente buscaDocente(String nome) throws ClassNotFoundException, SQLException {
-        return new Docentes().buscaDocente(nome);
+        return Docentes.instance().buscaDocente(nome);
     }
 
     /**
@@ -114,7 +116,7 @@ public class Fachada {
      * @return 
      */
     public static List<Docente> buscaDocente(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        return new Docentes().buscaDocentes(nucleo);
+        return Docentes.instance().buscaDocentes(nucleo);
     }
 
     /**
@@ -123,7 +125,7 @@ public class Fachada {
      * @return 
      */
     public static Docente melhorDocente(UnidadeCurricular uc) throws ClassNotFoundException, SQLException {
-        return new Disciplinas().melhorDocente(uc);
+        return Disciplinas.instance().melhorDocente(uc);
     }
 
     /**
@@ -132,7 +134,7 @@ public class Fachada {
      * @return 
      */
     public static UnidadeCurricular buscaDisciplina(String nome) throws ClassNotFoundException, SQLException {
-        return new Disciplinas().buscaDisciplina(nome);
+        return Disciplinas.instance().buscaDisciplina(nome);
     }
 
     /**
@@ -141,7 +143,7 @@ public class Fachada {
      * @return 
      */
     public static List<UnidadeCurricular> buscaDisciplinas(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        return new Disciplinas().buscaDisciplina(nucleo);
+        return Disciplinas.instance().buscaDisciplina(nucleo);
     }
 
     /**
@@ -151,7 +153,7 @@ public class Fachada {
      * @return 
      */
     public static List<UnidadeCurricular> buscaDisciplinas(Nucleo nucleo, Integer modulo) throws ClassNotFoundException, SQLException {
-        return new Disciplinas().buscaDisciplina(nucleo, modulo);
+        return Disciplinas.instance().buscaDisciplina(nucleo, modulo);
     }
 
     /**
@@ -160,7 +162,7 @@ public class Fachada {
      * @return 
      */
     public static Turma buscaTurma(String nome) throws ClassNotFoundException, SQLException {
-        return new Turmas().buscaTurma(nome);
+        return Turmas.instance().buscaTurma(nome);
     }
     
     /**
@@ -171,7 +173,7 @@ public class Fachada {
      * @throws SQLException 
      */
     public static List<Turma> buscaTurma(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        return new Turmas().buscaTurma(nucleo);
+        return Turmas.instance().buscaTurma(nucleo);
     }
     
     /**
@@ -182,7 +184,7 @@ public class Fachada {
      * @throws SQLException 
      */
     public static Nucleo buscaNucleo(String nome) throws ClassNotFoundException, SQLException{
-        for(Nucleo nc : new DAONucleo().get()) {
+        for(Nucleo nc : Nucleos.instance().get()) {
             if(nc.getNome().equals(nome))
                 return nc;
         }
@@ -198,7 +200,7 @@ public class Fachada {
      * @throws SQLException 
      */
     public static Laboratorio buscaLab(String nome) throws ClassNotFoundException, SQLException{
-        for(Laboratorio lab : new DAOLaboratorio().get()) {
+        for(Laboratorio lab : Laboratorios.instance().get()) {
             if(lab.getNome().equals(nome))
                 return lab;
         }

@@ -3,6 +3,7 @@ package senai.cronos.database.dao;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
+import senai.cronos.util.Observado;
 
 /**
  * 
@@ -11,7 +12,7 @@ import java.util.List;
  * 
  * @author Sergio Lisan
  */
-public interface DAO<T> {
+public interface DAO<T> extends Observado {
     
     /**
      * adiciona um elemento ao banco de dados
@@ -44,5 +45,17 @@ public interface DAO<T> {
      * @return 
      */
     List<T> get() throws SQLException;
+    
+    /**
+     * abre a conexao com o banco de dados
+     * @throws SQLException 
+     */
+    void open() throws SQLException;
+    
+    /**
+     * fecha a conexao com o banco de dados
+     * @throws SQLException 
+     */
+    void close() throws SQLException;
     
 }

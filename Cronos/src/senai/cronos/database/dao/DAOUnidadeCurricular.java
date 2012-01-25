@@ -7,8 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import senai.cronos.Fachada;
+import senai.cronos.util.Observador;
 import senai.cronos.database.Database;
+import senai.cronos.entidades.Laboratorio;
+import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.util.Contador;
 
 /**
  *
@@ -16,12 +21,9 @@ import senai.cronos.entidades.UnidadeCurricular;
  */
 public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
 
-    public DAOUnidadeCurricular() throws ClassNotFoundException, SQLException {
-        con = Database.conexao();
-    }
-
     @Override
     public void add(UnidadeCurricular u) throws SQLException {
+        open();
         String query = Database.query("disciplina.insert");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
@@ -32,19 +34,23 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
             ps.setInt(6, u.getCargaHoraria());
             ps.execute();
         }
+        close();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
+        open();
         String query = Database.query("disciplina.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
+        close();
     }
 
     @Override
     public void update(UnidadeCurricular u) throws SQLException {
+        open();
         String query = Database.query("disciplina.update");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
@@ -57,10 +63,12 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
 
             ps.execute();
         }
+        close();
     }
 
     @Override
     public List<UnidadeCurricular> get() throws SQLException {
+        open();
         List<UnidadeCurricular> disciplinas = new ArrayList<>();
         String query = Database.query("disciplina.select");
 
@@ -71,27 +79,25 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
                 UnidadeCurricular uc = new UnidadeCurricular();
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-
-                DAONucleo daonucleo = new DAONucleo();
-                uc.setNucleo(daonucleo.get(rs.getInt("nucleo")));
-
-                DAOLaboratorio daolab = new DAOLaboratorio();
-                uc.setLab(daolab.get(rs.getInt("laboratorio")));
-                
+                uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));                
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
 
                 disciplinas.add(uc);
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
         }
 
+        close();
+        
         return disciplinas;
     }
 
     @Override
     public UnidadeCurricular get(Serializable id) throws SQLException {
+        open();
         UnidadeCurricular uc = new UnidadeCurricular();
         String query = Database.query("disciplina.get");
 
@@ -102,21 +108,48 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
             while (rs.next()) {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-
-                DAONucleo daonucleo = new DAONucleo();
-                uc.setNucleo(daonucleo.get(rs.getInt("nucleo")));
-
-                DAOLaboratorio daolab = new DAOLaboratorio();
-                uc.setLab(daolab.get(rs.getInt("laboratorio")));
-                
+                uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));                
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
         }
 
+        close();
+        
         return uc;
     }
+    
+    @Override
+    public void close() throws SQLException {
+        con.close();
+    }
+
+    @Override
+    public void open() throws SQLException {
+        con = Database.conexao();
+        Contador.disciplinas++;
+    }
+    
     private Connection con;
+
+    @Override
+    public void registra(Observador o) {
+        observadores.add(o);
+    }
+
+    @Override
+    public void remove(Observador o) {
+        observadores.remove(o);
+    }
+
+    @Override
+    public void notifica() {
+        for(Observador o : observadores)
+            o.update();
+    }
+    
+    private List<Observador> observadores = new ArrayList<>();
 }

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import javax.swing.JOptionPane;
 import senai.cronos.logica.Preferencias;
 
 /**
@@ -14,13 +13,13 @@ import senai.cronos.logica.Preferencias;
  * @author Sergio Lisan
  */
 public class ConnectionFactory {
-
+    
     ConnectionFactory() {
-        Properties pp = Preferencias.instance().getConexao();
-        user = pp.getProperty("user");
-        passwd = pp.getProperty("passwd");
-        url = pp.getProperty("url");
-        driver = pp.getProperty("driver");
+        Properties pp   = Preferencias.instance().getConexao();
+        user            = pp.getProperty("user");
+        passwd          = pp.getProperty("passwd");
+        url             = pp.getProperty("url");
+        driver          = pp.getProperty("driver");
     }
 
     /**
@@ -30,13 +29,13 @@ public class ConnectionFactory {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    Connection getConnection() throws ClassNotFoundException, SQLException {
-        return DriverManager.getConnection(url, user, passwd);
+    Connection getConnection() throws SQLException {
+        Connection con = DriverManager.getConnection(url, user, passwd);
+        return con;
     }
     
     private String user;
     private String passwd;
     private String url;
     private String driver;
-    private Connection con;
 }

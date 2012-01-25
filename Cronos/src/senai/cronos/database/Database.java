@@ -21,7 +21,7 @@ public class Database {
      * @throws ClassNotFoundException
      * @throws SQLException 
      */
-    public static Connection conexao() throws ClassNotFoundException, SQLException {
+    public static Connection conexao() throws SQLException {
         return new ConnectionFactory().getConnection();
     }
 }
