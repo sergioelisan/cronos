@@ -9,7 +9,7 @@ import java.util.Objects;
  * 
  * @author Carlos Melo e Sergio Lisan
  */
-public class Nucleo {
+public class Nucleo implements Comparable<Nucleo> {
 
     public Nucleo() {
     }
@@ -66,13 +66,15 @@ public class Nucleo {
     }
 
     public String toString() {
-        return "Nucleo{" 
-                + "id = " + id 
-                + ", nome = " + nome 
-                + ", desc = " + desc + '}';
+        return nome;
     }
-
+    
     private Integer id = 0;
     private String nome = "";
     private String desc = "";
+
+    @Override
+    public int compareTo(Nucleo t) {
+        return nome.compareTo(t.nome);
+    }
 }

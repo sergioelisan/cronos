@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
@@ -125,10 +126,12 @@ public class HorariosUI extends javax.swing.JPanel {
      */
     static class LoadTurmas implements Runnable {
 
-        private HorariosUIClient panel;
+        private JPanel panel;
+        private HorariosUIClient client;
 
-        LoadTurmas(HorariosUIClient panel) {
+        LoadTurmas(JPanel panel, HorariosUIClient client) {
             this.panel = panel;
+            this.client = client;
         }
 
         @Override
@@ -139,7 +142,7 @@ public class HorariosUI extends javax.swing.JPanel {
                     Tile tile = new Tile();
                     tile.setNome(t.getNome());
                     tile.setId(t.getId() + "");
-                    tile.setClickEvent(new TileClickedHandler(panel));
+                    tile.setClickEvent(new TileClickedHandler(client));
                     panel.add(tile);
                 }
             } catch (ClassNotFoundException | SQLException ex) {
