@@ -17,30 +17,33 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
-import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.events.LinkEffectHandler;
 
 /**
  *
  * @author Serginho
  */
-public class HorariosExibirPanel extends javax.swing.JPanel {
+public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient {
 
     private static HorariosExibirPanel instance = new HorariosExibirPanel();
+    
     private List<HorarioUI> calendarios;
+    
     private Horario horario;
-    private JPanel pnTurmas = new JPanel();
-    private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios = new JPanel();
-    private JPanel pnLegendas = new JPanel();
-    private JPanel pnLoading = new JPanel();
-    private JLabel lbLoading = new JLabel();
-    private JLabel setaDireita = new JLabel(">");
-    private JLabel setaEsquerda = new JLabel("<");
-    private JLabel lbVoltar = new JLabel("voltar");
-    private JLabel lbPrint = new JLabel("imprimir");
+    
+    private JPanel pnTurmas         = new JPanel();
+    private JPanel pnCalendarios    = new JPanel();
+    private JPanel pnHorarios       = new JPanel();
+    private JPanel pnLegendas       = new JPanel();
+    private JPanel pnLoading        = new JPanel();
+    private JLabel lbLoading        = new JLabel();
+    private JLabel setaDireita      = new JLabel(">");
+    private JLabel setaEsquerda     = new JLabel("<");
+    private JLabel lbVoltar         = new JLabel("voltar");
+    private JLabel lbPrint          = new JLabel("imprimir");
+    
     private Timer animacao;
-    private final int DELAY = 500;
+    private final int DELAY         = 500;
 
     public static HorariosExibirPanel getInstance() {
         return instance;
@@ -75,28 +78,13 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
      * inicializa os components voltados para calendarios
      */
     private void createCalendarComponents() {
-        
-        class LinkHandler extends MouseAdapter {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.claro(ColorManager.getColor("button")));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.getColor("button"));
-            }
-        }
-        
         lbVoltar.setPreferredSize(new Dimension(100, 25));
         lbVoltar.setOpaque(true);
         lbVoltar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lbVoltar.setHorizontalAlignment(JLabel.CENTER);
         lbVoltar.setForeground(Color.white);
         lbVoltar.setBackground(ColorManager.getColor("button"));
-        lbVoltar.addMouseListener(new LinkHandler());
+        lbVoltar.addMouseListener(new HorariosUI.LinkHandler());
         lbVoltar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -111,7 +99,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
         lbPrint.setHorizontalAlignment(JLabel.CENTER);
         lbPrint.setForeground(Color.white);
         lbPrint.setBackground(ColorManager.getColor("button"));
-        lbPrint.addMouseListener(new LinkHandler());
+        lbPrint.addMouseListener(new HorariosUI.LinkHandler());
         lbPrint.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -178,25 +166,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
      * @throws SQLException
      */
     private void loadTurmas() {
-        Thread t = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    List<Turma> turmas = Fachada.<Turma>get(Turma.class);
-                    for (Turma t : turmas) {
-                        Tile tile = new Tile();
-                        tile.setNome(t.getNome());
-                        tile.setId(t.getId() + "");
-                        tile.setClickEvent(new TileClickedHandler());
-                        pnTurmas.add(tile);
-                    }
-                } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Problema ao carregar turmas:\n" + ex);
-                }
-            }
-        });
-
+        Thread t = new Thread(new HorariosUI.LoadTurmas(this));
         t.start();
     }
 
@@ -205,23 +175,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
      */
     private void startLoading() {
         show("LOADING");
-
-        animacao = new Timer(DELAY, new ActionListener() {
-
-            private int turn = 0;
-            private String[] chars = {" ", ".", "..", "..."};
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                lbLoading.setText("carregando " + chars[turn]);
-                turn++;
-
-                if (turn == chars.length) {
-                    turn = 0;
-                }
-            }
-        });
-
+        animacao = new Timer(DELAY, new HorariosUI.LoadingEffect(lbLoading));
         animacao.start();
     }
 
@@ -267,7 +221,8 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
      *
      * @param id
      */
-    public void loadHorario(final Integer id) {
+    @Override
+    public void action(final Integer id) {
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -302,34 +257,16 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
                     }
 
 
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | SQLException | HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Erro ao Exibir Horario:\n" + e);
                     show("TURMAS");
-                    e.printStackTrace();
+                    e.printStackTrace(System.err);
                 }
             }
         });
 
         thread.start();
         startLoading();
-    }
-
-    /**
-     * classe interna que trata dos eventos do mouse
-     */
-    private class TileClickedHandler extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            Tile tile;
-            if (e.getSource() instanceof JLabel) {
-                tile = (Tile) ((JLabel) e.getSource()).getParent();
-            } else {
-                tile = (Tile) e.getSource();
-            }
-
-            loadHorario(Integer.parseInt(tile.getId()));
-        }
     }
 
     @SuppressWarnings("unchecked")

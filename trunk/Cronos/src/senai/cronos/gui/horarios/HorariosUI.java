@@ -8,12 +8,21 @@ package senai.cronos.gui.horarios;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import senai.cronos.Fachada;
+import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.gui.custom.ImageLoader;
+import senai.cronos.gui.custom.Tile;
 
 /**
  *
@@ -60,21 +69,6 @@ public class HorariosUI extends javax.swing.JPanel {
     }
 
     private void loadEffects() {
-        class LinkHandler extends MouseAdapter {
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.claro(ColorManager.getColor("button")));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.getColor("button"));
-            }
-        }
-
         btexibir.addMouseListener(new LinkHandler());
         btgerar.addMouseListener(new LinkHandler());
         btopcoes.addMouseListener(new LinkHandler());
@@ -88,6 +82,113 @@ public class HorariosUI extends javax.swing.JPanel {
     public void move(String modulo) {
         ((CardLayout) container.getLayout()).show(container, modulo);
         lbModulo.setText(modulo);
+    }
+
+    /*
+     * 
+     * CLASSES INTERNAS ANONIMAS VOLTADAS PARA OFERECER SERVICOS PARA SEUS CLIENTES
+     * 
+     */
+    
+    /**
+     * Classe interna que gera o efeito de carregamento no Loading
+     */
+    static class LoadingEffect implements ActionListener {
+
+        private JLabel lbLoading;
+        
+        LoadingEffect(JLabel lb) {
+            lbLoading = lb;
+        }
+        
+        private int turn = 0;
+            private String[] chars = {" ", ".", "..", "..."};
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                lbLoading.setText("carregando " + chars[turn]);
+                turn++;
+
+                if (turn == chars.length) {
+                    turn = 0;
+                }
+            }
+        
+    }
+    
+    /**
+     * Classe interna que prove o Serviço de carregar turmas do banco de dados e retornar
+     * em forma de "TILES", peças da cor do sistema.
+     * 
+     * É uma maneira de centralizar essa funcionalidade em um unico lugar e oferecer a todos
+     * os modulos instalados em HorariosUI
+     */
+    static class LoadTurmas implements Runnable {
+
+        private HorariosUIClient panel;
+
+        LoadTurmas(HorariosUIClient panel) {
+            this.panel = panel;
+        }
+
+        @Override
+        public void run() {
+            try {
+                List<Turma> turmas = Fachada.<Turma>get(Turma.class);
+                for (Turma t : turmas) {
+                    Tile tile = new Tile();
+                    tile.setNome(t.getNome());
+                    tile.setId(t.getId() + "");
+                    tile.setClickEvent(new TileClickedHandler(panel));
+                    panel.add(tile);
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "FAIL! Problema ao carregar turmas:\n" + ex);
+            }
+        }
+    }
+
+    /**
+     * Classe que gerará objetos HANDLER para tratar os efeitos graficos, quando o mouse
+     * passa por cima dos elementos que o implementam
+     */
+    static class LinkHandler extends MouseAdapter {
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            JComponent com = (JComponent) e.getSource();
+            com.setBackground(ColorManager.claro(ColorManager.getColor("button")));
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            JComponent com = (JComponent) e.getSource();
+            com.setBackground(ColorManager.getColor("button"));
+        }
+    }
+
+    /**
+     * Classe que prove o servico de tratamento do evento de clicar em cima da tile
+     * 
+     */
+    static class TileClickedHandler extends MouseAdapter {
+
+        private HorariosUIClient action;
+
+        TileClickedHandler(HorariosUIClient action) {
+            this.action = action;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            Tile tile;
+            if (e.getSource() instanceof JLabel) {
+                tile = (Tile) ((JLabel) e.getSource()).getParent();
+            } else {
+                tile = (Tile) e.getSource();
+            }
+            action.action(Integer.parseInt(tile.getId()));
+        }
     }
 
     @SuppressWarnings("unchecked")

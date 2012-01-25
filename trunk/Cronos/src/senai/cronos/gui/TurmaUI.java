@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.Fachada;
@@ -336,13 +335,13 @@ public class TurmaUI extends javax.swing.JPanel {
     private void btverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btverMouseClicked
         main.Switch(CronosFrame.HORARIOS);
         HorariosUI.getInstance().move("exibir");
-        HorariosExibirPanel.getInstance().loadHorario(Integer.parseInt(lbid.getText()));
+        HorariosExibirPanel.getInstance().action(Integer.parseInt(lbid.getText()));
     }//GEN-LAST:event_btverMouseClicked
 
     private void btgerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btgerarMouseClicked
         main.Switch(CronosFrame.HORARIOS);
         HorariosUI.getInstance().move("gerar");
-        HorariosGerarPanel.getInstance().gerarHorario(Integer.parseInt(lbid.getText()));
+        HorariosGerarPanel.getInstance().action(Integer.parseInt(lbid.getText()));
     }//GEN-LAST:event_btgerarMouseClicked
 
     private void btconfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btconfigMouseClicked
