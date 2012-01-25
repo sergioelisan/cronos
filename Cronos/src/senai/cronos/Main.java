@@ -6,13 +6,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.lang.Object;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.Calendario;
 import senai.cronos.util.Feriado;
-import org.apache.derby.drda.NetworkServerControl;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
 
 /**
@@ -23,20 +21,32 @@ public class Main {
 
     public static void main(String[] args) {
         Main m = new Main();
-try {
-    String location=System.getProperty("user.dir")+System.getProperty("file.separator"); 
-    System.setProperty("derby.system.home", location);
-    NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
-    networkServer.start(new PrintWriter(System.out));
-    System.out.println("Conectado ao banco de dados.");
-        } catch (Exception ex) {
-        System.out.println("Não conseguiu conectar no banco de dados.");
-    }
+
         try {
+            String location = System.getProperty("user.dir") + System.getProperty("file.separator");
+            System.setProperty("derby.system.home", location);
+            NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
+            networkServer.start(new PrintWriter(System.out));
+            System.out.println("Conectado ao banco de dados.");
+            
             m.init();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "FAIL!\n" + e);
-            e.printStackTrace();
+        } catch (Exception ex) {
+            System.out.println("Não conseguiu conectar no banco de dados.");
+        }
+    }
+
+    /**
+     * desliga o banco e a aplicacao
+     */
+    public static void quit() {
+        try {
+            System.out.println("Encerrando banco de dados e desligando JVM");
+            NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
+            networkServer.shutdown();
+            System.exit(0);
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -61,12 +71,12 @@ try {
         Date fim = Fachada.getFimCalendario();
 
         List<Feriado> feriados = Fachada.<Feriado>get(Feriado.class);
-        
+
         List<Date> diasDeFeriado = new ArrayList<>();
-        for(Feriado f : feriados) {
+        for (Feriado f : feriados) {
             diasDeFeriado.add(f.getDia());
         }
-        
+
         calendario = new Calendario(inicio, fim, diasDeFeriado);
     }
 
@@ -83,7 +93,6 @@ try {
             }
         });
     }
-    
     /**
      * objeto que armazena o calendario de dias uteis usados pela escola
      */

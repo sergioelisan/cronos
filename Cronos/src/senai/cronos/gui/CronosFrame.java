@@ -6,6 +6,9 @@
 package senai.cronos.gui;
 
 import java.awt.CardLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import senai.cronos.Fachada;
 import senai.cronos.gui.cadastro.CadastroUI;
 import senai.cronos.gui.horarios.HorariosUI;
 
@@ -22,15 +25,22 @@ public class CronosFrame extends javax.swing.JFrame {
 
         loadPanels();
         Switch(CronosFrame.PRESENTATION);
+
+        // chama a funcao de saida do banco
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                Fachada.quit();
+            }
+        });
     }
 
     private void loadPanels() {
-        getContentPane().setLayout(new CardLayout() );
-        
+        getContentPane().setLayout(new CardLayout());
+
         getContentPane().add(new Home(this), HOME);
         getContentPane().add(HorariosUI.getInstance(), HORARIOS);
         HorariosUI.getInstance().setMain(this);
-        
+
         getContentPane().add(new DocenteUI(this), DOCENTES);
         getContentPane().add(new CadastroUI(this), CADASTROS);
         getContentPane().add(new ReportUI(this), RELATORIOS);
@@ -74,7 +84,6 @@ public class CronosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    
     public static final String HOME = "home";
     public static final String HORARIOS = "horarios";
     public static final String DOCENTES = "docentes";

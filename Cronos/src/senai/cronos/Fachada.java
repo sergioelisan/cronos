@@ -26,6 +26,14 @@ public class Fachada {
     
     private Fachada() {        
     }
+    
+    
+    /**
+     * encerra o banco de dados e sai da aplicacao
+     */
+    public static void quit() {
+        Main.quit();
+    }
 
     /**
      * Adiciona um objeto de uma entidade de classe T ao banco de dados.
