@@ -297,6 +297,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel {
                         ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
                     } else {
                         JOptionPane.showMessageDialog(null, "Horario inexistente! Tente criar um na opção 'gerar'. ");
+                        stopLoading();
                         show("TURMAS");
                     }
 

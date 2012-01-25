@@ -311,6 +311,19 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
                     calendarios.clear();
                     
                     Turma turma = Fachada.<Turma>get(Turma.class, id);
+                    
+                    horario = Fachada.<Horario>get(Horario.class, id);
+                    if (!horario.getHorario().isEmpty())  {
+                        int opcao = JOptionPane.showConfirmDialog(null, "Deseja sobrescrever o horário dessa turma?", "Aviso", JOptionPane.YES_NO_OPTION);
+                        
+                        // se a opcao for nao, retorna a funcao.
+                        if (opcao == JOptionPane.NO_OPTION) {
+                            stopLoading();
+                            show("TURMAS");
+                        }
+                    }
+                        
+                    
                     horario = GeraHorarioFactory.getGerador().generate(turma);
 
                     HorarioUIFactory factory = new HorarioUIFactory(horario);
@@ -327,8 +340,10 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
                     stopLoading();
                     show("CALENDARIOS");
                     ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
+                    
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
+                    stopLoading();
                     show("TURMAS");
                     e.printStackTrace();
                 }
