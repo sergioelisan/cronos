@@ -1,12 +1,12 @@
-Wed Jan 25 11:27:33 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Wed Jan 25 12:03:41 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Wed Jan 25 11:27:33 GMT-03:00 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0135-1543-b5f4-ffffdd04a47a 
-on database directory C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos  with class loader sun.misc.Launcher$AppClassLoader@19fcc69 
+Wed Jan 25 12:03:41 GMT-03:00 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0135-1564-c87d-ffffdd04a47a 
+on database directory C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos  with class loader sun.misc.Launcher$AppClassLoader@1050169 
 Loaded from file:/C:/Users/user/Documents/NetBeansProjects/trunk/Cronos/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0-b147
 user.dir=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos
 derby.system.home=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\
 Database Class Loader started - derby.database.classpath=''
-Wed Jan 25 11:27:39 GMT-03:00 2012 : Servidor de Rede Apache Derby - encerramento de 10.8.1.2 - (1095077) em {2}
+Wed Jan 25 12:16:35 GMT-03:00 2012 : Servidor de Rede Apache Derby - encerramento de 10.8.1.2 - (1095077) em {2}
