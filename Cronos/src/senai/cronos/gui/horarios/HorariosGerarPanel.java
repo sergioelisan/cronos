@@ -6,8 +6,6 @@
 package senai.cronos.gui.horarios;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -18,7 +16,6 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
-import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.events.LinkEffectHandler;
 import senai.cronos.logica.horarios.GeraHorarioFactory;
 
@@ -26,26 +23,33 @@ import senai.cronos.logica.horarios.GeraHorarioFactory;
  *
  * @author Serginho
  */
-public class HorariosGerarPanel extends javax.swing.JPanel {
+public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient {
 
     private List<HorarioUI> calendarios = new ArrayList<>();
+    
     private Horario horario;
-    private JPanel pnTurmas = new JPanel();
+    
+    private JPanel pnTurmas      = new JPanel();
     private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios = new JPanel();
-    private JPanel pnLegendas = new JPanel();
-    private JPanel pnLoading = new JPanel();
-    private JLabel lbLoading = new JLabel();
-    private JLabel setaDireita = new JLabel(">");
-    private JLabel setaEsquerda = new JLabel("<");
-    private JLabel lbVoltar = new JLabel("voltar");
-    private JLabel lbSave = new JLabel("salvar");
-    private JLabel lbPrint = new JLabel("imprimir");
+    private JPanel pnHorarios    = new JPanel();
+    private JPanel pnLegendas    = new JPanel();
+    private JPanel pnLoading     = new JPanel();
+    private JLabel lbLoading     = new JLabel();
+    private JLabel setaDireita   = new JLabel(">");
+    private JLabel setaEsquerda  = new JLabel("<");
+    private JLabel lbVoltar      = new JLabel("voltar");
+    private JLabel lbSave        = new JLabel("salvar");
+    private JLabel lbPrint       = new JLabel("imprimir");
+    
     private Timer animacao;
-    private final int DELAY = 500;
+    private final int DELAY      = 500;
 
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
     
+    /**
+     * retorna uma instancia unica desde painel
+     * @return 
+     */
     public static HorariosGerarPanel getInstance() {
         return instance;
     }
@@ -79,27 +83,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
      * inicializa os components voltados para calendarios
      */
     private void createCalendarComponents() {
-        class LinkHandler extends MouseAdapter {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.claro(ColorManager.getColor("button")));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                JComponent com = (JComponent) e.getSource();
-                com.setBackground(ColorManager.getColor("button"));
-            }
-        }
-        
         lbVoltar.setPreferredSize(new Dimension(100, 25));
         lbVoltar.setOpaque(true);
         lbVoltar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lbVoltar.setHorizontalAlignment(JLabel.CENTER);
         lbVoltar.setForeground(Color.white);
         lbVoltar.setBackground(ColorManager.getColor("button"));
-        lbVoltar.addMouseListener(new LinkHandler());
+        lbVoltar.addMouseListener(new HorariosUI.LinkHandler());
         lbVoltar.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -114,7 +104,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
         lbPrint.setHorizontalAlignment(JLabel.CENTER);
         lbPrint.setForeground(Color.white);
         lbPrint.setBackground(ColorManager.getColor("button"));
-        lbPrint.addMouseListener(new LinkHandler());
+        lbPrint.addMouseListener(new HorariosUI.LinkHandler());
         lbPrint.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -129,7 +119,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
         lbSave.setHorizontalAlignment(JLabel.CENTER);
         lbSave.setForeground(Color.white);
         lbSave.setBackground(ColorManager.getColor("button"));
-        lbSave.addMouseListener(new LinkHandler());
+        lbSave.addMouseListener(new HorariosUI.LinkHandler());
         lbSave.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -197,25 +187,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
      * @throws SQLException
      */
     private void loadTurmas() {
-        Thread t = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    List<Turma> turmas = Fachada.<Turma>get(Turma.class);
-                    for (Turma t : turmas) {
-                        Tile tile = new Tile();
-                        tile.setNome(t.getNome());
-                        tile.setId(t.getId() + "");
-                        tile.setClickEvent(new TileClickedHandler());
-                        pnTurmas.add(tile);
-                    }
-                } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Problema ao carregar turmas:\n" + ex);
-                }
-            }
-        });
-
+        Thread t = new Thread(new HorariosUI.LoadTurmas(this));
         t.start();
     }
 
@@ -224,23 +196,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
      */
     private void startLoading() {
         show("LOADING");
-
-        animacao = new Timer(DELAY, new ActionListener() {
-
-            private int turn = 0;
-            private String[] chars = {" ", ".", "..", "..."};
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                lbLoading.setText("gerando " + chars[turn]);
-                turn++;
-
-                if (turn == chars.length) {
-                    turn = 0;
-                }
-            }
-        });
-
+        animacao = new Timer(DELAY, new HorariosUI.LoadingEffect(lbLoading));
         animacao.start();
     }
 
@@ -300,7 +256,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
      *
      * @param id
      */
-    public void gerarHorario(final Integer id) {
+    public void action(final Integer id) {
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -320,6 +276,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
                         if (opcao == JOptionPane.NO_OPTION) {
                             stopLoading();
                             show("TURMAS");
+                            return;
                         }
                     }
                         
@@ -352,25 +309,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel {
 
         thread.start();
         startLoading();
-    }
-
-    /**
-     * classe interna que trata dos eventos do mouse
-     */
-    private class TileClickedHandler extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            Tile tile;
-            if (e.getSource() instanceof JLabel) {
-                tile = (Tile) ((JLabel) e.getSource()).getParent();
-            } else {
-                tile = (Tile) e.getSource();
-            }
-
-            gerarHorario(Integer.parseInt(tile.getId()));
-        }
-    }
+    }    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
