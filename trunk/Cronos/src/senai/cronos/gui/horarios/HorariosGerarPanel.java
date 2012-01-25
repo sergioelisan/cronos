@@ -95,6 +95,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
             @Override
             public void mouseClicked(MouseEvent evt) {
                 show("TURMAS");
+                
             }
         });
 

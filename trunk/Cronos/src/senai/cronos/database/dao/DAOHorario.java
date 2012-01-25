@@ -5,12 +5,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import senai.cronos.Fachada;
+import senai.cronos.util.Observador;
 import senai.cronos.database.Database;
 import senai.cronos.entidades.*;
+import senai.cronos.util.Contador;
 import senai.cronos.util.Tupla;
 
 /**
@@ -19,12 +23,9 @@ import senai.cronos.util.Tupla;
  */
 public class DAOHorario implements DAO<Horario> {
 
-    public DAOHorario() throws ClassNotFoundException, SQLException {
-        con = Database.conexao();
-    }
-
-    @Override
+   @Override
     public void add(Horario u) throws SQLException {
+        open();
         String query = Database.query("horario.insert");
 
         for (Date dia : u.getHorario().keySet()) {
@@ -41,20 +42,25 @@ public class DAOHorario implements DAO<Horario> {
                 ps.execute();
             }
         }
+        close();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
+        open();
         String query = Database.query("horario.delete");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
+        
+        close();
     }
 
     @Override
     public void update(Horario u) throws SQLException {
+        open();
         String query = Database.query("horario.update");
 
         for (Date dia : u.getHorario().keySet()) {
@@ -74,15 +80,30 @@ public class DAOHorario implements DAO<Horario> {
                 ps.execute();
             }
         }
+        close();
     }
 
     @Override
     public List<Horario> get() throws SQLException {
-        throw new UnsupportedOperationException("Logica sem necessidade de implementacao");
+        open();
+        List<Horario> horarios = new ArrayList<>();
+        
+        try {
+            for(Turma turma : Fachada.<Turma>get(Turma.class) ) {
+                Integer id = turma.getId();
+                horarios.add(this.get(id));
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        close();
+        return horarios;
     }
 
     @Override
     public Horario get(Serializable id) throws SQLException {
+        open();
         Horario h = new Horario();
         String query = Database.query("horario.get");
 
@@ -92,32 +113,21 @@ public class DAOHorario implements DAO<Horario> {
 
             Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
 
-            DAOTurma daoturma = new DAOTurma();
-            
-            DAODocente daodocente = new DAODocente();
-            List<Docente> docentes = daodocente.get();
-            
-            DAOUnidadeCurricular daodisciplina = new DAOUnidadeCurricular();
-            List<UnidadeCurricular> disciplinas = daodisciplina.get();
-            
-            DAOLaboratorio daoLab = new DAOLaboratorio();
-            List<Laboratorio> labs = daoLab.get();
-            
-            Turma t = daoturma.get((Integer) id);
+            Turma t = Fachada.<Turma>get(Turma.class, (Integer) id);
 
             while (rs.next()) {
                 Date dia = rs.getDate("dia");
 
                 Aula a1 = new Aula();
 
-                a1.setDocente(getDocente(rs.getInt("docente1"), docentes) );
-                a1.setDisciplina(getUnidadeCurricular(rs.getInt("disciplina1"), disciplinas));
-                a1.setLab(getLaboratorio(rs.getInt("laboratorio1"), labs));
+                a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1") ) ) ;
+                a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1") ) );
+                a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1") ) );
 
                 Aula a2 = new Aula();
-                a2.setDocente(getDocente(rs.getInt("docente2"), docentes) );
-                a2.setDisciplina(getUnidadeCurricular(rs.getInt("disciplina2"), disciplinas));
-                a2.setLab(getLaboratorio(rs.getInt("laboratorio1"), labs));
+                a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2") ) ) ;
+                a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2") ) );
+                a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2") ) );
 
                 horario.put(dia, new Tupla<>(a1, a2));
             }
@@ -125,50 +135,42 @@ public class DAOHorario implements DAO<Horario> {
             h.setTurma(t);
             h.setHorario(horario);
 
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
         }
 
+        close();
+        
         return h;
     }
     
-    /**
-     * Metodo usado para acelerar a operacao de carregamento de horarios
-     * @param id
-     * @param docentes
-     * @return 
-     */
-    private Docente getDocente(Integer id, List<Docente> docentes) {
-        for(Docente dc : docentes)
-            if(dc.getMatricula().equals(id))
-                return dc;
-        return new Docente();
+    @Override
+    public void close() throws SQLException {
+        con.close();
+    }
+
+    @Override
+    public void open() throws SQLException {
+        con = Database.conexao();
+        Contador.horario++;
     }
     
-    /**
-     * Metodo usado para acelerar a operacao de carregamento de horarios
-     * @param id
-     * @param disciplinas
-     * @return 
-     */
-    private UnidadeCurricular getUnidadeCurricular(Integer id, List<UnidadeCurricular> disciplinas) {
-        for(UnidadeCurricular disciplina : disciplinas)
-            if(disciplina.getId().equals(id))
-                return disciplina;
-        return new UnidadeCurricular();
+    @Override
+    public void registra(Observador o) {
+        observadores.add(o);
+    }
+
+    @Override
+    public void remove(Observador o) {
+        observadores.remove(o);
+    }
+
+    @Override
+    public void notifica() {
+        for(Observador o : observadores)
+            o.update();
     }
     
-    /**
-     * Metodo usado para acelerar a operacao de carregamento de horarios
-     * @param id
-     * @param labs
-     * @return 
-     */
-    private Laboratorio getLaboratorio(Integer id, List<Laboratorio> labs) {
-        for(Laboratorio lab : labs)
-            if(lab.getId().equals(id))
-                return lab;
-        return new Laboratorio();
-    }
+    private List<Observador> observadores = new ArrayList<>();
     
     
     private Connection con;

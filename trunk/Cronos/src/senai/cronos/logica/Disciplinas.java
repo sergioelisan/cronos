@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import senai.cronos.util.Observador;
 import senai.cronos.database.dao.DAODocente;
 import senai.cronos.database.dao.DAOUnidadeCurricular;
 import senai.cronos.entidades.Nucleo;
@@ -19,9 +20,18 @@ import senai.cronos.util.Aleatorio;
  *
  * @author Carlos Melo e sergio lisan
  */
-public final class Disciplinas {
+public final class Disciplinas implements Observador, Repository<UnidadeCurricular> {
+    
+    private List<UnidadeCurricular> disciplinas;
 
-    public Disciplinas() {
+    private static Disciplinas instance = new Disciplinas();
+    
+    public static Disciplinas instance() {
+        return instance;
+    }
+    
+    private Disciplinas() {
+        update();
     }
 
     /**
@@ -30,7 +40,7 @@ public final class Disciplinas {
      * @return 
      */
     public UnidadeCurricular buscaDisciplina(String nome) throws ClassNotFoundException, SQLException {
-        for (UnidadeCurricular uc : new DAOUnidadeCurricular().get()) {
+        for (UnidadeCurricular uc : get()) {
             if (uc.getNome().equals(nome)) {
                 return uc;
             }
@@ -45,7 +55,7 @@ public final class Disciplinas {
      */
     public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         List<UnidadeCurricular> unidades = new ArrayList<>();
-        for (UnidadeCurricular uc : new DAOUnidadeCurricular().get()) {
+        for (UnidadeCurricular uc : get()) {
             if (uc.getNucleo().equals(nucleo)) {
                 unidades.add(uc);
             }
@@ -66,7 +76,7 @@ public final class Disciplinas {
     public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, Integer modulo)  throws ClassNotFoundException, SQLException {
         List<UnidadeCurricular> unidades = new ArrayList<>();
         
-        for (UnidadeCurricular uc : new DAOUnidadeCurricular().get()) {
+        for (UnidadeCurricular uc : get()) {
             if (uc.getNucleo().equals(nucleo) && uc.getModulo().equals(modulo)) {
                 unidades.add(uc);
             }
@@ -119,7 +129,7 @@ public final class Disciplinas {
         // Armazena os melhores docentes associados a seus Scores Finais
         List<Docente> melhores = new ArrayList<>();
         for (Docente doc : proficiencias.keySet()) {
-            double scorefinal = new Docentes().getScoreFinal(doc, proficiencias.get(doc).getDisciplina());
+            double scorefinal = Docentes.instance().getScoreFinal(doc, proficiencias.get(doc).getDisciplina());
             doc.setScore((int) scorefinal);
             melhores.add(doc);
         }
@@ -132,5 +142,27 @@ public final class Disciplinas {
         }
         // retorna o melhor docente de 1 a 4.
         return docentes[fator];
+    }
+
+    @Override
+    public void update() {
+        try {
+            disciplinas = new DAOUnidadeCurricular().get();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<UnidadeCurricular> get() {
+        return disciplinas;
+    }
+
+    @Override
+    public UnidadeCurricular get(Class c, Integer id) {
+        for(UnidadeCurricular disciplina : disciplinas)
+            if(disciplina.getId().equals(id))
+                return disciplina;
+        return null;
     }
 }

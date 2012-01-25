@@ -3,6 +3,7 @@ package senai.cronos.logica;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import senai.cronos.util.Observador;
 import senai.cronos.database.dao.DAODocente;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
@@ -14,7 +15,19 @@ import senai.cronos.util.DateUtil;
  *
  * @author Carlos Melo e Sergio Lisan
  */
-public final class Docentes {
+public final class Docentes implements Observador, Repository<Docente> {
+    
+    private List<Docente> docentes;
+
+    private static Docentes instance = new Docentes();
+    
+    public static Docentes instance() {
+        return instance;
+    }
+    
+    private Docentes() {
+        update();
+    }
 
     /**
      * retorna docentes de um determinado nucleo
@@ -22,12 +35,12 @@ public final class Docentes {
      * @return 
      */
     public List<Docente> buscaDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        List<Docente> docentes = new ArrayList<>();
-        for(Docente doc : new DAODocente().get()) {
+        List<Docente> _docentes = new ArrayList<>();
+        for(Docente doc : getDocentes()) {
             if(doc.getNucleo().equals(nucleo))
-                docentes.add(doc);
+                _docentes.add(doc);
         }
-        return docentes;
+        return _docentes;
     }
 
     /**
@@ -36,7 +49,7 @@ public final class Docentes {
      * @return 
      */
     public Docente buscaDocente(String nome) throws ClassNotFoundException, SQLException {
-        for (Docente dc : new DAODocente().get()) {
+        for (Docente dc : getDocentes()) {
             if (dc.getNome().equals(nome)) {
                 return dc;
             }
@@ -119,6 +132,35 @@ public final class Docentes {
             }
         }
         return Double.valueOf(scoreTemp);
+    }
+
+    @Override
+    public void update() {
+        try {
+            docentes = new DAODocente().get();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * @return the docentes
+     */
+    public List<Docente> getDocentes() {
+        return docentes;
+    }
+
+    @Override
+    public List<Docente> get() {
+        return getDocentes();
+    }
+
+    @Override
+    public Docente get(Class c, Integer id) {
+        for(Docente docente : docentes)
+            if(docente.getMatricula().equals(id))
+                return docente;
+        return null;
     }
 
     

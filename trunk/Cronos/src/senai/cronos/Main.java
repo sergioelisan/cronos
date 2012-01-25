@@ -12,6 +12,7 @@ import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.Calendario;
 import senai.cronos.util.Feriado;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
+import senai.cronos.util.Contador;
 
 /**
  *
@@ -31,7 +32,8 @@ public class Main {
             
             m.init();
         } catch (Exception ex) {
-            System.out.println("Não conseguiu conectar no banco de dados.");
+            System.out.println("Problemas no sistema:\n\n" + ex);
+            ex.printStackTrace(System.err);
         }
     }
 
@@ -43,6 +45,14 @@ public class Main {
             System.out.println("Encerrando banco de dados e desligando JVM");
             NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
             networkServer.shutdown();
+            
+            System.out.println("Docentes: " + Contador.docentes);
+            System.out.println("Discipli: " + Contador.disciplinas);
+            System.out.println("Laborato: " + Contador.laboratorios);
+            System.out.println("Horarios: " + Contador.horario);
+            System.out.println("Turmas  : " + Contador.turmas);
+            System.out.println("Nucleos : " + Contador.nucleos);
+            
             System.exit(0);
             
         } catch (Exception ex) {
@@ -61,6 +71,8 @@ public class Main {
         }
 
         loadUI();
+        
+        
     }
 
     /**

@@ -142,7 +142,7 @@ public class HorarioUIFactory {
          * Cria as legendas, usando o dicionario de cores
          */
         for (UnidadeCurricular uc : docs.keySet()) {
-            if (!uc.getNome().isEmpty()) {
+            if (uc != null && !uc.getNome().isEmpty()) {
                 JLabel label = new JLabel();
                 label.setOpaque(true);
                 label.setPreferredSize(new Dimension(450, 25));
