@@ -187,7 +187,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      * @throws SQLException
      */
     private void loadTurmas() {
-        Thread t = new Thread(new HorariosUI.LoadTurmas(this));
+        Thread t = new Thread(new HorariosUI.LoadTurmas(pnTurmas, this));
         t.start();
     }
 
