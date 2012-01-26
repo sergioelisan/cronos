@@ -1,4 +1,4 @@
-package senai.cronos.util;
+package senai.cronos.util.debug;
 
 /**
  *

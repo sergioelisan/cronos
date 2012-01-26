@@ -9,7 +9,7 @@ import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.DateUtil;
+import senai.cronos.util.calendario.DateUtil;
 import senai.cronos.util.Tupla;
 
 /**

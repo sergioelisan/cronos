@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
+import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Nucleo;
 
 /**
@@ -17,33 +17,44 @@ import senai.cronos.entidades.Nucleo;
  */
 public class DAONucleo implements DAO<Nucleo> {
 
+    private static DAO<Nucleo> instance = new DAONucleo();
+    
+    public static DAO<Nucleo> getInstance() {
+        return instance;
+    }
+    
+    private DAONucleo() {        
+    }
+    
     @Override
     public void add(Nucleo u) throws SQLException {
         open();
-        String query = Database.query("nucleo.insert");
+        String query = DatabaseUtil.query("nucleo.insert");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setString(2, u.getDesc());
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("nucleo.delete");
+        String query = DatabaseUtil.query("nucleo.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void update(Nucleo u) throws SQLException {
         open();
-        String query = Database.query("nucleo.update");
+        String query = DatabaseUtil.query("nucleo.update");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setString(2, u.getDesc());
@@ -51,13 +62,14 @@ public class DAONucleo implements DAO<Nucleo> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public List<Nucleo> get() throws SQLException {
         open();
         List<Nucleo> laboratorios = new ArrayList<>();
-        String query = Database.query("nucleo.select");
+        String query = DatabaseUtil.query("nucleo.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
@@ -84,7 +96,7 @@ public class DAONucleo implements DAO<Nucleo> {
         open();
         Nucleo lb = new Nucleo();
 
-        String query = Database.query("nucleo.get");
+        String query = DatabaseUtil.query("nucleo.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -112,7 +124,7 @@ public class DAONucleo implements DAO<Nucleo> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
     }
     
     @Override

@@ -10,7 +10,7 @@ import senai.cronos.util.Observado;
  * Interface de um objeto de acesso a dados, com metodo de manipulacao de uma tabela
  * de um banco.
  * 
- * @author Sergio Lisan
+ * @author Sergio Lisan e Carlos Melo
  */
 public interface DAO<T> extends Observado {
     

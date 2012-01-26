@@ -2,8 +2,10 @@ package senai.cronos.logica;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAONucleo;
 import senai.cronos.entidades.Nucleo;
 
 /**
@@ -21,15 +23,20 @@ public class Nucleos implements Observador, Repository<Nucleo> {
     }
     
     private Nucleos() {
-        update();
+        try {            
+            DAOFactory.getDao(Nucleo.class).registra(this);
+            update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Nucleos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void update() {
         try {
-            nucleos = new DAONucleo().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            nucleos = DAOFactory.getDao(Nucleo.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 

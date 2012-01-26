@@ -10,7 +10,7 @@ import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Feriado;
+import senai.cronos.util.calendario.Feriado;
 
 /**
  *

@@ -3,13 +3,15 @@ package senai.cronos.logica;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAODocente;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.DateUtil;
+import senai.cronos.util.calendario.DateUtil;
 
 /**
  *
@@ -26,7 +28,12 @@ public final class Docentes implements Observador, Repository<Docente> {
     }
     
     private Docentes() {
-        update();
+        try {
+            DAOFactory.getDao(Docente.class).registra(this);
+            update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Docentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -137,9 +144,9 @@ public final class Docentes implements Observador, Repository<Docente> {
     @Override
     public void update() {
         try {
-            docentes = new DAODocente().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            docentes = DAOFactory.getDao(Docente.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 

@@ -1,20 +1,16 @@
 package senai.cronos.logica;
 
 import java.sql.SQLException;
-import senai.cronos.entidades.UnidadeCurricular;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
-import java.util.ArrayList;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAODocente;
-import senai.cronos.database.dao.DAOUnidadeCurricular;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
+import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.util.Aleatorio;
+import senai.cronos.util.Observador;
 
 /**
  *
@@ -31,7 +27,12 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
     }
     
     private Disciplinas() {
-        update();
+        try {
+            DAOFactory.getDao(UnidadeCurricular.class).registra(this);
+            update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Disciplinas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -95,7 +96,8 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
         // ALGORITMO PROVISORIO!
         // Cria um dicionario com uma Proficiencia e um Docente correspondente
         Map<Docente, Proficiencia> proficiencias = new HashMap<>();
-        for (Docente dc : new DAODocente().get()) {
+        List<Docente> docentes = DAOFactory.getDao(Docente.class).get();
+        for (Docente dc :  docentes) {
             for (Proficiencia p : dc.getProficiencias()) {
                 if (p.getDisciplina().equals(uc)) {
                     proficiencias.put(dc, p);
@@ -147,9 +149,9 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
     @Override
     public void update() {
         try {
-            disciplinas = new DAOUnidadeCurricular().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            disciplinas = DAOFactory.getDao(UnidadeCurricular.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 

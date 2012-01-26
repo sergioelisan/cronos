@@ -12,21 +12,30 @@ import java.util.Map;
 import java.util.TreeMap;
 import senai.cronos.Fachada;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
+import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.*;
-import senai.cronos.util.Contador;
+import senai.cronos.util.debug.Contador;
 import senai.cronos.util.Tupla;
 
 /**
  *
- * @author Sergio Lisan
+ * @author Sergio Lisan e Carlos Melo
  */
 public class DAOHorario implements DAO<Horario> {
 
+    private static DAO<Horario> instance = new DAOHorario();
+    
+    public static DAO<Horario> getInstance() {
+        return instance;
+    }
+    
+    private DAOHorario() {        
+    }
+    
    @Override
     public void add(Horario u) throws SQLException {
         open();
-        String query = Database.query("horario.insert");
+        String query = DatabaseUtil.query("horario.insert");
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -42,13 +51,15 @@ public class DAOHorario implements DAO<Horario> {
                 ps.execute();
             }
         }
+        
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("horario.delete");
+        String query = DatabaseUtil.query("horario.delete");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -56,12 +67,13 @@ public class DAOHorario implements DAO<Horario> {
         }
         
         close();
+        notifica();
     }
 
     @Override
     public void update(Horario u) throws SQLException {
         open();
-        String query = Database.query("horario.update");
+        String query = DatabaseUtil.query("horario.update");
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -81,6 +93,7 @@ public class DAOHorario implements DAO<Horario> {
             }
         }
         close();
+        notifica();
     }
 
     @Override
@@ -105,7 +118,7 @@ public class DAOHorario implements DAO<Horario> {
     public Horario get(Serializable id) throws SQLException {
         open();
         Horario h = new Horario();
-        String query = Database.query("horario.get");
+        String query = DatabaseUtil.query("horario.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -150,7 +163,7 @@ public class DAOHorario implements DAO<Horario> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
         Contador.horario++;
     }
     

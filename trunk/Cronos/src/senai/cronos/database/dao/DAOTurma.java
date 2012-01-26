@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.Fachada;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
+import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.enums.Turno;
@@ -20,10 +20,22 @@ import senai.cronos.entidades.enums.Turno;
  */
 public class DAOTurma implements DAO<Turma> {
 
+    private static DAO<Turma> instance = new DAOTurma();
+    private List<Observador> observadores = new ArrayList<>();   
+    private Connection con;
+    
+    public static DAO<Turma> getInstance() {
+        return instance;
+    }
+    
+    private DAOTurma() {     
+        
+    }
+    
     @Override
     public void add(Turma u) throws SQLException {
         open();
-        String query = Database.query("turma.insert");
+        String query = DatabaseUtil.query("turma.insert");
         
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
@@ -35,24 +47,26 @@ public class DAOTurma implements DAO<Turma> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("turma.delete");
+        String query = DatabaseUtil.query("turma.delete");
         
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void update(Turma u) throws SQLException {
         open();
-        String query = Database.query("turma.update");
+        String query = DatabaseUtil.query("turma.update");
         
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
@@ -68,13 +82,14 @@ public class DAOTurma implements DAO<Turma> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public List<Turma> get() throws SQLException {
         open();
         List<Turma> turmas = new ArrayList<>();
-        String query = Database.query("turma.select");
+        String query = DatabaseUtil.query("turma.select");
         
         try(PreparedStatement ps = con.prepareStatement(query) ) {
             ResultSet rs = ps.executeQuery();
@@ -104,7 +119,7 @@ public class DAOTurma implements DAO<Turma> {
     public Turma get(Serializable id) throws SQLException {
         open();
         Turma t = new Turma();
-        String query = Database.query("turma.get");
+        String query = DatabaseUtil.query("turma.get");
         
         try(PreparedStatement ps = con.prepareStatement(query) ) {
             ps.setInt(1, (Integer) id);
@@ -135,7 +150,7 @@ public class DAOTurma implements DAO<Turma> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
     }
     
     @Override
@@ -154,7 +169,5 @@ public class DAOTurma implements DAO<Turma> {
             o.update();
     }
     
-    private List<Observador> observadores = new ArrayList<>();
     
-    private Connection con;
 }

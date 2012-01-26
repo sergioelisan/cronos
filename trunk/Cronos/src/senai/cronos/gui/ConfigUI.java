@@ -17,7 +17,7 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.events.LinkEffectHandler;
-import senai.cronos.util.Feriado;
+import senai.cronos.util.calendario.Feriado;
 
 /**
  *
@@ -73,18 +73,20 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void loadFeriados() {
         try {
-            DefaultListModel lm = (DefaultListModel<Feriado>)listFeriados.getModel();
-            lm.clear();
+            ((DefaultListModel<Feriado>)listFeriados.getModel()).clear();
+            
             
             // logica de carregamento de feriados
             List<Feriado> feriados = Fachada.<Feriado>get(Feriado.class);
             Collections.sort(feriados);
 
+            DefaultListModel<Feriado> lm = new DefaultListModel<>();
             for (Feriado feriado : feriados) {
                 lm.addElement(feriado);
             }
-
+            
             listFeriados.setModel(lm);
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao carregar os feriados\n" + ex);
             ex.printStackTrace(System.err);
@@ -126,18 +128,19 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void loadNucleos() {
         try {
-            DefaultListModel lm = (DefaultListModel<Nucleo>)listaNucleos.getModel();
-            lm.clear();
-            
+            ((DefaultListModel<Nucleo>)listaNucleos.getModel()).clear();
+                        
             // logica de carregamento de feriados
             List<Nucleo> nucleos = Fachada.<Nucleo>get(Nucleo.class);
             Collections.sort(nucleos);
 
+            DefaultListModel<Nucleo> lm = new DefaultListModel<>();
             for (Nucleo nucleo : nucleos) {
                 lm.addElement(nucleo);
             }
 
             listaNucleos.setModel(lm);
+            
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao carregar os nucleos nas configuracoes\n" + ex);
             ex.printStackTrace(System.err);
