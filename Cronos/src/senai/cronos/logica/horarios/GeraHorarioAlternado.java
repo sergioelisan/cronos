@@ -8,7 +8,7 @@ import java.util.Map;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.*;
 import senai.cronos.logica.validacoes.ValidaAptidao;
-import senai.cronos.util.DateUtil;
+import senai.cronos.util.calendario.DateUtil;
 import senai.cronos.util.Tupla; 
 
 /**

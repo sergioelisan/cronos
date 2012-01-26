@@ -3,8 +3,10 @@ package senai.cronos.logica;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 
@@ -22,7 +24,12 @@ public final class Turmas implements Observador, Repository<Turma> {
     }
 
     private Turmas() {
-        update();
+        try {            
+            DAOFactory.getDao(Turma.class).registra(this);
+            update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Turmas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -59,9 +66,9 @@ public final class Turmas implements Observador, Repository<Turma> {
     @Override
     public void update() {
         try {
-            turmas = new DAOTurma().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            turmas = DAOFactory.getDao(Turma.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 

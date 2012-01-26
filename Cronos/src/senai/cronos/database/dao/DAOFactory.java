@@ -1,9 +1,8 @@
-package senai.cronos.database;
+package senai.cronos.database.dao;
 
 import java.sql.SQLException;
-import senai.cronos.database.dao.*;
 import senai.cronos.entidades.*;
-import senai.cronos.util.Feriado;
+import senai.cronos.util.calendario.Feriado;
 
 /**
  *
@@ -24,28 +23,28 @@ public class DAOFactory {
     public static DAO getDao(Class c) throws ClassNotFoundException, SQLException {
         
         if (c.equals(Docente.class)) {
-            return new DAODocente();
+            return DAODocente.getInstance();
             
         } else if (c.equals(Horario.class)) {
-            return new DAOHorario();
+            return DAOHorario.getInstance();
             
         } else if (c.equals(Laboratorio.class)) {
-            return new DAOLaboratorio();
+            return DAOLaboratorio.getInstance();
             
         } else if (c.equals(Nucleo.class)) {
-            return new DAONucleo();
+            return DAONucleo.getInstance();
             
         } else if (c.equals(Turma.class)) {
-            return new DAOTurma();
+            return DAOTurma.getInstance();
             
         } else if (c.equals(UnidadeCurricular.class)) {
-            return new DAOUnidadeCurricular();
+            return DAOUnidadeCurricular.getInstance();
             
         } else if (c.equals(Feriado.class)) {
-            return new DAOFeriado();
+            return DAOFeriado.getInstance();
             
         } else
-            return null;
+            throw new IllegalArgumentException("DAO Inexistente para a classe: " + c.getName() );
     }
     
 }

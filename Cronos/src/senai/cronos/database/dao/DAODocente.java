@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import senai.cronos.Fachada;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
+import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
@@ -21,19 +21,28 @@ import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
-import senai.cronos.util.Contador;
+import senai.cronos.util.debug.Contador;
 import senai.cronos.util.Tupla;
 
 /**
  *
- * @author Sergio Lisan
+ * @author Sergio Lisan e Carlos Melo
  */
 public class DAODocente implements DAO<Docente> {
 
+    private static DAO<Docente> instance = new DAODocente();
+    
+    public static DAO<Docente> getInstance() {
+        return instance;
+    }
+    
+    private DAODocente() {        
+    }
+    
     @Override
     public void add(Docente u) throws SQLException {
         open();
-        String query = Database.query("docente.insert");
+        String query = DatabaseUtil.query("docente.insert");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, u.getMatricula());
@@ -52,12 +61,13 @@ public class DAODocente implements DAO<Docente> {
         this.addOcupacao(u);
         
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("docente.delete");
+        String query = DatabaseUtil.query("docente.delete");
 
         removeOcupacao((Integer) id);
         removeProficiencia((Integer) id);
@@ -68,13 +78,14 @@ public class DAODocente implements DAO<Docente> {
         }
         
         close();
+        notifica();
     }
 
     @Override
     public void update(Docente u) throws SQLException {
         open();
         
-        String query = Database.query("docente.update");
+        String query = DatabaseUtil.query("docente.update");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
@@ -93,6 +104,7 @@ public class DAODocente implements DAO<Docente> {
         this.updateProficiencia(u);
         
         close();
+        notifica();
     }
 
     @Override
@@ -100,7 +112,7 @@ public class DAODocente implements DAO<Docente> {
         open();
         
         List<Docente> docentes = new LinkedList<>();
-        String query = Database.query("docente.select");
+        String query = DatabaseUtil.query("docente.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
@@ -132,7 +144,7 @@ public class DAODocente implements DAO<Docente> {
     public Docente get(Serializable id) throws SQLException {
         open();
         Docente docente = new Docente();
-        String query = Database.query("docente.get");
+        String query = DatabaseUtil.query("docente.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -163,7 +175,7 @@ public class DAODocente implements DAO<Docente> {
      * @param u 
      */
     private void addOcupacao(Docente u) throws SQLException {
-        String query = Database.query("docente.ocupacao.insert");
+        String query = DatabaseUtil.query("docente.ocupacao.insert");
 
         for (Date dia : u.getOcupacao().keySet()) {
             Map<Turno, Tupla<Aula, Aula>> ocupacao = u.getOcupacao().get(dia);
@@ -192,7 +204,7 @@ public class DAODocente implements DAO<Docente> {
      * @throws SQLException 
      */
     private void updateOcupacao(Docente u) throws SQLException {
-        String query = Database.query("docente.ocupacao.update");
+        String query = DatabaseUtil.query("docente.ocupacao.update");
 
         for (Date dia : u.getOcupacao().keySet()) {
             Map<Turno, Tupla<Aula, Aula>> ocupacao = u.getOcupacao().get(dia);
@@ -226,7 +238,7 @@ public class DAODocente implements DAO<Docente> {
     private Map<Date, Map<Turno, Tupla<Aula, Aula>>> listOcupacao(Docente dc)
             throws SQLException, ClassNotFoundException {
         Map<Date, Map<Turno, Tupla<Aula, Aula>>> ocupacao = new HashMap<>();
-        String query = Database.query("docente.ocupacao.select");
+        String query = DatabaseUtil.query("docente.ocupacao.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, dc.getMatricula());
@@ -261,7 +273,7 @@ public class DAODocente implements DAO<Docente> {
      * @throws SQLException 
      */
     private void removeOcupacao(Integer matricula) throws SQLException {
-        String query = Database.query("docente.ocupacao.delete");
+        String query = DatabaseUtil.query("docente.ocupacao.delete");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, matricula);
@@ -275,7 +287,7 @@ public class DAODocente implements DAO<Docente> {
      * @param d 
      */
     private void addProficiencia(Docente d) throws SQLException {
-        String query = Database.query("docente.proficiencia.insert");
+        String query = DatabaseUtil.query("docente.proficiencia.insert");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             for (Proficiencia p : d.getProficiencias()) {
@@ -294,7 +306,7 @@ public class DAODocente implements DAO<Docente> {
      * @param d 
      */
     private void updateProficiencia(Docente d) throws SQLException {
-        String query = Database.query("docente.proficiencia.update");
+        String query = DatabaseUtil.query("docente.proficiencia.update");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             for (Proficiencia p : d.getProficiencias()) {
@@ -318,7 +330,7 @@ public class DAODocente implements DAO<Docente> {
      */
     private List<Proficiencia> listProficiencia(Docente dc) throws SQLException {
         List<Proficiencia> profs = new ArrayList<>();
-        String query = Database.query("docente.proficiencia.select");
+        String query = DatabaseUtil.query("docente.proficiencia.select");
         
         try(PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, dc.getMatricula() );  
@@ -344,7 +356,7 @@ public class DAODocente implements DAO<Docente> {
      * @throws SQLException 
      */
     private void removeProficiencia(Integer matricula) throws SQLException {
-        String query = Database.query("docente.proficiencia.delete");
+        String query = DatabaseUtil.query("docente.proficiencia.delete");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, matricula);
@@ -361,7 +373,7 @@ public class DAODocente implements DAO<Docente> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
         Contador.docentes++;
     }
     

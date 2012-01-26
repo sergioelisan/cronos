@@ -131,8 +131,8 @@ public class Preferencias {
      */
     private void save() {
         try {
-            horariosProperties.store(getOutput(horarioURL), "");            
-            calendarioProperties.store(getOutput(calendarioURL), "");
+            horariosProperties.store(getOutput(horarioURL), "horarios");            
+            calendarioProperties.store(getOutput(calendarioURL), "calendario");
             
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao ler o arquivo de configuracoes:\n" + ex);

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import senai.cronos.database.DAOFactory;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.database.dao.DAO;
 import senai.cronos.entidades.*;
 import senai.cronos.logica.Disciplinas;

@@ -9,42 +9,53 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
-import senai.cronos.util.Contador;
+import senai.cronos.database.DatabaseUtil;
+import senai.cronos.util.debug.Contador;
 
 /**
  *
- * @author Sergio Lisan
+ * @author Sergio Lisan e Carlos Melo
  */
 public class DAOLaboratorio implements DAO<Laboratorio> {
 
+    private static DAO<Laboratorio> instance = new DAOLaboratorio();
+    
+    public static DAO<Laboratorio> getInstance() {
+        return instance;
+    }
+    
+    private DAOLaboratorio() {        
+    }
+    
     @Override
     public void add(Laboratorio u) throws SQLException {
         open();
-        String query = Database.query("laboratorio.insert");
+        String query = DatabaseUtil.query("laboratorio.insert");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setString(2, u.getDescricao());
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("laboratorio.delete");
+        String query = DatabaseUtil.query("laboratorio.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void update(Laboratorio u) throws SQLException {
         open();
-        String query = Database.query("laboratorio.update");
+        String query = DatabaseUtil.query("laboratorio.update");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setString(2, u.getDescricao());
@@ -52,13 +63,14 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public List<Laboratorio> get() throws SQLException {
         open();
         List<Laboratorio> laboratorios = new ArrayList<>();
-        String query = Database.query("laboratorio.select");
+        String query = DatabaseUtil.query("laboratorio.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.execute();
@@ -85,7 +97,7 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
         open();
         Laboratorio lb = new Laboratorio();
 
-        String query = Database.query("laboratorio.get");
+        String query = DatabaseUtil.query("laboratorio.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -113,7 +125,7 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
         Contador.laboratorios++;
     }
     

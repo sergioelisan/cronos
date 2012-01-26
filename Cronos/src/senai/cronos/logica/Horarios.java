@@ -6,8 +6,10 @@ package senai.cronos.logica;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAOHorario;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 
@@ -26,15 +28,20 @@ public class Horarios implements Observador, Repository<Horario> {
     }
     
     private Horarios() {
-        update();
+        try {
+            DAOFactory.getDao(Horario.class).registra(this);
+            update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Horarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void update() {
         try {
-            horarios = new DAOHorario().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            horarios = DAOFactory.getDao(Horario.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 

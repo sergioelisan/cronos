@@ -9,19 +9,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
-import senai.cronos.util.Feriado;
+import senai.cronos.database.DatabaseUtil;
+import senai.cronos.util.calendario.Feriado;
 
 /**
  *
- * @author Sergio Lisan
+ * @author Sergio Lisan e Carlos Melo
  */
 public class DAOFeriado implements DAO<Feriado>{
 
+    private static DAO<Feriado> instance = new DAOFeriado();
+    
+    public static DAO<Feriado> getInstance() {
+        return instance;
+    }
+    
+    private DAOFeriado() {        
+    }
+    
     @Override
     public void add(Feriado u) throws SQLException {
         open();
-        String query = Database.query("feriados.insert");
+        String query = DatabaseUtil.query("feriados.insert");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setDate(1, new java.sql.Date( u.getDia().getTime() ) );
@@ -30,18 +39,20 @@ public class DAOFeriado implements DAO<Feriado>{
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("feriados.delete");
+        String query = DatabaseUtil.query("feriados.delete");
         
         try(PreparedStatement ps = con.prepareStatement(query)) {
             ps.setDate(1, new java.sql.Date( ((Date)id).getTime() ) );
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
@@ -55,7 +66,7 @@ public class DAOFeriado implements DAO<Feriado>{
     public Feriado get(Serializable id) throws SQLException {
         open();
         Feriado feriados = new Feriado();                
-        String query = Database.query("feriados.get");
+        String query = DatabaseUtil.query("feriados.get");
         
         try(PreparedStatement ps = con.prepareStatement(query)) {
             ps.setDate(1, new java.sql.Date( ((Date)id).getTime() ) );
@@ -74,7 +85,7 @@ public class DAOFeriado implements DAO<Feriado>{
     public List<Feriado> get() throws SQLException {
         open();
         List<Feriado> feriados = new ArrayList<>();                
-        String query = Database.query("feriados.select");
+        String query = DatabaseUtil.query("feriados.select");
         
         try(PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
@@ -98,7 +109,7 @@ public class DAOFeriado implements DAO<Feriado>{
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
     }
     
     @Override

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.Fachada;
 import senai.cronos.util.Observador;
-import senai.cronos.database.Database;
+import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Contador;
+import senai.cronos.util.debug.Contador;
 
 /**
  *
@@ -21,10 +21,19 @@ import senai.cronos.util.Contador;
  */
 public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
 
+    private static DAO<UnidadeCurricular> instance = new DAOUnidadeCurricular();
+    
+    public static DAO<UnidadeCurricular> getInstance() {
+        return instance;
+    }
+    
+    private DAOUnidadeCurricular() {        
+    }
+    
     @Override
     public void add(UnidadeCurricular u) throws SQLException {
         open();
-        String query = Database.query("disciplina.insert");
+        String query = DatabaseUtil.query("disciplina.insert");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
@@ -35,23 +44,25 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = Database.query("disciplina.delete");
+        String query = DatabaseUtil.query("disciplina.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public void update(UnidadeCurricular u) throws SQLException {
         open();
-        String query = Database.query("disciplina.update");
+        String query = DatabaseUtil.query("disciplina.update");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
@@ -64,13 +75,14 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
             ps.execute();
         }
         close();
+        notifica();
     }
 
     @Override
     public List<UnidadeCurricular> get() throws SQLException {
         open();
         List<UnidadeCurricular> disciplinas = new ArrayList<>();
-        String query = Database.query("disciplina.select");
+        String query = DatabaseUtil.query("disciplina.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
@@ -99,7 +111,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
     public UnidadeCurricular get(Serializable id) throws SQLException {
         open();
         UnidadeCurricular uc = new UnidadeCurricular();
-        String query = Database.query("disciplina.get");
+        String query = DatabaseUtil.query("disciplina.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -129,7 +141,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
 
     @Override
     public void open() throws SQLException {
-        con = Database.conexao();
+        con = DatabaseUtil.conexao();
         Contador.disciplinas++;
     }
     

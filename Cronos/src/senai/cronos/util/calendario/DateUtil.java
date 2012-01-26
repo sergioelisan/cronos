@@ -1,4 +1,4 @@
-package senai.cronos.util;
+package senai.cronos.util.calendario;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

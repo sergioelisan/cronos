@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
  *
  * @author Sergio Lisan
  */
-public class Database {
+public class DatabaseUtil {
 
     public static String query(String key) {
         ResourceBundle rb = ResourceBundle.getBundle("senai/cronos/properties/queries");

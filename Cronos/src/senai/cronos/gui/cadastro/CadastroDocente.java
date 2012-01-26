@@ -111,7 +111,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                     DateFormat fmt = DateFormat.getDateInstance();
                     dc.setContratacao(fmt.parse(txtcontratacao.getText().trim()));
 
-                    dc.setFormacao(Formacao.valueOf((String) comboformacao.getSelectedItem()));
+                    dc.setFormacao(Formacao.valueOf( ((String) comboformacao.getSelectedItem()).toUpperCase() ) );
                     dc.setNome(txtnome.getText().trim());
 
                     if (comboturnos.getSelectedIndex() == 1) {

@@ -2,8 +2,10 @@ package senai.cronos.logica;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.util.Observador;
-import senai.cronos.database.dao.DAOLaboratorio;
 import senai.cronos.entidades.Laboratorio;
 
 /**
@@ -21,15 +23,20 @@ public class Laboratorios implements Observador, Repository<Laboratorio> {
     }
     
     private Laboratorios() {
-        update();
+        try {
+            DAOFactory.getDao(Laboratorio.class).registra(this);
+            update();            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Laboratorios.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void update() {
         try {
-            laboratorios = new DAOLaboratorio().get();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            laboratorios = DAOFactory.getDao(Laboratorio.class).get();
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace(System.err);
         }
     }
 
