@@ -26,7 +26,7 @@ public interface OperatingSystem {
     
     // Sistemas operacionais suportados
     final String WINDOWS = "Microsoft Windows";
-    final String MacOSX = "Apple MacOS X";
-    final String UNIX = "Unix";
-    final String LINUX = "Linux";
+    final String MacOSX  = "Apple MacOS X";
+    final String UNIX    = "Unix";
+    final String LINUX   = "Linux";
 }
