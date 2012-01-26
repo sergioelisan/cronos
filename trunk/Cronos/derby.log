@@ -1,12 +1,12 @@
-Wed Jan 25 12:03:41 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Wed Jan 25 21:44:39 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Wed Jan 25 12:03:41 GMT-03:00 2012:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0135-1564-c87d-ffffdd04a47a 
-on database directory C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos  with class loader sun.misc.Launcher$AppClassLoader@1050169 
-Loaded from file:/C:/Users/user/Documents/NetBeansProjects/trunk/Cronos/lib/derby.jar
+Wed Jan 25 21:44:40 GMT-03:00 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0135-1778-af9c-ffff84f9e403 
+on database directory C:\Users\Carlos Melo\Documents\pastas na nuvem\projeto-google\trunk\Cronos\cronos  with class loader sun.misc.Launcher$AppClassLoader@19fcc69 
+Loaded from file:/C:/Users/Carlos%20Melo/Documents/pastas%20na%20nuvem/projeto-google/trunk/Cronos/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0-b147
-user.dir=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos
-derby.system.home=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\
+user.dir=C:\Users\Carlos Melo\Documents\pastas na nuvem\projeto-google\trunk\Cronos
+derby.system.home=C:\Users\Carlos Melo\Documents\pastas na nuvem\projeto-google\trunk\Cronos
 Database Class Loader started - derby.database.classpath=''
-Wed Jan 25 12:16:35 GMT-03:00 2012 : Servidor de Rede Apache Derby - encerramento de 10.8.1.2 - (1095077) em {2}
+Wed Jan 25 21:44:43 GMT-03:00 2012 : Servidor de Rede Apache Derby - encerramento de 10.8.1.2 - (1095077) em {2}

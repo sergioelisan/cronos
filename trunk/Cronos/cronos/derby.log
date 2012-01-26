@@ -1,31 +1,11 @@
-Wed Jan 25 11:58:16 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Wed Jan 25 21:41:26 GMT-03:00 2012 : Apache Derby Servidor de Rede - 10.8.1.2 - (1095077) iniciado e pronto para aceitar conexÃµes na porta 1527 em {3}
 ----------------------------------------------------------------
-Wed Jan 25 11:58:16 GMT-03:00 2012:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instância a816c00e-0135-155f-d56a-ffffaab1e694
-no diretório de banco de dados C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos\cronos  
-
+Wed Jan 25 21:41:26 GMT-03:00 2012:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0135-1775-bb37-00002602a480 
+on database directory C:\Users\Carlos Melo\Documents\pastas na nuvem\projeto-google\trunk\Cronos\cronos\cronos  with class loader sun.misc.Launcher$AppClassLoader@1050169 
+Loaded from file:/C:/Users/Carlos%20Melo/Documents/pastas%20na%20nuvem/projeto-google/trunk/Cronos/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0-b147
-user.dir=C:\Program Files (x86)\Java\jdk1.7.0\db
-derby.system.home=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos
-Carregador de classe do banco de dados iniciado - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Jan 25 11:58:18 GMT-03:00 2012:
-Encerrando a instância a816c00e-0135-155f-d56a-ffffaab1e694
-Wed Jan 25 11:58:18 GMT-03:00 2012 Thread[DRDAConnThread_3,5,main] (DATABASE = cronos), (DRDAID = {2}), Banco de dados 'cronos' fechado.
-----------------------------------------------------------------
-Wed Jan 25 11:58:28 GMT-03:00 2012:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instância 23ce809c-0135-155f-d56a-ffffaab1e694
-no diretório de banco de dados C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos\cronos  
-
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0-b147
-user.dir=C:\Program Files (x86)\Java\jdk1.7.0\db
-derby.system.home=C:\Users\user\Documents\NetBeansProjects\trunk\Cronos\cronos
-Carregador de classe do banco de dados iniciado - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Jan 25 11:58:52 GMT-03:00 2012: Shutting down Derby engine
-----------------------------------------------------------------
-Wed Jan 25 11:58:52 GMT-03:00 2012:
-Encerrando a instância 23ce809c-0135-155f-d56a-ffffaab1e694
-----------------------------------------------------------------
+user.dir=C:\Users\Carlos Melo\Documents\pastas na nuvem\projeto-google\trunk\Cronos
+derby.system.home=.\Cronos
+Database Class Loader started - derby.database.classpath=''

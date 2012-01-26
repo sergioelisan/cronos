@@ -24,7 +24,8 @@ public class Main {
         Main m = new Main();
 
         try {
-            String location = System.getProperty("user.dir") + System.getProperty("file.separator");
+            String location = System.getProperty("user.home")+"\\Documents\\banco";
+            System.out.println(location);
             System.setProperty("derby.system.home", location);
             NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
             networkServer.start(new PrintWriter(System.out));
