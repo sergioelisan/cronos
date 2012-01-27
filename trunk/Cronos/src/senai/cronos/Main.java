@@ -1,5 +1,10 @@
 package senai.cronos;
 
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JDialog;
+import java.io.File;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -12,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import senai.cronos.gui.CronosFrame;
+import senai.cronos.gui.Update;
 import senai.cronos.util.calendario.Calendario;
 import senai.cronos.util.calendario.Feriado;
 
@@ -20,7 +26,7 @@ import org.apache.derby.impl.drda.NetworkServerControlImpl;
 import senai.cronos.util.debug.Debug;
 import senai.cronos.util.os.OSFactory;
 import senai.cronos.util.os.OperatingSystem;
-
+import senai.cronos.util.os.UpdateCronos;
 import static senai.cronos.util.debug.Debug.*;
 
 /**
@@ -29,13 +35,20 @@ import static senai.cronos.util.debug.Debug.*;
  */
 public class Main {
 
+ 
+ 
     /**
      * Gênesis do sistema... aqui é onde tudo começa.
      */
-    public static void main(String[] args) {
-        Main m = new Main();
-        m.init();        
+    public static void main(String[] args) throws InterruptedException {
+        final Main m = new Main();
+    
+        m.init(); 
+        
+         
     }
+
+ 
 
     /**
      * Metodo que carrega o sistema, começando pela base de dados, as
@@ -73,7 +86,9 @@ public class Main {
      */
     private void loadDatabase() throws Exception {
         OperatingSystem os = OSFactory.getOperatingSystem();
+        UpdateCronos update=new UpdateCronos();
         
+       
         String path = "";
         String key  = "";
         String dir  = "";
@@ -93,7 +108,12 @@ public class Main {
         
         String location = os.readRegistry(path, key) + dir;
          println("Local do Banco: " + location );
-        System.setProperty("derby.system.home", location);
+          
+        println(System.getProperty("user.dir"));
+          File f=update.gravaArquivoDeURL("http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe",System.getProperty("user.dir"));  
+       
+        
+          System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
         networkServer.start(new PrintWriter(System.out));
         
