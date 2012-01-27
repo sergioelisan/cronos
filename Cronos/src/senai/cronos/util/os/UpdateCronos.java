@@ -5,9 +5,12 @@
 package senai.cronos.util.os;
 
 import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,7 +20,7 @@ import javax.swing.SwingUtilities;
 import senai.cronos.Main;
 import senai.cronos.Splash;
 import senai.cronos.gui.Update;
-
+import java.net.HttpURLConnection;
 /**
  *
  * @author Carlos Melo
@@ -25,9 +28,22 @@ import senai.cronos.gui.Update;
 public class UpdateCronos {
     int baixado;
 Update u=new Update();
-    public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {  
-    try {  
-final Main m=new Main();
+  final Main m=new Main(); 
+public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {  
+    URL url = null;
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+   String[] path=url.getPath().split("-");
+    String[] versao=path[2].split(".exe");
+    System.out.println("versão:"+versao[0]+"------");
+    if(Integer.parseInt(versao[0])>m.getVersion()){
+    try { 
+        
+
+
     JDialog dia=new JDialog();
     dia.setBounds(400, 300, 450,250 );
     dia.setContentPane(u);
@@ -36,9 +52,13 @@ final Main m=new Main();
     JButton b=new JButton();
     JProgressBar dpb = new JProgressBar(0, 100);
     dia.add(BorderLayout.CENTER, dpb);
-    URL url = new URL(stringUrl); 
+    
+   
+    System.out.print(url.getPath());
+    
     System.out.print("baixando|=");
     String nomeArquivoLocal = "\\update.exe";  
+    
     InputStream is = url.openStream(); 
     int i=0;
         FileOutputStream fos = new FileOutputStream(pathLocal+"\\"+nomeArquivoLocal);  
@@ -63,29 +83,28 @@ final Main m=new Main();
         is.close();  
         fos.close(); 
         
-        System.out.println("download, ok!!!");
+        System.out.println(">download, ok!!!");
         u.setVisible(false);
-      
+      dia.dispose();
         return new File(pathLocal+nomeArquivoLocal);
         
           
     } catch (Exception e) {  
       
         e.printStackTrace();  
-    }  
-         
+    } 
+    }else{
+        
+        
+    }
+        
     return null;  
 }
+
+
 
     public UpdateCronos() {
         this.baixado=0;
     }
-
-  
-
-    public int getBaixado() {
-        return baixado;
-    }
-
     
 }

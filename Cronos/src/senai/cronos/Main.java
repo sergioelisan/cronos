@@ -1,9 +1,6 @@
 package senai.cronos;
 
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JDialog;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -34,9 +31,11 @@ import static senai.cronos.util.debug.Debug.*;
  * @author sergio lisan e carlos melo
  */
 public class Main {
+final static int version=11;
 
- 
- 
+    public static int getVersion() {
+        return version;
+    }
     /**
      * Gênesis do sistema... aqui é onde tudo começa.
      */
