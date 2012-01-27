@@ -12,7 +12,7 @@ public class Windows implements OperatingSystem {
     @Override
     public String readRegistry(String location, String key) {
         try {
-            // Run reg query, then read output with StreamReader (internal class)
+          
             Process process = Runtime.getRuntime().exec("reg query "
                     + '"' + location + "\" /v " + key);
 
@@ -29,17 +29,14 @@ public class Windows implements OperatingSystem {
 
             String output = sw.toString();
 
-            // Output has the following format:
-            // \n<Version information>\n\n<key>    <registry type>    <value>\r\n\r\n
+          
             int i = output.indexOf("REG_SZ");
             if (i == -1) {
                 return null;
             }
 
             sw = new StringBuilder();
-            i += 6; // skip REG_SZ
-
-            // skip spaces or tabs
+            i += 6; 
             for (;;) {
                 if (i > output.length()) {
                     break;
@@ -51,7 +48,7 @@ public class Windows implements OperatingSystem {
                 ++i;
             }
 
-            // take everything until end of line
+           
             for (;;) {
                 if (i > output.length()) {
                     break;

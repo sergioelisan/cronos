@@ -92,12 +92,13 @@ public class Main {
         }
         
         String location = os.readRegistry(path, key) + dir;
-        
+         println("Local do Banco: " + location );
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
         networkServer.start(new PrintWriter(System.out));
         
         println("Sistema Operacional: " + os.getName() );
+        
         println("Conectado ao banco de dados.");
     }
 
