@@ -46,16 +46,14 @@ public class Splash extends JWindow {
      *
      * @param progressStage
      */
-    public void upBar(String mensagem) {
+    public void upBar() {
         progressBar.setValue(progressStage++);
-        progressBar.setString(mensagem);
     }
 
     /**
      * Inicia a aplicação
      */
     public void start() {
-        upBar("Iniciando aplicação");
         setVisible(true);
     }
 
@@ -85,14 +83,14 @@ public class Splash extends JWindow {
     private void createProgressBar() {
         progressBar = new JProgressBar();
         int width = (int) (dim.width * 0.50);
-        int height = (int) (dim.height * 0.07);
+        int height = (int) (dim.height * 0.02);
         int x = (int) (dim.width - width) / 2;
-        int y = (int) (dim.height * 0.60);
+        int y = (int) (dim.height * 0.65);
 
         progressBar.setForeground(Color.decode("0x0BA4E8"));
         progressBar.setBackground(Color.white);
+        progressBar.setBorder(null);
         progressBar.setBounds(x, y, width, height);
-        progressBar.setStringPainted(true);
         progressBar.setMinimum(0);
         progressBar.setMaximum(MAX);
     }
