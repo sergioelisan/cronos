@@ -46,6 +46,7 @@ public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {
 
     JDialog dia=new JDialog();
     dia.setBounds(400, 300, 450,250 );
+    
     dia.setContentPane(u);
     dia.setVisible(true);
     dia.toFront();
