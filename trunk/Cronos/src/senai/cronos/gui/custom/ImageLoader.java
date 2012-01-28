@@ -20,7 +20,7 @@ public class ImageLoader {
     
     public static Image loadSplash() {
         Toolkit kit = Toolkit.getDefaultToolkit();
-        ImageIcon imagem = new ImageIcon(kit.getClass().getResource("/senai/cronos/gui/images/splahs.png"));
+        ImageIcon imagem = new ImageIcon(kit.getClass().getResource("/senai/cronos/gui/images/Splash.png"));
         return imagem.getImage();
     }
 }
