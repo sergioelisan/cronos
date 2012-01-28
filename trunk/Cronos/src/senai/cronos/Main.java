@@ -54,13 +54,13 @@ public class Main {
             Splash s = Splash.getInstance();
             s.start();
             
-            s.upBar("carregando base de dados");
+            s.upBar();
             loadDatabase();
             
-            s.upBar("carregando preferencias");
+            s.upBar();
             loadPreferences();
             
-            s.upBar("iniciando");
+            s.upBar();
             loadUI();
             
             s.stop();
