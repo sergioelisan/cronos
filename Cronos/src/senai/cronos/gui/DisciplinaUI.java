@@ -41,8 +41,6 @@ public class DisciplinaUI extends javax.swing.JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponents(g);
-        
         Image wallpaper = ImageLoader.loadBackground();
         if (wallpaper != null) {
             g.drawImage(wallpaper, 0, 0, null);

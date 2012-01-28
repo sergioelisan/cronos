@@ -28,6 +28,7 @@ public class CronosFrame extends javax.swing.JFrame {
 
         // chama a funcao de saida do banco
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent we) {
                 Fachada.quit();
             }
