@@ -18,7 +18,7 @@ public class OSFactory {
                 return new Windows();
 
             case OperatingSystem.LINUX:
-                return new Windows();
+                return new Linux();
 
             case OperatingSystem.MacOSX:
                 return new MacOSX();
