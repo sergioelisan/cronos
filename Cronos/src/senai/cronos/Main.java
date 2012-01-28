@@ -51,9 +51,19 @@ public class Main {
      */
     public void init() {
         try {
+            Splash s = Splash.getInstance();
+            s.start();
+            
+            s.upBar("carregando base de dados");
             loadDatabase();
+            
+            s.upBar("carregando preferencias");
             loadPreferences();
+            
+            s.upBar("iniciando");
             loadUI();
+            
+            s.stop();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "FAIL! Problemas ao iniciar o sistema:\n\n" + ex.getMessage());
         }
@@ -83,7 +93,7 @@ public class Main {
      */
     private void loadDatabase() throws Exception {
         OperatingSystem os = OSFactory.getOperatingSystem();
-        // UpdateCronos update = new UpdateCronos();
+        UpdateCronos update = new UpdateCronos();
 
         String path = "";
         String key = "";
@@ -113,7 +123,7 @@ public class Main {
         String location = os.readRegistry(path, key) + dir;
         println(location);
         
-        // File f = update.gravaArquivoDeURL("http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe", System.getProperty("user.dir"));
+        File f = update.gravaArquivoDeURL("http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe", System.getProperty("user.dir"));
 
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
