@@ -29,20 +29,12 @@ public class UpdateCronos {
     int baixado;
 Update u=new Update();
   final Main m=new Main(); 
-public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {  
-    URL url = null;
-        try {
-            url = new URL(stringUrl);
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        }
-   String[] path=url.getPath().split("-");
-    String[] versao=path[2].split(".exe");
-    System.out.println("versão:"+versao[0]+"------");
-    if(Integer.parseInt(versao[0])>m.getVersion()){
+public  File gravaArquivoDeURL(URL url,String pathLocal, String verAntes,String verDepois) {  
+    
+   
     try { 
         
-
+ String nomeArquivoLocal = "\\update.exe";  
 
     JDialog dia=new JDialog();
     dia.setBounds(400, 300, 450,250 );
@@ -53,12 +45,10 @@ public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {
     JButton b=new JButton();
     JProgressBar dpb = new JProgressBar(0, 100);
     dia.add(BorderLayout.CENTER, dpb);
-    
-   
-    System.out.print(url.getPath());
-    
+     
+    u.setAtualiza("Atualizando da versão "+verAntes+" para "+verDepois);
     System.out.print("baixando|=");
-    String nomeArquivoLocal = "\\update.exe";  
+    
     
     InputStream is = url.openStream(); 
     int i=0;
@@ -87,19 +77,21 @@ public  File gravaArquivoDeURL(String stringUrl, String pathLocal) {
         System.out.println(">download, ok!!!");
         u.setVisible(false);
       dia.dispose();
+        
         return new File(pathLocal+nomeArquivoLocal);
+        
+        
+                
         
           
     } catch (Exception e) {  
       
         e.printStackTrace();  
     } 
-    }else{
-        
-        
-    }
-        
-    return null;  
+     
+    
+      
+  return null;    
 }
 
 

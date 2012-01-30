@@ -2,6 +2,7 @@ package senai.cronos;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -24,14 +25,14 @@ import senai.cronos.util.os.OSFactory;
 import senai.cronos.util.os.OperatingSystem;
 import senai.cronos.util.os.UpdateCronos;
 import static senai.cronos.util.debug.Debug.*;
-
+import java.net.URL;
 /**
  *
  * @author sergio lisan e carlos melo
  */
 public class Main {
 
-    public final static int version = 11;
+    public final static int version = 10;
 
     public static int getVersion() {
         return version;
@@ -122,8 +123,24 @@ public class Main {
 
         String location = os.readRegistry(path, key) + dir;
         println(location);
-        
-        File f = update.gravaArquivoDeURL("http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe", System.getProperty("user.dir"));
+        //Checando a versão do repositorio
+        URL url = null;
+        String stringUrl="http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe";
+       
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+   
+        String[] end=url.getPath().split("-");
+        String[] versao=end[2].split(".exe");
+        System.out.println("versão:"+versao[0]);
+         if(Integer.parseInt(versao[0])>version){
+             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao[0]);
+             Runtime.getRuntime().exec(System.getProperty("user.dir")+"\\update.exe");
+             System.exit(0);
+         }
 
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();

@@ -36,6 +36,14 @@ public class Update extends javax.swing.JPanel {
         progresso.setMinimum(100);
     }
 
+    public JLabel getAtualiza() {
+        return atualiza;
+    }
+
+    public void setAtualiza(String frase) {
+        this.atualiza.setText(frase);
+    }
+
     public void setjLabel1(String teste) {
         this.jLabel1.setText(teste);
     }
@@ -53,6 +61,7 @@ public class Update extends javax.swing.JPanel {
 
         jLayeredPane2 = new javax.swing.JLayeredPane();
         progresso = new javax.swing.JProgressBar();
+        atualiza = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
@@ -65,6 +74,10 @@ public class Update extends javax.swing.JPanel {
         progresso.setBounds(20, 90, 400, 40);
         jLayeredPane2.add(progresso, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        atualiza.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        atualiza.setBounds(20, 150, 390, 20);
+        jLayeredPane2.add(atualiza, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18));
         jLabel1.setText("Atualizando o Sistema");
         jLabel1.setBounds(20, 40, 350, 35);
@@ -72,7 +85,6 @@ public class Update extends javax.swing.JPanel {
 
         jLayeredPane1.setMaximumSize(new java.awt.Dimension(450, 250));
         jLayeredPane1.setMinimumSize(new java.awt.Dimension(450, 250));
-        jLayeredPane1.setPreferredSize(new java.awt.Dimension(450, 250));
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carlos Melo\\Desktop\\background.png")); // NOI18N
         jLabel2.setMaximumSize(new java.awt.Dimension(450, 250));
@@ -100,6 +112,7 @@ public class Update extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel atualiza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
