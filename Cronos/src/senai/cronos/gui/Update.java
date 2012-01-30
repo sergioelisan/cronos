@@ -44,8 +44,8 @@ public class Update extends javax.swing.JPanel {
         this.atualiza.setText(frase);
     }
 
-    public void setjLabel1(String teste) {
-        this.jLabel1.setText(teste);
+    public void setTitulo(String teste) {
+        this.titulo.setText(teste);
     }
     
    
@@ -62,7 +62,7 @@ public class Update extends javax.swing.JPanel {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         progresso = new javax.swing.JProgressBar();
         atualiza = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel2 = new javax.swing.JLabel();
 
@@ -74,14 +74,14 @@ public class Update extends javax.swing.JPanel {
         progresso.setBounds(20, 90, 400, 40);
         jLayeredPane2.add(progresso, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        atualiza.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        atualiza.setFont(new java.awt.Font("Segoe UI", 0, 14));
         atualiza.setBounds(20, 150, 390, 20);
         jLayeredPane2.add(atualiza, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        jLabel1.setText("Atualizando o Sistema");
-        jLabel1.setBounds(20, 40, 350, 35);
-        jLayeredPane2.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        titulo.setText("Atualizando o Sistema");
+        titulo.setBounds(20, 40, 350, 35);
+        jLayeredPane2.add(titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLayeredPane1.setMaximumSize(new java.awt.Dimension(450, 250));
         jLayeredPane1.setMinimumSize(new java.awt.Dimension(450, 250));
@@ -113,10 +113,10 @@ public class Update extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel atualiza;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JProgressBar progresso;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
