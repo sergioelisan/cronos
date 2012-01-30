@@ -12,6 +12,8 @@ package senai.cronos.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import javax.swing.JDialog;
+import senai.cronos.Main;
 import senai.cronos.gui.custom.ImageLoader;
 
 /**
@@ -146,6 +148,11 @@ public class HelpUI extends javax.swing.JPanel {
         jButton3.setMaximumSize(new java.awt.Dimension(93, 23));
         jButton3.setMinimumSize(new java.awt.Dimension(93, 23));
         jButton3.setPreferredSize(new java.awt.Dimension(93, 23));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -240,6 +247,20 @@ public class HelpUI extends javax.swing.JPanel {
     private void btconfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btconfigMouseClicked
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btconfigMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+Update u =new Update();
+Main m=new Main();
+JDialog dia=new JDialog();
+dia.setBounds(400, 300, 450,250 );
+    
+    dia.setContentPane(u);
+    dia.setVisible(true);
+    dia.toFront();
+    u.getProgresso().setVisible(false);
+    u.setTitulo("Sobre");
+u.setAtualiza("Versão do sistema:0."+String.valueOf(m.getVersion()));// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;

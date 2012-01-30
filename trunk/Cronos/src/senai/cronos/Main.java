@@ -36,9 +36,9 @@ import java.net.URLConnection;
  */
 public class Main {
 
-    public final static int version = 26;
+    public static int version = 26;
 
-    public static int getVersion() {
+    public int getVersion() {
         return version;
     }
 
