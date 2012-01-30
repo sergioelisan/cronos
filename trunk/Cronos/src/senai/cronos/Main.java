@@ -1,6 +1,9 @@
 package senai.cronos;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
@@ -26,13 +29,14 @@ import senai.cronos.util.os.OperatingSystem;
 import senai.cronos.util.os.UpdateCronos;
 import static senai.cronos.util.debug.Debug.*;
 import java.net.URL;
+import java.net.URLConnection;
 /**
  *
  * @author sergio lisan e carlos melo
  */
 public class Main {
 
-    public final static int version = 10;
+    public final static int version = 26;
 
     public static int getVersion() {
         return version;
@@ -132,12 +136,38 @@ public class Main {
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         }
+        String versao=null;
+        URL url1 = null;
+        String stringUrl1="http://code.google.com/p/senai-pe-cronos/downloads/list";
+
+        try {
+            url1 = new URL(stringUrl1);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+        InputStream is = url1.openStream();   
+InputStreamReader isr = new InputStreamReader(is);   
+BufferedReader br = new BufferedReader(isr);   
+  
+String linha = br.readLine();  
+  
+while (linha != null) { 
+    linha = br.readLine();  
    
-        String[] end=url.getPath().split("-");
-        String[] versao=end[2].split(".exe");
-        System.out.println("versão:"+versao[0]);
-         if(Integer.parseInt(versao[0])>version){
-             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao[0]);
+   if(linha.contains("/files/updateCronos-0-")){
+   String[] s=linha.split("-");
+   String[] v=s[4].split(".exe");
+   versao=v[0];
+   println("----"+versao);
+   //linha=null;
+  break;
+}   
+
+}
+      
+        System.out.println("versão:"+versao);
+         if(Integer.parseInt(versao)>version){
+             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao);
              Runtime.getRuntime().exec(System.getProperty("user.dir")+"\\update.exe");
              System.exit(0);
          }
