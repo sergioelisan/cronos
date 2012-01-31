@@ -258,7 +258,7 @@ dia.setBounds(400, 300, 450,250 );
     dia.setVisible(true);
     dia.toFront();
     u.getProgresso().setVisible(false);
-    u.setTitulo("Sobre");
+    u.setTitulo("sobre");
 u.setAtualiza("Versão do sistema:0."+String.valueOf(m.getVersion()));// TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
