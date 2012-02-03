@@ -37,6 +37,23 @@ public class Preferencias {
         horariosProperties.setProperty("horario.aulaspordia", String.valueOf(aulasDia));
         save();
     }
+    
+    /**
+     * retorna se o horario deve ser alternado ou continuo
+     * @return 
+     */
+    public int getAlternancia() {
+        return Integer.parseInt(horariosProperties.getProperty("horario.alternancia") );
+    }
+
+    /**
+     * seta a opcao do horario ser continuo ou alternado
+     * @param horarioAlternado 
+     */
+    public void setAlternancia(int horarioAlternado) {
+        horariosProperties.setProperty("horario.alternancia", String.valueOf(horarioAlternado));
+        save();
+    }
 
     /**
      * retorna o fim do calendario
@@ -53,23 +70,6 @@ public class Preferencias {
      */
     public void setFimCalendario(Date fimCalendario) {
         calendarioProperties.setProperty("calendario.fim", DateFormat.getDateInstance(DateFormat.MEDIUM).format(fimCalendario));
-        save();
-    }
-
-    /**
-     * retorna se o horario deve ser alternado ou continuo
-     * @return 
-     */
-    public int getAlternancia() {
-        return Integer.parseInt(horariosProperties.getProperty("horario.alternancia") );
-    }
-
-    /**
-     * seta a opcao do horario ser continuo ou alternado
-     * @param horarioAlternado 
-     */
-    public void setAlternancia(int horarioAlternado) {
-        horariosProperties.setProperty("horario.alternancia", String.valueOf(horarioAlternado));
         save();
     }
 

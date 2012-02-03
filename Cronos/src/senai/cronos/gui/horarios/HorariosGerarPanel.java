@@ -21,7 +21,7 @@ import senai.cronos.logica.horarios.GeraHorarioFactory;
 
 /**
  *
- * @author Serginho
+ * @author Sergio Lisan e Carlos Melo
  */
 public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient {
 
@@ -238,11 +238,12 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
     private void saveHorario() {
         try {
             Fachada.add(horario);
+            
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "FAIL! Erro ao Salvar Horario:\n" + e);
             show("TURMAS");
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -257,6 +258,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      *
      * @param id
      */
+    @Override
     public void action(final Integer id) {
         Thread thread = new Thread(new Runnable() {
 
@@ -280,8 +282,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                             return;
                         }
                     }
-                        
-                    
+                                            
                     horario = GeraHorarioFactory.getGerador().generate(turma);
 
                     HorarioUIFactory factory = new HorarioUIFactory(horario);
@@ -300,10 +301,9 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
                     
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
-                    stopLoading();
+                    JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);                    
+                    e.printStackTrace(System.err);
                     show("TURMAS");
-                    e.printStackTrace();
                 }
             }
         });

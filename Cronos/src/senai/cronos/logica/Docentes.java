@@ -105,7 +105,7 @@ public final class Docentes implements Observador, Repository<Docente> {
      * @return 
      */
     private double calcScoreOcupacao(Docente docente) {
-        double ocupacao = docente.percentualOcupacao();
+        double ocupacao = docente.getOcupacao().percentualOcupacao();
 
         if (ocupacao >= 1 && ocupacao <= 10) {
             return 1;
@@ -135,7 +135,7 @@ public final class Docentes implements Observador, Repository<Docente> {
         List<Proficiencia> proficiencias = dc.getProficiencias();
         for (Proficiencia prof : proficiencias) {
             if (disciplina.equals(prof.getDisciplina())) {
-                scoreTemp = prof.getNivel();
+                scoreTemp = prof.getScoreTemp();
             }
         }
         return Double.valueOf(scoreTemp);

@@ -18,6 +18,8 @@ public class Debug {
         println("Horarios DAO: " + Contador.horario);
         println("Turmas   DAO: " + Contador.turmas);
         println("Nucleos  DAO: " + Contador.nucleos);
+        println("Proficie DAO: " + Contador.proficiencias);
+        println("Ocupacao DAO: " + Contador.ocupacoes);
     }
     
     public static void println(Object o) {

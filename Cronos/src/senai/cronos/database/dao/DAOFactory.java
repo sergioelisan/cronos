@@ -37,6 +37,12 @@ public class DAOFactory {
         } else if (c.equals(Turma.class)) {
             return DAOTurma.getInstance();
             
+        } else if (c.equals(Ocupacao.class)) {
+            return DAOOcupacao.getInstance();
+            
+        } else if (c.equals(Proficiencia.class)) {
+            return DAOProficiencia.getInstance();
+            
         } else if (c.equals(UnidadeCurricular.class)) {
             return DAOUnidadeCurricular.getInstance();
             

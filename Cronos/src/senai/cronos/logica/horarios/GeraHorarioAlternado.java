@@ -5,113 +5,72 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import senai.cronos.Fachada;
-import senai.cronos.entidades.*;
-import senai.cronos.logica.validacoes.ValidaAptidao;
+import senai.cronos.entidades.Aula;
+import senai.cronos.entidades.Horario;
+import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.util.Tupla;
 import senai.cronos.util.calendario.DateUtil;
-import senai.cronos.util.Tupla; 
+import senai.cronos.util.debug.Debug;
 
-/**
- *
- * @author sergio lisan e carlos melo
- */
 public class GeraHorarioAlternado extends GeraHorario {
 
     @Override
-    public Horario generate(Turma turma) throws ClassNotFoundException, SQLException {
-        validador = new ValidaAptidao(turma);
-
-        // pega o horario ja existente no banco de dados
-        Horario horario = Fachada.get(Horario.class, turma.getId());
-        if(horario.getHorario().keySet().isEmpty()) {
-            // se nao tiver um horario existente, coloca um novo
-            horario = new Horario(turma);
-        }       
-        
+    public void generate(Horario horario) throws ClassNotFoundException, SQLException {
         Map<Date, Tupla<Aula, Aula>> calendario = horario.getHorario();
 
-        // pega uma lista de disciplinas de um nucleo em um modulo
-        List<UnidadeCurricular> disciplinas = new ArrayList<>();
-        Nucleo gestao = Fachada.buscaNucleo("comum");
-        for(int i = 0; i < 3; i++) {
-            List<UnidadeCurricular> disciplinasPorModulo = Fachada.buscaDisciplinas(turma.getNucleo(), i);
-            List<UnidadeCurricular> gestoes = Fachada.buscaDisciplinas(gestao, i);
-            disciplinas.addAll(disciplinasPorModulo);
-            disciplinas.addAll(gestoes);
-        }
-                
+        List<UnidadeCurricular> disciplinas = getDisciplinas();
+        int diasletivos = calendario.keySet().size();
+
         int modo = 0;
+        for (UnidadeCurricular uc : disciplinas) {
+            int total = getQuantidadeDeDias(uc, 4);
 
-        // para cada unidade curricular
-        for (UnidadeCurricular disciplina : disciplinas) {
-            
-            // procura por um docente bom e apto.
-            Docente docente;
-            int tentativas = 0;
-            do {
-                docente = Fachada.melhorDocente(disciplina);
-                tentativas++;
-            } while (!validador.isValid(docente) && tentativas < MAX_TENTATIVAS);
+            if (total <= diasletivos) {
+                List<Date> diasdisciplina = new ArrayList<>();
 
-            // se extourar o numero de tentativas, seleciona um extra-quadro
-            if(tentativas >= MAX_TENTATIVAS)
-                docente = EXTRA_QUADRO;
-            
-            Aula aula = new Aula(disciplina, docente, disciplina.getLab());
+                for (int i = 0; i < total; i++) {
+                    OUTER:
+                    for (Date dia : calendario.keySet()) {
+                        String diaSemana = DateUtil.getNomeDia(dia);
+                        if (modo == 0) {
+                            switch (diaSemana) {
+                                case DateUtil.SEG:
+                                case DateUtil.QUA:
+                                case DateUtil.SEX:
+                                    if (calendario.get(dia).getPrimeiro() == null && !diasdisciplina.contains(dia)) {
+                                        diasdisciplina.add(dia);
+                                        diasletivos--;
+                                        break OUTER;
+                                    }
+                                    break;
+                            }
+                        } else {
+                            switch (diaSemana) {
+                                case DateUtil.TER:
+                                case DateUtil.QUI:
+                                    if (calendario.get(dia).getPrimeiro() == null && !diasdisciplina.contains(dia)) {
+                                        diasdisciplina.add(dia);
+                                        diasletivos--;
+                                        break OUTER;
+                                    }
+                                    break;
+                            }
 
-            int aulas = disciplina.getCargaHoraria() / 4; // carga horaria dividida por 4h diarias
-            int resto = disciplina.getCargaHoraria() % 4; // carga que sobra q
-            int totaldias = aulas + resto; // quantidade total de dias que a cadeira é lecionada
-
-            for (int i = 0; i < totaldias; i++) {
-                OUTER:
-                for (Date data : calendario.keySet()) {
-                    String diaDaSemana = DateUtil.getNomeDia(data);
-                    
-                    // se o modo for zero, entao a disciplina eh alocada para Seg, Qua e Sex.
-                    if (modo == 0) {
-                        switch (diaDaSemana) {
-                            case DateUtil.SEG:
-                            case DateUtil.QUA:
-                            case DateUtil.SEX:
-                                if (calendario.get(data).getPrimeiro() == null) {
-                                    calendario.get(data).setPrimeiro(aula);
-                                    calendario.get(data).setSegundo(aula);
-                                    break OUTER;
-                                }
-                                break;
                         }
+
                     }
-                    
-                    // se o modo for 1, entao a disciplina eh alocada para Ter ou Qui
-                    else {
-                        switch (diaDaSemana) {
-                            case DateUtil.TER:
-                            case DateUtil.QUI:
-                                if (calendario.get(data).getPrimeiro() == null) {
-                                    calendario.get(data).setPrimeiro(aula);
-                                    calendario.get(data).setSegundo(aula);
-                                    break OUTER;
-                                }
-                                break;
-                        }
-                        
-                    }
-                    
+
+                }
+
+                updateCalendario(uc, diasdisciplina, calendario);
+
+                if (modo == 0) {
+                    modo = 1;
+                } else {
+                    modo = 0;
                 }
 
             }
-
-            // troca o modo
-            if (modo == 0) {
-                modo = 1;
-            } else {
-                modo = 0;
-            }
-
         }
-
-        // retorna o horario de uma turma em um determinado dia
-        return horario;
     }
 }

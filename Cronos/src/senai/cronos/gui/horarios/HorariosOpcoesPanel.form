@@ -38,8 +38,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="swAlternado" min="-2" max="-2" attributes="0"/>
-                          <Component id="swAulas" min="-2" max="-2" attributes="0"/>
+                          <Component id="checkBoxAlternancia" min="-2" max="-2" attributes="0"/>
+                          <Component id="checkBoxAulasDia" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="356" max="-2" attributes="0"/>
                   </Group>
@@ -58,12 +58,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="swAlternado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkBoxAlternancia" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="swAulas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="checkBoxAulasDia" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
           </Group>
@@ -105,7 +105,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="swAlternado">
+    <Component class="javax.swing.JCheckBox" name="checkBoxAlternancia">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -113,10 +113,10 @@
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="swAlternadoItemStateChanged"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxAlternanciaItemStateChanged"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="swAulas">
+    <Component class="javax.swing.JCheckBox" name="checkBoxAulasDia">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -124,7 +124,7 @@
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="swAulasItemStateChanged"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="checkBoxAulasDiaItemStateChanged"/>
       </Events>
     </Component>
   </SubComponents>

@@ -1,15 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package senai.cronos.logica;
 
-import senai.cronos.entidades.Docente;
-import senai.cronos.entidades.Horario;
-import senai.cronos.entidades.Laboratorio;
-import senai.cronos.entidades.Nucleo;
-import senai.cronos.entidades.Turma;
-import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.entidades.*;
 import senai.cronos.util.calendario.Feriado;
 
 /**

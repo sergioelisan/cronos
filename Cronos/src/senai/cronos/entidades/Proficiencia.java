@@ -9,26 +9,27 @@ import java.util.Objects;
  */
 public class Proficiencia implements Comparable<Proficiencia> {
 
-    private Integer matricula;
-    private UnidadeCurricular unidadecurricular = new UnidadeCurricular();
-    private int nivel = 0;
+    private Docente docente;
+    private UnidadeCurricular unidadecurricular;
+    private int scoretemp = 0;
     private int lecionado = 0;
 
     public Proficiencia() {
     }
 
-    public Proficiencia(UnidadeCurricular unidadecurricular, int nivel, int lecionado) {
+    public Proficiencia(Docente docente, UnidadeCurricular unidadecurricular, int scoretemp, int lecionado) {
+        this.docente = docente;
         this.unidadecurricular = unidadecurricular;
-        this.nivel = nivel;
+        this.scoretemp = scoretemp;
         this.lecionado = lecionado;
     }
 
-    public Integer getMatricula() {
-        return matricula;
+    public Docente getDocente() {
+        return docente;
     }
 
-    public void setMatricula(Integer matricula) {
-        this.matricula = matricula;
+    public void setDocente(Docente docente) {
+        this.docente = docente;
     }
     
     public int getLecionado() {
@@ -39,12 +40,12 @@ public class Proficiencia implements Comparable<Proficiencia> {
         this.lecionado = lecionado;
     }
 
-    public int getNivel() {
-        return nivel;
+    public int getScoreTemp() {
+        return scoretemp;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void setScoreTemp(int scoretemp) {
+        this.scoretemp = scoretemp;
     }
 
     public UnidadeCurricular getDisciplina() {
@@ -66,7 +67,7 @@ public class Proficiencia implements Comparable<Proficiencia> {
         if (!Objects.equals(this.unidadecurricular, other.unidadecurricular)) {
             return false;
         }
-        if (this.nivel != other.nivel) {
+        if (this.scoretemp != other.scoretemp) {
             return false;
         }
         if (this.lecionado != other.lecionado) {
@@ -79,18 +80,18 @@ public class Proficiencia implements Comparable<Proficiencia> {
     public int hashCode() {
         int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.unidadecurricular);
-        hash = 79 * hash + this.nivel;
+        hash = 79 * hash + this.scoretemp;
         hash = 79 * hash + this.lecionado;
         return hash;
     }
 
     @Override
     public String toString() {
-        return "Proficiencia{" + "unidadecurricular=" + unidadecurricular + ", nivel=" + nivel + ", lecionado=" + lecionado + '}';
+        return "Proficiencia{" + "unidadecurricular=" + unidadecurricular + ", scoretemp=" + scoretemp + ", lecionado=" + lecionado + '}';
     }
 
     @Override
     public int compareTo(Proficiencia o) {
-        return nivel > o.nivel ? 1 : (nivel == o.nivel ? 0 : -1);
+        return scoretemp > o.scoretemp ? 1 : (scoretemp == o.scoretemp ? 0 : -1);
     }
 }

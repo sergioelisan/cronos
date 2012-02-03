@@ -132,11 +132,12 @@ public class HorarioUIFactory {
 
         int i = 0;
         Map<UnidadeCurricular, Color> dicionarioCores = new HashMap<>();
-        dicionarioCores.put(new UnidadeCurricular(), Color.white);
         for (UnidadeCurricular disciplina : disciplinas) {
             dicionarioCores.put(disciplina, CORES.get(i));
             i++;
         }
+        dicionarioCores.put(new UnidadeCurricular(), Color.white);
+        
 
         /*
          * Cria as legendas, usando o dicionario de cores

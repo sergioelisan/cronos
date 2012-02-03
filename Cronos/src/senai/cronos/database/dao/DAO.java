@@ -45,7 +45,7 @@ public interface DAO<T> extends Observado {
      * @return 
      */
     List<T> get() throws SQLException;
-    
+
     /**
      * abre a conexao com o banco de dados
      * @throws SQLException 

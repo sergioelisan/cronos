@@ -17,7 +17,7 @@ public class Aleatorio {
      * @return 
      */
     public static int alec(int inicio, int fim) { 
-        int fator = new Random().nextInt(4);
+        int fator = new Random().nextInt(fim);
         return fator;
     }
 }

@@ -1,35 +1,24 @@
 package senai.cronos;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.MalformedURLException;
+import java.io.*;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
+import org.apache.derby.impl.drda.NetworkServerControlImpl;
 import senai.cronos.gui.CronosFrame;
-import senai.cronos.gui.Update;
+import senai.cronos.util.UpdateCronos;
 import senai.cronos.util.calendario.Calendario;
 import senai.cronos.util.calendario.Feriado;
-
-import org.apache.derby.impl.drda.NetworkServerControlImpl;
-
 import senai.cronos.util.debug.Debug;
+import static senai.cronos.util.debug.Debug.println;
 import senai.cronos.util.os.OSFactory;
 import senai.cronos.util.os.OperatingSystem;
-import senai.cronos.util.os.UpdateCronos;
-import static senai.cronos.util.debug.Debug.*;
-import java.net.URL;
-import java.net.URLConnection;
+
 /**
  *
  * @author sergio lisan e carlos melo
@@ -58,19 +47,22 @@ public class Main {
         try {
             Splash s = Splash.getInstance();
             s.start();
-            
+
+            s.upBar();
+            updateSystem();
+
             s.upBar();
             loadDatabase();
-            
+
             s.upBar();
             loadPreferences();
-            
+
             s.upBar();
             loadUI();
-            
+
             s.stop();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "FAIL! Problemas ao iniciar o sistema:\n\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "FAIL! Problemas na inicializacao:\n\n" + ex.getMessage());
         }
     }
 
@@ -82,12 +74,11 @@ public class Main {
             println("Encerrando banco de dados e desligando JVM");
             NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
             networkServer.shutdown();
-            
+
             // metodo usado para debugar o numero de conexoes
             Debug.countConnections();
-            
-            System.exit(0);
 
+            System.exit(0);
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
@@ -98,7 +89,6 @@ public class Main {
      */
     private void loadDatabase() throws Exception {
         OperatingSystem os = OSFactory.getOperatingSystem();
-        UpdateCronos update = new UpdateCronos();
 
         String path = "";
         String key = "";
@@ -126,55 +116,68 @@ public class Main {
         }
 
         String location = os.readRegistry(path, key) + dir;
-        println(location);
-        //Checando a versão do repositorio
-        URL url = null;
-        String stringUrl="http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe";
-       
-        try {
-            url = new URL(stringUrl);
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        }
-        String versao=null;
-        URL url1 = null;
-        String stringUrl1="http://code.google.com/p/senai-pe-cronos/downloads/list";
-
-        try {
-            url1 = new URL(stringUrl1);
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        }
-        InputStream is = url1.openStream();   
-InputStreamReader isr = new InputStreamReader(is);   
-BufferedReader br = new BufferedReader(isr);   
-  
-String linha = br.readLine();  
-  
-while (linha != null) { 
-    linha = br.readLine();  
-   
-   if(linha.contains("/files/updateCronos-0-")){
-   String[] s=linha.split("-");
-   String[] v=s[4].split(".exe");
-   versao=v[0];
-   println("----"+versao);
-   //linha=null;
-  break;
-}   
-
-}
-      
-        System.out.println("versão:"+versao);
-         if(Integer.parseInt(versao)>version){
-             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao);
-             Runtime.getRuntime().exec(System.getProperty("user.dir")+"\\update.exe");
-             System.exit(0);
-         }
-
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
         networkServer.start(new PrintWriter(System.out));
+    }
+
+    /**
+     * Atualiza o sistema
+     *
+     * @throws IOException
+     * @throws NumberFormatException
+     */
+    private void updateSystem() throws IOException, NumberFormatException {
+        try {
+            UpdateCronos update = new UpdateCronos();
+
+            //Checando a versão do repositorio
+            URL url = null;
+            String stringUrl = "http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe";
+
+            try {
+                url = new URL(stringUrl);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.err);
+            }
+            String versao = null;
+            URL url1 = null;
+            String stringUrl1 = "http://code.google.com/p/senai-pe-cronos/downloads/list";
+
+            try {
+                url1 = new URL(stringUrl1);
+            } catch (Exception ex) {
+                ex.printStackTrace(System.err);
+            }
+            InputStream is = url1.openStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+
+            String linha = br.readLine();
+
+            while (linha != null) {
+                linha = br.readLine();
+
+                if (linha.contains("/files/updateCronos-0-")) {
+                    String[] s = linha.split("-");
+                    String[] v = s[4].split(".exe");
+                    versao = v[0];
+                    println("----" + versao);
+                    //linha=null;
+                    break;
+                }
+
+            }
+
+            System.out.println("versão:" + versao);
+            if (Integer.parseInt(versao) > version) {
+                File f = update.gravaArquivoDeURL(url, System.getProperty("user.dir"), String.valueOf(version), versao);
+                Runtime.getRuntime().exec(System.getProperty("user.dir") + "\\update.exe");
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            Debug.println("Problemas com a conexão de Internet");                
+        }
     }
 
     /**
