@@ -7,6 +7,8 @@ import java.util.Objects;
  * @author Carlos Melo e sergio lisan
  */
 public class Aula {
+    
+    public static Aula NULA = new Aula();
 
     public Aula() {        
     }

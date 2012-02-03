@@ -9,7 +9,7 @@ import senai.cronos.Fachada;
 
 /**
  *
- * @author Serginho
+ * @author Sergio Lisan e Carlos Melo
  */
 public class HorariosOpcoesPanel extends javax.swing.JPanel {
 
@@ -17,15 +17,15 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
         initComponents();
 
         if (Fachada.getAulasDia() == 0) {
-            swAulas.setSelected(false);
+            checkBoxAulasDia.setSelected(false);
         } else {
-            swAulas.setSelected(true);
+            checkBoxAulasDia.setSelected(true);
         }
 
         if (Fachada.getAlternancia() == 0) {
-            swAulas.setSelected(false);
+            checkBoxAlternancia.setSelected(false);
         } else {
-            swAulas.setSelected(true);
+            checkBoxAlternancia.setSelected(true);
         }
     }
 
@@ -37,8 +37,8 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lbstatus = new javax.swing.JLabel();
-        swAlternado = new javax.swing.JCheckBox();
-        swAulas = new javax.swing.JCheckBox();
+        checkBoxAlternancia = new javax.swing.JCheckBox();
+        checkBoxAulasDia = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
@@ -55,19 +55,19 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
 
         lbstatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        swAlternado.setBackground(new java.awt.Color(255, 255, 255));
-        swAlternado.setOpaque(false);
-        swAlternado.addItemListener(new java.awt.event.ItemListener() {
+        checkBoxAlternancia.setBackground(new java.awt.Color(255, 255, 255));
+        checkBoxAlternancia.setOpaque(false);
+        checkBoxAlternancia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                swAlternadoItemStateChanged(evt);
+                checkBoxAlternanciaItemStateChanged(evt);
             }
         });
 
-        swAulas.setBackground(new java.awt.Color(255, 255, 255));
-        swAulas.setOpaque(false);
-        swAulas.addItemListener(new java.awt.event.ItemListener() {
+        checkBoxAulasDia.setBackground(new java.awt.Color(255, 255, 255));
+        checkBoxAulasDia.setOpaque(false);
+        checkBoxAulasDia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                swAulasItemStateChanged(evt);
+                checkBoxAulasDiaItemStateChanged(evt);
             }
         });
 
@@ -89,8 +89,8 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(swAlternado)
-                            .addComponent(swAulas))
+                            .addComponent(checkBoxAlternancia)
+                            .addComponent(checkBoxAulasDia))
                         .addGap(356, 356, 356))))
         );
 
@@ -106,11 +106,11 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(swAlternado))
+                    .addComponent(checkBoxAlternancia))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(swAulas))
+                    .addComponent(checkBoxAulasDia))
                 .addGap(149, 149, 149))
         );
 
@@ -118,27 +118,27 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
 
     }// </editor-fold>//GEN-END:initComponents
 
-    private void swAlternadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_swAlternadoItemStateChanged
-        if (swAlternado.isSelected()) {
+    private void checkBoxAlternanciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxAlternanciaItemStateChanged
+        if (checkBoxAlternancia.isSelected()) {
             Fachada.setAlternacia(1);
         } else {
             Fachada.setAlternacia(0);
         }
-    }//GEN-LAST:event_swAlternadoItemStateChanged
+    }//GEN-LAST:event_checkBoxAlternanciaItemStateChanged
 
-    private void swAulasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_swAulasItemStateChanged
-        if (swAulas.isSelected()) {
+    private void checkBoxAulasDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxAulasDiaItemStateChanged
+        if (checkBoxAulasDia.isSelected()) {
             Fachada.setAulasDia(1);
         } else {
             Fachada.setAulasDia(0);
         }
-    }//GEN-LAST:event_swAulasItemStateChanged
+    }//GEN-LAST:event_checkBoxAulasDiaItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox checkBoxAlternancia;
+    private javax.swing.JCheckBox checkBoxAulasDia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbstatus;
-    private javax.swing.JCheckBox swAlternado;
-    private javax.swing.JCheckBox swAulas;
     // End of variables declaration//GEN-END:variables
 }

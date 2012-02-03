@@ -3,7 +3,6 @@ package senai.cronos.entidades;
 import java.util.*;
 import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
-import senai.cronos.util.Tupla;
 
 /**
  *
@@ -12,11 +11,11 @@ import senai.cronos.util.Tupla;
 public class Docente implements Comparable<Docente> {
 
     public Docente() {
+        
     }
 
     public Docente(Integer matricula, String nome, Formacao formacao, Date contratacao,
-            Nucleo nucleo, Map<Date, Map<Turno, Tupla<Aula, Aula>>> ocupacao, int score,
-            Turno primeiroTurno, Turno segundoTurno) {
+            Nucleo nucleo, Ocupacao ocupacao, int score, Turno primeiroTurno, Turno segundoTurno) {
         this();
         this.matricula = matricula;
         this.nome = nome;
@@ -32,44 +31,9 @@ public class Docente implements Comparable<Docente> {
     /*
      * METODOS DE NEGOCIO PARA UM DOCENTE
      */
-    /**
-     * verifica a disponibilidade do docente em um turno
-     *
-     * @param dia
-     * @return verdadeiro se esta disponivel, false se nao estiver disponivel
-     */
-    public boolean isDisponivel(Date dia, Turno turno) {
-        if (!ocupacao.containsKey(dia)) {
-            return true;
-        }
-        Map<Turno, Tupla<Aula, Aula>> ocupacaoDia = ocupacao.get(dia);
-        return ocupacaoDia.get(turno) == null;
-    }
-
-    /**
-     * verifica a disponibilidade de um docente em uma parte de um turno
-     *
-     * 1 - primeira metade do turno 2 - segunda metade do turno
-     *
-     * @param dia
-     * @param turno
-     * @param metade
-     * @return
-     */
-    public boolean isDisponivel(Date dia, Turno turno, Integer metade) {
-        Map<Turno, Tupla<Aula, Aula>> ocupacaoDia = ocupacao.get(dia);
-        Tupla<Aula, Aula> ocupacaoTurno = ocupacaoDia.get(turno);
-
-        if (metade.equals(1)) {
-            return ocupacaoTurno.getPrimeiro() == null;
-        } else {
-            return ocupacaoTurno.getSegundo() == null;
-        }
-    }
-
+    
     /**
      * Retorna as unidades curriculares das proficiencias deste docente
-     *
      * @return
      */
     public List<UnidadeCurricular> getUnidadesCurriculares() {
@@ -83,68 +47,33 @@ public class Docente implements Comparable<Docente> {
     }
 
     /**
-     * Retorna a percentagem de ocupacao do docente
-     *
-     * @return a percentagem de ocupacao
-     */
-    public double percentualOcupacao() {
-        double aulas = 0;
-        double ocupado = 0;
-
-        for (Map<Turno, Tupla<Aula, Aula>> ocupacaoDia : ocupacao.values()) {
-            for (Tupla<Aula, Aula> tupla : ocupacaoDia.values()) {
-                aulas += 2;
-                if (tupla.getPrimeiro() != null) {
-                    ocupado += 1;
-                }
-                if (tupla.getSegundo() != null) {
-                    ocupado += 1;
-                }
-            }
-        }
-
-        return aulas == 0 ? 0 : (ocupado * 100) / aulas;
-    }
-
-    /**
      * adiciona uma proficiencia, ou adiciona pontos a proficiencia.
-     *
-     * @param prof
+     * @param uc Unidade Curricular desta proficiencia
      */
-    public void addProficiencia(Proficiencia prof) {
-        if (proficiencias.contains(prof)) {
-            int index = proficiencias.indexOf(prof);
-            Proficiencia pf = proficiencias.get(index);
-            pf.setNivel(pf.getNivel() + 1);
-            pf.setLecionado(pf.getLecionado() + 1);
-        } else {
-            proficiencias.add(prof);
-        }
-    }
-
-    /**
-     * adiciona uma ocupacao em um dia, turno e aulas
-     *
-     * @param dia
-     * @param t
-     * @param aulas
-     */
-    public void addOcupacao(Date dia, Turno t, Aula a1, Aula a2) {
-        if (ocupacao.containsKey(dia)) {
-            if (!ocupacao.get(dia).containsKey(t)) {
-                ocupacao.get(dia).put(t, new Tupla<>(a1, a2));
-            } else {
-                ocupacao.get(dia).get(t).setPrimeiro(a1);
-                ocupacao.get(dia).get(t).setSegundo(a2);
+    public void addProficiencia(UnidadeCurricular uc) {
+        for (Proficiencia p : proficiencias) {
+            if(p.getDisciplina().equals(uc)) {
+                p.setLecionado(p.getLecionado() + 1);
+                p.setScoreTemp(p.getScoreTemp() - 1);
+                return;
             }
-        } else {
-            Map<Turno, Tupla<Aula, Aula>> turnos = new HashMap<>();
-            turnos.put(t, new Tupla<>(a1, a2));
-            ocupacao.put(dia, turnos);
         }
-
+        Proficiencia prof = new Proficiencia(this, uc, 10, 1);
+        proficiencias.add(prof);
     }
-
+    
+    /**
+     * remove uma proficiencia
+     * @param prof 
+     */
+    public void removeProficiencia(UnidadeCurricular uc) {
+        for (Proficiencia prof : proficiencias) {
+            if(prof.getDisciplina().equals(uc)) {
+                proficiencias.remove(prof);
+            }
+        }        
+    }
+    
     /*
      *
      * METODOS ACESSORES
@@ -195,11 +124,11 @@ public class Docente implements Comparable<Docente> {
         this.nucleo = nucleo;
     }
 
-    public Map<Date, Map<Turno, Tupla<Aula, Aula>>> getOcupacao() {
+    public Ocupacao getOcupacao() {
         return ocupacao;
     }
 
-    public void setOcupacao(Map<Date, Map<Turno, Tupla<Aula, Aula>>> ocupacao) {
+    public void setOcupacao(Ocupacao ocupacao) {
         this.ocupacao = ocupacao;
     }
 
@@ -319,7 +248,7 @@ public class Docente implements Comparable<Docente> {
     /**
      * Como o horario do docente esta sendo preenchido
      */
-    private Map<Date, Map<Turno, Tupla<Aula, Aula>>> ocupacao = new HashMap();
+    private Ocupacao ocupacao = new Ocupacao(this);
     /**
      * pontuacao do docente. esse atributo é relacionado com a formacao e o
      * tempo de casa do docente

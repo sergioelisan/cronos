@@ -24,7 +24,7 @@ public class ValidaAptidao implements Validacao<Docente> {
         }
 
         // se o percentual de ocupacao estiver estourado
-        if (u.percentualOcupacao() > .66) {
+        if (u.getOcupacao().percentualOcupacao() > .66) {
             return false;
         }
                 

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import senai.cronos.Fachada;
 import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
@@ -11,6 +12,7 @@ import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.util.Aleatorio;
 import senai.cronos.util.Observador;
+import senai.cronos.util.debug.Debug;
 
 /**
  *
@@ -92,59 +94,39 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
      * @return o docente mais indicado
      */
     public Docente melhorDocente(UnidadeCurricular uc)  throws ClassNotFoundException, SQLException {
-        // TODO Fazer algoritmo sofisticado, com analise probabilistica
-        // ALGORITMO PROVISORIO!
-        // Cria um dicionario com uma Proficiencia e um Docente correspondente
-        Map<Docente, Proficiencia> proficiencias = new HashMap<>();
-        List<Docente> docentes = DAOFactory.getDao(Docente.class).get();
-        for (Docente dc :  docentes) {
+        List<Proficiencia> proficiencias = new ArrayList<>();
+        
+        for (Docente dc : Fachada.<Docente>get(Docente.class)) {
             for (Proficiencia p : dc.getProficiencias()) {
                 if (p.getDisciplina().equals(uc)) {
-                    proficiencias.put(dc, p);
+                    proficiencias.add(p);
                     break; // break usado para evitar que iteracoes sejam feitas desnecessariamente!
                 }
             }
         }
-        // Se nao houver nenhuma proficiencia, retorna nulo
+        
+        // Se nao houver nenhuma proficiencia, retorna 'extra-quadro'
         if (proficiencias.isEmpty()) {
-            return null;
+            return new Docente();
         }
-        // TODO Implementar a logica de geracao de aleatorios
-        int fator = Aleatorio.alec(0, 4);
-        // Retorna o Melhor docente
-        return selecioneMelhorDocente(proficiencias, fator);
-    }
-
-    /**
-     * Metodo que aplica o algoritmo matematico para seleciona o melhor docente
-     * @param docentes
-     * @param fator
-     * @return 
-     */
-    private Docente selecioneMelhorDocente(Map<Docente, Proficiencia> proficiencias, int fator) {
-        // Varre a lista de docentes para remover os que tem mais de 66% de ocupacao
-        for (Docente doc : proficiencias.keySet()) {
-            if (doc.percentualOcupacao() > .66) {
-                proficiencias.remove(doc);
-            }
-        }
-        // Armazena os melhores docentes associados a seus Scores Finais
+        
         List<Docente> melhores = new ArrayList<>();
-        for (Docente doc : proficiencias.keySet()) {
-            double scorefinal = Docentes.instance().getScoreFinal(doc, proficiencias.get(doc).getDisciplina());
+        for (Proficiencia prof : proficiencias) {
+            Docente doc = prof.getDocente();
+            double scorefinal = Docentes.instance().getScoreFinal(doc, prof.getDisciplina());
             doc.setScore((int) scorefinal);
             melhores.add(doc);
         }
         // pega os quatro melhores
         Collections.sort(melhores);
-        Collections.reverse(melhores);
-        Docente[] docentes = new Docente[4];
-        for (int i = 0; i < 4 && i < melhores.size(); i++) {
-            docentes[i] = melhores.get(i);
-        }
-        // retorna o melhor docente de 1 a 4.
-        return docentes[fator];
-    }
+        Collections.reverse(melhores);        
+        
+        // TODO Implementar a logica de geracao de aleatorios
+        int fator = Aleatorio.alec(0, proficiencias.size() > 4 ? 4 : proficiencias.size());
+        
+        // Retorna o Melhor docente
+        return melhores.get(fator);
+    }    
 
     @Override
     public void update() {

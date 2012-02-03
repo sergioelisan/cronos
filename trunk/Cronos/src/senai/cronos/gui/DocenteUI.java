@@ -128,7 +128,7 @@ public class DocenteUI extends javax.swing.JPanel {
                     lbscore.setText("score: " + String.valueOf(doc.getScore()));
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
-                    double ocupacao = Double.isNaN(doc.percentualOcupacao()) ? 0 : doc.percentualOcupacao() * 100;
+                    double ocupacao = Double.isNaN(doc.getOcupacao().percentualOcupacao()) ? 0 : doc.getOcupacao().percentualOcupacao() * 100;
                     lbocupacao.setText("ocupação: " + String.valueOf(ocupacao) + "%");
 
                 } catch (ClassNotFoundException | SQLException ex) {
@@ -361,6 +361,8 @@ public class DocenteUI extends javax.swing.JPanel {
         lbnucleoatual.setMinimumSize(new java.awt.Dimension(100, 25));
         lbnucleoatual.setOpaque(true);
         lbnucleoatual.setPreferredSize(new java.awt.Dimension(100, 25));
+
+        pnOcupacao.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

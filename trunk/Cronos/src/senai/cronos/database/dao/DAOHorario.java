@@ -24,35 +24,58 @@ import senai.cronos.util.Tupla;
 public class DAOHorario implements DAO<Horario> {
 
     private static DAO<Horario> instance = new DAOHorario();
-    
+
     public static DAO<Horario> getInstance() {
         return instance;
     }
-    
-    private DAOHorario() {        
+
+    private DAOHorario() {
     }
-    
-   @Override
+
+    @Override
     public void add(Horario u) throws SQLException {
         open();
         String query = DatabaseUtil.query("horario.insert");
+
+        List<Docente> docentes = new ArrayList<>();
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, u.getTurma().getId());
                 ps.setDate(2, new java.sql.Date(dia.getTime()));
                 ps.setInt(3, u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
-                ps.setInt(4, u.getHorario().get(dia).getPrimeiro().getDocente().getMatricula());
+
+                Docente dc1 = u.getHorario().get(dia).getPrimeiro().getDocente();
+                ps.setInt(4, dc1.getMatricula());
+                if (!docentes.contains(dc1)) {
+                    docentes.add(dc1);
+                }
+
                 ps.setInt(5, u.getHorario().get(dia).getPrimeiro().getLab().getId());
                 ps.setInt(6, u.getHorario().get(dia).getSegundo().getDisciplina().getId());
-                ps.setInt(7, u.getHorario().get(dia).getSegundo().getDocente().getMatricula());
+
+                Docente dc2 = u.getHorario().get(dia).getSegundo().getDocente();
+                ps.setInt(7, dc2.getMatricula());
+                if (!docentes.contains(dc2)) {
+                    docentes.add(dc2);
+                }
+
                 ps.setInt(8, u.getHorario().get(dia).getSegundo().getLab().getId());
 
                 ps.execute();
             }
         }
-        
         close();
+
+        try {
+            DAO<Ocupacao> dao = DAOFactory.getDao(Ocupacao.class);
+            for (Docente d : docentes) {
+                dao.add(d.getOcupacao());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(System.err);
+        }
+        
         notifica();
     }
 
@@ -65,7 +88,7 @@ public class DAOHorario implements DAO<Horario> {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
-        
+
         close();
         notifica();
     }
@@ -100,16 +123,16 @@ public class DAOHorario implements DAO<Horario> {
     public List<Horario> get() throws SQLException {
         open();
         List<Horario> horarios = new ArrayList<>();
-        
+
         try {
-            for(Turma turma : Fachada.<Turma>get(Turma.class) ) {
+            for (Turma turma : Fachada.<Turma>get(Turma.class)) {
                 Integer id = turma.getId();
                 horarios.add(this.get(id));
             }
         } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
-        
+
         close();
         return horarios;
     }
@@ -133,14 +156,14 @@ public class DAOHorario implements DAO<Horario> {
 
                 Aula a1 = new Aula();
 
-                a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1") ) ) ;
-                a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1") ) );
-                a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1") ) );
+                a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1")));
+                a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
+                a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
 
                 Aula a2 = new Aula();
-                a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2") ) ) ;
-                a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2") ) );
-                a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2") ) );
+                a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2")));
+                a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
+                a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
 
                 horario.put(dia, new Tupla<>(a1, a2));
             }
@@ -152,10 +175,10 @@ public class DAOHorario implements DAO<Horario> {
         }
 
         close();
-        
+
         return h;
     }
-    
+
     @Override
     public void close() throws SQLException {
         con.close();
@@ -166,7 +189,7 @@ public class DAOHorario implements DAO<Horario> {
         con = DatabaseUtil.conexao();
         Contador.horario++;
     }
-    
+
     @Override
     public void registra(Observador o) {
         observadores.add(o);
@@ -179,12 +202,10 @@ public class DAOHorario implements DAO<Horario> {
 
     @Override
     public void notifica() {
-        for(Observador o : observadores)
+        for (Observador o : observadores) {
             o.update();
+        }
     }
-    
     private List<Observador> observadores = new ArrayList<>();
-    
-    
     private Connection con;
 }
