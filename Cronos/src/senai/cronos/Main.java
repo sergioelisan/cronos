@@ -8,10 +8,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
 import senai.cronos.gui.Update;
+import senai.cronos.gui.Alertas;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.UpdateCronos;
 import senai.cronos.util.calendario.Calendario;
@@ -30,6 +32,7 @@ private String location;
     public static int version = 40;
     String versao=null;
         URL url = null;
+        Alertas alerta=new Alertas();
 
     public static int getVersion() {
         return version;
@@ -71,7 +74,9 @@ private String location;
 
             s.stop();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "FAIL! Problemas na inicializacao:\n\n" + ex.getMessage());
+           alerta.jogarAviso(ex.toString());
+            
+            //JOptionPane.showMessageDialog(null, "FAIL! Problemas na inicializacao:\n\n" + ex.getMessage());
         }
     }
 
@@ -125,6 +130,8 @@ private String location;
         }
 
          location= os.readRegistry(path, key) + dir;
+        
+        //location="wwer";
         println(location);
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
