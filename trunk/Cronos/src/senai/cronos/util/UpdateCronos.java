@@ -29,6 +29,7 @@ public class UpdateCronos {
     int baixado;
 Update u=new Update();
   final Main m=new Main(); 
+  boolean s=false;
 public  File gravaArquivoDeURL(URL url,String pathLocal, String verAntes,String verDepois) {  
     
    
@@ -65,14 +66,19 @@ public  File gravaArquivoDeURL(URL url,String pathLocal, String verAntes,String 
                 dpb.setValue(baixado);
                 System.out.print("=");
                 i=0;
-               if(!dia.isVisible()) break;
+               if(!dia.isVisible()) {
+                    s=false;
+                   break;
+               }
             u.setProgresso(baixado);
+                   
           
             }
         } 
         u.setProgresso(100);
         is.close();  
-        fos.close(); 
+        fos.close();
+        s=true;
         
         System.out.println(">download, ok!!!");
         u.setVisible(false);
@@ -93,6 +99,14 @@ public  File gravaArquivoDeURL(URL url,String pathLocal, String verAntes,String 
       
   return null;    
 }
+
+    public boolean isS() {
+        return s;
+    }
+
+    public void setS(boolean s) {
+        this.s = s;
+    }
 
 
 
