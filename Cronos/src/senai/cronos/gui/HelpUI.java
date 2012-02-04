@@ -81,7 +81,7 @@ public class HelpUI extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 30));
         jLabel1.setForeground(ColorManager.getColor("foreground"));
         jLabel1.setText("ajuda");
 
@@ -98,24 +98,24 @@ public class HelpUI extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18));
         jLabel2.setText("obtenha atualização");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12));
         jLabel4.setText("Obtenha as atualizações mais recente do Cronos Através do repositório");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18));
         jLabel5.setText("fale conosco");
 
         jLabel6.setText("_____________________________________________________________________________________________________");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12));
         jLabel7.setText("entre em contato com os desenvolvedores da plataforma");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18));
         jLabel8.setText("sobre");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 12));
         jLabel10.setText("versão e outras informações de release ");
 
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
@@ -127,6 +127,7 @@ public class HelpUI extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(0, 153, 204));
         jLabel11.setText("_____________________________________________________________________________________________________");
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/btAtualizacao.png"))); // NOI18N
         jButton1.setText("atualização");
         jButton1.setBorder(null);
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -135,10 +136,13 @@ public class HelpUI extends javax.swing.JPanel {
         jButton1.setPreferredSize(new java.awt.Dimension(93, 23));
         jButton1.setRequestFocusEnabled(false);
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/btFaleconosco.png"))); // NOI18N
         jButton2.setText("fale conosco");
         jButton2.setBorder(null);
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/btAtualizacao.png"))); // NOI18N
         jButton3.setText("sobre");
         jButton3.setBorder(null);
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -164,7 +168,7 @@ public class HelpUI extends javax.swing.JPanel {
                     .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1186, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -230,7 +234,7 @@ public class HelpUI extends javax.swing.JPanel {
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

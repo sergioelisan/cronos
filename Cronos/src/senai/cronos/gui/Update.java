@@ -78,7 +78,7 @@ public class Update extends javax.swing.JPanel {
         atualiza.setBounds(20, 150, 390, 20);
         jLayeredPane2.add(atualiza, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18));
         titulo.setText("Atualizando o Sistema");
         titulo.setBounds(20, 40, 350, 35);
         jLayeredPane2.add(titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -86,7 +86,7 @@ public class Update extends javax.swing.JPanel {
         jLayeredPane1.setMaximumSize(new java.awt.Dimension(450, 250));
         jLayeredPane1.setMinimumSize(new java.awt.Dimension(450, 250));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carlos Melo\\Desktop\\background.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/background.png"))); // NOI18N
         jLabel2.setMaximumSize(new java.awt.Dimension(450, 250));
         jLabel2.setMinimumSize(new java.awt.Dimension(450, 250));
         jLabel2.setName(""); // NOI18N

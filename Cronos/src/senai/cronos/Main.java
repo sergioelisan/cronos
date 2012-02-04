@@ -1,6 +1,7 @@
 package senai.cronos;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
+import senai.cronos.gui.Update;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.UpdateCronos;
 import senai.cronos.util.calendario.Calendario;
@@ -24,12 +26,19 @@ import senai.cronos.util.os.OperatingSystem;
  * @author sergio lisan e carlos melo
  */
 public class Main {
+private String location;
+    public static int version = 40;
+    String versao=null;
+        URL url = null;
 
-    public static int version = 30;
-
-    public int getVersion() {
+    public static int getVersion() {
         return version;
     }
+
+    public static void setVersion(int version) {
+        Main.version = version;
+    }
+
 
     /**
      * Gênesis do sistema... aqui é onde tudo começa.
@@ -115,11 +124,15 @@ public class Main {
                 throw new IllegalArgumentException("Sistema Operacional ainda não suportado!");
         }
 
-        String location = os.readRegistry(path, key) + dir;
+         location= os.readRegistry(path, key) + dir;
+        println(location);
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
         networkServer.start(new PrintWriter(System.out));
+        //Checando a versão do repositorio
+      
     }
+      
 
     /**
      * Atualiza o sistema
@@ -127,58 +140,57 @@ public class Main {
      * @throws IOException
      * @throws NumberFormatException
      */
-    private void updateSystem() throws IOException, NumberFormatException {
+    private void updateSystem() throws IOException {
+          String stringUrl="http://code.google.com/p/senai-pe-cronos/downloads/list";
         try {
-            UpdateCronos update = new UpdateCronos();
-
-            //Checando a versão do repositorio
-            URL url = null;
-            String stringUrl = "http://senai-pe-cronos.googlecode.com/files/updateCronos-0-11.exe";
-
-            try {
-                url = new URL(stringUrl);
-            } catch (Exception ex) {
-                ex.printStackTrace(System.err);
-            }
-            String versao = null;
-            URL url1 = null;
-            String stringUrl1 = "http://code.google.com/p/senai-pe-cronos/downloads/list";
-
-            try {
-                url1 = new URL(stringUrl1);
-            } catch (Exception ex) {
-                ex.printStackTrace(System.err);
-            }
-            InputStream is = url1.openStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-
-            String linha = br.readLine();
-
-            while (linha != null) {
-                linha = br.readLine();
-
-                if (linha.contains("/files/updateCronos-0-")) {
-                    String[] s = linha.split("-");
-                    String[] v = s[4].split(".exe");
-                    versao = v[0];
-                    println("----" + versao);
-                    //linha=null;
-                    break;
-                }
-
-            }
-
-            System.out.println("versão:" + versao);
-            if (Integer.parseInt(versao) > version) {
-                File f = update.gravaArquivoDeURL(url, System.getProperty("user.dir"), String.valueOf(version), versao);
-                Runtime.getRuntime().exec(System.getProperty("user.dir") + "\\update.exe");
-                System.exit(0);
-            }
-        } catch (Exception e) {
-            Debug.println("Problemas com a conexão de Internet");                
+            url = new URL(stringUrl);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
         }
+        InputStream is = url.openStream();   
+InputStreamReader isr = new InputStreamReader(is);   
+BufferedReader br = new BufferedReader(isr);   
+  
+String linha = br.readLine();  
+  
+while (linha != null) { 
+    linha = br.readLine();  
+   
+   if(linha.contains("/files/updateCronos-0-")){
+   String[] s=linha.split("-");
+   String[] v=s[4].split(".exe");
+   versao=v[0];
+   println("----"+versao);
+  
+  break;
+}   
+
+}
+      
+stringUrl="http://senai-pe-cronos.googlecode.com/files/updateCronos-0-"+versao+".exe";
+UpdateCronos update=new UpdateCronos();
+        try {
+            url = new URL(stringUrl);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }       
+System.out.println("versão:"+versao);
+         if(Integer.parseInt(versao)>version){
+              
+             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao);
+            
+             
+            
+             if(update.isS()) {
+                 Runtime.getRuntime().exec(location+"\\update.exe");
+                 System.exit(0);
+         }
+         }
+
+          
     }
+
+    
 
     /**
      * Carrega as configuracoes do sistema
