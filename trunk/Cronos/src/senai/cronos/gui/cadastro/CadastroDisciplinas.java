@@ -85,6 +85,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                     }
 
                 } catch (ClassNotFoundException | SQLException ex) {
+                    
                     JOptionPane.showMessageDialog(null, "Problemas ao carregar dados:\n" + ex);
                 }
             }

@@ -142,7 +142,7 @@ public class HelpUI extends javax.swing.JPanel {
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/btAtualizacao.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/btSobre.png"))); // NOI18N
         jButton3.setText("sobre");
         jButton3.setBorder(null);
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
