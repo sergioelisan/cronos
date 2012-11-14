@@ -36,46 +36,35 @@ public class DAOHorario implements DAO<Horario> {
     public void add(Horario u) throws SQLException {
         open();
         String query = DatabaseUtil.query("horario.insert");
-
-        List<Docente> docentes = new ArrayList<>();
+        
+        // limpa o objeto Horario, mas essa tarefa precisa ser feita em 
+        // outro lugar, ou seja:
+        // TODO Refatorar!
+        
+        // Fim da limpeza
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setInt(1, u.getTurma().getId());
                 ps.setDate(2, new java.sql.Date(dia.getTime()));
-                ps.setInt(3, u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
-
-                Docente dc1 = u.getHorario().get(dia).getPrimeiro().getDocente();
-                ps.setInt(4, dc1.getMatricula());
-                if (!docentes.contains(dc1)) {
-                    docentes.add(dc1);
-                }
-
+                
+                System.out.println(u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
+                Integer disciplinaID = u.getHorario().get(dia).getPrimeiro().getDisciplina().getId();
+                ps.setInt(3, disciplinaID);
+                ps.setInt(4, u.getHorario().get(dia).getPrimeiro().getDocente().getMatricula());                
                 ps.setInt(5, u.getHorario().get(dia).getPrimeiro().getLab().getId());
-                ps.setInt(6, u.getHorario().get(dia).getSegundo().getDisciplina().getId());
-
-                Docente dc2 = u.getHorario().get(dia).getSegundo().getDocente();
-                ps.setInt(7, dc2.getMatricula());
-                if (!docentes.contains(dc2)) {
-                    docentes.add(dc2);
-                }
-
+                
+                System.out.println(u.getHorario().get(dia).getSegundo().getDisciplina().getId());
+                Integer disciplina2ID = u.getHorario().get(dia).getSegundo().getDisciplina().getId();
+                ps.setInt(6, disciplina2ID);
+                ps.setInt(7, u.getHorario().get(dia).getSegundo().getDocente().getMatricula());                
                 ps.setInt(8, u.getHorario().get(dia).getSegundo().getLab().getId());
 
                 ps.execute();
             }
         }
-        close();
-
-        try {
-            DAO<Ocupacao> dao = DAOFactory.getDao(Ocupacao.class);
-            for (Docente d : docentes) {
-                dao.add(d.getOcupacao());
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(System.err);
-        }
         
+        close();
         notifica();
     }
 

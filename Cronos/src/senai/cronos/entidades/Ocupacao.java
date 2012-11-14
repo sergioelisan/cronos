@@ -11,19 +11,19 @@ import senai.cronos.util.calendario.Calendario;
  * @author Sergio Lisan e Carlos Melo
  */
 public class Ocupacao {
-    
+
     public Ocupacao(Docente docente) {
         this.docente = docente;
         Calendario calendario = Main.calendario;
-        
-        Map<Date, Tupla<Aula,Aula>> horario1 = new TreeMap<>();
-        Map<Date, Tupla<Aula,Aula>> horario2 = new TreeMap<>();
-        
-        for(Date dia : calendario.getDiasUteis()) {
+
+        Map<Date, Tupla<Aula, Aula>> horario1 = new TreeMap<>();
+        Map<Date, Tupla<Aula, Aula>> horario2 = new TreeMap<>();
+
+        for (Date dia : calendario.getDiasUteis()) {
             horario1.put(dia, new Tupla<>(Aula.NULA, Aula.NULA));
             horario2.put((Date) dia.clone(), new Tupla<>(Aula.NULA, Aula.NULA));
         }
-        
+
         ocupacao.put(docente.getPrimeiroTurno(), horario1);
         ocupacao.put(docente.getSegundoTurno(), horario2);
     }
@@ -36,121 +36,134 @@ public class Ocupacao {
         this.docente = docente;
     }
 
-    public Map<Turno, Map<Date, Tupla<Aula,Aula>>> getOcupacao() {
+    public Map<Turno, Map<Date, Tupla<Aula, Aula>>> getOcupacao() {
         return ocupacao;
     }
 
-    public void setOcupacao(Map<Turno, Map<Date, Tupla<Aula,Aula>>> ocupacao) {
+    public void setOcupacao(Map<Turno, Map<Date, Tupla<Aula, Aula>>> ocupacao) {
         this.ocupacao = ocupacao;
     }
-    
+
     /**
      * verifica a disponibilidade de um docente.
+     *
      * @param turno
      * @param dia
      * @param metade
-     * @return 
+     * @return
      */
     public boolean isDisponivel(Turno turno, Date dia, Integer metade) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
-        
-        if (metade == 0)
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
+
+        if (metade == 0) {
             return horario.get(dia).getPrimeiro() == null;
-        else
+        } else {
             return horario.get(dia).getSegundo() == null;
+        }
     }
-    
+
     /**
      * verifica a disponibilidade de um docente.
+     *
      * @param turno
      * @param dia
-     * @return 
+     * @return
      */
     public boolean isDisponivel(Turno turno, Date dia) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
         return horario.get(dia).getPrimeiro().equals(Aula.NULA) && horario.get(dia).getSegundo().equals(Aula.NULA);
     }
-    
+
     /**
      * adiciona uma aula em uma metade de um turno
+     *
      * @param turno
      * @param dia
      * @param aula
-     * @param metade 
+     * @param metade
      */
     public void add(Turno turno, Date dia, Aula aula, Integer metade) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
-        if (metade == 0)
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
+        if (metade == 0) {
             horario.get(dia).setPrimeiro(aula);
-        else
+        } else {
             horario.get(dia).setSegundo(aula);
+        }
     }
-    
+
     /**
      * adiciona uma tupla de aulas em um dia em um turno
+     *
      * @param turno
      * @param dia
-     * @param aulas 
+     * @param aulas
      */
     public void add(Turno turno, Date dia, Tupla<Aula, Aula> aulas) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
         horario.put(dia, aulas);
     }
-    
+
     /**
      * remove a ocupacao de um determinado dia
+     *
      * @param turno
-     * @param dia a 
+     * @param dia a
      */
     public void remove(Turno turno, Date dia) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
-        horario.put(dia, new Tupla<Aula, Aula>(null, null) );
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
+        horario.put(dia, new Tupla<Aula, Aula>(null, null));
     }
-    
+
     /**
      * remove a ocupacao de um determinado dia, em um turno, em uma metade
+     *
      * @param turno
      * @param dia
      * @param metade mov
      */
     public void remove(Turno turno, Date dia, Integer metade) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
-        if (metade == 0)
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
+        if (metade == 0) {
             horario.get(dia).setPrimeiro(null);
-        else
+        } else {
             horario.get(dia).setSegundo(null);
-        
+        }
+
     }
-    
+
     /**
      * retorna uma tupla
+     *
      * @param turno
      * @param dia
-     * @return 
+     * @return
      */
     public Tupla<Aula, Aula> get(Turno turno, Date dia) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
         return horario.get(dia);
     }
-    
+
     /**
      * retorna uma aula
+     *
      * @param turno
      * @param dia
      * @param metade
-     * @return 
+     * @return
      */
     public Aula get(Turno turno, Date dia, Integer metade) {
-        Map<Date, Tupla<Aula,Aula>> horario = ocupacao.get(turno);
-        if (metade == 0)
+        Map<Date, Tupla<Aula, Aula>> horario = ocupacao.get(turno);
+        if (metade == 0) {
             return horario.get(dia).getPrimeiro();
-        else
+        } else {
             return horario.get(dia).getSegundo();
+        }
     }
-    
+
     /**
      * retorna o percetual de ocupacao
-     * @return 
+     *
+     * @return
      */
     public double percentualOcupacao() {
         double aulas = 0;
@@ -197,7 +210,6 @@ public class Ocupacao {
     public String toString() {
         return "Ocupacao{" + "matricula=" + docente + ", ocupacao=" + ocupacao + '}';
     }
-    
     private Docente docente;
-    private Map<Turno, Map<Date, Tupla<Aula,Aula>>> ocupacao = new HashMap<>();
+    private Map<Turno, Map<Date, Tupla<Aula, Aula>>> ocupacao = new HashMap<>();
 }
