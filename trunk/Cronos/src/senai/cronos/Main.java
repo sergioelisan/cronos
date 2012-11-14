@@ -58,7 +58,7 @@ public class Main {
             s.start();
 
             s.upBar();
-            updateSystem();
+           // updateSystem();
 
             s.upBar();
             loadDatabase();
@@ -106,7 +106,7 @@ public class Main {
         String dir = "";
         switch (os.getName()) {
             // windows 7, windows vista (com aero ligado) e windows xp ok!
-            case OperatingSystem.WINDOWS:
+             case OperatingSystem.WINDOWS:
                 path = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders";
                 key = "Personal";
                 dir = "\\cronos-database";

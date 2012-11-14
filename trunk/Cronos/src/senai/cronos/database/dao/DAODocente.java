@@ -13,6 +13,7 @@ import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
 import senai.cronos.util.Observador;
 import senai.cronos.util.debug.Contador;
+import java.util.Properties;
 
 /**
  *
@@ -54,8 +55,19 @@ public class DAODocente implements DAO<Docente> {
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query = DatabaseUtil.query("docente.delete");
-
+        String query; 
+        int n=Fachada.getAulasDia();
+        query= DatabaseUtil.query("horario.delete.docente1");
+         try (PreparedStatement ps = con.prepareStatement(query)) {
+             ps.setInt(1, (Integer) id);
+             ps.execute();
+        }
+        query = DatabaseUtil.query("horario.delete.docente2");
+         try (PreparedStatement ps = con.prepareStatement(query)) {
+             ps.setInt(1, (Integer) id);
+             ps.execute();
+        }
+         query = DatabaseUtil.query("docente.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             
