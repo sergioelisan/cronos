@@ -8,11 +8,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
-import senai.cronos.gui.Update;
 import senai.cronos.gui.Alertas;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.UpdateCronos;
@@ -28,11 +25,12 @@ import senai.cronos.util.os.OperatingSystem;
  * @author sergio lisan e carlos melo
  */
 public class Main {
-private String location;
+
+    private String location;
     public static int version = 40;
-    String versao=null;
-        URL url = null;
-        Alertas alerta=new Alertas();
+    String versao = null;
+    URL url = null;
+    Alertas alerta = new Alertas();
 
     public static int getVersion() {
         return version;
@@ -41,7 +39,6 @@ private String location;
     public static void setVersion(int version) {
         Main.version = version;
     }
-
 
     /**
      * Gênesis do sistema... aqui é onde tudo começa.
@@ -74,8 +71,8 @@ private String location;
 
             s.stop();
         } catch (Exception ex) {
-           alerta.jogarAviso(ex.toString());
-            
+            alerta.jogarAviso(ex.toString());
+
             //JOptionPane.showMessageDialog(null, "FAIL! Problemas na inicializacao:\n\n" + ex.getMessage());
         }
     }
@@ -112,7 +109,7 @@ private String location;
             case OperatingSystem.WINDOWS:
                 path = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders";
                 key = "Personal";
-                dir = "\\banco";
+                dir = "\\cronos-database";
                 break;
 
             // testado no Ubuntu 11.10 32 bits
@@ -129,17 +126,16 @@ private String location;
                 throw new IllegalArgumentException("Sistema Operacional ainda não suportado!");
         }
 
-         location= os.readRegistry(path, key) + dir;
-        
+        location = os.readRegistry(path, key) + dir;
+
         //location="wwer";
         println(location);
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
         networkServer.start(new PrintWriter(System.out));
         //Checando a versão do repositorio
-      
+
     }
-      
 
     /**
      * Atualiza o sistema
@@ -148,56 +144,54 @@ private String location;
      * @throws NumberFormatException
      */
     private void updateSystem() throws IOException {
-          String stringUrl="http://code.google.com/p/senai-pe-cronos/downloads/list";
+        String stringUrl = "http://code.google.com/p/senai-pe-cronos/downloads/list";
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
         }
-        InputStream is = url.openStream();   
-InputStreamReader isr = new InputStreamReader(is);   
-BufferedReader br = new BufferedReader(isr);   
-  
-String linha = br.readLine();  
-  
-while (linha != null) { 
-    linha = br.readLine();  
-   
-   if(linha.contains("/files/updateCronos-0-")){
-   String[] s=linha.split("-");
-   String[] v=s[4].split(".exe");
-   versao=v[0];
-   println("----"+versao);
-  
-  break;
-}   
+        InputStream is = url.openStream();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
 
-}
-      
-stringUrl="http://senai-pe-cronos.googlecode.com/files/updateCronos-0-"+versao+".exe";
-UpdateCronos update=new UpdateCronos();
+        String linha = br.readLine();
+
+        while (linha != null) {
+            linha = br.readLine();
+
+            if (linha.contains("/files/updateCronos-0-")) {
+                String[] s = linha.split("-");
+                String[] v = s[4].split(".exe");
+                versao = v[0];
+                println("----" + versao);
+
+                break;
+            }
+
+        }
+
+        stringUrl = "http://senai-pe-cronos.googlecode.com/files/updateCronos-0-" + versao + ".exe";
+        UpdateCronos update = new UpdateCronos();
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
-        }       
-System.out.println("versão:"+versao);
-         if(Integer.parseInt(versao)>version){
-              
-             File f = update.gravaArquivoDeURL(url,System.getProperty("user.dir"),String.valueOf(version),versao);
-            
-             
-            
-             if(update.isS()) {
-                 Runtime.getRuntime().exec(location+"\\update.exe");
-                 System.exit(0);
-         }
-         }
+        }
+        System.out.println("versão:" + versao);
+        if (Integer.parseInt(versao) > version) {
 
-          
+            File f = update.gravaArquivoDeURL(url, System.getProperty("user.dir"), String.valueOf(version), versao);
+
+
+
+            if (update.isS()) {
+                Runtime.getRuntime().exec(location + "\\update.exe");
+                System.exit(0);
+            }
+        }
+
+
     }
-
-    
 
     /**
      * Carrega as configuracoes do sistema
@@ -221,7 +215,6 @@ System.out.println("versão:"+versao);
      */
     private void loadUI() {
         SwingUtilities.invokeLater(new Runnable() {
-
             @Override
             public void run() {
                 CronosFrame frame = new CronosFrame();

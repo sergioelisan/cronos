@@ -59,9 +59,6 @@ public class DAODocente implements DAO<Docente> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             
-            DAO daoocupacao = DAOOcupacao.getInstance();
-            daoocupacao.remove((Integer) id);
-            
             DAO daoproficiencia = DAOProficiencia.getInstance();
             daoproficiencia.remove((Integer) id);
             
@@ -104,7 +101,6 @@ public class DAODocente implements DAO<Docente> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
-            DAOOcupacao ocup = (DAOOcupacao) DAOFactory.getDao(Ocupacao.class);
             DAOProficiencia prof = (DAOProficiencia) DAOFactory.getDao(Proficiencia.class);
             
             while (rs.next()) {
@@ -117,7 +113,10 @@ public class DAODocente implements DAO<Docente> {
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));
-                docente.setOcupacao(ocup.get(docente));
+                
+                // TODO implementar a logica de captacao dos dados da ocupacao do docente.
+                //docente.setOcupacao(ocup.get(docente));
+                
                 docente.setProficiencias(prof.get(docente));
                 docentes.add(docente);
             }
