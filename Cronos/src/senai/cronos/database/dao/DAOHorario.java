@@ -80,7 +80,7 @@ public class DAOHorario implements DAO<Horario> {
 
         close();
         notifica();
-    }
+    }  
 
     @Override
     public void update(Horario u) throws SQLException {
@@ -107,7 +107,7 @@ public class DAOHorario implements DAO<Horario> {
         close();
         notifica();
     }
-
+    
     @Override
     public List<Horario> get() throws SQLException {
         open();

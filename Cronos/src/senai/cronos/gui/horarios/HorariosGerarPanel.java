@@ -237,6 +237,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      */
     private void saveHorario() {
         try {
+            //Fachada.remove(horario.getTurma().getClass(), horario.getTurma().getId());
             Fachada.add(horario);
             
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
