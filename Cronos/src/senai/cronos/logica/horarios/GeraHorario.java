@@ -91,7 +91,7 @@ public abstract class GeraHorario {
         } while (!validacao.isValid(doc) && isEmChoque(doc, diasdisciplina, metade) && tentativas < MAXTENTATIVAS);
 
         if (tentativas > MAXTENTATIVAS) {
-            doc = new Docente();
+            doc = Docente.PADRAO;
         }
 
         return doc;
@@ -105,16 +105,16 @@ public abstract class GeraHorario {
      * @return
      */
     protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina) {
-        
+
         // TODO Novo algoritmo para verificar o choque do docente.
-        
+
         /*Turno tn = turma.getTurno();
-        for (Date dia : diasdisciplina) {
-            if (!docente.getHorarioDocente().isDisponivel(tn, dia)) {
-                return true;
-            }
-        }
-        return false;*/
+         for (Date dia : diasdisciplina) {
+         if (!docente.getHorarioDocente().isDisponivel(tn, dia)) {
+         return true;
+         }
+         }
+         return false;*/
         return true;
     }
 
@@ -128,7 +128,7 @@ public abstract class GeraHorario {
     protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina, Integer metade) {
         Turno tn = turma.getTurno();
         for (Date dia : diasdisciplina) {
-            if (!docente.getHorarioDocente().isDisponivel(dia, tn, metade)) {
+            if (docente.getHorarioDocente().isDisponivel(dia, tn, metade)) {
                 return true;
             }
         }
@@ -157,7 +157,8 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina, Map<Date, Tupla<Aula, Aula>> calendario)
+    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina,
+            Map<Date, Tupla<Aula, Aula>> calendario)
             throws ClassNotFoundException, SQLException {
         Docente doc = getDocente(uc, diasdisciplina);
         Laboratorio lab = uc.getLab();
@@ -165,13 +166,14 @@ public abstract class GeraHorario {
         au.setDisciplina(uc);
         au.setDocente(doc);
         au.setLab(lab);
-        
+
         doc.addProficiencia(uc);
 
         for (Date dia : diasdisciplina) {
             Tupla<Aula, Aula> aulas = new Tupla<>(au, au);
             calendario.put(dia, aulas);
-            //doc.getHorarioDocente().add(turma.getTurno(), dia, aulas);
+            doc.getHorarioDocente().add(dia, turma.getTurno(), aulas.getPrimeiro(), Tupla.PRIMERA);
+            doc.getHorarioDocente().add(dia, turma.getTurno(), aulas.getSegundo(), Tupla.SEGUNDA);
         }
     }
 
@@ -185,7 +187,8 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina, Map<Date, Tupla<Aula, Aula>> calendario, Integer modo)
+    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina, 
+            Map<Date, Tupla<Aula, Aula>> calendario, Integer modo)
             throws ClassNotFoundException, SQLException {
 
         Docente doc = getDocente(uc, diasdisciplina, modo);
@@ -202,7 +205,7 @@ public abstract class GeraHorario {
                 calendario.get(dia).setSegundo(au);
             }
 
-            //doc.getHorarioDocente().add(turma.getTurno(), dia, au, modo);
+            doc.getHorarioDocente().add(dia, turma.getTurno(), au, modo);
         }
     }
 }

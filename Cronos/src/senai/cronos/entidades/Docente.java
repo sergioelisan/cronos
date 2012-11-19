@@ -11,6 +11,8 @@ import senai.cronos.logica.HorarioDocente;
  */
 public class Docente implements Comparable<Docente> {
 
+    public static final Docente PADRAO = new Docente();
+    
     public Docente() {        
     }
 

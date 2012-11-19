@@ -12,7 +12,6 @@ import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.util.Aleatorio;
 import senai.cronos.util.Observador;
-import senai.cronos.util.debug.Debug;
 
 /**
  *
@@ -107,7 +106,7 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
         
         // Se nao houver nenhuma proficiencia, retorna 'extra-quadro'
         if (proficiencias.isEmpty()) {
-            return new Docente();
+            return Docente.PADRAO;
         }
         
         List<Docente> melhores = new ArrayList<>();
@@ -117,6 +116,7 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
             doc.setScore((int) scorefinal);
             melhores.add(doc);
         }
+        
         // pega os quatro melhores
         Collections.sort(melhores);
         Collections.reverse(melhores);        

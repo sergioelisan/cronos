@@ -16,11 +16,14 @@ import javax.swing.JOptionPane;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.Proficiencia;
+import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.util.Aleatorio;
 
 /**
  *
@@ -140,7 +143,13 @@ public class CadastroDocente extends javax.swing.JPanel {
                         }
                     }
 
-                    dc.setScore(0);
+                    // Adiciona proficiencias-padrao para o novo docente
+                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(dc.getNucleo())) {
+                        Proficiencia pf = new Proficiencia(dc, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
+                        dc.getProficiencias().add(pf);
+                    }                    
+                    
+                    dc.setScore(1);
 
                     String code = txtmatricula.getText();
                    
