@@ -232,11 +232,13 @@ public class CadastroDocente extends javax.swing.JPanel {
                     }
 
                     for (Docente doc : docentes) {
+                        if(!doc.getNome().equals("docente")){
                         Tile ct = new Tile();
                         ct.setNome(doc.getNome());
                         ct.setId(String.valueOf(doc.getMatricula()) + "");
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
+                        }
                     }
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas o docente:\n" + ex);
