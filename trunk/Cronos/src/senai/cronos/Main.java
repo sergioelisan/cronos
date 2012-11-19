@@ -109,7 +109,7 @@ public class Main {
              case OperatingSystem.WINDOWS:
                 path = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders";
                 key = "Personal";
-                dir = "\\cronos-database";
+                dir = "\\banco";
                 break;
 
             // testado no Ubuntu 11.10 32 bits

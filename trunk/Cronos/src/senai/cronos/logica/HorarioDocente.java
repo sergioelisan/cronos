@@ -50,7 +50,7 @@ public class HorarioDocente {
      * @param half
      */
     public void add(Date dia, Turno turno, Aula aula, Integer half) {
-        horario.get(dia).get(turno).insert(aula, Tupla.PRIMERA);
+        horario.get(dia).get(turno).insert(aula, half);
     }
     
     /**
