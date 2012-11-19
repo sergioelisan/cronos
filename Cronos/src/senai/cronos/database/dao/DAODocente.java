@@ -12,8 +12,6 @@ import senai.cronos.entidades.*;
 import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
 import senai.cronos.util.Observador;
-import senai.cronos.util.debug.Contador;
-import java.util.Properties;
 
 /**
  *
@@ -176,7 +174,6 @@ public class DAODocente implements DAO<Docente> {
     @Override
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
-        Contador.docentes++;
     }
 
     @Override

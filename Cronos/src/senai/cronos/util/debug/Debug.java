@@ -10,18 +10,6 @@ import static java.lang.System.out;
  */
 public class Debug {
 
-    public static void countConnections() {
-        println("\nContado as conexões ---------------------");
-        println("Docentes DAO: " + Contador.docentes);
-        println("Discipli DAO: " + Contador.disciplinas);
-        println("Laborato DAO: " + Contador.laboratorios);
-        println("Horarios DAO: " + Contador.horario);
-        println("Turmas   DAO: " + Contador.turmas);
-        println("Nucleos  DAO: " + Contador.nucleos);
-        println("Proficie DAO: " + Contador.proficiencias);
-        println("Ocupacao DAO: " + Contador.ocupacoes);
-    }
-    
     public static void println(Object o) {
         out.println(o);
     }

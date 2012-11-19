@@ -13,7 +13,6 @@ import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.util.Observador;
-import senai.cronos.util.debug.Contador;
 import senai.cronos.util.debug.Debug;
 
 /**
@@ -121,7 +120,6 @@ public class DAOProficiencia implements DAO<Proficiencia> {
     @Override
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
-        Contador.proficiencias++;
     }
 
     @Override

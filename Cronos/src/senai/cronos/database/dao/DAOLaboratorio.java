@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.util.Observador;
 import senai.cronos.database.DatabaseUtil;
-import senai.cronos.util.debug.Contador;
 
 /**
  *
@@ -126,7 +125,6 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
     @Override
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
-        Contador.laboratorios++;
     }
     
     @Override

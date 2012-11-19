@@ -86,8 +86,6 @@ public class Main {
             NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
             networkServer.shutdown();
 
-            // metodo usado para debugar o numero de conexoes
-            Debug.countConnections();
 
             System.exit(0);
         } catch (Exception ex) {
