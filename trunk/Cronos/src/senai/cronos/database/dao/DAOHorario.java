@@ -14,7 +14,6 @@ import senai.cronos.Fachada;
 import senai.cronos.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.*;
-import senai.cronos.util.debug.Contador;
 import senai.cronos.util.Tupla;
 
 /**
@@ -176,7 +175,6 @@ public class DAOHorario implements DAO<Horario> {
     @Override
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
-        Contador.horario++;
     }
 
     @Override

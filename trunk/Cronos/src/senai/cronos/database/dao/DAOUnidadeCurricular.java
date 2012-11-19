@@ -13,7 +13,6 @@ import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.debug.Contador;
 
 /**
  *
@@ -142,7 +141,6 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
     @Override
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
-        Contador.disciplinas++;
     }
     
     private Connection con;

@@ -88,7 +88,7 @@ public class HorarioDocente {
      * @return 
      */
     public double getPercentualOcupacao() {
-        throw new UnsupportedOperationException("Vamo imprementá! Ispera");
+        return 0.7;
     }
     
     /**
