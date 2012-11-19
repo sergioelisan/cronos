@@ -110,7 +110,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                     Docente dc = new Docente();
                     DateFormat fmt = DateFormat.getDateInstance();
                     dc.setContratacao(fmt.parse(txtcontratacao.getText().trim()));
-
+                    
                     dc.setFormacao(Formacao.valueOf( ((String) comboformacao.getSelectedItem()).toUpperCase() ) );
                     dc.setNome(txtnome.getText().trim());
 
@@ -143,7 +143,9 @@ public class CadastroDocente extends javax.swing.JPanel {
                     dc.setScore(0);
 
                     String code = txtmatricula.getText();
-                    if (code.equals("matrícula")) {
+                   
+                    if (!Fachada.existeDocente(code)) {
+                        dc.setMatricula(Integer.parseInt(code));
                         Fachada.add(dc);
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
                     } else {
@@ -187,8 +189,9 @@ public class CadastroDocente extends javax.swing.JPanel {
                     return;
                 }
 
-                initData();
+               
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+                initData();
             }
         });
 

@@ -109,7 +109,14 @@ public class Fachada {
     public static Docente buscaDocente(String nome) throws ClassNotFoundException, SQLException {
         return Docentes.instance().buscaDocente(nome);
     }
-
+/**
+ * Verifica se o docente existe
+ * @param mat
+ * @return existe
+ */
+    public static boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException{
+      return Docentes.instance().existeDocente(matricula);  
+    }
     /**
      * retorna os docentes de um determinado nucleo.
      * @param nucleo

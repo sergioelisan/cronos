@@ -63,7 +63,19 @@ public final class Docentes implements Observador, Repository<Docente> {
         }
         return null;
     }
-
+    /**
+     * Busca docente pela matricula
+     * @Param matricula
+     * @return existe
+     */
+    public boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException{
+        for (Docente dc:getDocentes()){
+            if(dc.getMatricula().equals(Integer.parseInt(matricula))){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Calcula o Score final de um docente de acordo com uma Disciplina
      * @param docente
