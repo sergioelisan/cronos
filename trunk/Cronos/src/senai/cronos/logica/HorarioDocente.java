@@ -88,6 +88,7 @@ public class HorarioDocente {
      * @return 
      */
     public double getPercentualOcupacao() {
+        // TODO Desenvolver a logica de calculo da ocupacao de um docente
         return 0.7;
     }
     
