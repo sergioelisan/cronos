@@ -129,7 +129,7 @@ public class DAOHorario implements DAO<Horario> {
     @Override
     public Horario get(Serializable id) throws SQLException {
         open();
-        Horario h = new Horario();
+        Horario h = Horario.create();
         String query = DatabaseUtil.query("horario.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -143,13 +143,13 @@ public class DAOHorario implements DAO<Horario> {
             while (rs.next()) {
                 Date dia = rs.getDate("dia");
 
-                Aula a1 = new Aula();
+                Aula a1 = Aula.create();
 
                 a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1")));
                 a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
                 a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
 
-                Aula a2 = new Aula();
+                Aula a2 = Aula.create();
                 a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2")));
                 a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
                 a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));

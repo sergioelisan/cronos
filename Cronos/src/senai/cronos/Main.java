@@ -207,7 +207,7 @@ public class Main {
             diasDeFeriado.add(f.getDia());
         }
 
-        calendario = new Calendario(inicio, fim, diasDeFeriado);
+        CALENDARIO = new Calendario(inicio, fim, diasDeFeriado);
     }
 
     /**
@@ -223,7 +223,7 @@ public class Main {
         });
     }
     /**
-     * objeto que armazena o calendario de dias uteis usados pela escola
+     * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */
-    public static Calendario calendario;
+    public static Calendario CALENDARIO;
 }

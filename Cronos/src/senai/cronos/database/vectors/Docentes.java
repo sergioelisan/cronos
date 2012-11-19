@@ -1,4 +1,4 @@
-package senai.cronos.logica;
+package senai.cronos.database.vectors;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,15 +18,14 @@ import senai.cronos.util.calendario.DateUtil;
  * @author Carlos Melo e Sergio Lisan
  */
 public final class Docentes implements Observador, Repository<Docente> {
-    
-    private List<Docente> docentes;
 
+    private List<Docente> docentes;
     private static Docentes instance = new Docentes();
-    
+
     public static Docentes instance() {
         return instance;
     }
-    
+
     private Docentes() {
         try {
             DAOFactory.getDao(Docente.class).registra(this);
@@ -38,22 +37,25 @@ public final class Docentes implements Observador, Repository<Docente> {
 
     /**
      * retorna docentes de um determinado nucleo
+     *
      * @param nucleo
-     * @return 
+     * @return
      */
     public List<Docente> buscaDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         List<Docente> _docentes = new ArrayList<>();
-        for(Docente doc : getDocentes()) {
-            if(doc.getNucleo().equals(nucleo))
+        for (Docente doc : getDocentes()) {
+            if (doc.getNucleo().equals(nucleo)) {
                 _docentes.add(doc);
+            }
         }
         return _docentes;
     }
 
     /**
      * Busca um docente pelo nome
+     *
      * @param nome
-     * @return 
+     * @return
      */
     public Docente buscaDocente(String nome) throws ClassNotFoundException, SQLException {
         for (Docente dc : getDocentes()) {
@@ -63,24 +65,13 @@ public final class Docentes implements Observador, Repository<Docente> {
         }
         return null;
     }
-    /**
-     * Busca docente pela matricula
-     * @Param matricula
-     * @return existe
-     */
-    public boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException{
-        for (Docente dc:getDocentes()){
-            if(dc.getMatricula().equals(Integer.parseInt(matricula))){
-                return true;
-            }
-        }
-        return false;
-    }
+
     /**
      * Calcula o Score final de um docente de acordo com uma Disciplina
+     *
      * @param docente
      * @param uc
-     * @return 
+     * @return
      */
     public double getScoreFinal(Docente docente, UnidadeCurricular uc) {
         double score = calcScore(docente);
@@ -91,11 +82,11 @@ public final class Docentes implements Observador, Repository<Docente> {
     }
 
     /**
-     * Calcula o score, atributo, de um docente. Aqui, o score é calculado levando em consideração a sua formação e
-     * experiência, e dois pesos:
-     * 
+     * Calcula o score, atributo, de um docente. Aqui, o score é calculado
+     * levando em consideração a sua formação e experiência, e dois pesos:
+     *
      * experiência * 3 + formação * 2
-     * 
+     *
      * @param nomeDocente a ser calculado o score
      * @return valor do score do docente
      */
@@ -113,11 +104,12 @@ public final class Docentes implements Observador, Repository<Docente> {
 
     /**
      * Gera uma pontuacao de acordo com a ocupacao do docente
+     *
      * @param docente
-     * @return 
+     * @return
      */
     private double calcScoreOcupacao(Docente docente) {
-        double ocupacao = docente.getOcupacao().percentualOcupacao();
+        double ocupacao = docente.getHorarioDocente().getPercentualOcupacao();
 
         if (ocupacao >= 1 && ocupacao <= 10) {
             return 1;
@@ -137,7 +129,23 @@ public final class Docentes implements Observador, Repository<Docente> {
     }
 
     /**
+     * Busca docente pela matricula
+     *
+     * @Param matricula
+     * @return existe
+     */
+    public boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException {
+        for (Docente dc : getDocentes()) {
+            if (dc.getMatricula().equals(Integer.parseInt(matricula))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Retorna o scoreTemp de um docente em uma determinada disciplina
+     *
      * @param nomeDocente a ser pesquisado
      * @param nomeDisciplina a ser pesquisado
      * @return scoreTempo de um docente em uma disciplina
@@ -176,11 +184,11 @@ public final class Docentes implements Observador, Repository<Docente> {
 
     @Override
     public Docente get(Class c, Integer id) {
-        for(Docente docente : docentes)
-            if(docente.getMatricula().equals(id))
+        for (Docente docente : docentes) {
+            if (docente.getMatricula().equals(id)) {
                 return docente;
+            }
+        }
         return null;
     }
-
-    
 }

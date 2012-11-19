@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Horario;
+import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.util.calendario.DateUtil;
 import senai.cronos.util.Tupla;
@@ -95,7 +96,7 @@ public class HorarioUIFactory {
             }
 
             // cria uma calendario do mes, com as peças geradas para cada dia deste
-            HorarioUI calendar = new HorarioUI(DateUtil.getNomeMes(mes), horario.getTurma(), tiles);
+            HorarioUI calendar = new HorarioUI(DateUtil.getNomeMes(mes), new Turma(), tiles);
             calendarios.add(calendar);
         }
 
@@ -115,11 +116,11 @@ public class HorarioUIFactory {
         for (Date dia : horario.getHorario().keySet()) {
             Tupla<Aula, Aula> aulas = horario.getHorario().get(dia);
             if (aulas.getPrimeiro() == null) {
-                aulas.setPrimeiro(new Aula());
+                aulas.setPrimeiro(Aula.create());
             }
 
             if (aulas.getSegundo() == null) {
-                aulas.setSegundo(new Aula());
+                aulas.setSegundo(Aula.create());
             }
 
             disciplinas.add(aulas.getPrimeiro().getDisciplina());
@@ -137,7 +138,7 @@ public class HorarioUIFactory {
             i++;
         }
         dicionarioCores.put(new UnidadeCurricular(), Color.white);
-        
+
 
         /*
          * Cria as legendas, usando o dicionario de cores

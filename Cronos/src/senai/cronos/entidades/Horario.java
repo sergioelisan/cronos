@@ -1,6 +1,7 @@
 package senai.cronos.entidades;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -16,36 +17,24 @@ import senai.cronos.util.Tupla;
 public class Horario {
     
     /**
+     * Cria uma instancia vazia padrao para Horario
+     * @return horario
+     */
+    public static Horario create() {
+        Horario horario = new Horario();
+        for (Date diasUteis : Main.CALENDARIO.getDiasUteis()) {
+            horario.getHorario().put(diasUteis, new Tupla<>(Aula.create(), Aula.create()));
+        }
+        return horario;
+    }
+    
+    /**
      * construtor vazio
      */
-    public Horario() {
-        for (Date util : Main.calendario.getDiasUteis()) {
-            horario.put(util, new Tupla<Aula, Aula>());
-        }
-        
-    }
+    private Horario() {
+        horario = new HashMap<>();
+    }   
     
-    /**
-     * construtor que recebe uma turma e coloca os dias de acordo com o calendario do sistema
-     * @param turma 
-     */
-    public Horario(Turma turma) {
-        this();
-        this.turma = turma;
-        
-        
-    }
-    
-    /**
-     * Construtor que recebe um horario pronto e uma turma
-     * @param turma
-     * @param horario 
-     */
-    public Horario(Turma turma, Map<Date, Tupla<Aula,Aula>> horario) {
-        this.turma = turma;
-        this.horario = horario;
-    }
-
     public Map<Date, Tupla<Aula, Aula>> getHorario() {
         return horario;
     }
@@ -53,11 +42,11 @@ public class Horario {
     public void setHorario(Map<Date, Tupla<Aula, Aula>> horario) {
         this.horario = horario;
     }
-
+    
     public Turma getTurma() {
         return turma;
     }
-
+    
     public void setTurma(Turma turma) {
         this.turma = turma;
     }
@@ -71,9 +60,6 @@ public class Horario {
             return false;
         }
         final Horario other = (Horario) obj;
-        if (!Objects.equals(this.turma, other.turma)) {
-            return false;
-        }
         if (!Objects.equals(this.horario, other.horario)) {
             return false;
         }
@@ -83,12 +69,10 @@ public class Horario {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.turma);
         hash = 29 * hash + Objects.hashCode(this.horario);
         return hash;
     }
 
-    
-    private Turma turma = new Turma();
+    private Turma turma;
     private Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
 }

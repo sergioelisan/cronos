@@ -1,4 +1,4 @@
-package senai.cronos.logica;
+package senai.cronos.database.vectors;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

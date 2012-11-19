@@ -13,16 +13,7 @@ import senai.cronos.entidades.enums.Turno;
 public class Turma {
 
     public Turma() {
-    }
-
-    public Turma(String nome, Nucleo nucleo, Date entrada, Date saida, Turno turno, int habilitacao) {
-        this.nome = nome;
-        this.nucleo = nucleo;
-        this.entrada = entrada;
-        this.saida = saida;
-        this.turno = turno;
-        this.habilitacao = habilitacao;
-    }
+    }   
 
     public Date getEntrada() {
         return entrada;
@@ -78,6 +69,20 @@ public class Turma {
 
     public void setTurno(Turno turno) {
         this.turno = turno;
+    }
+    
+    /**
+     * @return the horario
+     */
+    public Horario getHorario() {
+        return horario;
+    }
+
+    /**
+     * @param horario the horario to set
+     */
+    public void setHorario(Horario horario) {
+        this.horario = horario;
     }
 
     public boolean equals(Object obj) {
@@ -154,13 +159,19 @@ public class Turma {
     /**
      * saida da turma, setada inicialmente no EPOCH, para evitar o nullpointerexception
      */
-    private Date saida = new GregorianCalendar(1970, 0, 1).getTime();
+    private Date saida = new GregorianCalendar(2100, 0, 1).getTime();
     /**
      * Turno da turma
      */
     private Turno turno = Turno.MANHA;
     /**
+     * horario da turma
+     */
+    private Horario horario = Horario.create();
+    /**
      * habilitacao
      */
     private int habilitacao = 0;
+
+    
 }

@@ -4,17 +4,46 @@ import java.util.Objects;
 
 /**
  * Classe que representa uma par de dois elementos
- * 
+ *
  * @author Sergio Lisan e carlos melo
  */
 public class Tupla<K, V> {
 
+    public static final Integer PRIMERA = 0;
+    public static final Integer SEGUNDA = 1;
+    
     public Tupla() {
     }
 
     public Tupla(K primeiro, V segundo) {
         this.primeiro = primeiro;
         this.segundo = segundo;
+    }
+
+    /**
+     * Insere de acordo com a posicao passada com parametro
+     * @param objeto
+     * @param posicao 
+     */
+    public void insert(Object objeto, Integer posicao) {
+        if (posicao == Tupla.PRIMERA) {
+            this.setPrimeiro((K) objeto);
+        } else {
+            this.setSegundo((V) objeto);
+        }
+    }
+    
+    /**
+     * Retorna um objeto alocado na posicao passada como parametro
+     * @param posicao
+     * @return 
+     */
+    public Object get(Integer posicao) {
+        if (posicao == Tupla.PRIMERA) {
+            return getPrimeiro();
+        } else {
+            return getSegundo();
+        }
     }
 
     public K getPrimeiro() {
@@ -63,8 +92,6 @@ public class Tupla<K, V> {
     public String toString() {
         return "Tupla { " + "primeiro = " + primeiro + ", segundo = " + segundo + '}';
     }
-    
     private K primeiro;
     private V segundo;
-    
 }
