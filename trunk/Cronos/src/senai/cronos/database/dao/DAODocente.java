@@ -34,7 +34,7 @@ public class DAODocente implements DAO<Docente> {
     public void add(Docente u) throws SQLException {
         open();
         String query = DatabaseUtil.query("docente.insert");
-
+        System.out.println(query);
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, u.getMatricula());
             ps.setString(2, u.getNome());
