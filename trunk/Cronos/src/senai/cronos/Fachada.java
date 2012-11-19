@@ -8,14 +8,14 @@ import java.util.List;
 import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.database.dao.DAO;
 import senai.cronos.entidades.*;
-import senai.cronos.logica.Disciplinas;
-import senai.cronos.logica.Docentes;
-import senai.cronos.logica.Laboratorios;
-import senai.cronos.logica.Nucleos;
+import senai.cronos.database.vectors.Disciplinas;
+import senai.cronos.database.vectors.Docentes;
+import senai.cronos.database.vectors.Laboratorios;
+import senai.cronos.database.vectors.Nucleos;
 import senai.cronos.logica.Preferencias;
-import senai.cronos.logica.Repository;
-import senai.cronos.logica.RepositoryFactory;
-import senai.cronos.logica.Turmas;
+import senai.cronos.database.vectors.Repository;
+import senai.cronos.database.vectors.RepositoryFactory;
+import senai.cronos.database.vectors.Turmas;
 
 /**
  *

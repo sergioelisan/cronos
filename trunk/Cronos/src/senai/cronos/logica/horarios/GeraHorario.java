@@ -29,11 +29,7 @@ public abstract class GeraHorario {
     abstract void generate(Horario horario) throws ClassNotFoundException, SQLException;
 
     protected Horario getHorario() throws ClassNotFoundException, SQLException {
-        Horario horario = Fachada.<Horario>get(Horario.class, turma.getId());
-        if (horario.getHorario().keySet().isEmpty()) {
-            horario = new Horario(turma);
-        }
-        return horario;
+        return Fachada.<Horario>get(Horario.class, turma.getId());
     }
 
     protected List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
@@ -114,7 +110,7 @@ public abstract class GeraHorario {
         
         /*Turno tn = turma.getTurno();
         for (Date dia : diasdisciplina) {
-            if (!docente.getOcupacao().isDisponivel(tn, dia)) {
+            if (!docente.getHorarioDocente().isDisponivel(tn, dia)) {
                 return true;
             }
         }
@@ -132,7 +128,7 @@ public abstract class GeraHorario {
     protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina, Integer metade) {
         Turno tn = turma.getTurno();
         for (Date dia : diasdisciplina) {
-            if (!docente.getOcupacao().isDisponivel(tn, dia, metade)) {
+            if (!docente.getHorarioDocente().isDisponivel(dia, tn, metade)) {
                 return true;
             }
         }
@@ -165,14 +161,17 @@ public abstract class GeraHorario {
             throws ClassNotFoundException, SQLException {
         Docente doc = getDocente(uc, diasdisciplina);
         Laboratorio lab = uc.getLab();
-        Aula au = new Aula(uc, doc, lab);
-
+        Aula au = Aula.create();
+        au.setDisciplina(uc);
+        au.setDocente(doc);
+        au.setLab(lab);
+        
         doc.addProficiencia(uc);
 
         for (Date dia : diasdisciplina) {
             Tupla<Aula, Aula> aulas = new Tupla<>(au, au);
             calendario.put(dia, aulas);
-            //doc.getOcupacao().add(turma.getTurno(), dia, aulas);
+            //doc.getHorarioDocente().add(turma.getTurno(), dia, aulas);
         }
     }
 
@@ -191,7 +190,10 @@ public abstract class GeraHorario {
 
         Docente doc = getDocente(uc, diasdisciplina, modo);
         Laboratorio lab = uc.getLab();
-        Aula au = new Aula(uc, doc, lab);
+        Aula au = Aula.create();
+        au.setDisciplina(uc);
+        au.setDocente(doc);
+        au.setLab(lab);
 
         for (Date dia : diasdisciplina) {
             if (modo == 0 || modo == 2) {
@@ -200,7 +202,7 @@ public abstract class GeraHorario {
                 calendario.get(dia).setSegundo(au);
             }
 
-            //doc.getOcupacao().add(turma.getTurno(), dia, au, modo);
+            //doc.getHorarioDocente().add(turma.getTurno(), dia, au, modo);
         }
     }
 }

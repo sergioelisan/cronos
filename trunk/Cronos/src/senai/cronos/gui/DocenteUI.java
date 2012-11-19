@@ -128,7 +128,7 @@ public class DocenteUI extends javax.swing.JPanel {
                     lbscore.setText("score: " + String.valueOf(doc.getScore()));
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
-                    double ocupacao = Double.isNaN(doc.getOcupacao().percentualOcupacao()) ? 0 : doc.getOcupacao().percentualOcupacao() * 100;
+                    double ocupacao = Double.isNaN(doc.getHorarioDocente().getPercentualOcupacao()) ? 0 : doc.getHorarioDocente().getPercentualOcupacao() * 100;
                     lbocupacao.setText("ocupação: " + String.valueOf(ocupacao) + "%");
 
                 } catch (ClassNotFoundException | SQLException ex) {

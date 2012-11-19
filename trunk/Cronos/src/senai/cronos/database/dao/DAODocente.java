@@ -20,16 +20,16 @@ import java.util.Properties;
  * @author Sergio Lisan e Carlos Melo
  */
 public class DAODocente implements DAO<Docente> {
-    
+
     private static DAO<Docente> instance = new DAODocente();
-    
+
     public static DAO<Docente> getInstance() {
         return instance;
     }
-    
-    private DAODocente() {        
+
+    private DAODocente() {
     }
-    
+
     @Override
     public void add(Docente u) throws SQLException {
         open();
@@ -55,28 +55,28 @@ public class DAODocente implements DAO<Docente> {
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
-        String query; 
-        int n=Fachada.getAulasDia();
-        query= DatabaseUtil.query("horario.delete.docente1");
-         try (PreparedStatement ps = con.prepareStatement(query)) {
-             ps.setInt(1, (Integer) id);
-             ps.execute();
-        }
-        query = DatabaseUtil.query("horario.delete.docente2");
-         try (PreparedStatement ps = con.prepareStatement(query)) {
-             ps.setInt(1, (Integer) id);
-             ps.execute();
-        }
-         query = DatabaseUtil.query("docente.delete");
+        String query;
+        int n = Fachada.getAulasDia();
+        query = DatabaseUtil.query("horario.delete.docente1");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
-            
-            DAO daoproficiencia = DAOProficiencia.getInstance();
-            daoproficiencia.remove((Integer) id);
-            
             ps.execute();
         }
-        
+        query = DatabaseUtil.query("horario.delete.docente2");
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, (Integer) id);
+            ps.execute();
+        }
+        query = DatabaseUtil.query("docente.delete");
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, (Integer) id);
+
+            DAO daoproficiencia = DAOProficiencia.getInstance();
+            daoproficiencia.remove((Integer) id);
+
+            ps.execute();
+        }
+
         close();
         notifica();
     }
@@ -84,7 +84,7 @@ public class DAODocente implements DAO<Docente> {
     @Override
     public void update(Docente u) throws SQLException {
         open();
-        
+
         String query = DatabaseUtil.query("docente.update");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -96,7 +96,7 @@ public class DAODocente implements DAO<Docente> {
             ps.setInt(6, u.getPrimeiroTurno().ordinal());
             ps.setInt(7, u.getSegundoTurno().ordinal());
             ps.setInt(8, u.getMatricula());
-            ps.execute();            
+            ps.execute();
         }
 
         close();
@@ -106,7 +106,7 @@ public class DAODocente implements DAO<Docente> {
     @Override
     public List<Docente> get() throws SQLException {
         open();
-        
+
         List<Docente> docentes = new LinkedList<>();
         String query = DatabaseUtil.query("docente.select");
 
@@ -114,28 +114,28 @@ public class DAODocente implements DAO<Docente> {
             ResultSet rs = ps.executeQuery();
 
             DAOProficiencia prof = (DAOProficiencia) DAOFactory.getDao(Proficiencia.class);
-            
+
             while (rs.next()) {
                 Docente docente = new Docente();
                 docente.setMatricula(rs.getInt("matricula"));
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
-                docente.setNome(rs.getString("nome"));                
-                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));                
+                docente.setNome(rs.getString("nome"));
+                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));
-                
+
                 // TODO implementar a logica de captacao dos dados da ocupacao do docente.
                 //docente.setOcupacao(ocup.get(docente));
-                
+
                 docente.setProficiencias(prof.get(docente));
                 docentes.add(docente);
             }
         } catch (ClassNotFoundException ex) {
             // TODO Tratar essa excecao direitinho
         }
-        
+
         close();
         return docentes;
     }
@@ -149,25 +149,25 @@ public class DAODocente implements DAO<Docente> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 docente.setMatricula(rs.getInt("matricula"));
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
                 docente.setNome(rs.getString("nome"));
-                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo"))); 
+                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
-                docente.setScore(rs.getInt("score"));                
+                docente.setScore(rs.getInt("score"));
             }
         } catch (ClassNotFoundException ex) {
             // TODO Tratar essa excecao direitinho
         }
-        
+
         close();
         return docente;
     }
-    
+
     @Override
     public void close() throws SQLException {
         con.close();
@@ -178,7 +178,7 @@ public class DAODocente implements DAO<Docente> {
         con = DatabaseUtil.conexao();
         Contador.docentes++;
     }
-    
+
     @Override
     public void registra(Observador o) {
         observadores.add(o);
@@ -191,10 +191,10 @@ public class DAODocente implements DAO<Docente> {
 
     @Override
     public void notifica() {
-        for(Observador o : observadores)
+        for (Observador o : observadores) {
             o.update();
+        }
     }
-    
     private List<Observador> observadores = new ArrayList<>();
     private Connection con;
 }

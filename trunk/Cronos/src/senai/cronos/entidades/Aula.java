@@ -8,15 +8,20 @@ import java.util.Objects;
  */
 public class Aula {
     
-    public static Aula NULA = new Aula();
-
-    public Aula() {        
+    /**
+     * Aula padrao, vazia, usada para ocupar um espaço e evitar nulos
+     */
+    public static final Aula PADRAO = Aula.create();
+    
+    /**
+     * Cria uma instancia padrao de Aula
+     * @return aula
+     */
+    public static Aula create() {
+        return new Aula();
     }
-
-    public Aula(UnidadeCurricular disciplina, Docente docente, Laboratorio lab) {
-        this.disciplina = disciplina;
-        this.docente = docente;
-        this.lab = lab;
+    
+    private Aula() {        
     }
 
     public UnidadeCurricular getDisciplina() {
@@ -51,6 +56,7 @@ public class Aula {
         this.lab = lab;
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -74,6 +80,7 @@ public class Aula {
         return true;
     }
 
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.id);
@@ -83,6 +90,7 @@ public class Aula {
         return hash;
     }
 
+    @Override
     public String toString() {
         return "Aula{" + "id=" + id + ", disciplina=" + disciplina + ", docente=" + docente + ", lab=" + lab + '}';
     }

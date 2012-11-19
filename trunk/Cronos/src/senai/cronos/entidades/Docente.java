@@ -3,6 +3,7 @@ package senai.cronos.entidades;
 import java.util.*;
 import senai.cronos.entidades.enums.Formacao;
 import senai.cronos.entidades.enums.Turno;
+import senai.cronos.logica.HorarioDocente;
 
 /**
  *
@@ -10,27 +11,10 @@ import senai.cronos.entidades.enums.Turno;
  */
 public class Docente implements Comparable<Docente> {
 
-    public Docente() {
-        
+    public Docente() {        
     }
 
-    public Docente(Integer matricula, String nome, Formacao formacao, Date contratacao,
-            Nucleo nucleo, Ocupacao ocupacao, int score, Turno primeiroTurno, Turno segundoTurno) {
-        this();
-        this.matricula = matricula;
-        this.nome = nome;
-        this.formacao = formacao;
-        this.contratacao = contratacao;
-        this.nucleo = nucleo;
-        this.ocupacao = ocupacao;
-        this.score = score;
-        this.primeiroTurno = primeiroTurno;
-        this.segundoTurno = segundoTurno;
-    }
-
-    /*
-     * METODOS DE NEGOCIO PARA UM DOCENTE
-     */
+    /* METODOS DE NEGOCIO PARA UM DOCENTE  */
     
     /**
      * Retorna as unidades curriculares das proficiencias deste docente
@@ -124,11 +108,11 @@ public class Docente implements Comparable<Docente> {
         this.nucleo = nucleo;
     }
 
-    public Ocupacao getOcupacao() {
+    public HorarioDocente getHorarioDocente() {
         return ocupacao;
     }
 
-    public void setOcupacao(Ocupacao ocupacao) {
+    public void setOcupacao(HorarioDocente ocupacao) {
         this.ocupacao = ocupacao;
     }
 
@@ -221,6 +205,7 @@ public class Docente implements Comparable<Docente> {
                 + ", primeiroTurno = " + primeiroTurno
                 + ", segundoTurno = " + segundoTurno + '}';
     }
+    
     /**
      * matricula que serve como identificador unico do docente
      */
@@ -248,7 +233,7 @@ public class Docente implements Comparable<Docente> {
     /**
      * Como o horario do docente esta sendo preenchido
      */
-    private Ocupacao ocupacao = new Ocupacao(this);
+    private HorarioDocente ocupacao = HorarioDocente.create();
     /**
      * pontuacao do docente. esse atributo é relacionado com a formacao e o
      * tempo de casa do docente
