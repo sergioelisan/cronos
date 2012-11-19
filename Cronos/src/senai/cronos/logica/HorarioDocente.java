@@ -32,9 +32,9 @@ public class HorarioDocente {
 
         for (Date dia : Main.CALENDARIO.getDiasUteis()) {
             Map<Turno, Tupla<Aula, Aula>> diaDeTrabalho = new HashMap<>();
-            diaDeTrabalho.put(Turno.MANHA, new Tupla<>(Aula.create(), Aula.create()));
-            diaDeTrabalho.put(Turno.TARDE, new Tupla<>(Aula.create(), Aula.create()));
-            diaDeTrabalho.put(Turno.NOITE, new Tupla<>(Aula.create(), Aula.create()));
+            diaDeTrabalho.put(Turno.MANHA, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
+            diaDeTrabalho.put(Turno.TARDE, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
+            diaDeTrabalho.put(Turno.NOITE, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
             horario.put(dia, diaDeTrabalho);
         }
 
