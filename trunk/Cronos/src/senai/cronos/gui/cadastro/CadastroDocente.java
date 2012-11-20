@@ -111,6 +111,8 @@ public class CadastroDocente extends javax.swing.JPanel {
             public void run() {
                 try {
                     Docente dc = new Docente();
+                    Proficiencia pf=new Proficiencia();
+                    dc.setMatricula(Integer.parseInt(txtmatricula.getText()));
                     DateFormat fmt = DateFormat.getDateInstance();
                     dc.setContratacao(fmt.parse(txtcontratacao.getText().trim()));
                     
@@ -142,26 +144,28 @@ public class CadastroDocente extends javax.swing.JPanel {
                             dc.setNucleo(nc);
                         }
                     }
-
-                    // Adiciona proficiencias-padrao para o novo docente
-                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(dc.getNucleo())) {
-                        Proficiencia pf = new Proficiencia(dc, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
-                        dc.getProficiencias().add(pf);
-                    }                    
-                    
                     dc.setScore(1);
 
-                    String code = txtmatricula.getText();
+                    //String code = txtmatricula.getText();
                    
-                    if (!Fachada.existeDocente(code)) {
-                        dc.setMatricula(Integer.parseInt(code));
+                    if (!Fachada.existeDocente(txtmatricula.getText())) {
+                        
+                        
                         Fachada.add(dc);
+                        
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
                     } else {
-                        dc.setMatricula(Integer.parseInt(code));
+                        //dc.setMatricula(Integer.parseInt(code));
                         Fachada.update(dc);
                         JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
                     }
+                    // Adiciona proficiencias-padrao para o novo docente
+                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(dc.getNucleo())) {
+                        pf = new Proficiencia(dc, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
+                       
+                        dc.getProficiencias().add(pf);
+                         Fachada.add(pf);
+                    } 
 
                 } catch (ClassNotFoundException | SQLException e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Problemas ao adicionar Docente:\n" + e);
