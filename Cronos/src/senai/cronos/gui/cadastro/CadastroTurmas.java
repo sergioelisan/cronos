@@ -16,8 +16,10 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.Fachada;
+import senai.cronos.database.vectors.Turmas;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
+import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.enums.Habilitacao;
 import senai.cronos.entidades.enums.Turno;
 import senai.cronos.gui.ColorManager;
@@ -89,7 +91,12 @@ public class CadastroTurmas extends javax.swing.JPanel {
                     DateFormat fmt = DateFormat.getDateInstance();
                     t.setEntrada(fmt.parse(txtentrada.getText().trim()));
 
-                    Date saida = txtsaida.getText().equals("saída") ? fmt.parse(txtsaida.getText().trim()) : null;
+                    Date saida;
+                    if(!txtsaida.getText().equals("saída")){
+                        saida=fmt.parse(txtsaida.getText().trim());
+                    }else{
+                        saida=fmt.parse("01/01/2015");
+                    }
                     t.setSaida(saida);
 
                     t.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
@@ -100,11 +107,13 @@ public class CadastroTurmas extends javax.swing.JPanel {
                             t.setNucleo(nc);
                         }
                     }
-
+                    
                     t.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
-
+                    //Integer id=Fachada.getIDTurma();
+                    System.out.println("teste");
                     String code = lbcodigo.getText();
-                    if (code.equals("matrícula")) {
+                    if (code.equals("matrícula")||code.equals("código")) {
+                        //t.setId(id);
                         Fachada.add(t);
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
                     } else {
@@ -114,9 +123,9 @@ public class CadastroTurmas extends javax.swing.JPanel {
                     }
 
                 } catch (ParseException | ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos");
+                    JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos|"+e);
                 }
-
+initData();
             }
         });
         t.start();
@@ -133,23 +142,25 @@ public class CadastroTurmas extends javax.swing.JPanel {
                 if (!code.equals("código")) {
                     try {
                         Integer id = Integer.parseInt(code);
+                        Fachada.remove(Horario.class, id);
                         Fachada.remove(Turma.class, id);
                         JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                        load();
+                       // load();
                     } catch (ClassNotFoundException | SQLException e) {
-                        JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos");
+                        JOptionPane.showMessageDialog(null, "Problemas ao remover a turma. Verifique banco de dados ou dados inseridos");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione uma turma para ser removida!");
                     return;
-                }
+                }initData();
             }
         });
         t.start();
-        
+        load();
     }
 
     private void novo() {
+        lbcodigo.setText("matrícula");
         txtentrada.setText("entrada");
         txtnome.setText("nome");
         txtsaida.setText("saída");

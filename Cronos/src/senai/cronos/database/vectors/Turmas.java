@@ -43,9 +43,19 @@ public final class Turmas implements Observador, Repository<Turma> {
                 return turma;
             }
         }
-
-
         return null;
+    }
+    public Integer getIDTurma() throws ClassNotFoundException, SQLException{
+        Integer id;
+        Turma t=getTurmas().get(getTurmas().size());
+        if(getTurmas().isEmpty()){
+          id=0;  
+        }else{
+         id=t.getId();   
+        } 
+
+
+        return id+1;
     }
 
     /**

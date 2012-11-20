@@ -173,6 +173,9 @@ public class Fachada {
     public static Turma buscaTurma(String nome) throws ClassNotFoundException, SQLException {
         return Turmas.instance().buscaTurma(nome);
     }
+    public static Integer getIDTurma() throws ClassNotFoundException, SQLException{
+        return Turmas.instance().getIDTurma();
+    }
     
     /**
      * busca turmas a partir de um nucleo especifico
