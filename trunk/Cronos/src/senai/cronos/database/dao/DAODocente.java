@@ -9,9 +9,9 @@ import java.util.*;
 import senai.cronos.Fachada;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.*;
-import senai.cronos.entidades.enums.Formacao;
-import senai.cronos.entidades.enums.Turno;
-import senai.cronos.util.Observador;
+import senai.cronos.entidades.Formacao;
+import senai.cronos.entidades.Turno;
+import senai.util.Observador;
 
 /**
  *

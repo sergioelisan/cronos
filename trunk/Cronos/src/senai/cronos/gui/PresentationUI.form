@@ -62,7 +62,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/senai/cronos/gui/images/logo.jpg"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Cronos - gerenciamento de hor&#xe1;rios"/>
+        <Property name="text" type="java.lang.String" value="Cronos"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="iconTextGap" type="int" value="16"/>
         <Property name="verticalTextPosition" type="int" value="3"/>

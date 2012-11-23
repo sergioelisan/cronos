@@ -3,7 +3,6 @@ package senai.cronos.entidades;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
-import senai.cronos.entidades.enums.Turno;
 
 /**
  *
@@ -13,7 +12,7 @@ import senai.cronos.entidades.enums.Turno;
 public class Turma {
 
     public Turma() {
-    }   
+    }
 
     public Date getEntrada() {
         return entrada;
@@ -70,7 +69,7 @@ public class Turma {
     public void setTurno(Turno turno) {
         this.turno = turno;
     }
-    
+
     /**
      * @return the horario
      */
@@ -130,13 +129,13 @@ public class Turma {
     }
 
     public String toString() {
-        return "Turma{" 
-                + "id = " + id 
-                + ", nome = " + nome 
-                + ", nucleo = " + nucleo 
-                + ", entrada = " + entrada 
-                + ", saida = " + saida 
-                + ", turno = " + turno 
+        return "Turma{"
+                + "id = " + id
+                + ", nome = " + nome
+                + ", nucleo = " + nucleo
+                + ", entrada = " + entrada
+                + ", saida = " + saida
+                + ", turno = " + turno
                 + ", habilitacao = " + habilitacao + '}';
     }
 
@@ -173,5 +172,5 @@ public class Turma {
      */
     private int habilitacao = 0;
 
-    
+
 }

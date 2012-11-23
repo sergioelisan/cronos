@@ -13,7 +13,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.Timer;
 import senai.cronos.gui.custom.ImageLoader;
-import senai.cronos.gui.events.BlinkEffectHandler;
+import senai.cronos.gui.custom.BlinkEffectHandler;
 
 /**
  *

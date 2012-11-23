@@ -5,13 +5,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.*;
 import javax.swing.JLabel;
+import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.calendario.DateUtil;
-import senai.cronos.util.Tupla;
+import senai.util.date.DateUtil;
+import senai.util.Tupla;
 
 /**
  *
@@ -28,8 +29,9 @@ public class HorarioUIFactory {
      *
      * @param horario
      */
-    public HorarioUIFactory(Horario horario) {
-        this.horario = horario;
+    public HorarioUIFactory(Turma turma) {
+        this.turma = turma;
+        this.horario = turma.getHorario();
         loadCalendars();
     }
 
@@ -96,7 +98,7 @@ public class HorarioUIFactory {
             }
 
             // cria uma calendario do mes, com as peças geradas para cada dia deste
-            HorarioUI calendar = new HorarioUI(DateUtil.getNomeMes(mes), new Turma(), tiles);
+            HorarioUI calendar = new HorarioUI(DateUtil.getNomeMes(mes), turma, tiles);
             calendarios.add(calendar);
         }
 
@@ -174,20 +176,20 @@ public class HorarioUIFactory {
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> divideHorario() {
         Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
 
-        Integer mesAtual = 0;
+        Integer mesCorrente = DateUtil.getMes(Main.CALENDARIO.getDiasUteis().get(0) );
         for (Date dia : horario.getHorario().keySet()) {
             Integer mes = DateUtil.getMes(dia);
 
             // se for o mes corrente
-            if (mesAtual.equals(mes)) {
+            if (mesCorrente.equals(mes)) {
                 horarios.get(mes).put(dia, horario.getHorario().get(dia));
             } // quando troca o mes
-            else if (!mesAtual.equals(mes)) {
+            else if (!mesCorrente.equals(mes)) {
                 Map<Date, Tupla<Aula, Aula>> mapa = new TreeMap<>();
                 mapa.put(dia, horario.getHorario().get(dia));
 
                 horarios.put(mes, mapa);
-                mesAtual = mes;
+                mesCorrente = mes;
             }
         }
 
@@ -209,21 +211,28 @@ public class HorarioUIFactory {
 
         return cores;
     }
+
     /**
      * Lista de calendarios
      */
     private List<HorarioUI> calendarios;
+
     /**
      * lista de cores determinadas pelo sistema
      */
     private List<Color> CORES = readSystemColors();
+
     /**
      * legendas de cada aula (disciplina, docente, laboratorio)
      */
     private List<JLabel> legendas = new ArrayList<>();
+
     /**
      * horario em que o algoritmo de fabricacao de calendarios vai trabalhar em
      * cima
      */
     private Horario horario;
+
+    /** */
+    private Turma turma;
 }

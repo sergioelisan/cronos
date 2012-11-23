@@ -1,9 +1,7 @@
 package senai.cronos.entidades;
 
 import java.util.*;
-import senai.cronos.entidades.enums.Formacao;
-import senai.cronos.entidades.enums.Turno;
-import senai.cronos.logica.HorarioDocente;
+import senai.cronos.horario.HorarioDocente;
 
 /**
  *
@@ -12,12 +10,12 @@ import senai.cronos.logica.HorarioDocente;
 public class Docente implements Comparable<Docente> {
 
     public static final Docente PADRAO = new Docente();
-    
-    public Docente() {        
+
+    public Docente() {
     }
 
     /* METODOS DE NEGOCIO PARA UM DOCENTE  */
-    
+
     /**
      * Retorna as unidades curriculares das proficiencias deste docente
      * @return
@@ -47,19 +45,19 @@ public class Docente implements Comparable<Docente> {
         Proficiencia prof = new Proficiencia(this, uc, 10, 1);
         proficiencias.add(prof);
     }
-    
+
     /**
      * remove uma proficiencia
-     * @param prof 
+     * @param prof
      */
     public void removeProficiencia(UnidadeCurricular uc) {
         for (Proficiencia prof : proficiencias) {
             if(prof.getDisciplina().equals(uc)) {
                 proficiencias.remove(prof);
             }
-        }        
+        }
     }
-    
+
     /*
      *
      * METODOS ACESSORES
@@ -207,7 +205,7 @@ public class Docente implements Comparable<Docente> {
                 + ", primeiroTurno = " + primeiroTurno
                 + ", segundoTurno = " + segundoTurno + '}';
     }
-    
+
     /**
      * matricula que serve como identificador unico do docente
      */

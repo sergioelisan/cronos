@@ -27,12 +27,12 @@ public class ValidaAptidao implements Validacao<Docente> {
         if (u.getHorarioDocente().getPercentualOcupacao() > .66) {
             return false;
         }
-                
+
         // se a turma estiver em um turno diferente do turno que o professor leciona
         if (!u.getPrimeiroTurno().equals(turma.getTurno()) && !u.getSegundoTurno().equals(turma.getTurno())) {
             return false;
         }
-        
+
         return true;
     }
 }

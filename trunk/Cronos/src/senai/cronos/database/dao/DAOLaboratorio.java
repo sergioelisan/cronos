@@ -8,7 +8,7 @@ import senai.cronos.entidades.Laboratorio;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 
 /**
@@ -18,14 +18,14 @@ import senai.cronos.database.DatabaseUtil;
 public class DAOLaboratorio implements DAO<Laboratorio> {
 
     private static DAO<Laboratorio> instance = new DAOLaboratorio();
-    
+
     public static DAO<Laboratorio> getInstance() {
         return instance;
     }
-    
-    private DAOLaboratorio() {        
+
+    private DAOLaboratorio() {
     }
-    
+
     @Override
     public void add(Laboratorio u) throws SQLException {
         open();
@@ -85,7 +85,7 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
                 laboratorios.add(lb);
             }
         }
-        
+
         close();
 
         return laboratorios;
@@ -113,10 +113,10 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
         }
 
         close();
-        
+
         return lb;
     }
-    
+
    @Override
     public void close() throws SQLException {
         con.close();
@@ -126,7 +126,7 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
     }
-    
+
     @Override
     public void registra(Observador o) {
         observadores.add(o);
@@ -142,8 +142,8 @@ public class DAOLaboratorio implements DAO<Laboratorio> {
         for(Observador o : observadores)
             o.update();
     }
-    
+
     private List<Observador> observadores = new ArrayList<>();
-    
+
     private Connection con;
 }

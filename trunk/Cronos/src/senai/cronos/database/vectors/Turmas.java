@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 
@@ -24,7 +24,7 @@ public final class Turmas implements Observador, Repository<Turma> {
     }
 
     private Turmas() {
-        try {            
+        try {
             DAOFactory.getDao(Turma.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -33,7 +33,7 @@ public final class Turmas implements Observador, Repository<Turma> {
     }
 
     /**
-     * Método que retorno o objeto turma tendo como parametro de entrada o nome. 
+     * Método que retorno o objeto turma tendo como parametro de entrada o nome.
      * @param nome String com o nome da turma
      * @return objeto Turma
      */
@@ -49,10 +49,10 @@ public final class Turmas implements Observador, Repository<Turma> {
         Integer id;
         Turma t=getTurmas().get(getTurmas().size());
         if(getTurmas().isEmpty()){
-          id=0;  
+          id=0;
         }else{
-         id=t.getId();   
-        } 
+         id=t.getId();
+        }
 
 
         return id+1;
@@ -61,7 +61,7 @@ public final class Turmas implements Observador, Repository<Turma> {
     /**
      * retorna as turmas de um nucleo
      * @param nucleo
-     * @return 
+     * @return
      */
     public List<Turma> buscaTurma(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         List<Turma> _turmas = new ArrayList<>();
@@ -77,6 +77,8 @@ public final class Turmas implements Observador, Repository<Turma> {
     public void update() {
         try {
             turmas = DAOFactory.getDao(Turma.class).get();
+
+            System.out.println(turmas);
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
@@ -91,7 +93,7 @@ public final class Turmas implements Observador, Repository<Turma> {
 
     @Override
     public List<Turma> get() {
-        return turmas;
+        return getTurmas();
     }
 
     @Override

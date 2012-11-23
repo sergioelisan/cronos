@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.util.Observador;
-import senai.cronos.util.calendario.Feriado;
+import senai.util.Observador;
+import senai.util.date.Feriado;
 
 /**
  *
  * @author user
  */
 public class Feriados implements Observador, Repository<Feriado> {
-    
+
     private List<Feriado> feriados;
 
     private static Feriados instance = new Feriados();
-    
+
     public static Feriados instance() {
         return instance;
     }
-    
+
     private Feriados() {
         try {
             DAOFactory.getDao(Feriado.class).registra(this);

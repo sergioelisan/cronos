@@ -12,8 +12,8 @@ import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Observador;
-import senai.cronos.util.debug.Debug;
+import senai.util.Observador;
+import senai.util.debug.Debug;
 
 /**
  *
@@ -95,11 +95,11 @@ public class DAOProficiencia implements DAO<Proficiencia> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, doc.getMatricula());
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 Proficiencia p = new Proficiencia();
                 p.setDocente(doc);
-                p.setLecionado(rs.getInt("nivel"));                
+                p.setLecionado(rs.getInt("nivel"));
                 p.setScoreTemp(rs.getInt("scoretemp"));
                 p.setUnidadecurricular(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina")));
                 profs.add(p);

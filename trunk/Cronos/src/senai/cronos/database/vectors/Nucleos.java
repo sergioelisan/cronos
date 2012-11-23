@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.entidades.Nucleo;
 
 /**
@@ -13,17 +13,17 @@ import senai.cronos.entidades.Nucleo;
  * @author sergio lisan e carlos melo
  */
 public class Nucleos implements Observador, Repository<Nucleo> {
-    
+
     private List<Nucleo> nucleos;
 
     private static Nucleos instance = new Nucleos();
-    
+
     public static Nucleos instance() {
         return instance;
     }
-    
+
     private Nucleos() {
-        try {            
+        try {
             DAOFactory.getDao(Nucleo.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {

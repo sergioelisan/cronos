@@ -2,7 +2,7 @@ package senai.cronos.database.dao;
 
 import java.sql.SQLException;
 import senai.cronos.entidades.*;
-import senai.cronos.util.calendario.Feriado;
+import senai.util.date.Feriado;
 
 /**
  *
@@ -25,9 +25,6 @@ public class DAOFactory {
 
         if (c.equals(Docente.class)) {
             return DAODocente.getInstance();
-
-        } else if (c.equals(Horario.class)) {
-            return DAOHorario.getInstance();
 
         } else if (c.equals(Laboratorio.class)) {
             return DAOLaboratorio.getInstance();

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import senai.cronos.Fachada;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
@@ -21,14 +21,14 @@ import senai.cronos.entidades.UnidadeCurricular;
 public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
 
     private static DAO<UnidadeCurricular> instance = new DAOUnidadeCurricular();
-    
+
     public static DAO<UnidadeCurricular> getInstance() {
         return instance;
     }
-    
-    private DAOUnidadeCurricular() {        
+
+    private DAOUnidadeCurricular() {
     }
-    
+
     @Override
     public void add(UnidadeCurricular u) throws SQLException {
         open();
@@ -91,7 +91,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
                 uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));                
+                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
@@ -102,7 +102,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
         }
 
         close();
-        
+
         return disciplinas;
     }
 
@@ -120,7 +120,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
                 uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));                
+                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
@@ -129,10 +129,10 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
         }
 
         close();
-        
+
         return uc;
     }
-    
+
     @Override
     public void close() throws SQLException {
         con.close();
@@ -142,7 +142,7 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
     }
-    
+
     private Connection con;
 
     @Override
@@ -160,6 +160,6 @@ public class DAOUnidadeCurricular implements DAO<UnidadeCurricular> {
         for(Observador o : observadores)
             o.update();
     }
-    
+
     private List<Observador> observadores = new ArrayList<>();
 }

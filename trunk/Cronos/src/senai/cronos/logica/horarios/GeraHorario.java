@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.*;
-import senai.cronos.entidades.enums.Turno;
+import senai.cronos.entidades.Turno;
 import senai.cronos.logica.validacoes.ValidaAptidao;
 import senai.cronos.logica.validacoes.Validacao;
-import senai.cronos.util.Tupla;
+import senai.util.Tupla;
 
 public abstract class GeraHorario {
 
@@ -29,7 +29,11 @@ public abstract class GeraHorario {
     abstract void generate(Horario horario) throws ClassNotFoundException, SQLException;
 
     protected Horario getHorario() throws ClassNotFoundException, SQLException {
-        return Fachada.<Horario>get(Horario.class, turma.getId());
+        Turma t = Fachada.<Turma>get(Turma.class, turma.getId());
+        Horario h = t.getHorario();
+        if (h.getHorario().isEmpty())
+            h = Horario.create();
+        return h;
     }
 
     protected List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
@@ -65,9 +69,6 @@ public abstract class GeraHorario {
         if (tentativas > MAXTENTATIVAS) {
             doc = new Docente();
         }
-
-        System.out.println(doc.getNome());
-        System.out.println(isEmChoque(doc, diasdisciplina));
 
         return doc;
     }
@@ -187,7 +188,7 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina, 
+    protected void updateCalendario(UnidadeCurricular uc, List<Date> diasdisciplina,
             Map<Date, Tupla<Aula, Aula>> calendario, Integer modo)
             throws ClassNotFoundException, SQLException {
 

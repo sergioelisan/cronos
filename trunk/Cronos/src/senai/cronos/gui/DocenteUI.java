@@ -18,7 +18,7 @@ import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -46,7 +46,7 @@ public class DocenteUI extends javax.swing.JPanel {
             g.drawImage(wallpaper, 0, 0, null);
         }
     }
-    
+
     /**
      * Inicializa os dados
      */
@@ -139,7 +139,7 @@ public class DocenteUI extends javax.swing.JPanel {
 
         t.start();
     }
-   
+
     /**
      * passa para o proximo nucleo
      *
@@ -167,7 +167,7 @@ public class DocenteUI extends javax.swing.JPanel {
 
         loadDocentes();
     }
-    
+
     /**
      * classe interna que trata dos eventos do mouse
      */

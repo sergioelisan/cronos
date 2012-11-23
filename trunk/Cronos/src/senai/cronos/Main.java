@@ -12,13 +12,12 @@ import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
 import senai.cronos.gui.Alertas;
 import senai.cronos.gui.CronosFrame;
-import senai.cronos.util.UpdateCronos;
-import senai.cronos.util.calendario.Calendario;
-import senai.cronos.util.calendario.Feriado;
-import senai.cronos.util.debug.Debug;
-import static senai.cronos.util.debug.Debug.println;
-import senai.cronos.util.os.OSFactory;
-import senai.cronos.util.os.OperatingSystem;
+import senai.util.date.Calendario;
+import senai.util.date.Feriado;
+import senai.util.debug.Debug;
+import static senai.util.debug.Debug.println;
+import senai.util.os.OSFactory;
+import senai.util.os.OperatingSystem;
 
 /**
  *
@@ -56,24 +55,17 @@ public class Main {
         try {
             Splash s = Splash.getInstance();
             s.start();
-
             s.upBar();
-           // updateSystem();
-
+            // updateSystem();
             s.upBar();
             loadDatabase();
-
             s.upBar();
             loadPreferences();
-
             s.upBar();
             loadUI();
-
             s.stop();
         } catch (Exception ex) {
             alerta.jogarAviso(ex.toString());
-
-            //JOptionPane.showMessageDialog(null, "FAIL! Problemas na inicializacao:\n\n" + ex.getMessage());
         }
     }
 
@@ -104,7 +96,7 @@ public class Main {
         String dir = "";
         switch (os.getName()) {
             // windows 7, windows vista (com aero ligado) e windows xp ok!
-             case OperatingSystem.WINDOWS:
+            case OperatingSystem.WINDOWS:
                 path = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders";
                 key = "Personal";
                 dir = "\\banco";
@@ -126,7 +118,6 @@ public class Main {
 
         location = os.readRegistry(path, key) + dir;
 
-        //location="wwer";
         println(location);
         System.setProperty("derby.system.home", location);
         NetworkServerControlImpl networkServer = new NetworkServerControlImpl();
@@ -177,11 +168,7 @@ public class Main {
         }
         System.out.println("versão:" + versao);
         if (Integer.parseInt(versao) > version) {
-
             File f = update.gravaArquivoDeURL(url, System.getProperty("user.dir"), String.valueOf(version), versao);
-
-
-
             if (update.isS()) {
                 Runtime.getRuntime().exec(location + "\\update.exe");
                 System.exit(0);
@@ -220,6 +207,7 @@ public class Main {
             }
         });
     }
+
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */

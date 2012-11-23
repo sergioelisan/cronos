@@ -11,7 +11,7 @@ import java.awt.Image;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.gui.custom.ImageLoader;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -28,7 +28,7 @@ public class CadastroUI extends javax.swing.JPanel {
         Switch(DOCENTE);
         loadEffects();
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Image wallpaper = ImageLoader.loadBackground();
@@ -36,7 +36,7 @@ public class CadastroUI extends javax.swing.JPanel {
             g.drawImage(wallpaper, 0, 0, null);
         }
     }
-    
+
     private void loadPanels() {
         pnContainer.setLayout(new CardLayout());
         pnContainer.add(new CadastroDocente(), DOCENTE);
@@ -235,7 +235,7 @@ public class CadastroUI extends javax.swing.JPanel {
     private javax.swing.JLabel lkturmas;
     private javax.swing.JPanel pnContainer;
     // End of variables declaration//GEN-END:variables
-    
+
     public static final String DOCENTE = "docente";
     public static final String TURMAS = "turmas";
     public static final String DISCIPLINAS = "disciplinas";

@@ -8,8 +8,8 @@ import java.util.Map;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Tupla;
-import senai.cronos.util.debug.Debug;
+import senai.util.Tupla;
+import senai.util.debug.Debug;
 
 public class GeraHorarioContinuo extends GeraHorario {
 
@@ -21,10 +21,10 @@ public class GeraHorarioContinuo extends GeraHorario {
 
         for (UnidadeCurricular uc : disciplinas) {
             int total = getQuantidadeDeDias(uc, 4);
-            
+
             if (total <= diasletivos) {
                 List<Date> diasdisciplina = new ArrayList<>();
-                for (int i = 0; i < total; i++) { 
+                for (int i = 0; i < total; i++) {
                     for (Date dia : calendario.keySet()) {
                         if (calendario.get(dia).getPrimeiro() == null && !diasdisciplina.contains(dia)) {
                             diasdisciplina.add(dia);
@@ -32,13 +32,13 @@ public class GeraHorarioContinuo extends GeraHorario {
                             break;
                         }
                     }
-                    
+
                 }
 
                 updateCalendario(uc, diasdisciplina, calendario);
             }
         }
-        
-        
+
+
     }
 }
