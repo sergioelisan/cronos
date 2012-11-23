@@ -20,11 +20,11 @@ import senai.cronos.database.vectors.Turmas;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.Horario;
-import senai.cronos.entidades.enums.Habilitacao;
-import senai.cronos.entidades.enums.Turno;
+import senai.cronos.entidades.Habilitacao;
+import senai.cronos.entidades.Turno;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -107,7 +107,7 @@ public class CadastroTurmas extends javax.swing.JPanel {
                             t.setNucleo(nc);
                         }
                     }
-                    
+
                     t.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
                     //Integer id=Fachada.getIDTurma();
                     System.out.println("teste");

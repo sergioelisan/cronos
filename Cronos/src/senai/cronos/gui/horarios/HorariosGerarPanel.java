@@ -16,8 +16,8 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
-import senai.cronos.gui.events.LinkEffectHandler;
-import senai.cronos.logica.horarios.GeraHorarioFactory;
+import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.cronos.horario.GeraHorarioFactory;
 
 /**
  *
@@ -26,34 +26,31 @@ import senai.cronos.logica.horarios.GeraHorarioFactory;
 public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient {
 
     private List<HorarioUI> calendarios = new ArrayList<>();
-    
     private Horario horario;
-    
-    private JPanel pnTurmas      = new JPanel();
+    private JPanel pnTurmas = new JPanel();
     private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios    = new JPanel();
-    private JPanel pnLegendas    = new JPanel();
-    private JPanel pnLoading     = new JPanel();
-    private JLabel lbLoading     = new JLabel();
-    private JLabel setaDireita   = new JLabel(">");
-    private JLabel setaEsquerda  = new JLabel("<");
-    private JLabel lbVoltar      = new JLabel("voltar");
-    private JLabel lbSave        = new JLabel("salvar");
-    private JLabel lbPrint       = new JLabel("imprimir");
-    
+    private JPanel pnHorarios = new JPanel();
+    private JPanel pnLegendas = new JPanel();
+    private JPanel pnLoading = new JPanel();
+    private JLabel lbLoading = new JLabel();
+    private JLabel setaDireita = new JLabel(">");
+    private JLabel setaEsquerda = new JLabel("<");
+    private JLabel lbVoltar = new JLabel("voltar");
+    private JLabel lbSave = new JLabel("salvar");
+    private JLabel lbPrint = new JLabel("imprimir");
     private Timer animacao;
-    private final int DELAY      = 500;
-
+    private final int DELAY = 500;
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
-    
+
     /**
      * retorna uma instancia unica desde painel
-     * @return 
+     *
+     * @return
      */
     public static HorariosGerarPanel getInstance() {
         return instance;
     }
-    
+
     private HorariosGerarPanel() {
         initComponents();
         setLayout(new CardLayout());
@@ -91,11 +88,10 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         lbVoltar.setBackground(ColorManager.getColor("button"));
         lbVoltar.addMouseListener(new HorariosUI.LinkHandler());
         lbVoltar.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent evt) {
                 show("TURMAS");
-                
+
             }
         });
 
@@ -107,7 +103,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         lbPrint.setBackground(ColorManager.getColor("button"));
         lbPrint.addMouseListener(new HorariosUI.LinkHandler());
         lbPrint.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent evt) {
                 print();
@@ -122,7 +117,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         lbSave.setBackground(ColorManager.getColor("button"));
         lbSave.addMouseListener(new HorariosUI.LinkHandler());
         lbSave.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent evt) {
                 saveHorario();
@@ -145,7 +139,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         setaDireita.setPreferredSize(new Dimension(80, 150));
         setaDireita.addMouseListener(new LinkEffectHandler());
         setaDireita.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent evt) {
                 next();
@@ -159,7 +152,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         setaEsquerda.setPreferredSize(new Dimension(80, 150));
         setaEsquerda.addMouseListener(new LinkEffectHandler());
         setaEsquerda.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent evt) {
                 previous();
@@ -239,7 +231,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         try {
             //Fachada.remove(horario.getTurma().getClass(), horario.getTurma().getId());
             Fachada.add(horario);
-            
+
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "FAIL! Erro ao Salvar Horario:\n" + e);
@@ -262,20 +254,19 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
     @Override
     public void action(final Integer id) {
         Thread thread = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
                     pnLegendas.removeAll();
                     pnHorarios.removeAll();
                     calendarios.clear();
-                    
+
                     Turma turma = Fachada.<Turma>get(Turma.class, id);
-                    
-                    horario = Fachada.<Horario>get(Horario.class, id);
-                    if (!horario.getHorario().isEmpty())  {
+                    horario = turma.getHorario();
+
+                    if (!horario.getHorario().isEmpty()) {
                         int opcao = JOptionPane.showConfirmDialog(null, "Deseja sobrescrever o horário dessa turma?", "Aviso", JOptionPane.YES_NO_OPTION);
-                        
+
                         // se a opcao for nao, retorna a funcao.
                         if (opcao == JOptionPane.NO_OPTION) {
                             stopLoading();
@@ -283,26 +274,32 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                             return;
                         }
                     }
-                                            
+
                     horario = GeraHorarioFactory.getGerador().generate(turma);
 
-                    HorarioUIFactory factory = new HorarioUIFactory(horario);
-                    calendarios = factory.getCalendarios();
+                    if (horario.getHorario().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Problemas no Gerador de Horário");
+                    } else {
+                        HorarioUIFactory factory = new HorarioUIFactory(turma);
+                        calendarios = factory.getCalendarios();
 
-                    for (HorarioUI calendario : calendarios) {
-                        pnHorarios.add(calendario, calendario.getMes().toLowerCase());
+                        for (HorarioUI calendario : calendarios) {
+                            pnHorarios.add(calendario, calendario.getMes().toLowerCase());
+                        }
+
+                        for (JLabel legenda : factory.getLegendas()) {
+                            pnLegendas.add(legenda);
+                        }
+                        stopLoading();
+                        show("CALENDARIOS");
+                        ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
                     }
-
-                    for (JLabel legenda : factory.getLegendas()) {
-                        pnLegendas.add(legenda);
-                    }
-
                     stopLoading();
-                    show("CALENDARIOS");
-                    ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
-                    
+                    show("TURMAS");
+
+
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);                    
+                    JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
                     e.printStackTrace(System.err);
                     show("TURMAS");
                 }
@@ -311,7 +308,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
         thread.start();
         startLoading();
-    }    
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

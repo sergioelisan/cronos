@@ -16,7 +16,7 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *

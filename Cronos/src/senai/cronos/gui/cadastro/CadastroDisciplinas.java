@@ -19,7 +19,7 @@ import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -85,7 +85,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                     }
 
                 } catch (ClassNotFoundException | SQLException ex) {
-                    
+
                     JOptionPane.showMessageDialog(null, "Problemas ao carregar dados:\n" + ex);
                 }
             }

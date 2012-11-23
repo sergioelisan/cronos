@@ -18,29 +18,29 @@ import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.entidades.enums.Formacao;
-import senai.cronos.entidades.enums.Turno;
+import senai.cronos.entidades.Formacao;
+import senai.cronos.entidades.Turno;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
-import senai.cronos.util.Aleatorio;
+import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.Aleatorio;
 
 /**
  *
  * interface grafica para o cadastro de docentes no banco de dados. Tem rotinas para
  * interagir com a fachada do sistema, para realizar operacoes de adicao, alteracao,
  * remocao e listagem de Docentes do sistema.
- * 
+ *
  * @author Carlos Melo eSergio Lisan
  */
 public class CadastroDocente extends javax.swing.JPanel {
 
-    
+
     /**
      * Lista de nucleos que agrupam os docentes
      */
     private List<Nucleo> nucleos;
-    
+
     /**
      * posicao atual da lista usada para armazenar os nucleos
      */
@@ -96,7 +96,7 @@ public class CadastroDocente extends javax.swing.JPanel {
         });
 
         t.start();
-        
+
         load();
     }
 
@@ -115,7 +115,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                     dc.setMatricula(Integer.parseInt(txtmatricula.getText()));
                     DateFormat fmt = DateFormat.getDateInstance();
                     dc.setContratacao(fmt.parse(txtcontratacao.getText().trim()));
-                    
+
                     dc.setFormacao(Formacao.valueOf( ((String) comboformacao.getSelectedItem()).toUpperCase() ) );
                     dc.setNome(txtnome.getText().trim());
 
@@ -147,12 +147,12 @@ public class CadastroDocente extends javax.swing.JPanel {
                     dc.setScore(1);
 
                     //String code = txtmatricula.getText();
-                   
+
                     if (!Fachada.existeDocente(txtmatricula.getText())) {
-                        
-                        
+
+
                         Fachada.add(dc);
-                        
+
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
                     } else {
                         //dc.setMatricula(Integer.parseInt(code));
@@ -162,10 +162,10 @@ public class CadastroDocente extends javax.swing.JPanel {
                     // Adiciona proficiencias-padrao para o novo docente
                     for (UnidadeCurricular uc : Fachada.buscaDisciplinas(dc.getNucleo())) {
                         pf = new Proficiencia(dc, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
-                       
+
                         dc.getProficiencias().add(pf);
                          Fachada.add(pf);
-                    } 
+                    }
 
                 } catch (ClassNotFoundException | SQLException e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Problemas ao adicionar Docente:\n" + e);
@@ -202,7 +202,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                     return;
                 }
 
-               
+
                 JOptionPane.showMessageDialog(null, "Removido com sucesso!");
                 initData();
             }
@@ -268,8 +268,8 @@ public class CadastroDocente extends javax.swing.JPanel {
     /**
      * Exibe os dados de um docente selecionado do painel de exibicao, nos componentes usados
      * para manipulacao de dados.
-     * 
-     * @param matricula 
+     *
+     * @param matricula
      */
     private void show(final String matricula) {
         Thread t = new Thread(new Runnable() {
@@ -279,15 +279,15 @@ public class CadastroDocente extends javax.swing.JPanel {
                 try {
                     Docente dc = Fachada.<Docente>get(Docente.class, Integer.parseInt(matricula));
                     txtmatricula.setText(String.valueOf(dc.getMatricula()));
-                    
+
                     DateFormat fmt = DateFormat.getDateInstance();
                     txtcontratacao.setText(fmt.format(dc.getContratacao()));
-                    
+
                     txtnome.setText(dc.getNome());
-                    
+
                     comboformacao.setSelectedIndex(dc.getFormacao().ordinal() + 1);
                     combonucleo.setSelectedItem(dc.getNucleo().getNome());
-                    
+
                     if (dc.getPrimeiroTurno().equals(Turno.MANHA) && dc.getSegundoTurno() == null) {
                         comboturnos.setSelectedIndex(1);
                     } else if (dc.getPrimeiroTurno().equals(Turno.TARDE) && dc.getSegundoTurno() == null) {
@@ -301,7 +301,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                     } else if (dc.getPrimeiroTurno().equals(Turno.TARDE) && dc.getSegundoTurno().equals(Turno.NOITE)) {
                         comboturnos.setSelectedIndex(6);
                     }
-                    
+
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
                 }

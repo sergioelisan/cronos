@@ -15,7 +15,7 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -24,11 +24,11 @@ import senai.cronos.gui.events.LinkEffectHandler;
 public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient {
 
     private static HorariosExibirPanel instance = new HorariosExibirPanel();
-    
+
     private List<HorarioUI> calendarios;
-    
+
     private Horario horario;
-    
+
     private JPanel pnTurmas         = new JPanel();
     private JPanel pnCalendarios    = new JPanel();
     private JPanel pnHorarios       = new JPanel();
@@ -39,7 +39,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
     private JLabel setaEsquerda     = new JLabel("<");
     private JLabel lbVoltar         = new JLabel("voltar");
     private JLabel lbPrint          = new JLabel("imprimir");
-    
+
     private Timer animacao;
     private final int DELAY         = 500;
 
@@ -230,11 +230,11 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                     pnHorarios.removeAll();
 
                     Turma turma = Fachada.<Turma>get(Turma.class, id);
-                    horario = Fachada.<Horario>get(Horario.class, turma.getId());
+                    horario = turma.getHorario();
 
                     if (!horario.getHorario().isEmpty()) {
 
-                        HorarioUIFactory factory = new HorarioUIFactory(horario);
+                        HorarioUIFactory factory = new HorarioUIFactory(turma);
                         calendarios = factory.getCalendarios();
 
                         for (HorarioUI calendario : calendarios) {

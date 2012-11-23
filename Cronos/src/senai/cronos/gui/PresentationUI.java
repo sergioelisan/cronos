@@ -17,12 +17,12 @@ import senai.cronos.gui.custom.ImageLoader;
 public class PresentationUI extends javax.swing.JPanel {
 
     public CronosFrame main;
-    
+
     public PresentationUI(CronosFrame main) {
         this.main = main;
         initComponents();
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Image wallpaper = ImageLoader.loadBackground();
@@ -30,7 +30,7 @@ public class PresentationUI extends javax.swing.JPanel {
             g.drawImage(wallpaper, 0, 0, null);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,7 +47,7 @@ public class PresentationUI extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/logo.jpg"))); // NOI18N
-        jLabel2.setText("Cronos - gerenciamento de horários");
+        jLabel2.setText("Cronos");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel2.setIconTextGap(16);
         jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

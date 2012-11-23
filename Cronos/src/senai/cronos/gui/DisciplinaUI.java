@@ -18,7 +18,7 @@ import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 
 /**
  *
@@ -27,7 +27,7 @@ import senai.cronos.gui.events.LinkEffectHandler;
 public class DisciplinaUI extends javax.swing.JPanel {
 
     private CronosFrame main;
-    
+
     private List<Nucleo> nucleos;
     private int posicao = -1;
 
@@ -46,7 +46,7 @@ public class DisciplinaUI extends javax.swing.JPanel {
             g.drawImage(wallpaper, 0, 0, null);
         }
     }
-    
+
     /**
      * inicializa os dados de disciplinas
      */
@@ -98,7 +98,7 @@ public class DisciplinaUI extends javax.swing.JPanel {
                 }
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas a disciplina:\n" + ex);
-                    
+
                 }
             }
         });

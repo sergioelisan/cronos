@@ -18,7 +18,7 @@ import senai.cronos.Fachada;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
-import senai.cronos.gui.events.LinkEffectHandler;
+import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.horarios.HorariosExibirPanel;
 import senai.cronos.gui.horarios.HorariosGerarPanel;
 import senai.cronos.gui.horarios.HorariosUI;

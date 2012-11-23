@@ -6,13 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import senai.cronos.Fachada;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
+import senai.cronos.entidades.Aula;
+import senai.cronos.entidades.Docente;
+import senai.cronos.entidades.Horario;
+import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
-import senai.cronos.entidades.enums.Turno;
+import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.entidades.Turno;
+import senai.util.Tupla;
 
 /**
  *
@@ -21,22 +30,22 @@ import senai.cronos.entidades.enums.Turno;
 public class DAOTurma implements DAO<Turma> {
 
     private static DAO<Turma> instance = new DAOTurma();
-    private List<Observador> observadores = new ArrayList<>();   
+    private List<Observador> observadores = new ArrayList<>();
     private Connection con;
-    
+
     public static DAO<Turma> getInstance() {
         return instance;
     }
-    
-    private DAOTurma() {     
-        
+
+    private DAOTurma() {
+
     }
-    
+
     @Override
     public void add(Turma u) throws SQLException {
         open();
         String query = DatabaseUtil.query("turma.insert");
-        
+
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
@@ -50,11 +59,42 @@ public class DAOTurma implements DAO<Turma> {
         notifica();
     }
 
+    public void addHorario(Turma t) throws SQLException {
+        open();
+        String query = DatabaseUtil.query("horario.insert");
+
+        Horario u = t.getHorario();
+
+        for (Date dia : u.getHorario().keySet()) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, t.getId());
+                ps.setDate(2, new java.sql.Date(dia.getTime()));
+
+                System.out.println(u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
+                Integer disciplinaID = u.getHorario().get(dia).getPrimeiro().getDisciplina().getId();
+                ps.setInt(3, disciplinaID);
+                ps.setInt(4, u.getHorario().get(dia).getPrimeiro().getDocente().getMatricula());
+                ps.setInt(5, u.getHorario().get(dia).getPrimeiro().getLab().getId());
+
+                System.out.println(u.getHorario().get(dia).getSegundo().getDisciplina().getId());
+                Integer disciplina2ID = u.getHorario().get(dia).getSegundo().getDisciplina().getId();
+                ps.setInt(6, disciplina2ID);
+                ps.setInt(7, u.getHorario().get(dia).getSegundo().getDocente().getMatricula());
+                ps.setInt(8, u.getHorario().get(dia).getSegundo().getLab().getId());
+
+                ps.execute();
+            }
+        }
+
+        close();
+        notifica();
+    }
+
     @Override
     public void remove(Serializable id) throws SQLException {
         open();
         String query = DatabaseUtil.query("turma.delete");
-        
+
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
@@ -63,23 +103,63 @@ public class DAOTurma implements DAO<Turma> {
         notifica();
     }
 
+    public void removeHorario(Serializable id) throws SQLException {
+        open();
+        String query = DatabaseUtil.query("horario.delete");
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, (Integer) id);
+            ps.execute();
+        }
+
+        close();
+        notifica();
+    }
+
     @Override
     public void update(Turma u) throws SQLException {
         open();
         String query = DatabaseUtil.query("turma.update");
-        
+
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
             ps.setDate(3, new java.sql.Date(u.getEntrada().getTime()) );
-            
-            java.sql.Date saida = u.getSaida() == null ? null : new java.sql.Date(u.getSaida().getTime()); 
+
+            java.sql.Date saida = u.getSaida() == null ? null : new java.sql.Date(u.getSaida().getTime());
             ps.setDate(4, saida);
-            
+
             ps.setInt(5, u.getTurno().ordinal());
             ps.setInt(6, u.getHabilitacao());
             ps.setInt(7, u.getId());
             ps.execute();
+        }
+        close();
+        notifica();
+    }
+
+    public void updateHorario(Turma t) throws SQLException {
+        open();
+        String query = DatabaseUtil.query("horario.update");
+
+        Horario u = t.getHorario();
+
+        for (Date dia : u.getHorario().keySet()) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                // update
+                ps.setInt(1, u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
+                ps.setInt(2, u.getHorario().get(dia).getPrimeiro().getDocente().getMatricula());
+                ps.setInt(3, u.getHorario().get(dia).getPrimeiro().getLab().getId());
+                ps.setInt(4, u.getHorario().get(dia).getSegundo().getDisciplina().getId());
+                ps.setInt(5, u.getHorario().get(dia).getSegundo().getDocente().getMatricula());
+                ps.setInt(6, u.getHorario().get(dia).getSegundo().getLab().getId());
+
+                // where
+                ps.setInt(7, t.getId());
+                ps.setDate(8, new java.sql.Date(dia.getTime()));
+
+                ps.execute();
+            }
         }
         close();
         notifica();
@@ -90,59 +170,101 @@ public class DAOTurma implements DAO<Turma> {
         open();
         List<Turma> turmas = new ArrayList<>();
         String query = DatabaseUtil.query("turma.select");
-        
+
         try(PreparedStatement ps = con.prepareStatement(query) ) {
             ResultSet rs = ps.executeQuery();
-            
+
             while(rs.next()) {
                 Turma t = new Turma();
                 t.setId(rs.getInt("id"));
-                t.setNome(rs.getString("nome"));                
-                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));                
+                t.setNome(rs.getString("nome"));
+                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
                 t.setHabilitacao(rs.getInt("habilitacao"));
-                
-                turmas.add(t);                
+                t.setHorario(getHorario(t.getId()));
+
+                turmas.add(t);
             }
-            
+
         } catch (Exception e) {
-            
+
         }
         close();
-        
+
         return turmas;
     }
+
+
 
     @Override
     public Turma get(Serializable id) throws SQLException {
         open();
         Turma t = new Turma();
         String query = DatabaseUtil.query("turma.get");
-        
+
         try(PreparedStatement ps = con.prepareStatement(query) ) {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()) {                
+
+            while(rs.next()) {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));                
+                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
                 t.setHabilitacao(rs.getInt("habilitacao"));
+                t.setHorario(getHorario(t.getId()));
             }
-            
+
         } catch (Exception e) {
-            
+
         }
-        
+
         close();
         return t;
     }
-    
+
+    public Horario getHorario(Integer turmaID) throws SQLException {
+        open();
+        Horario h = Horario.create();
+        String query = DatabaseUtil.query("horario.get");
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, (Integer) turmaID);
+            ResultSet rs = ps.executeQuery();
+
+            Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
+
+            while (rs.next()) {
+                Date dia = rs.getDate("dia");
+
+                Aula a1 = Aula.create();
+
+                a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1")));
+                a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
+                a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
+
+                Aula a2 = Aula.create();
+                a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2")));
+                a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
+                a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
+
+                horario.put(dia, new Tupla<>(a1, a2));
+            }
+
+            h.setHorario(horario);
+
+        } catch (Exception e) {
+        }
+
+        close();
+
+        return h;
+    }
+
     @Override
     public void close() throws SQLException {
         con.close();
@@ -152,7 +274,7 @@ public class DAOTurma implements DAO<Turma> {
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
     }
-    
+
     @Override
     public void registra(Observador o) {
         observadores.add(o);
@@ -168,6 +290,6 @@ public class DAOTurma implements DAO<Turma> {
         for(Observador o : observadores)
             o.update();
     }
-    
-    
+
+
 }

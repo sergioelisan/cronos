@@ -8,9 +8,9 @@ import java.util.Map;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Tupla;
-import senai.cronos.util.calendario.DateUtil;
-import senai.cronos.util.debug.Debug;
+import senai.util.Tupla;
+import senai.util.date.DateUtil;
+import senai.util.debug.Debug;
 
 public class GeraHorarioAlternado extends GeraHorario {
 

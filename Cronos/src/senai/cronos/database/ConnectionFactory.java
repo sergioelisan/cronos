@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import senai.cronos.logica.Preferencias;
+import senai.cronos.properties.Preferencias;
 
 /**
  * Classe que fabrica uma conexao lendo as configuracoes do arquivo
@@ -13,7 +13,7 @@ import senai.cronos.logica.Preferencias;
  * @author Sergio Lisan
  */
 public class ConnectionFactory {
-    
+
     ConnectionFactory() {
         Properties pp   = Preferencias.instance().getConexao();
         user            = pp.getProperty("user");
@@ -33,7 +33,7 @@ public class ConnectionFactory {
         Connection con = DriverManager.getConnection(url, user, passwd);
         return con;
     }
-    
+
     private String user;
     private String passwd;
     private String url;

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.calendario.DateUtil;
+import senai.util.date.DateUtil;
 
 /**
  *

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.entidades.Laboratorio;
 
 /**
@@ -13,19 +13,19 @@ import senai.cronos.entidades.Laboratorio;
  * @author sergio lisan e carlos melo
  */
 public class Laboratorios implements Observador, Repository<Laboratorio> {
-    
+
     private List<Laboratorio> laboratorios;
 
     private static Laboratorios instance = new Laboratorios();
-    
+
     public static Laboratorios instance() {
         return instance;
     }
-    
+
     private Laboratorios() {
         try {
             DAOFactory.getDao(Laboratorio.class).registra(this);
-            update();            
+            update();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Laboratorios.class.getName()).log(Level.SEVERE, null, ex);
         }

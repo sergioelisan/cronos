@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
-import senai.cronos.gui.events.LinkEffectHandler;
-import senai.cronos.util.calendario.Feriado;
+import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.date.Feriado;
 
 /**
  *
@@ -31,23 +31,23 @@ public class ConfigUI extends javax.swing.JPanel {
         try {
             this.main = main;
             initComponents();
-            
+
             // graças aos designers do tio java, tem que se criar um novo list model
             // pq o que ja vem dentro de JList é incompativel com o Default... ¬¬'
             DefaultListModel<Feriado> lmFeriados = new DefaultListModel<>();
-            listFeriados.setModel(lmFeriados); 
-            
+            listFeriados.setModel(lmFeriados);
+
             DefaultListModel<Nucleo> lmNucleos = new DefaultListModel<>();
-            listaNucleos.setModel(lmNucleos);                    
-            
+            listaNucleos.setModel(lmNucleos);
+
             panelferiadoadd.setVisible(false);
             panelAddNucleo.setVisible(false);
-            
+
             btaddferiado.addMouseListener(new LinkEffectHandler());
             btremoveferiado.addMouseListener(new LinkEffectHandler());
             btcancelarferiado.addMouseListener(new LinkEffectHandler());
             btsaveferiado.addMouseListener(new LinkEffectHandler());
-            
+
             btaddnucleo.addMouseListener(new LinkEffectHandler());
             btremovenucleo.addMouseListener(new LinkEffectHandler());
             btcancelarnucleo.addMouseListener(new LinkEffectHandler());
@@ -74,8 +74,8 @@ public class ConfigUI extends javax.swing.JPanel {
     private void loadFeriados() {
         try {
             ((DefaultListModel<Feriado>)listFeriados.getModel()).clear();
-            
-            
+
+
             // logica de carregamento de feriados
             List<Feriado> feriados = Fachada.<Feriado>get(Feriado.class);
             Collections.sort(feriados);
@@ -84,7 +84,7 @@ public class ConfigUI extends javax.swing.JPanel {
             for (Feriado feriado : feriados) {
                 lm.addElement(feriado);
             }
-            
+
             listFeriados.setModel(lm);
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -122,14 +122,14 @@ public class ConfigUI extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Problemas ao remover feriado\n" + ex);
         }
     }
-    
+
     /**
      * atualiza a lista de feriados
      */
     private void loadNucleos() {
         try {
             ((DefaultListModel<Nucleo>)listaNucleos.getModel()).clear();
-                        
+
             // logica de carregamento de feriados
             List<Nucleo> nucleos = Fachada.<Nucleo>get(Nucleo.class);
             Collections.sort(nucleos);
@@ -140,7 +140,7 @@ public class ConfigUI extends javax.swing.JPanel {
             }
 
             listaNucleos.setModel(lm);
-            
+
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao carregar os nucleos nas configuracoes\n" + ex);
             ex.printStackTrace(System.err);
@@ -155,7 +155,7 @@ public class ConfigUI extends javax.swing.JPanel {
             String nome = txtnomenucleo.getText().trim();
             String descricao = txtdescricao.getText().trim();
             Nucleo nucleo = new Nucleo(nome, descricao);
-            
+
             Fachada.add(nucleo);
             loadNucleos();
             panelAddNucleo.setVisible(false);
@@ -179,7 +179,7 @@ public class ConfigUI extends javax.swing.JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {        
+    public void paintComponent(Graphics g) {
         Image wallpaper = ImageLoader.loadBackground();
         if (wallpaper != null) {
             g.drawImage(wallpaper, 0, 0, null);

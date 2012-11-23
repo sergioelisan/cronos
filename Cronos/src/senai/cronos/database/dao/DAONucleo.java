@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.cronos.util.Observador;
+import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Nucleo;
 
@@ -18,14 +18,14 @@ import senai.cronos.entidades.Nucleo;
 public class DAONucleo implements DAO<Nucleo> {
 
     private static DAO<Nucleo> instance = new DAONucleo();
-    
+
     public static DAO<Nucleo> getInstance() {
         return instance;
     }
-    
-    private DAONucleo() {        
+
+    private DAONucleo() {
     }
-    
+
     @Override
     public void add(Nucleo u) throws SQLException {
         open();
@@ -87,7 +87,7 @@ public class DAONucleo implements DAO<Nucleo> {
         }
 
         close();
-        
+
         return laboratorios;
     }
 
@@ -113,10 +113,10 @@ public class DAONucleo implements DAO<Nucleo> {
         }
 
         close();
-        
+
         return lb;
     }
-    
+
     @Override
     public void close() throws SQLException {
         con.close();
@@ -126,7 +126,7 @@ public class DAONucleo implements DAO<Nucleo> {
     public void open() throws SQLException {
         con = DatabaseUtil.conexao();
     }
-    
+
     @Override
     public void registra(Observador o) {
         observadores.add(o);
@@ -142,8 +142,8 @@ public class DAONucleo implements DAO<Nucleo> {
         for(Observador o : observadores)
             o.update();
     }
-    
+
     private List<Observador> observadores = new ArrayList<>();
-    
+
     private Connection con;
 }

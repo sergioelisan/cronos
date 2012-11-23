@@ -10,23 +10,23 @@ import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.Aleatorio;
-import senai.cronos.util.Observador;
+import senai.util.Aleatorio;
+import senai.util.Observador;
 
 /**
  *
  * @author Carlos Melo e sergio lisan
  */
 public final class Disciplinas implements Observador, Repository<UnidadeCurricular> {
-    
+
     private List<UnidadeCurricular> disciplinas;
 
     private static Disciplinas instance = new Disciplinas();
-    
+
     public static Disciplinas instance() {
         return instance;
     }
-    
+
     private Disciplinas() {
         try {
             DAOFactory.getDao(UnidadeCurricular.class).registra(this);
@@ -39,7 +39,7 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
     /**
      * retorna uma disciplina identificada pelo seu nome
      * @param nome
-     * @return 
+     * @return
      */
     public UnidadeCurricular buscaDisciplina(String nome) throws ClassNotFoundException, SQLException {
         for (UnidadeCurricular uc : get()) {
@@ -77,13 +77,13 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
      */
     public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, Integer modulo)  throws ClassNotFoundException, SQLException {
         List<UnidadeCurricular> unidades = new ArrayList<>();
-        
+
         for (UnidadeCurricular uc : get()) {
             if (uc.getNucleo().equals(nucleo) && uc.getModulo().equals(modulo)) {
                 unidades.add(uc);
             }
         }
-        
+
         return unidades;
     }
 
@@ -94,7 +94,7 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
      */
     public Docente melhorDocente(UnidadeCurricular uc)  throws ClassNotFoundException, SQLException {
         List<Proficiencia> proficiencias = new ArrayList<>();
-        
+
         for (Docente dc : Fachada.<Docente>get(Docente.class)) {
             for (Proficiencia p : dc.getProficiencias()) {
                 if (p.getDisciplina().equals(uc)) {
@@ -103,12 +103,12 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
                 }
             }
         }
-        
+
         // Se nao houver nenhuma proficiencia, retorna 'extra-quadro'
         if (proficiencias.isEmpty()) {
             return Docente.PADRAO;
         }
-        
+
         List<Docente> melhores = new ArrayList<>();
         for (Proficiencia prof : proficiencias) {
             Docente doc = prof.getDocente();
@@ -116,17 +116,17 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
             doc.setScore((int) scorefinal);
             melhores.add(doc);
         }
-        
+
         // pega os quatro melhores
         Collections.sort(melhores);
-        Collections.reverse(melhores);        
-        
+        Collections.reverse(melhores);
+
         // TODO Implementar a logica de geracao de aleatorios
         int fator = Aleatorio.alec(0, proficiencias.size() > 4 ? 4 : proficiencias.size());
-        
+
         // Retorna o Melhor docente
         return melhores.get(fator);
-    }    
+    }
 
     @Override
     public void update() {
