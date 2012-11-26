@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.*;
 import senai.cronos.Fachada;
@@ -18,6 +19,7 @@ import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.GeraHorarioFactory;
+import static senai.util.debug.Debug.*;
 
 /**
  *
@@ -169,7 +171,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         pnCalendarios.add(setaDireita, BorderLayout.EAST);
         pnCalendarios.add(setaEsquerda, BorderLayout.WEST);
         pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
-        pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
         pnCalendarios.add(pnLegendas, BorderLayout.SOUTH);
     }
 
@@ -276,6 +277,16 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     }
 
                     horario = GeraHorarioFactory.getGerador().generate(turma);
+                    
+                    // DEBUG
+                    for(Date dia : horario.getHorario().keySet() ) {
+                        println(dia);
+                        println(horario.getHorario().get(dia).getPrimeiro());
+                        println(horario.getHorario().get(dia).getSegundo());
+                        println("");
+                    }
+                    // DEBUG
+                    
 
                     if (horario.getHorario().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Problemas no Gerador de Horário");
@@ -298,7 +309,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     show("TURMAS");
 
 
-                } catch (Exception e) {
+                } catch (ClassNotFoundException | SQLException | HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
                     e.printStackTrace(System.err);
                     show("TURMAS");

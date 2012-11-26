@@ -11,10 +11,11 @@ import javax.swing.JDialog;
  * @author Eduardo
  */
 public class Alertas {
-    
-     Update u=new Update();
-            JDialog dia = new JDialog();
-     public void jogarAviso(String Exception){
+
+    private Update u = new Update();
+    private JDialog dia = new JDialog();
+
+    public void jogarAviso(String Exception) {
         dia.setBounds(400, 300, 450, 250);
 
         dia.setContentPane(u);
@@ -22,11 +23,9 @@ public class Alertas {
         dia.toFront();
         u.getProgresso().setVisible(false);
         u.setTitulo("Mensagem");
-        u.setAtualiza("FALHA! mensagem:"+Exception); 
-     }
+        u.setAtualiza("FALHA! mensagem:" + Exception);
+    }
 
     public Alertas() {
     }
-            
-    
 }

@@ -10,7 +10,6 @@ import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.util.Tupla;
 import senai.util.date.DateUtil;
-import senai.util.debug.Debug;
 
 public class GeraHorarioAlternado extends GeraHorario {
 
@@ -73,4 +72,6 @@ public class GeraHorarioAlternado extends GeraHorario {
             }
         }
     }
+    
+    
 }

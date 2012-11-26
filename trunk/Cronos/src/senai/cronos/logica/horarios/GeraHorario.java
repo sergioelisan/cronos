@@ -31,8 +31,9 @@ public abstract class GeraHorario {
     protected Horario getHorario() throws ClassNotFoundException, SQLException {
         Turma t = Fachada.<Turma>get(Turma.class, turma.getId());
         Horario h = t.getHorario();
-        if (h.getHorario().isEmpty())
+        if (h.getHorario().isEmpty()) {
             h = Horario.create();
+        }
         return h;
     }
 
@@ -107,7 +108,7 @@ public abstract class GeraHorario {
      */
     protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina) {
 
-        // TODO Novo algoritmo para verificar o choque do docente.
+        // @todo Novo algoritmo para verificar o choque do docente.
 
         /*Turno tn = turma.getTurno();
          for (Date dia : diasdisciplina) {
@@ -194,6 +195,7 @@ public abstract class GeraHorario {
 
         Docente doc = getDocente(uc, diasdisciplina, modo);
         Laboratorio lab = uc.getLab();
+        
         Aula au = Aula.create();
         au.setDisciplina(uc);
         au.setDocente(doc);
