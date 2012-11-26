@@ -9,7 +9,6 @@ import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.util.Tupla;
-import senai.util.debug.Debug;
 
 public class GeraHorarioContinuo extends GeraHorario {
 
@@ -26,7 +25,7 @@ public class GeraHorarioContinuo extends GeraHorario {
                 List<Date> diasdisciplina = new ArrayList<>();
                 for (int i = 0; i < total; i++) {
                     for (Date dia : calendario.keySet()) {
-                        if (calendario.get(dia).getPrimeiro() == null && !diasdisciplina.contains(dia)) {
+                        if (calendario.get(dia).getPrimeiro().equals(Aula.PADRAO) && !diasdisciplina.contains(dia)) {
                             diasdisciplina.add(dia);
                             diasletivos--;
                             break;
@@ -36,6 +35,8 @@ public class GeraHorarioContinuo extends GeraHorario {
                 }
 
                 updateCalendario(uc, diasdisciplina, calendario);
+            } else {
+                break;
             }
         }
 

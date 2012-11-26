@@ -14,7 +14,6 @@ import senai.cronos.gui.Alertas;
 import senai.cronos.gui.CronosFrame;
 import senai.util.date.Calendario;
 import senai.util.date.Feriado;
-import senai.util.debug.Debug;
 import static senai.util.debug.Debug.println;
 import senai.util.os.OSFactory;
 import senai.util.os.OperatingSystem;
