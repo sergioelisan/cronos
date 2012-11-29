@@ -1,5 +1,6 @@
 package senai.util.date;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +11,6 @@ import java.util.List;
  */
 public class Calendario {
 
-    public Calendario() {
-    }
-
     /**
      *
      * @param inicio data do inicio do calendario de dias uteis
@@ -20,8 +18,13 @@ public class Calendario {
      * criar um calendário de dias e disponibiliza-lo através dos getters and
      * setters
      */
-    public Calendario(Date inicio, Date fim, List<Date> feriados) {
-        diasUteis = DateUtil.getDiasUteis(inicio, fim, feriados);
+    public Calendario(Date inicio, Date fim, List<Feriado> feriados) {
+        List<Date> diasDeFeriado = new ArrayList<>();
+        for (Feriado f : feriados) {
+            diasDeFeriado.add(f.getDia());
+        }
+
+        diasUteis = DateUtil.getDiasUteis(inicio, fim, diasDeFeriado);
     }
 
     public void setDiasUteis(List<Date> diasUteis) {

@@ -277,23 +277,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     }
 
                     horario = GeraHorarioFactory.getGerador().generate(turma);
-                    
-                    // DEBUG
-                    for(Date dia : horario.getHorario().keySet() ) {
-                        println(dia);
-                        println(horario.getHorario().get(dia).getPrimeiro());
-                        println(horario.getHorario().get(dia).getSegundo());
-                        println("");
-                    }
-                    // DEBUG
-                    
 
                     if (horario.getHorario().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Problemas no Gerador de Horário");
+                        JOptionPane.showMessageDialog(null, "Horário vazio");
                     } else {
                         HorarioUIFactory factory = new HorarioUIFactory(turma);
                         calendarios = factory.getCalendarios();
-
+                        
                         for (HorarioUI calendario : calendarios) {
                             pnHorarios.add(calendario, calendario.getMes().toLowerCase());
                         }

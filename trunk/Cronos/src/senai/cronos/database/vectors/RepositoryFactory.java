@@ -11,25 +11,29 @@ public class RepositoryFactory {
 
     public static Repository getRepository(Class c) {
 
-        if (c.equals(Docente.class)) {
-            return Docentes.instance();
-
-        } else if (c.equals(Laboratorio.class)) {
-            return Laboratorios.instance();
-
-        } else if (c.equals(Nucleo.class)) {
-            return Nucleos.instance();
-
-        } else if (c.equals(Turma.class)) {
-            return Turmas.instance();
-
-        } else if (c.equals(UnidadeCurricular.class)) {
-            return Disciplinas.instance();
-
-        } else if (c.equals(Feriado.class)) {
-            return Feriados.instance();
-
-        } else
-            return null;
+        switch(c.getName() ) {
+            case "senai.cronos.entidades.Docente": 
+                return Docentes.instance();
+                
+            case "senai.cronos.entidades.Laboratorio": 
+                return Laboratorios.instance();
+                
+            case "senai.cronos.entidades.Nucleo": 
+                return Nucleos.instance();
+                
+            case "senai.cronos.entidades.Turma": 
+                return Turmas.instance();
+                            
+            case "senai.cronos.entidades.UnidadeCurricular": 
+                return UnidadesCurriculares.instance();
+                
+            case "senai.util.date.Feriado": 
+                return Feriados.instance();
+                
+            default:
+                throw new IllegalArgumentException(c.getName() + " não possui Repository");
+        } 
+        
     }
+    
 }

@@ -121,26 +121,32 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
      * ideintificador unico
      */
     private Integer id = 0;
+    
     /**
      * disciplina
      */
     private String nome = "";
+    
     /**
      * nucleo
      */
     private Nucleo nucleo = new Nucleo();
+    
     /**
      * carga horaria
      */
     private Integer cargaHoraria = 0;
+    
     /**
      * modulo
      */
     private Integer modulo = 0;
+    
     /**
      * descricao do conteudo da disciplina
      */
     private String conteudoProgramatico = "";
+    
     /**
      * laboratorio
      */

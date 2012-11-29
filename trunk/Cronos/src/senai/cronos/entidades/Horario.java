@@ -1,7 +1,6 @@
 package senai.cronos.entidades;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -21,18 +20,18 @@ public class Horario {
      * @return horario
      */
     public static Horario create() {
-        Horario horario = new Horario();
-        for (Date diasUteis : Main.CALENDARIO.getDiasUteis()) {
-            horario.getHorario().put(diasUteis, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
+        Horario horario = new Horario();        
+        for (Date diaUtil : Main.CALENDARIO.getDiasUteis()) {
+            horario.getHorario().put(diaUtil, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
         }
+        
         return horario;
     }
 
     /**
      * construtor vazio
      */
-    public Horario() {
-        horario = new HashMap<>();
+    private Horario() {        
     }
 
     public Map<Date, Tupla<Aula, Aula>> getHorario() {

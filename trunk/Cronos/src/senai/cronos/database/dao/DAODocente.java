@@ -1,7 +1,6 @@
 package senai.cronos.database.dao;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,13 +10,12 @@ import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.*;
 import senai.cronos.entidades.Formacao;
 import senai.cronos.entidades.Turno;
-import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class DAODocente implements DAO<Docente> {
+public class DAODocente extends DAO<Docente> {
 
     private static DAO<Docente> instance = new DAODocente();
 
@@ -166,32 +164,5 @@ public class DAODocente implements DAO<Docente> {
         return docente;
     }
 
-    @Override
-    public void close() throws SQLException {
-        con.close();
-    }
-
-    @Override
-    public void open() throws SQLException {
-        con = DatabaseUtil.conexao();
-    }
-
-    @Override
-    public void registra(Observador o) {
-        observadores.add(o);
-    }
-
-    @Override
-    public void remove(Observador o) {
-        observadores.remove(o);
-    }
-
-    @Override
-    public void notifica() {
-        for (Observador o : observadores) {
-            o.update();
-        }
-    }
-    private List<Observador> observadores = new ArrayList<>();
-    private Connection con;
+    
 }

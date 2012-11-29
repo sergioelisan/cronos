@@ -84,9 +84,7 @@ public class HorariosUI extends javax.swing.JPanel {
     }
 
     /*
-     * 
      * CLASSES INTERNAS ANONIMAS VOLTADAS PARA OFERECER SERVICOS PARA SEUS CLIENTES
-     * 
      */
     
     /**

@@ -9,11 +9,6 @@ import java.util.Objects;
  */
 public class Proficiencia implements Comparable<Proficiencia> {
 
-    private Docente docente;
-    private UnidadeCurricular unidadecurricular;
-    private int scoretemp = 0;
-    private int lecionado = 0;
-
     public Proficiencia() {
     }
 
@@ -94,4 +89,10 @@ public class Proficiencia implements Comparable<Proficiencia> {
     public int compareTo(Proficiencia o) {
         return scoretemp > o.scoretemp ? 1 : (scoretemp == o.scoretemp ? 0 : -1);
     }
+    
+    private Docente docente = new Docente();
+    private UnidadeCurricular unidadecurricular = new UnidadeCurricular();
+    private int scoretemp = 0;
+    private int lecionado = 0;
+
 }

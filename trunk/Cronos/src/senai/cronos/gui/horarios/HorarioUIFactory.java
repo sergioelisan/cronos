@@ -177,6 +177,7 @@ public class HorarioUIFactory {
         Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
 
         Integer mesCorrente = DateUtil.getMes(Main.CALENDARIO.getDiasUteis().get(0) );
+        System.out.println(Main.CALENDARIO.getDiasUteis().size() );
         for (Date dia : horario.getHorario().keySet()) {
             Integer mes = DateUtil.getMes(dia);
 
@@ -206,7 +207,7 @@ public class HorarioUIFactory {
 
         List<Color> cores = new ArrayList<>();
         for (int i = 1; i <= 15; i++) {
-            cores.add(Color.decode(rb.getString("disciplina." + (i))));
+            cores.add(Color.decode(rb.getString("disciplina." + (i) ) ) );
         }
 
         return cores;

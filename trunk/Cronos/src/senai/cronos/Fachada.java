@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import senai.cronos.database.dao.DAO;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.database.vectors.Disciplinas;
+import senai.cronos.database.vectors.UnidadesCurriculares;
 import senai.cronos.database.vectors.Docentes;
 import senai.cronos.database.vectors.Laboratorios;
 import senai.cronos.database.vectors.Nucleos;
@@ -142,7 +142,7 @@ public class Fachada {
      * @return
      */
     public static Docente melhorDocente(UnidadeCurricular uc) throws ClassNotFoundException, SQLException {
-        return Disciplinas.instance().melhorDocente(uc);
+        return UnidadesCurriculares.instance().melhorDocente(uc);
     }
 
     /**
@@ -152,7 +152,7 @@ public class Fachada {
      * @return
      */
     public static UnidadeCurricular buscaDisciplina(String nome) throws ClassNotFoundException, SQLException {
-        return Disciplinas.instance().buscaDisciplina(nome);
+        return UnidadesCurriculares.instance().buscaDisciplina(nome);
     }
 
     /**
@@ -162,7 +162,7 @@ public class Fachada {
      * @return
      */
     public static List<UnidadeCurricular> buscaDisciplinas(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        return Disciplinas.instance().buscaDisciplina(nucleo);
+        return UnidadesCurriculares.instance().buscaDisciplina(nucleo);
     }
 
     /**
@@ -173,7 +173,7 @@ public class Fachada {
      * @return
      */
     public static List<UnidadeCurricular> buscaDisciplinas(Nucleo nucleo, Integer modulo) throws ClassNotFoundException, SQLException {
-        return Disciplinas.instance().buscaDisciplina(nucleo, modulo);
+        return UnidadesCurriculares.instance().buscaDisciplina(nucleo, modulo);
     }
 
     /**

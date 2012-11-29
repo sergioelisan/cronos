@@ -1,13 +1,11 @@
 package senai.cronos.database.dao;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Nucleo;
 
@@ -15,7 +13,7 @@ import senai.cronos.entidades.Nucleo;
  *
  * @author Sergio Lisan
  */
-public class DAONucleo implements DAO<Nucleo> {
+public class DAONucleo extends DAO<Nucleo> {
 
     private static DAO<Nucleo> instance = new DAONucleo();
 
@@ -116,34 +114,5 @@ public class DAONucleo implements DAO<Nucleo> {
 
         return lb;
     }
-
-    @Override
-    public void close() throws SQLException {
-        con.close();
-    }
-
-    @Override
-    public void open() throws SQLException {
-        con = DatabaseUtil.conexao();
-    }
-
-    @Override
-    public void registra(Observador o) {
-        observadores.add(o);
-    }
-
-    @Override
-    public void remove(Observador o) {
-        observadores.remove(o);
-    }
-
-    @Override
-    public void notifica() {
-        for(Observador o : observadores)
-            o.update();
-    }
-
-    private List<Observador> observadores = new ArrayList<>();
-
-    private Connection con;
+    
 }

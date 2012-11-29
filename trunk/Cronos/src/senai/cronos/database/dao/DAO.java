@@ -1,9 +1,13 @@
 package senai.cronos.database.dao;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import senai.cronos.database.DatabaseUtil;
 import senai.util.Observado;
+import senai.util.Observador;
 
 /**
  *
@@ -12,25 +16,25 @@ import senai.util.Observado;
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public interface DAO<T> extends Observado {
+public abstract class DAO<T> implements Observado {
 
     /**
      * adiciona um elemento ao banco de dados
      * @param u
      */
-    void add(T u) throws SQLException;
+    public abstract void add(T u) throws SQLException;
 
     /**
      * remove um elemento do banco de dados
      * @param id
      */
-    void remove(Serializable id) throws SQLException;
+    public abstract void remove(Serializable id) throws SQLException;
 
     /**
      * altera um elemento do banco de dados
      * @param u
      */
-    void update(T u) throws SQLException;
+    public abstract void update(T u) throws SQLException;
 
     /**
      * retorna um objeto idenfiticado por sua id
@@ -38,24 +42,45 @@ public interface DAO<T> extends Observado {
      * @return
      * @throws Exception
      */
-    T get(Serializable id) throws SQLException;
+    public abstract T get(Serializable id) throws SQLException;
 
     /**
      * lista elementos de uma tabela do banco de dados
      * @return
      */
-    List<T> get() throws SQLException;
+    public abstract List<T> get() throws SQLException;
 
-    /**
-     * abre a conexao com o banco de dados
-     * @throws SQLException
-     */
-    void open() throws SQLException;
+    /** fecha uma conexao com o banco */
+    public void close() throws SQLException {
+        con.close();
+    }
 
-    /**
-     * fecha a conexao com o banco de dados
-     * @throws SQLException
-     */
-    void close() throws SQLException;
+    /** abre uma conexao com o banco */
+    public void open() throws SQLException {
+        con = DatabaseUtil.conexao();
+    }
+
+    @Override
+    public void registra(Observador o) {
+        observadores.add(o);
+    }
+
+    @Override
+    public void remove(Observador o) {
+        observadores.remove(o);
+    }
+
+    @Override
+    public void notifica() {
+        for (Observador o : observadores) {
+            o.update();
+        }
+    }
+    
+    /** lista de observadores */
+    private List<Observador> observadores = new ArrayList<>();
+    
+    /** conexao com o banco */
+    protected Connection con;
 
 }

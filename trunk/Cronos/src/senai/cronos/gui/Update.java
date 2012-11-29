@@ -74,11 +74,11 @@ public class Update extends javax.swing.JPanel {
         progresso.setBounds(20, 90, 400, 40);
         jLayeredPane2.add(progresso, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        atualiza.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        atualiza.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         atualiza.setBounds(20, 150, 390, 20);
         jLayeredPane2.add(atualiza, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         titulo.setText("Atualizando o Sistema");
         titulo.setBounds(20, 40, 350, 35);
         jLayeredPane2.add(titulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -101,12 +101,12 @@ public class Update extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
