@@ -69,12 +69,15 @@ public class Nucleo implements Comparable<Nucleo> {
         return nome;
     }
     
-    private Integer id = 0;
-    private String nome = "";
-    private String desc = "";
-
     @Override
     public int compareTo(Nucleo t) {
         return nome.compareTo(t.nome);
     }
+    
+    private Integer id = 0;
+    
+    private String nome = "";
+    
+    private String desc = "";
+
 }

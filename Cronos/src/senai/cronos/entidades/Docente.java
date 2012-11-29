@@ -63,6 +63,7 @@ public class Docente implements Comparable<Docente> {
      * METODOS ACESSORES
      *
      */
+    
     @Override
     public int compareTo(Docente o) {
         return score > o.score ? 1 : score == o.score ? 0 : -1;
@@ -210,39 +211,48 @@ public class Docente implements Comparable<Docente> {
      * matricula que serve como identificador unico do docente
      */
     private Integer matricula = 0;
+    
     /**
      * nome do docente
      */
     private String nome = "Extra Quadro";
+    
     /**
      * Inteiro que contem um numero arbitrario sobre a formacao do docente
      */
     private Formacao formacao = Formacao.MEDIO;
+    
     /**
      * data de contratacao do docente
      */
     private Date contratacao = new Date();
+    
     /**
      * nucleo em que o docente preferencialmente trabalha
      */
     private Nucleo nucleo = new Nucleo();
+    
     /**
      * lista de proficiencias do docente
      */
     private List<Proficiencia> proficiencias = new ArrayList<>();
+    
     /**
      * Como o horario do docente esta sendo preenchido
      */
     private HorarioDocente ocupacao = HorarioDocente.create();
+    
     /**
      * pontuacao do docente. esse atributo é relacionado com a formacao e o
      * tempo de casa do docente
      */
     private int score = 0;
+    
     /**
      * Turno de operacao do docente
-     */
+     */    
     private Turno primeiroTurno = Turno.MANHA;
+    
     /**
      * docentes geralmente trabalham em dois turnos, nao necessariamento
      * seguidos

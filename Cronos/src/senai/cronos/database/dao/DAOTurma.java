@@ -1,7 +1,6 @@
 package senai.cronos.database.dao;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import senai.cronos.Fachada;
-import senai.util.Observador;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
@@ -27,18 +25,15 @@ import senai.util.Tupla;
  *
  * @author Sergio Lisan
  */
-public class DAOTurma implements DAO<Turma> {
+public class DAOTurma extends DAO<Turma> {
 
     private static DAO<Turma> instance = new DAOTurma();
-    private List<Observador> observadores = new ArrayList<>();
-    private Connection con;
 
     public static DAO<Turma> getInstance() {
         return instance;
     }
 
     private DAOTurma() {
-
     }
 
     @Override
@@ -49,8 +44,8 @@ public class DAOTurma implements DAO<Turma> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
-            ps.setDate(3, new java.sql.Date(u.getEntrada().getTime()) );
-            ps.setDate(4, new java.sql.Date(u.getSaida().getTime()) );
+            ps.setDate(3, new java.sql.Date(u.getEntrada().getTime()));
+            ps.setDate(4, new java.sql.Date(u.getSaida().getTime()));
             ps.setInt(5, u.getTurno().ordinal());
             ps.setInt(6, u.getHabilitacao());
             ps.execute();
@@ -124,7 +119,7 @@ public class DAOTurma implements DAO<Turma> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
             ps.setInt(2, u.getNucleo().getId());
-            ps.setDate(3, new java.sql.Date(u.getEntrada().getTime()) );
+            ps.setDate(3, new java.sql.Date(u.getEntrada().getTime()));
 
             java.sql.Date saida = u.getSaida() == null ? null : new java.sql.Date(u.getSaida().getTime());
             ps.setDate(4, saida);
@@ -171,10 +166,10 @@ public class DAOTurma implements DAO<Turma> {
         List<Turma> turmas = new ArrayList<>();
         String query = DatabaseUtil.query("turma.select");
 
-        try(PreparedStatement ps = con.prepareStatement(query) ) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Turma t = new Turma();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
@@ -184,19 +179,16 @@ public class DAOTurma implements DAO<Turma> {
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
                 t.setHabilitacao(rs.getInt("habilitacao"));
                 t.setHorario(getHorario(t.getId()));
-
                 turmas.add(t);
             }
 
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
-        close();
 
+        close();
         return turmas;
     }
-
-
 
     @Override
     public Turma get(Serializable id) throws SQLException {
@@ -204,11 +196,11 @@ public class DAOTurma implements DAO<Turma> {
         Turma t = new Turma();
         String query = DatabaseUtil.query("turma.get");
 
-        try(PreparedStatement ps = con.prepareStatement(query) ) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
                 t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
@@ -217,10 +209,11 @@ public class DAOTurma implements DAO<Turma> {
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
                 t.setHabilitacao(rs.getInt("habilitacao"));
                 t.setHorario(getHorario(t.getId()));
+
             }
 
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
 
         close();
@@ -229,20 +222,19 @@ public class DAOTurma implements DAO<Turma> {
 
     public Horario getHorario(Integer turmaID) throws SQLException {
         open();
-        Horario h = Horario.create();
+        Horario horario = Horario.create();
         String query = DatabaseUtil.query("horario.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) turmaID);
             ResultSet rs = ps.executeQuery();
 
-            Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
+            Map<Date, Tupla<Aula, Aula>> h = horario.getHorario();
 
             while (rs.next()) {
                 Date dia = rs.getDate("dia");
 
                 Aula a1 = Aula.create();
-
                 a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1")));
                 a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
                 a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
@@ -252,44 +244,16 @@ public class DAOTurma implements DAO<Turma> {
                 a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
                 a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
 
-                horario.put(dia, new Tupla<>(a1, a2));
+                h.put(dia, new Tupla<>(a1, a2));
             }
 
-            h.setHorario(horario);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage() );
         }
 
         close();
 
-        return h;
+        return horario;
     }
-
-    @Override
-    public void close() throws SQLException {
-        con.close();
-    }
-
-    @Override
-    public void open() throws SQLException {
-        con = DatabaseUtil.conexao();
-    }
-
-    @Override
-    public void registra(Observador o) {
-        observadores.add(o);
-    }
-
-    @Override
-    public void remove(Observador o) {
-        observadores.remove(o);
-    }
-
-    @Override
-    public void notifica() {
-        for(Observador o : observadores)
-            o.update();
-    }
-
-
 }

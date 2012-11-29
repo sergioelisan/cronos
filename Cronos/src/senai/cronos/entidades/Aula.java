@@ -21,7 +21,7 @@ public class Aula {
         return new Aula();
     }
     
-    private Aula() {        
+    public Aula() {        
     }
 
     public UnidadeCurricular getDisciplina() {
@@ -96,7 +96,11 @@ public class Aula {
     }
 
     private Integer id = 0;
+    
     private UnidadeCurricular disciplina = new UnidadeCurricular();
+    
     private Docente docente = new Docente();
+    
     private Laboratorio lab = new Laboratorio();
+    
 }

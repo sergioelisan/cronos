@@ -17,22 +17,22 @@ import senai.util.Observador;
  *
  * @author Carlos Melo e sergio lisan
  */
-public final class Disciplinas implements Observador, Repository<UnidadeCurricular> {
+public final class UnidadesCurriculares implements Observador, Repository<UnidadeCurricular> {
 
     private List<UnidadeCurricular> disciplinas;
 
-    private static Disciplinas instance = new Disciplinas();
+    private static UnidadesCurriculares instance = new UnidadesCurriculares();
 
-    public static Disciplinas instance() {
+    public static UnidadesCurriculares instance() {
         return instance;
     }
 
-    private Disciplinas() {
+    private UnidadesCurriculares() {
         try {
             DAOFactory.getDao(UnidadeCurricular.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Disciplinas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UnidadesCurriculares.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -144,9 +144,11 @@ public final class Disciplinas implements Observador, Repository<UnidadeCurricul
 
     @Override
     public UnidadeCurricular get(Class c, Integer id) {
-        for(UnidadeCurricular disciplina : disciplinas)
-            if(disciplina.getId().equals(id))
+        for(UnidadeCurricular disciplina : disciplinas) {
+            if(disciplina.getId().equals(id)) {
                 return disciplina;
+            }
+        }
         return null;
     }
 }

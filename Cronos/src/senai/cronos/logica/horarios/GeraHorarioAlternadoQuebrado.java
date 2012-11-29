@@ -14,7 +14,7 @@ import senai.util.date.DateUtil;
 public class GeraHorarioAlternadoQuebrado extends GeraHorario {
 
     @Override
-    public void generate(Horario horario) throws ClassNotFoundException, SQLException {
+    public void fazerHorario(Horario horario) throws ClassNotFoundException, SQLException {
         Map<Date, Tupla<Aula, Aula>> calendario = horario.getHorario();
 
         List<UnidadeCurricular> disciplinas = getDisciplinas();

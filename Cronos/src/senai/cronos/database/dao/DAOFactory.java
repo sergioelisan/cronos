@@ -23,29 +23,32 @@ public class DAOFactory {
      */
     public static DAO getDao(Class c) throws ClassNotFoundException, SQLException {
 
-        if (c.equals(Docente.class)) {
-            return DAODocente.getInstance();
-
-        } else if (c.equals(Laboratorio.class)) {
-            return DAOLaboratorio.getInstance();
-
-        } else if (c.equals(Nucleo.class)) {
-            return DAONucleo.getInstance();
-
-        } else if (c.equals(Turma.class)) {
-            return DAOTurma.getInstance();
-
-        } else if (c.equals(Proficiencia.class)) {
-            return DAOProficiencia.getInstance();
-
-        } else if (c.equals(UnidadeCurricular.class)) {
-            return DAOUnidadeCurricular.getInstance();
-
-        } else if (c.equals(Feriado.class)) {
-            return DAOFeriado.getInstance();
-
-        } else {
-            throw new IllegalArgumentException("DAO Inexistente para a classe: " + c.getName());
-        }
+        switch(c.getName() ) {
+            case "senai.cronos.entidades.Docente": 
+                return DAODocente.getInstance();
+                
+            case "senai.cronos.entidades.Laboratorio": 
+                return DAOLaboratorio.getInstance();
+                
+            case "senai.cronos.entidades.Nucleo": 
+                return DAONucleo.getInstance();
+                
+            case "senai.cronos.entidades.Turma": 
+                return DAOTurma.getInstance();
+                
+            case "senai.cronos.entidades.Proficiencia": 
+                return DAOProficiencia.getInstance();
+                
+            case "senai.cronos.entidades.UnidadeCurricular": 
+                return DAOUnidadeCurricular.getInstance();
+                
+            case "senai.util.date.Feriado": 
+                return DAOFeriado.getInstance();
+                
+            default:
+                throw new IllegalArgumentException(c.getName() + " não possui DAO");
+        }       
+        
     }
+    
 }

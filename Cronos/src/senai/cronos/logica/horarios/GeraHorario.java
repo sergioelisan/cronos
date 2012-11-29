@@ -12,66 +12,51 @@ import senai.cronos.logica.validacoes.ValidaAptidao;
 import senai.cronos.logica.validacoes.Validacao;
 import senai.util.Tupla;
 
+/**
+ * Classe abstrata que armazena a ordem e algumas partes do algoritmo de geração
+ * de horarios
+ * @author Sergio
+ */
 public abstract class GeraHorario {
 
-    private int MAXTENTATIVAS = 30;
-    private Validacao validacao;
-    protected Turma turma;
+    /**
+     * Turma em que uma instancia dessa classe será encarregada de gerar o horario
+     */
+    private Turma turma;
 
-    public Horario generate(Turma turma) throws ClassNotFoundException, SQLException {
-        this.turma = turma;
-        this.validacao = new ValidaAptidao(turma);
-        Horario horario = getHorario();
-        generate(horario);
-        return horario;
-    }
-
-    abstract void generate(Horario horario) throws ClassNotFoundException, SQLException;
-
-    protected Horario getHorario() throws ClassNotFoundException, SQLException {
-        Turma t = Fachada.<Turma>get(Turma.class, turma.getId());
-        Horario h = t.getHorario();
-        if (h.getHorario().isEmpty()) {
-            h = Horario.create();
-        }
-        return h;
-    }
-
-    protected List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
-        List<UnidadeCurricular> disciplinas = new ArrayList<>();
-        Nucleo gestao = Fachada.buscaNucleo("comum");
-        for (int i = 0; i <= 3; i++) {
-            List<UnidadeCurricular> pormodulo = Fachada.buscaDisciplinas(turma.getNucleo(), i);
-            List<UnidadeCurricular> gestoes = Fachada.buscaDisciplinas(gestao, i);
-            disciplinas.addAll(pormodulo);
-            disciplinas.addAll(gestoes);
-        }
-        return disciplinas;
+    /**
+     * Gera o horario de uma turma
+     * @param turma
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+    public void gerarHorario(Turma turma) throws ClassNotFoundException, SQLException {
+        this.turma = turma;        
+        fazerHorario(turma.getHorario() );
     }
 
     /**
-     * retorna o melhor docente
-     *
-     * @param disciplina
-     * @param diasdisciplina
+     * metodo abstrato que delega a subclasse a forma como as disciplinas serao
+     * distribuidas pelos dias uteis do calendario pre-determinado
+     * @param horario
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+    protected abstract void fazerHorario(Horario horario) throws ClassNotFoundException, SQLException;
+
+    /**
+     * Retorna as disciplinas de um curso
      * @return
      * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws SQLException 
      */
-    private Docente getDocente(UnidadeCurricular disciplina, List<Date> diasdisciplina)
-            throws ClassNotFoundException, SQLException {
-        Docente doc;
-        int tentativas = 0;
-        do {
-            doc = Fachada.melhorDocente(disciplina);
-            tentativas++;
-        } while (!validacao.isValid(doc) && isEmChoque(doc, diasdisciplina) && tentativas < MAXTENTATIVAS);
-
-        if (tentativas > MAXTENTATIVAS) {
-            doc = new Docente();
-        }
-
-        return doc;
+    protected List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
+        List<UnidadeCurricular> disciplinas = new ArrayList<>();
+        
+        // TODO implementar
+        
+        return disciplinas;
     }
 
     /**
@@ -85,56 +70,11 @@ public abstract class GeraHorario {
      */
     private Docente getDocente(UnidadeCurricular disciplina, List<Date> diasdisciplina, Integer metade)
             throws ClassNotFoundException, SQLException {
-        Docente doc;
-        int tentativas = 0;
-        do {
-            doc = Fachada.melhorDocente(disciplina);
-            tentativas++;
-        } while (!validacao.isValid(doc) && isEmChoque(doc, diasdisciplina, metade) && tentativas < MAXTENTATIVAS);
-
-        if (tentativas > MAXTENTATIVAS) {
-            doc = Docente.PADRAO;
-        }
+        Docente doc = Docente.PADRAO;
+        
+        // TODO implementar
 
         return doc;
-    }
-
-    /**
-     * verifica se há choque
-     *
-     * @param docente
-     * @param diasdisciplina
-     * @return
-     */
-    protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina) {
-
-        // @todo Novo algoritmo para verificar o choque do docente.
-
-        /*Turno tn = turma.getTurno();
-         for (Date dia : diasdisciplina) {
-         if (!docente.getHorarioDocente().isDisponivel(tn, dia)) {
-         return true;
-         }
-         }
-         return false;*/
-        return true;
-    }
-
-    /**
-     * verifica se há choque
-     *
-     * @param docente
-     * @param diasdisciplina
-     * @return
-     */
-    protected boolean isEmChoque(Docente docente, List<Date> diasdisciplina, Integer metade) {
-        Turno tn = turma.getTurno();
-        for (Date dia : diasdisciplina) {
-            if (docente.getHorarioDocente().isDisponivel(dia, tn, metade)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -144,10 +84,8 @@ public abstract class GeraHorario {
      * @param horasPorDia
      * @return
      */
-    protected int getQuantidadeDeDias(UnidadeCurricular uc, int horasPorDia) {
-        int dias = uc.getCargaHoraria() / horasPorDia;
-        int resto = uc.getCargaHoraria() % horasPorDia;
-        return dias + resto;
+    public int getQuantidadeDeDias(UnidadeCurricular uc, int horasPorDia) {
+        return (uc.getCargaHoraria() / horasPorDia) + (uc.getCargaHoraria() % horasPorDia);
     }
 
     /**

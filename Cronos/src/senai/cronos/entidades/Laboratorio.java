@@ -72,9 +72,9 @@ public class Laboratorio {
         return "Laboratorio{" + "id = " + id + ", nome = " + nome + ", descricao = " + descricao + '}';
     }
     
-    
-
     private Integer id = 0;
+    
     private String nome = "";
+    
     private String descricao = "";
 }

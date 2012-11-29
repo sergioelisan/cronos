@@ -28,12 +28,13 @@ public final class Turmas implements Observador, Repository<Turma> {
             DAOFactory.getDao(Turma.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Turmas.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Problemas com o vetor de turmas");
         }
     }
 
     /**
      * Método que retorno o objeto turma tendo como parametro de entrada o nome.
+     *
      * @param nome String com o nome da turma
      * @return objeto Turma
      */
@@ -45,21 +46,23 @@ public final class Turmas implements Observador, Repository<Turma> {
         }
         return null;
     }
-    public Integer getIDTurma() throws ClassNotFoundException, SQLException{
+
+    /** */
+    public Integer getIDTurma() throws ClassNotFoundException, SQLException {
         Integer id;
-        Turma t=getTurmas().get(getTurmas().size());
-        if(getTurmas().isEmpty()){
-          id=0;
-        }else{
-         id=t.getId();
+        Turma t = getTurmas().get(getTurmas().size());
+
+        if (getTurmas().isEmpty()) {
+            id = 0;
+        } else {
+            id = t.getId();
         }
-
-
-        return id+1;
+        return id + 1;
     }
 
     /**
      * retorna as turmas de um nucleo
+     *
      * @param nucleo
      * @return
      */
@@ -77,8 +80,6 @@ public final class Turmas implements Observador, Repository<Turma> {
     public void update() {
         try {
             turmas = DAOFactory.getDao(Turma.class).get();
-
-            System.out.println(turmas);
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
@@ -98,9 +99,11 @@ public final class Turmas implements Observador, Repository<Turma> {
 
     @Override
     public Turma get(Class c, Integer id) {
-        for(Turma t : turmas)
-            if(t.getId().equals(id))
+        for (Turma t : turmas) {
+            if (t.getId().equals(id)) {
                 return t;
+            }
+        }
         return null;
     }
 }

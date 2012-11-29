@@ -143,30 +143,37 @@ public class Turma {
      * identificador
      */
     private Integer id = 0;
+    
     /**
      * nome da turma
      */
     private String nome = "";
+    
     /**
      * nucleo que ela pertence
      */
     private Nucleo nucleo = new Nucleo();
+    
     /**
      * data de entrada da turma
      */
     private Date entrada = new Date();
+    
     /**
      * saida da turma, setada inicialmente no EPOCH, para evitar o nullpointerexception
      */
     private Date saida = new GregorianCalendar(2100, 0, 1).getTime();
+    
     /**
      * Turno da turma
      */
     private Turno turno = Turno.MANHA;
+    
     /**
      * horario da turma
      */
     private Horario horario = Horario.create();
+    
     /**
      * habilitacao
      */

@@ -82,13 +82,13 @@ public class Splash extends JWindow {
      */
     private void createProgressBar() {
         progressBar = new JProgressBar();
-        int width = (int) (dim.width * 0.50);
+        int width = (int) (dim.width * 0.55);
         int height = (int) (dim.height * 0.02);
         int x = (int) (dim.width - width) / 2;
-        int y = (int) (dim.height * 0.65);
+        int y = (int) (dim.height * 0.83);
 
-        progressBar.setForeground(Color.decode("0x0BA4E8"));
-        progressBar.setBackground(Color.white);
+        progressBar.setForeground(Color.white);
+        progressBar.setBackground(Color.decode("0x87AADE") );
         progressBar.setBorder(null);
         progressBar.setBounds(x, y, width, height);
         progressBar.setMinimum(0);

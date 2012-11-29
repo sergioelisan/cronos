@@ -33,7 +33,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" alignment="1" pref="1342" max="32767" attributes="1"/>
+                  <Component id="jLabel2" alignment="1" pref="1346" max="32767" attributes="1"/>
                   <Component id="jPanel1" alignment="1" pref="1342" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -56,11 +56,11 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="0"/>
+          <Font name="Segoe UI Light" size="36" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/senai/cronos/gui/images/logo.jpg"/>
+          <Image iconType="3" name="/senai/cronos/gui/images/logo.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cronos"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>

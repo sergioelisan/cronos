@@ -1,7 +1,6 @@
 package senai.cronos.database.dao;
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,14 +11,13 @@ import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.util.Observador;
 import senai.util.debug.Debug;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class DAOProficiencia implements DAO<Proficiencia> {
+public class DAOProficiencia extends DAO<Proficiencia> {
 
     private static DAO<Proficiencia> instance = new DAOProficiencia();
 
@@ -112,32 +110,4 @@ public class DAOProficiencia implements DAO<Proficiencia> {
         return profs;
     }
 
-    @Override
-    public void close() throws SQLException {
-        con.close();
-    }
-
-    @Override
-    public void open() throws SQLException {
-        con = DatabaseUtil.conexao();
-    }
-
-    @Override
-    public void registra(Observador o) {
-        observadores.add(o);
-    }
-
-    @Override
-    public void remove(Observador o) {
-        observadores.remove(o);
-    }
-
-    @Override
-    public void notifica() {
-        for (Observador o : observadores) {
-            o.update();
-        }
-    }
-    private List<Observador> observadores = new ArrayList<>();
-    private Connection con;
 }
