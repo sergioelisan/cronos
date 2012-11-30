@@ -65,13 +65,11 @@ public class DAOTurma extends DAO<Turma> {
                 ps.setInt(1, t.getId());
                 ps.setDate(2, new java.sql.Date(dia.getTime()));
 
-                System.out.println(u.getHorario().get(dia).getPrimeiro().getDisciplina().getId());
                 Integer disciplinaID = u.getHorario().get(dia).getPrimeiro().getDisciplina().getId();
                 ps.setInt(3, disciplinaID);
                 ps.setInt(4, u.getHorario().get(dia).getPrimeiro().getDocente().getMatricula());
                 ps.setInt(5, u.getHorario().get(dia).getPrimeiro().getLab().getId());
 
-                System.out.println(u.getHorario().get(dia).getSegundo().getDisciplina().getId());
                 Integer disciplina2ID = u.getHorario().get(dia).getSegundo().getDisciplina().getId();
                 ps.setInt(6, disciplina2ID);
                 ps.setInt(7, u.getHorario().get(dia).getSegundo().getDocente().getMatricula());

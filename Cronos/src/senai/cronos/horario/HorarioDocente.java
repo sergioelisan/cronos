@@ -101,7 +101,18 @@ public class HorarioDocente {
      * @return
      */
     public boolean isDisponivel(Date dia, Turno tn, Integer metade) {
-        return this.getAula(dia, tn, metade).equals(Aula.PADRAO);
+        return getAula(dia, tn, metade).equals(Aula.PADRAO);
+    }
+
+    /**
+     * Verifica disponibilidade de um docente
+     * @param dia
+     * @param tn
+     * @return
+     */
+    public boolean isDisponivel(Date dia, Turno tn) {
+        return ( getAula(dia, tn, Tupla.PRIMEIRA).equals(Aula.PADRAO) &&
+                 getAula(dia, tn, Tupla.SEGUNDA) .equals(Aula.PADRAO) );
     }
 
     /**
