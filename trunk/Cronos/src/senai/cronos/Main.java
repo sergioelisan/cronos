@@ -21,7 +21,7 @@ import static senai.util.debug.Debug.println;
 public class Main {
 
     /** Versao atual do codigo */
-    public static final String VERSAO = Versoes.BETA;
+    public static final String VERSAO = Versoes.BETA2;
 
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola

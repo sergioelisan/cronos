@@ -280,7 +280,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     show("CALENDARIOS");
                     ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
 
-                } catch (ClassNotFoundException | SQLException | HeadlessException e) {
+                } catch (Exception e) {
                     stopLoading();
                     JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
                     e.printStackTrace(System.err);

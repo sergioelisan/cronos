@@ -110,7 +110,6 @@ public class CadastroTurmas extends javax.swing.JPanel {
 
                     t.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
                     //Integer id=Fachada.getIDTurma();
-                    System.out.println("teste");
                     String code = lbcodigo.getText();
                     if (code.equals("matrícula")||code.equals("código")) {
                         //t.setId(id);

@@ -24,6 +24,7 @@ public class Alerta {
 
         dia.setContentPane(u);
         dia.setVisible(true);
+        dia.setLocationRelativeTo(null);
         dia.toFront();
         u.getProgresso().setVisible(false);
         u.setTitulo("Mensagem");
@@ -43,10 +44,11 @@ public class Alerta {
 
         dia.setContentPane(u);
         dia.setVisible(true);
+        dia.setLocationRelativeTo(null);
         dia.toFront();
         u.getProgresso().setVisible(false);
         u.setTitulo(titulo);
         u.setAtualiza(mensagem);
     }
-    
+
 }
