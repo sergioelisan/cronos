@@ -188,7 +188,7 @@ initData();
                     for (Turma turma : turmas) {
                         Tile ct = new Tile();
                         ct.setNome(turma.getNome());
-                        ct.setId(String.valueOf(turma.getId()) + "");
+                        ct.setId(turma.getNucleo().getNome() + "");
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
