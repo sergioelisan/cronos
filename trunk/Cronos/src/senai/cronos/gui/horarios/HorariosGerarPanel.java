@@ -10,16 +10,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.*;
 import senai.cronos.Fachada;
-import senai.cronos.entidades.Horario;
+import senai.cronos.database.dao.DAOFactory;
+import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.GeraHorarioFactory;
-import static senai.util.debug.Debug.*;
 
 /**
  *
@@ -28,18 +27,21 @@ import static senai.util.debug.Debug.*;
 public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient {
 
     private List<HorarioUI> calendarios = new ArrayList<>();
-    private Horario horario;
+    private Turma actualTurma;
+
     private JPanel pnTurmas = new JPanel();
     private JPanel pnCalendarios = new JPanel();
     private JPanel pnHorarios = new JPanel();
     private JPanel pnLegendas = new JPanel();
     private JPanel pnLoading = new JPanel();
+
     private JLabel lbLoading = new JLabel();
     private JLabel setaDireita = new JLabel(">");
     private JLabel setaEsquerda = new JLabel("<");
     private JLabel lbVoltar = new JLabel("voltar");
     private JLabel lbSave = new JLabel("salvar");
     private JLabel lbPrint = new JLabel("imprimir");
+
     private Timer animacao;
     private final int DELAY = 500;
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
@@ -181,8 +183,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      * @throws SQLException
      */
     private void loadTurmas() {
-        Thread t = new Thread(new HorariosUI.LoadTurmas(pnTurmas, this));
-        t.start();
+        new Thread(new HorariosUI.LoadTurmas(pnTurmas, this)).start();
     }
 
     /**
@@ -230,14 +231,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      */
     private void saveHorario() {
         try {
-            //Fachada.remove(horario.getTurma().getClass(), horario.getTurma().getId());
-            Fachada.add(horario);
+            DAOTurma dao = (DAOTurma) DAOFactory.getDao(Turma.class);
+            dao.addHorario(actualTurma);
 
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "FAIL! Erro ao Salvar Horario:\n" + e);
             show("TURMAS");
-            e.printStackTrace(System.err);
         }
     }
 
@@ -262,44 +262,26 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     pnHorarios.removeAll();
                     calendarios.clear();
 
-                    Turma turma = Fachada.<Turma>get(Turma.class, id);
-                    horario = turma.getHorario();
+                    actualTurma = Fachada.<Turma>get(Turma.class, id);
 
-                    if (!horario.getHorario().isEmpty()) {
-                        int opcao = JOptionPane.showConfirmDialog(null, "Deseja sobrescrever o horário dessa turma?", "Aviso", JOptionPane.YES_NO_OPTION);
+                    // Gera o horario
+                    GeraHorarioFactory.getGerador().gerarHorario(actualTurma);
 
-                        // se a opcao for nao, retorna a funcao.
-                        if (opcao == JOptionPane.NO_OPTION) {
-                            stopLoading();
-                            show("TURMAS");
-                            return;
-                        }
-                    }
+                    HorarioUIFactory factory = new HorarioUIFactory(actualTurma);
+                    calendarios = factory.getCalendarios();
 
-                    horario = GeraHorarioFactory.getGerador().generate(turma);
+                    for (HorarioUI calendario : calendarios)
+                        pnHorarios.add(calendario, calendario.getMes().toLowerCase());
 
-                    if (horario.getHorario().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Horário vazio");
-                    } else {
-                        HorarioUIFactory factory = new HorarioUIFactory(turma);
-                        calendarios = factory.getCalendarios();
-                        
-                        for (HorarioUI calendario : calendarios) {
-                            pnHorarios.add(calendario, calendario.getMes().toLowerCase());
-                        }
+                    for (JLabel legenda : factory.getLegendas() )
+                        pnLegendas.add(legenda);
 
-                        for (JLabel legenda : factory.getLegendas()) {
-                            pnLegendas.add(legenda);
-                        }
-                        stopLoading();
-                        show("CALENDARIOS");
-                        ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
-                    }
                     stopLoading();
-                    show("TURMAS");
-
+                    show("CALENDARIOS");
+                    ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
 
                 } catch (ClassNotFoundException | SQLException | HeadlessException e) {
+                    stopLoading();
                     JOptionPane.showMessageDialog(null, "FAIL! Erro ao Gerar Horario:\n" + e);
                     e.printStackTrace(System.err);
                     show("TURMAS");

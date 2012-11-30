@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
+import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Turno;
 import senai.util.Tupla;
 
@@ -60,7 +61,7 @@ public class HorarioDocente {
      * @param half
      */
     public void remove(Date dia, Turno turno, Integer half) {
-        horario.get(dia).get(turno).insert(Aula.create(), half);
+        horario.get(dia).get(turno).insert(Aula.PADRAO, half);
     }
 
     /**

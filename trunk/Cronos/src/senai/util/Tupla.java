@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Tupla<K, V> {
 
-    public static final Integer PRIMERA = 0;
+    public static final Integer PRIMEIRA = 0;
     public static final Integer SEGUNDA = 1;
 
     public Tupla() {
@@ -26,7 +26,7 @@ public class Tupla<K, V> {
      * @param posicao
      */
     public void insert(Object objeto, Integer posicao) {
-        if (posicao == Tupla.PRIMERA) {
+        if (posicao == Tupla.PRIMEIRA) {
             this.setPrimeiro((K) objeto);
         } else {
             this.setSegundo((V) objeto);
@@ -39,7 +39,7 @@ public class Tupla<K, V> {
      * @return
      */
     public Object get(Integer posicao) {
-        if (posicao == Tupla.PRIMERA) {
+        if (posicao == Tupla.PRIMEIRA) {
             return getPrimeiro();
         } else {
             return getSegundo();

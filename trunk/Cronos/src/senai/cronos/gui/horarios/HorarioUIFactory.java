@@ -176,23 +176,17 @@ public class HorarioUIFactory {
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> divideHorario() {
         Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
 
-        Integer mesCorrente = DateUtil.getMes(Main.CALENDARIO.getDiasUteis().get(0) );
-        System.out.println(Main.CALENDARIO.getDiasUteis().size() );
-        for (Date dia : horario.getHorario().keySet()) {
-            Integer mes = DateUtil.getMes(dia);
+        Date primeiroDia = Main.CALENDARIO.getDiasUteis().get(0); // pega o primeiro mes do calendario
+        Date ultimoDia = Main.CALENDARIO.getDiasUteis().get(Main.CALENDARIO.getDiasUteis().size() - 1); // pega o ultim mes do calendario
 
-            // se for o mes corrente
-            if (mesCorrente.equals(mes)) {
-                horarios.get(mes).put(dia, horario.getHorario().get(dia));
-            } // quando troca o mes
-            else if (!mesCorrente.equals(mes)) {
-                Map<Date, Tupla<Aula, Aula>> mapa = new TreeMap<>();
-                mapa.put(dia, horario.getHorario().get(dia));
+        // cria os dicionarios respectivos de cada mes
+        for (Integer mes =  DateUtil.getMes(primeiroDia);
+                     mes <= DateUtil.getMes(ultimoDia);
+                     mes++ )
+            horarios.put(mes, new TreeMap<Date, Tupla<Aula, Aula>>());
 
-                horarios.put(mes, mapa);
-                mesCorrente = mes;
-            }
-        }
+        for (Date dia : horario.getHorario().keySet())
+            horarios.get(DateUtil.getMes(dia) ).put(dia, horario.getHorario().get(dia) );
 
         return horarios;
     }
@@ -234,6 +228,7 @@ public class HorarioUIFactory {
      */
     private Horario horario;
 
-    /** */
+    /**
+     *      */
     private Turma turma;
 }

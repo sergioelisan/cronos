@@ -76,7 +76,7 @@ public final class Docentes implements Observador, Repository<Docente> {
     public double getScoreFinal(Docente docente, UnidadeCurricular uc) {
         double score = calcScore(docente);
         double scoreTemp = calcScoreTemp(docente, uc);
-        double scoreOcupacao = calcScoreOcupacao(docente);
+        double scoreOcupacao = 0;
 
         return score - (scoreTemp + scoreOcupacao / 3);
     }
@@ -100,32 +100,6 @@ public final class Docentes implements Observador, Repository<Docente> {
         docente.setScore((int) score);
 
         return score;
-    }
-
-    /**
-     * Gera uma pontuacao de acordo com a ocupacao do docente
-     *
-     * @param docente
-     * @return
-     */
-    private double calcScoreOcupacao(Docente docente) {
-        double ocupacao = docente.getHorarioDocente().getPercentualOcupacao();
-
-        if (ocupacao >= 1 && ocupacao <= 10) {
-            return 1;
-        } else if (ocupacao > 10 && ocupacao <= 20) {
-            return 2;
-        } else if (ocupacao > 20 && ocupacao <= 30) {
-            return 3;
-        } else if (ocupacao > 30 && ocupacao <= 40) {
-            return 4;
-        } else if (ocupacao > 40 && ocupacao <= 50) {
-            return 5;
-        } else if (ocupacao > 50 && ocupacao <= 66) {
-            return 6;
-        }
-
-        return 0;
     }
 
     /**
