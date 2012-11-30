@@ -23,4 +23,10 @@ public class ImageLoader {
         ImageIcon imagem = new ImageIcon(kit.getClass().getResource("/senai/cronos/gui/images/Splash.png"));
         return imagem.getImage();
     }
+
+    public static Image loadIcon() {
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        ImageIcon imagem = new ImageIcon(kit.getClass().getResource("/senai/cronos/gui/images/icon.png"));
+        return imagem.getImage();
+    }
 }

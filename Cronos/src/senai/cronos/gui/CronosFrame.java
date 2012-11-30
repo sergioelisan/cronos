@@ -10,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import senai.cronos.Fachada;
 import senai.cronos.gui.cadastro.CadastroUI;
+import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.horarios.HorariosUI;
 
 /**
@@ -33,6 +34,8 @@ public class CronosFrame extends javax.swing.JFrame {
                 Fachada.quit();
             }
         });
+
+        setIconImage(ImageLoader.loadIcon() );
     }
 
     private void loadPanels() {
