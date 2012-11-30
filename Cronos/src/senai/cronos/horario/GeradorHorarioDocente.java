@@ -35,11 +35,13 @@ public class GeradorHorarioDocente {
 
             for (Date dia : horario.getHorario().keySet()) {
                 Tupla<Aula, Aula> diaDeTrabalho = horario.getHorario().get(dia);
-                if (diaDeTrabalho.getPrimeiro().getDocente().equals(doc)) {
-                    horarioDocente.add(dia, turno, diaDeTrabalho.getPrimeiro(), Tupla.PRIMERA);
-                } else if (diaDeTrabalho.getSegundo().getDocente().equals(doc)) {
+
+                if (diaDeTrabalho.getPrimeiro().getDocente().equals(doc))
+                    horarioDocente.add(dia, turno, diaDeTrabalho.getPrimeiro(), Tupla.PRIMEIRA);
+
+                else if (diaDeTrabalho.getSegundo().getDocente().equals(doc))
                     horarioDocente.add(dia, turno, diaDeTrabalho.getSegundo(), Tupla.SEGUNDA);
-                }
+
             }
         }
 

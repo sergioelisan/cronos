@@ -6,10 +6,26 @@ import java.util.Objects;
  *
  * Classe que representa um nucleo, que é um agrupador semantico de docentes,
  * turma e unidades curriculares, da escola.
- * 
+ *
  * @author Carlos Melo e Sergio Lisan
  */
 public class Nucleo implements Comparable<Nucleo> {
+
+    /** Nucleo comum a todas as disciplinas  */
+    public static final Nucleo COMUM = Nucleo.getCommon();
+
+    /**
+     * metodo que gera um nucleo padrao
+     * @return nucleo comum
+     */
+    private static Nucleo getCommon() {
+        Nucleo n = new Nucleo();
+        n.setId(1);
+        n.setNome("Comum");
+        n.setDesc("Núcleo comum");
+
+        return n;
+    }
 
     public Nucleo() {
     }
@@ -68,16 +84,16 @@ public class Nucleo implements Comparable<Nucleo> {
     public String toString() {
         return nome;
     }
-    
+
     @Override
     public int compareTo(Nucleo t) {
         return nome.compareTo(t.nome);
     }
-    
+
     private Integer id = 0;
-    
+
     private String nome = "";
-    
+
     private String desc = "";
 
 }

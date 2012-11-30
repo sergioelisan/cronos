@@ -12,8 +12,11 @@ import javax.swing.JDialog;
  */
 public class Alerta {
 
-    /** */
-    public static void jogarAviso(String exception) {
+    /**
+     * exibe um alerta com mensagem de erro
+     * @param Exception
+     */
+    public static void jogarAviso(String Exception) {
         Update u = new Update();
         JDialog dia = new JDialog();
 
@@ -21,17 +24,16 @@ public class Alerta {
 
         dia.setContentPane(u);
         dia.setVisible(true);
-        dia.setLocationRelativeTo(null);
         dia.toFront();
-        
         u.getProgresso().setVisible(false);
-        u.setTitulo("FALHA!");
-        u.setAtualiza(exception);
+        u.setTitulo("Mensagem");
+        u.setAtualiza("FALHA! mensagem:" + Exception);
     }
-    
-    /** 
-     * Imprime uma mensagem em um Dialog
-     * @param mensagem a ser impressa
+
+    /**
+     * exibe um alerta com mensagens
+     * @param titulo
+     * @param mensagem
      */
     public static void showMensagem(String titulo, String mensagem) {
         Update u = new Update();
@@ -41,11 +43,10 @@ public class Alerta {
 
         dia.setContentPane(u);
         dia.setVisible(true);
-        dia.setLocationRelativeTo(null);
         dia.toFront();
-        
         u.getProgresso().setVisible(false);
         u.setTitulo(titulo);
         u.setAtualiza(mensagem);
     }
+    
 }

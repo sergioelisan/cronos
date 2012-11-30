@@ -36,6 +36,8 @@ public class Fachada {
         Main.quit();
     }
 
+    /* Metodos de persistencia */
+
     /**
      * Adiciona um objeto de uma entidade de classe T ao banco de dados.
      *
@@ -104,6 +106,8 @@ public class Fachada {
         Repository<T> repositorio = RepositoryFactory.getRepository(c);
         return repositorio.get(c, id);
     }
+
+    /* Metodos de pesquisa */
 
     /**
      * Retorna um docente buscando pelo nome
@@ -237,6 +241,14 @@ public class Fachada {
 
         return null;
     }
+
+    /* Métodos de utilidade */
+    
+    public static int getQuantidadeDiasLetivos() {
+        return Main.CALENDARIO.getDiasUteis().size();
+    }
+
+    /* Métodos para recuperação de dados das Preferencias do sistema */
 
     /**
      * retorna o numero de aulas por dia

@@ -104,7 +104,7 @@ public class DateUtil {
         SimpleDateFormat fmt = new SimpleDateFormat();
         String[] meses = fmt.getDateFormatSymbols().getMonths();
 
-        return meses[mes];
+        return meses[mes - 1];
     }
 
     /**

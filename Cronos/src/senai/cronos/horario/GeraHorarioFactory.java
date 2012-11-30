@@ -1,11 +1,6 @@
 package senai.cronos.horario;
 
 import senai.cronos.Fachada;
-import senai.cronos.logica.horarios.GeraHorario;
-import senai.cronos.logica.horarios.GeraHorarioAlternado;
-import senai.cronos.logica.horarios.GeraHorarioAlternadoQuebrado;
-import senai.cronos.logica.horarios.GeraHorarioContinuo;
-import senai.cronos.logica.horarios.GeraHorarioContinuoQuebrado;
 
 /**
  * Fabrica o gerador de horario, de acordo com as opcoes do sistema.

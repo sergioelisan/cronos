@@ -158,98 +158,86 @@ public class HorarioUI extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         slot36.setBackground(new java.awt.Color(255, 255, 255));
-        slot36.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot36.setMaximumSize(new java.awt.Dimension(60, 80));
         slot36.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot36.setName("slot36");
+        slot36.setName("slot36"); // NOI18N
         slot36.setPreferredSize(new java.awt.Dimension(60, 80));
         slot36.setLayout(new java.awt.BorderLayout());
 
         slot9.setBackground(new java.awt.Color(255, 255, 255));
-        slot9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot9.setMaximumSize(new java.awt.Dimension(60, 80));
         slot9.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot9.setName("slot9");
+        slot9.setName("slot9"); // NOI18N
         slot9.setPreferredSize(new java.awt.Dimension(60, 80));
         slot9.setLayout(new java.awt.BorderLayout());
 
         slot30.setBackground(new java.awt.Color(255, 255, 255));
-        slot30.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot30.setMaximumSize(new java.awt.Dimension(60, 80));
         slot30.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot30.setName("slot30");
+        slot30.setName("slot30"); // NOI18N
         slot30.setPreferredSize(new java.awt.Dimension(60, 80));
         slot30.setLayout(new java.awt.BorderLayout());
 
         slot8.setBackground(new java.awt.Color(255, 255, 255));
-        slot8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot8.setMaximumSize(new java.awt.Dimension(60, 80));
         slot8.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot8.setName("slot8");
+        slot8.setName("slot8"); // NOI18N
         slot8.setPreferredSize(new java.awt.Dimension(60, 80));
         slot8.setLayout(new java.awt.BorderLayout());
 
         slot16.setBackground(new java.awt.Color(255, 255, 255));
-        slot16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot16.setMaximumSize(new java.awt.Dimension(60, 80));
         slot16.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot16.setName("slot16");
+        slot16.setName("slot16"); // NOI18N
         slot16.setPreferredSize(new java.awt.Dimension(60, 80));
         slot16.setLayout(new java.awt.BorderLayout());
 
         slot22.setBackground(new java.awt.Color(255, 255, 255));
-        slot22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot22.setMaximumSize(new java.awt.Dimension(60, 80));
         slot22.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot22.setName("slot22");
+        slot22.setName("slot22"); // NOI18N
         slot22.setPreferredSize(new java.awt.Dimension(60, 80));
         slot22.setLayout(new java.awt.BorderLayout());
 
         slot2.setBackground(new java.awt.Color(255, 255, 255));
-        slot2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot2.setMaximumSize(new java.awt.Dimension(60, 80));
         slot2.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot2.setName("slot2");
+        slot2.setName("slot2"); // NOI18N
         slot2.setPreferredSize(new java.awt.Dimension(60, 80));
         slot2.setLayout(new java.awt.BorderLayout());
 
         slot15.setBackground(new java.awt.Color(255, 255, 255));
-        slot15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot15.setMaximumSize(new java.awt.Dimension(60, 80));
         slot15.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot15.setName("slot15");
+        slot15.setName("slot15"); // NOI18N
         slot15.setPreferredSize(new java.awt.Dimension(60, 80));
         slot15.setLayout(new java.awt.BorderLayout());
 
         slot29.setBackground(new java.awt.Color(255, 255, 255));
-        slot29.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot29.setMaximumSize(new java.awt.Dimension(60, 80));
         slot29.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot29.setName("slot29");
+        slot29.setName("slot29"); // NOI18N
         slot29.setPreferredSize(new java.awt.Dimension(60, 80));
         slot29.setLayout(new java.awt.BorderLayout());
 
         slot23.setBackground(new java.awt.Color(255, 255, 255));
-        slot23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot23.setMaximumSize(new java.awt.Dimension(60, 80));
         slot23.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot23.setName("slot23");
+        slot23.setName("slot23"); // NOI18N
         slot23.setPreferredSize(new java.awt.Dimension(60, 80));
         slot23.setLayout(new java.awt.BorderLayout());
 
         slot10.setBackground(new java.awt.Color(255, 255, 255));
-        slot10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot10.setMaximumSize(new java.awt.Dimension(60, 80));
         slot10.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot10.setName("slot10");
+        slot10.setName("slot10"); // NOI18N
         slot10.setPreferredSize(new java.awt.Dimension(60, 80));
         slot10.setLayout(new java.awt.BorderLayout());
 
         slot24.setBackground(new java.awt.Color(255, 255, 255));
-        slot24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot24.setMaximumSize(new java.awt.Dimension(60, 80));
         slot24.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot24.setName("slot24");
+        slot24.setName("slot24"); // NOI18N
         slot24.setPreferredSize(new java.awt.Dimension(60, 80));
         slot24.setLayout(new java.awt.BorderLayout());
 
@@ -261,90 +249,79 @@ public class HorarioUI extends javax.swing.JPanel {
         lbturma.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot37.setBackground(new java.awt.Color(255, 255, 255));
-        slot37.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot37.setMaximumSize(new java.awt.Dimension(60, 80));
         slot37.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot37.setName("slot37");
+        slot37.setName("slot37"); // NOI18N
         slot37.setPreferredSize(new java.awt.Dimension(60, 80));
         slot37.setLayout(new java.awt.BorderLayout());
 
         slot18.setBackground(new java.awt.Color(255, 255, 255));
-        slot18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot18.setMaximumSize(new java.awt.Dimension(60, 80));
         slot18.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot18.setName("slot18");
+        slot18.setName("slot18"); // NOI18N
         slot18.setPreferredSize(new java.awt.Dimension(60, 80));
         slot18.setLayout(new java.awt.BorderLayout());
 
         slot38.setBackground(new java.awt.Color(255, 255, 255));
-        slot38.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot38.setMaximumSize(new java.awt.Dimension(60, 80));
         slot38.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot38.setName("slot38");
+        slot38.setName("slot38"); // NOI18N
         slot38.setPreferredSize(new java.awt.Dimension(60, 80));
         slot38.setLayout(new java.awt.BorderLayout());
 
         slot31.setBackground(new java.awt.Color(255, 255, 255));
-        slot31.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot31.setMaximumSize(new java.awt.Dimension(60, 80));
         slot31.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot31.setName("slot31");
+        slot31.setName("slot31"); // NOI18N
         slot31.setPreferredSize(new java.awt.Dimension(60, 80));
         slot31.setLayout(new java.awt.BorderLayout());
 
         slot11.setBackground(new java.awt.Color(255, 255, 255));
-        slot11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot11.setMaximumSize(new java.awt.Dimension(60, 80));
         slot11.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot11.setName("slot11");
+        slot11.setName("slot11"); // NOI18N
         slot11.setPreferredSize(new java.awt.Dimension(60, 80));
         slot11.setLayout(new java.awt.BorderLayout());
 
         slot4.setBackground(new java.awt.Color(255, 255, 255));
-        slot4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot4.setMaximumSize(new java.awt.Dimension(60, 80));
         slot4.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot4.setName("slot4");
+        slot4.setName("slot4"); // NOI18N
         slot4.setPreferredSize(new java.awt.Dimension(60, 80));
         slot4.setLayout(new java.awt.BorderLayout());
 
         slot3.setBackground(new java.awt.Color(255, 255, 255));
-        slot3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot3.setMaximumSize(new java.awt.Dimension(60, 80));
         slot3.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot3.setName("slot3");
+        slot3.setName("slot3"); // NOI18N
         slot3.setPreferredSize(new java.awt.Dimension(60, 80));
         slot3.setLayout(new java.awt.BorderLayout());
 
         slot17.setBackground(new java.awt.Color(255, 255, 255));
-        slot17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot17.setMaximumSize(new java.awt.Dimension(60, 80));
         slot17.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot17.setName("slot17");
+        slot17.setName("slot17"); // NOI18N
         slot17.setPreferredSize(new java.awt.Dimension(60, 80));
         slot17.setLayout(new java.awt.BorderLayout());
 
         slot41.setBackground(new java.awt.Color(255, 255, 255));
-        slot41.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot41.setMaximumSize(new java.awt.Dimension(60, 80));
         slot41.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot41.setName("slot28");
+        slot41.setName("slot28"); // NOI18N
         slot41.setPreferredSize(new java.awt.Dimension(60, 80));
         slot41.setLayout(new java.awt.BorderLayout());
 
         slot42.setBackground(new java.awt.Color(255, 255, 255));
-        slot42.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot42.setMaximumSize(new java.awt.Dimension(60, 80));
         slot42.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot42.setName("slot27");
+        slot42.setName("slot27"); // NOI18N
         slot42.setPreferredSize(new java.awt.Dimension(60, 80));
         slot42.setLayout(new java.awt.BorderLayout());
 
         slot25.setBackground(new java.awt.Color(255, 255, 255));
-        slot25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot25.setMaximumSize(new java.awt.Dimension(60, 80));
         slot25.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot25.setName("slot25");
+        slot25.setName("slot25"); // NOI18N
         slot25.setPreferredSize(new java.awt.Dimension(60, 80));
         slot25.setLayout(new java.awt.BorderLayout());
 
@@ -359,10 +336,9 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel2.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot12.setBackground(new java.awt.Color(255, 255, 255));
-        slot12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot12.setMaximumSize(new java.awt.Dimension(60, 80));
         slot12.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot12.setName("slot12");
+        slot12.setName("slot12"); // NOI18N
         slot12.setPreferredSize(new java.awt.Dimension(60, 80));
         slot12.setLayout(new java.awt.BorderLayout());
 
@@ -387,10 +363,9 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel6.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot39.setBackground(new java.awt.Color(255, 255, 255));
-        slot39.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot39.setMaximumSize(new java.awt.Dimension(60, 80));
         slot39.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot39.setName("slot39");
+        slot39.setName("slot39"); // NOI18N
         slot39.setPreferredSize(new java.awt.Dimension(60, 80));
         slot39.setLayout(new java.awt.BorderLayout());
 
@@ -415,58 +390,51 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel4.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot40.setBackground(new java.awt.Color(255, 255, 255));
-        slot40.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot40.setMaximumSize(new java.awt.Dimension(60, 80));
         slot40.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot40.setName("slot40");
+        slot40.setName("slot40"); // NOI18N
         slot40.setPreferredSize(new java.awt.Dimension(60, 80));
         slot40.setLayout(new java.awt.BorderLayout());
 
         slot6.setBackground(new java.awt.Color(255, 255, 255));
-        slot6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot6.setMaximumSize(new java.awt.Dimension(60, 80));
         slot6.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot6.setName("slot6");
+        slot6.setName("slot6"); // NOI18N
         slot6.setPreferredSize(new java.awt.Dimension(60, 80));
         slot6.setLayout(new java.awt.BorderLayout());
 
         slot26.setBackground(new java.awt.Color(255, 255, 255));
-        slot26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot26.setMaximumSize(new java.awt.Dimension(60, 80));
         slot26.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot26.setName("slot26");
+        slot26.setName("slot26"); // NOI18N
         slot26.setPreferredSize(new java.awt.Dimension(60, 80));
         slot26.setLayout(new java.awt.BorderLayout());
 
         slot33.setBackground(new java.awt.Color(255, 255, 255));
-        slot33.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot33.setMaximumSize(new java.awt.Dimension(60, 80));
         slot33.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot33.setName("slot33");
+        slot33.setName("slot33"); // NOI18N
         slot33.setPreferredSize(new java.awt.Dimension(60, 80));
         slot33.setLayout(new java.awt.BorderLayout());
 
         slot32.setBackground(new java.awt.Color(255, 255, 255));
-        slot32.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot32.setMaximumSize(new java.awt.Dimension(60, 80));
         slot32.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot32.setName("slot32");
+        slot32.setName("slot32"); // NOI18N
         slot32.setPreferredSize(new java.awt.Dimension(60, 80));
         slot32.setLayout(new java.awt.BorderLayout());
 
         slot19.setBackground(new java.awt.Color(255, 255, 255));
-        slot19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot19.setMaximumSize(new java.awt.Dimension(60, 80));
         slot19.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot19.setName("slot19");
+        slot19.setName("slot19"); // NOI18N
         slot19.setPreferredSize(new java.awt.Dimension(60, 80));
         slot19.setLayout(new java.awt.BorderLayout());
 
         slot5.setBackground(new java.awt.Color(255, 255, 255));
-        slot5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot5.setMaximumSize(new java.awt.Dimension(60, 80));
         slot5.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot5.setName("slot5");
+        slot5.setName("slot5"); // NOI18N
         slot5.setPreferredSize(new java.awt.Dimension(60, 80));
         slot5.setLayout(new java.awt.BorderLayout());
 
@@ -481,10 +449,9 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel10.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot13.setBackground(new java.awt.Color(255, 255, 255));
-        slot13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot13.setMaximumSize(new java.awt.Dimension(60, 80));
         slot13.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot13.setName("slot13");
+        slot13.setName("slot13"); // NOI18N
         slot13.setPreferredSize(new java.awt.Dimension(60, 80));
         slot13.setLayout(new java.awt.BorderLayout());
 
@@ -509,10 +476,9 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel12.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot27.setBackground(new java.awt.Color(255, 255, 255));
-        slot27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot27.setMaximumSize(new java.awt.Dimension(60, 80));
         slot27.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot27.setName("slot27");
+        slot27.setName("slot27"); // NOI18N
         slot27.setPreferredSize(new java.awt.Dimension(60, 80));
         slot27.setLayout(new java.awt.BorderLayout());
 
@@ -537,10 +503,9 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel14.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot14.setBackground(new java.awt.Color(255, 255, 255));
-        slot14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot14.setMaximumSize(new java.awt.Dimension(60, 80));
         slot14.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot14.setName("slot14");
+        slot14.setName("slot14"); // NOI18N
         slot14.setPreferredSize(new java.awt.Dimension(60, 80));
         slot14.setLayout(new java.awt.BorderLayout());
 
@@ -555,18 +520,16 @@ public class HorarioUI extends javax.swing.JPanel {
         jLabel15.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot1.setBackground(new java.awt.Color(255, 255, 255));
-        slot1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot1.setMaximumSize(new java.awt.Dimension(60, 80));
         slot1.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot1.setName("slot1");
+        slot1.setName("slot1"); // NOI18N
         slot1.setPreferredSize(new java.awt.Dimension(60, 80));
         slot1.setLayout(new java.awt.BorderLayout());
 
         slot28.setBackground(new java.awt.Color(255, 255, 255));
-        slot28.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot28.setMaximumSize(new java.awt.Dimension(60, 80));
         slot28.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot28.setName("slot28");
+        slot28.setName("slot28"); // NOI18N
         slot28.setPreferredSize(new java.awt.Dimension(60, 80));
         slot28.setLayout(new java.awt.BorderLayout());
 
@@ -577,42 +540,37 @@ public class HorarioUI extends javax.swing.JPanel {
         lbmes.setPreferredSize(new java.awt.Dimension(60, 16));
 
         slot21.setBackground(new java.awt.Color(255, 255, 255));
-        slot21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot21.setMaximumSize(new java.awt.Dimension(60, 80));
         slot21.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot21.setName("slot21");
+        slot21.setName("slot21"); // NOI18N
         slot21.setPreferredSize(new java.awt.Dimension(60, 80));
         slot21.setLayout(new java.awt.BorderLayout());
 
         slot35.setBackground(new java.awt.Color(255, 255, 255));
-        slot35.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot35.setMaximumSize(new java.awt.Dimension(60, 80));
         slot35.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot35.setName("slot35");
+        slot35.setName("slot35"); // NOI18N
         slot35.setPreferredSize(new java.awt.Dimension(60, 80));
         slot35.setLayout(new java.awt.BorderLayout());
 
         slot20.setBackground(new java.awt.Color(255, 255, 255));
-        slot20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot20.setMaximumSize(new java.awt.Dimension(60, 80));
         slot20.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot20.setName("slot20");
+        slot20.setName("slot20"); // NOI18N
         slot20.setPreferredSize(new java.awt.Dimension(60, 80));
         slot20.setLayout(new java.awt.BorderLayout());
 
         slot34.setBackground(new java.awt.Color(255, 255, 255));
-        slot34.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot34.setMaximumSize(new java.awt.Dimension(60, 80));
         slot34.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot34.setName("slot34");
+        slot34.setName("slot34"); // NOI18N
         slot34.setPreferredSize(new java.awt.Dimension(60, 80));
         slot34.setLayout(new java.awt.BorderLayout());
 
         slot7.setBackground(new java.awt.Color(255, 255, 255));
-        slot7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(215, 215, 215)));
         slot7.setMaximumSize(new java.awt.Dimension(60, 80));
         slot7.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot7.setName("slot7");
+        slot7.setName("slot7"); // NOI18N
         slot7.setPreferredSize(new java.awt.Dimension(60, 80));
         slot7.setLayout(new java.awt.BorderLayout());
 

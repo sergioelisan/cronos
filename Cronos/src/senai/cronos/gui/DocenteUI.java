@@ -19,6 +19,7 @@ import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.cronos.horario.HorarioDocente;
 
 /**
  *
@@ -128,10 +129,10 @@ public class DocenteUI extends javax.swing.JPanel {
                     lbscore.setText("score: " + String.valueOf(doc.getScore()));
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
-                    double ocupacao = Double.isNaN(doc.getHorarioDocente().getPercentualOcupacao()) ? 0 : doc.getHorarioDocente().getPercentualOcupacao() * 100;
-                    lbocupacao.setText("ocupação: " + String.valueOf(ocupacao) + "%");
+                    HorarioDocente hd = doc.getHorarioDocente();
+                    lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao() * 100) + "%");
 
-                } catch (ClassNotFoundException | SQLException ex) {
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
                 }
             }

@@ -61,7 +61,7 @@ public class Main {
     public static void quit() {
         try {
             println("Encerrando banco de dados e desligando JVM");
-            new NetworkServerControlImpl().shutdown();            
+            new NetworkServerControlImpl().shutdown();
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.toString());
         } finally {
@@ -77,11 +77,11 @@ public class Main {
 
         String cronosDatabaseDir = ".cronos";
         String userDir = System.getProperty("user.home") + File.separator + cronosDatabaseDir;
-        
+
         System.setProperty("derby.system.home", userDir);
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
     }
-    
+
      /**
      * Carrega as configuracoes do sistema
      */
