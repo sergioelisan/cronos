@@ -2,9 +2,6 @@
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
-    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-    </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1366, 728]"/>
     </Property>
@@ -33,8 +30,8 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" alignment="1" pref="1346" max="32767" attributes="1"/>
-                  <Component id="jPanel1" alignment="1" pref="1342" max="32767" attributes="0"/>
+                  <Component id="jLabel2" pref="1346" max="32767" attributes="1"/>
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -42,12 +39,12 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel2" min="-2" pref="363" max="-2" attributes="1"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="jLabel2" min="-2" pref="353" max="-2" attributes="1"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="270" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,15 +57,14 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/senai/cronos/gui/images/logo.png"/>
+          <Image iconType="3" name="/senai/cronos/gui/images/intro_logopng.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Cronos"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="iconTextGap" type="int" value="16"/>
-        <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>
