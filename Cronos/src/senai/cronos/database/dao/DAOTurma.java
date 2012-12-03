@@ -58,7 +58,7 @@ public class DAOTurma extends DAO<Turma> {
         open();
         String query = DatabaseUtil.query("horario.insert");
 
-        Horario u = t.getHorario();
+        Horario u = t.getHorarioWrapper();
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -135,7 +135,7 @@ public class DAOTurma extends DAO<Turma> {
         open();
         String query = DatabaseUtil.query("horario.update");
 
-        Horario u = t.getHorario();
+        Horario u = t.getHorarioWrapper();
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {

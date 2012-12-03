@@ -27,20 +27,18 @@ import senai.util.Aleatorio;
 
 /**
  *
- * interface grafica para o cadastro de docentes no banco de dados. Tem rotinas para
- * interagir com a fachada do sistema, para realizar operacoes de adicao, alteracao,
- * remocao e listagem de Docentes do sistema.
+ * interface grafica para o cadastro de docentes no banco de dados. Tem rotinas
+ * para interagir com a fachada do sistema, para realizar operacoes de adicao,
+ * alteracao, remocao e listagem de Docentes do sistema.
  *
  * @author Carlos Melo eSergio Lisan
  */
 public class CadastroDocente extends javax.swing.JPanel {
 
-
     /**
      * Lista de nucleos que agrupam os docentes
      */
     private List<Nucleo> nucleos;
-
     /**
      * posicao atual da lista usada para armazenar os nucleos
      */
@@ -77,7 +75,6 @@ public class CadastroDocente extends javax.swing.JPanel {
      */
     private void initData() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -101,76 +98,65 @@ public class CadastroDocente extends javax.swing.JPanel {
     }
 
     /**
-     * Cria um objeto Docente com os dados inseridos nos elementos da Interface grafica e manda-o
-     * para a fachada salva-lo
+     * Cria um objeto Docente com os dados inseridos nos elementos da Interface
+     * grafica e manda-o para a fachada salva-lo
      */
     private void save() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
-                    Docente dc = new Docente();
-                    Proficiencia pf=new Proficiencia();
-                    dc.setMatricula(Integer.parseInt(txtmatricula.getText()));
-                    DateFormat fmt = DateFormat.getDateInstance();
-                    dc.setContratacao(fmt.parse(txtcontratacao.getText().trim()));
-
-                    dc.setFormacao(Formacao.valueOf( ((String) comboformacao.getSelectedItem()).toUpperCase() ) );
-                    dc.setNome(txtnome.getText().trim());
+                    Docente docente = new Docente();
+                    docente.setMatricula(Integer.parseInt(txtmatricula.getText()));
+                    docente.setContratacao(datecontratacao.getDate());
+                    docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
+                    docente.setNome(txtnome.getText().trim());
 
                     if (comboturnos.getSelectedIndex() == 1) {
-                        dc.setPrimeiroTurno(Turno.MANHA);
-                        dc.setSegundoTurno(null);
+                        docente.setPrimeiroTurno(Turno.MANHA);
+                        docente.setSegundoTurno(null);
                     } else if (comboturnos.getSelectedIndex() == 2) {
-                        dc.setPrimeiroTurno(Turno.TARDE);
-                        dc.setSegundoTurno(null);
+                        docente.setPrimeiroTurno(Turno.TARDE);
+                        docente.setSegundoTurno(null);
                     } else if (comboturnos.getSelectedIndex() == 3) {
-                        dc.setPrimeiroTurno(Turno.NOITE);
-                        dc.setSegundoTurno(null);
+                        docente.setPrimeiroTurno(Turno.NOITE);
+                        docente.setSegundoTurno(null);
                     } else if (comboturnos.getSelectedIndex() == 4) {
-                        dc.setPrimeiroTurno(Turno.MANHA);
-                        dc.setSegundoTurno(Turno.TARDE);
+                        docente.setPrimeiroTurno(Turno.MANHA);
+                        docente.setSegundoTurno(Turno.TARDE);
                     } else if (comboturnos.getSelectedIndex() == 5) {
-                        dc.setPrimeiroTurno(Turno.MANHA);
-                        dc.setSegundoTurno(Turno.NOITE);
+                        docente.setPrimeiroTurno(Turno.MANHA);
+                        docente.setSegundoTurno(Turno.NOITE);
                     } else if (comboturnos.getSelectedIndex() == 6) {
-                        dc.setPrimeiroTurno(Turno.TARDE);
-                        dc.setSegundoTurno(Turno.NOITE);
+                        docente.setPrimeiroTurno(Turno.TARDE);
+                        docente.setSegundoTurno(Turno.NOITE);
                     }
 
                     for (Nucleo nc : nucleos) {
                         if (nc.getNome().equals((String) combonucleo.getSelectedItem())) {
-                            dc.setNucleo(nc);
+                            docente.setNucleo(nc);
                         }
                     }
-                    dc.setScore(1);
+                    docente.setScore(1);
 
-                    //String code = txtmatricula.getText();
-
-                    if (!Fachada.existeDocente(txtmatricula.getText())) {
-
-
-                        Fachada.add(dc);
-
+                    if (!Fachada.existeDocente(txtmatricula.getText() ) ) {
+                        Fachada.add(docente);
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
                     } else {
-                        //dc.setMatricula(Integer.parseInt(code));
-                        Fachada.update(dc);
+                        Fachada.update(docente);
                         JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
                     }
-                    // Adiciona proficiencias-padrao para o novo docente
-                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(dc.getNucleo())) {
-                        pf = new Proficiencia(dc, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
 
-                        dc.getProficiencias().add(pf);
-                         Fachada.add(pf);
+                    // Adiciona proficiencias-padrao para o novo docente
+                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(docente.getNucleo())) {
+                        Proficiencia proficiencia = new Proficiencia(docente, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
+
+                        docente.getProficiencias().add(proficiencia);
+                        Fachada.add(proficiencia);
                     }
 
                 } catch (ClassNotFoundException | SQLException e) {
                     JOptionPane.showMessageDialog(null, "FAIL! Problemas ao adicionar Docente:\n" + e);
-                } catch (ParseException e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Formato de data inválido");
                 }
 
                 initData();
@@ -185,7 +171,6 @@ public class CadastroDocente extends javax.swing.JPanel {
      */
     private void remove() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 String code = txtmatricula.getText();
@@ -216,7 +201,7 @@ public class CadastroDocente extends javax.swing.JPanel {
      */
     private void novo() {
         txtmatricula.setText("matrícula");
-        txtcontratacao.setText("data de contratação");
+        datecontratacao.setDate(null);
         txtnome.setText("nome");
         comboformacao.setSelectedIndex(0);
         combonucleo.setSelectedIndex(0);
@@ -224,13 +209,12 @@ public class CadastroDocente extends javax.swing.JPanel {
     }
 
     /**
-     * carrega os docentes, agrupados por nucleo, para serem exibidos no painel de
-     * exibicao de docentes.
+     * carrega os docentes, agrupados por nucleo, para serem exibidos no painel
+     * de exibicao de docentes.
      */
     private void load() {
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -245,12 +229,12 @@ public class CadastroDocente extends javax.swing.JPanel {
                     }
 
                     for (Docente doc : docentes) {
-                        if(!doc.getNome().equals("docente")){
-                        Tile ct = new Tile();
-                        ct.setNome(doc.getNome());
-                        ct.setId(String.valueOf(doc.getMatricula()) + "");
-                        ct.setClickEvent(new TileClickedHandler());
-                        pnShow.add(ct);
+                        if (!doc.getNome().equals("docente")) {
+                            Tile ct = new Tile();
+                            ct.setNome(doc.getNome());
+                            ct.setId(String.valueOf(doc.getMatricula()) + "");
+                            ct.setClickEvent(new TileClickedHandler());
+                            pnShow.add(ct);
                         }
                     }
                 } catch (ClassNotFoundException | SQLException ex) {
@@ -266,25 +250,20 @@ public class CadastroDocente extends javax.swing.JPanel {
     }
 
     /**
-     * Exibe os dados de um docente selecionado do painel de exibicao, nos componentes usados
-     * para manipulacao de dados.
+     * Exibe os dados de um docente selecionado do painel de exibicao, nos
+     * componentes usados para manipulacao de dados.
      *
      * @param matricula
      */
     private void show(final String matricula) {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
                     Docente dc = Fachada.<Docente>get(Docente.class, Integer.parseInt(matricula));
                     txtmatricula.setText(String.valueOf(dc.getMatricula()));
-
-                    DateFormat fmt = DateFormat.getDateInstance();
-                    txtcontratacao.setText(fmt.format(dc.getContratacao()));
-
+                    datecontratacao.setDate(dc.getContratacao() );
                     txtnome.setText(dc.getNome());
-
                     comboformacao.setSelectedIndex(dc.getFormacao().ordinal() + 1);
                     combonucleo.setSelectedItem(dc.getNucleo().getNome());
 
@@ -357,7 +336,6 @@ public class CadastroDocente extends javax.swing.JPanel {
         comboturnos = new javax.swing.JComboBox();
         lbnucleoatual = new javax.swing.JLabel();
         btnovo = new javax.swing.JLabel();
-        txtcontratacao = new javax.swing.JTextField();
         lbanterior = new javax.swing.JLabel();
         combonucleo = new javax.swing.JComboBox();
         lbproximo = new javax.swing.JLabel();
@@ -368,6 +346,7 @@ public class CadastroDocente extends javax.swing.JPanel {
         btremove = new javax.swing.JLabel();
         txtmatricula = new javax.swing.JTextField();
         comboformacao = new javax.swing.JComboBox();
+        datecontratacao = new org.jdesktop.swingx.JXDatePicker();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1342, 591));
@@ -404,18 +383,6 @@ public class CadastroDocente extends javax.swing.JPanel {
         btnovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnovoMouseClicked(evt);
-            }
-        });
-
-        txtcontratacao.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtcontratacao.setForeground(new java.awt.Color(0, 0, 0));
-        txtcontratacao.setText("data de contratação");
-        txtcontratacao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtcontratacaoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtcontratacaoFocusLost(evt);
             }
         });
 
@@ -463,7 +430,6 @@ public class CadastroDocente extends javax.swing.JPanel {
         magicScroll1.setViewportView(pnShow);
 
         txtnome.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtnome.setForeground(new java.awt.Color(0, 0, 0));
         txtnome.setText("nome");
         txtnome.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -503,7 +469,6 @@ public class CadastroDocente extends javax.swing.JPanel {
         });
 
         txtmatricula.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtmatricula.setForeground(new java.awt.Color(0, 0, 0));
         txtmatricula.setText("matrícula");
         txtmatricula.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -545,14 +510,14 @@ public class CadastroDocente extends javax.swing.JPanel {
                                     .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboformacao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtcontratacao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboformacao, 0, 220, Short.MAX_VALUE)
+                                    .addComponent(datecontratacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(combonucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboturnos, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 626, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -566,14 +531,14 @@ public class CadastroDocente extends javax.swing.JPanel {
                     .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(magicScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, Short.MAX_VALUE)
+                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsave, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btremove, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnovo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -583,9 +548,10 @@ public class CadastroDocente extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(combonucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboturnos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtcontratacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(comboturnos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(datecontratacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -611,41 +577,28 @@ public class CadastroDocente extends javax.swing.JPanel {
     }//GEN-LAST:event_lbproximoMouseClicked
 
     private void txtmatriculaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtmatriculaFocusGained
-        if(txtmatricula.getText().equals("matrícula")) {
+        if (txtmatricula.getText().equals("matrícula")) {
             txtmatricula.setText(null);
         }
     }//GEN-LAST:event_txtmatriculaFocusGained
 
     private void txtmatriculaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtmatriculaFocusLost
-        if(txtmatricula.getText().equals("")) {
+        if (txtmatricula.getText().equals("")) {
             txtmatricula.setText("matrícula");
         }
     }//GEN-LAST:event_txtmatriculaFocusLost
 
     private void txtnomeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomeFocusGained
-        if(txtnome.getText().equals("nome")) {
+        if (txtnome.getText().equals("nome")) {
             txtnome.setText(null);
         }
     }//GEN-LAST:event_txtnomeFocusGained
 
     private void txtnomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomeFocusLost
-        if(txtnome.getText().equals("")) {
+        if (txtnome.getText().equals("")) {
             txtnome.setText("nome");
         }
     }//GEN-LAST:event_txtnomeFocusLost
-
-    private void txtcontratacaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcontratacaoFocusGained
-        if(txtcontratacao.getText().equals("data de contratação")) {
-            txtcontratacao.setText(null);
-        }
-    }//GEN-LAST:event_txtcontratacaoFocusGained
-
-    private void txtcontratacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcontratacaoFocusLost
-        if(txtcontratacao.getText().equals("")) {
-            txtcontratacao.setText("data de contratação");
-        }
-    }//GEN-LAST:event_txtcontratacaoFocusLost
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnovo;
     private javax.swing.JLabel btremove;
@@ -653,13 +606,13 @@ public class CadastroDocente extends javax.swing.JPanel {
     private javax.swing.JComboBox comboformacao;
     private javax.swing.JComboBox combonucleo;
     private javax.swing.JComboBox comboturnos;
+    private org.jdesktop.swingx.JXDatePicker datecontratacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbanterior;
     private javax.swing.JLabel lbnucleoatual;
     private javax.swing.JLabel lbproximo;
     private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll1;
     private javax.swing.JPanel pnShow;
-    private javax.swing.JTextField txtcontratacao;
     private javax.swing.JTextField txtmatricula;
     private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables

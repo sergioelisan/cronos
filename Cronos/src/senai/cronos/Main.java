@@ -51,7 +51,8 @@ public class Main {
             loadUI();
             splash.stop();
         } catch (Exception ex) {
-            Alerta.jogarAviso(ex.toString());
+            ex.printStackTrace();
+            Alerta.jogarAviso(ex.getMessage());
         }
     }
 

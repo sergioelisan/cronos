@@ -31,7 +31,7 @@ public class HorarioUIFactory {
      */
     public HorarioUIFactory(Turma turma) {
         this.turma = turma;
-        this.horario = turma.getHorario();
+        this.horario = turma.getHorarioWrapper();
         loadCalendars();
     }
 

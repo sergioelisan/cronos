@@ -57,7 +57,6 @@ public class CadastroTurmas extends javax.swing.JPanel {
 
     private void initData() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -82,23 +81,13 @@ public class CadastroTurmas extends javax.swing.JPanel {
 
     private void save() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
                     Turma t = new Turma();
 
                     DateFormat fmt = DateFormat.getDateInstance();
-                    t.setEntrada(fmt.parse(txtentrada.getText().trim()));
-
-                    Date saida;
-                    if(!txtsaida.getText().equals("saída")){
-                        saida=fmt.parse(txtsaida.getText().trim());
-                    }else{
-                        saida=fmt.parse("01/01/2015");
-                    }
-                    t.setSaida(saida);
-
+                    t.setEntrada(dateentrada.getDate() );
                     t.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
                     t.setNome(txtnome.getText().trim());
 
@@ -111,7 +100,7 @@ public class CadastroTurmas extends javax.swing.JPanel {
                     t.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
                     //Integer id=Fachada.getIDTurma();
                     String code = lbcodigo.getText();
-                    if (code.equals("matrícula")||code.equals("código")) {
+                    if (code.equals("matrícula") || code.equals("código")) {
                         //t.setId(id);
                         Fachada.add(t);
                         JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
@@ -121,10 +110,10 @@ public class CadastroTurmas extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
                     }
 
-                } catch (ParseException | ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos|"+e);
+                } catch (ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos|" + e);
                 }
-initData();
+                initData();
             }
         });
         t.start();
@@ -134,7 +123,6 @@ initData();
 
     private void remove() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 String code = lbcodigo.getText();
@@ -144,14 +132,15 @@ initData();
                         Fachada.remove(Horario.class, id);
                         Fachada.remove(Turma.class, id);
                         JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                       // load();
+                        // load();
                     } catch (ClassNotFoundException | SQLException e) {
                         JOptionPane.showMessageDialog(null, "Problemas ao remover a turma. Verifique banco de dados ou dados inseridos");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione uma turma para ser removida!");
                     return;
-                }initData();
+                }
+                initData();
             }
         });
         t.start();
@@ -160,9 +149,8 @@ initData();
 
     private void novo() {
         lbcodigo.setText("matrícula");
-        txtentrada.setText("entrada");
         txtnome.setText("nome");
-        txtsaida.setText("saída");
+        dateentrada.setDate(null);
         combohabilitacao.setSelectedIndex(0);
         combonucleo.setSelectedIndex(0);
         comboturno.setSelectedIndex(0);
@@ -171,7 +159,6 @@ initData();
     private void load() {
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -205,21 +192,13 @@ initData();
 
     private void show(final String nome) {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
                     Turma t = Fachada.buscaTurma(nome);
-                    DateFormat fmt = DateFormat.getDateInstance();
-
                     lbcodigo.setText(String.valueOf(t.getId()));
-                    txtentrada.setText(fmt.format(t.getEntrada()));
-
-                    Date saida = t.getSaida();
-                    txtsaida.setText(saida == null ? "" : fmt.format(saida));
-
+                    dateentrada.setDate(t.getEntrada() );
                     txtnome.setText(t.getNome());
-
                     combohabilitacao.setSelectedIndex(t.getHabilitacao() + 1);
                     combonucleo.setSelectedItem(t.getNucleo().getNome());
                     comboturno.setSelectedIndex(t.getTurno().ordinal() + 1);
@@ -284,7 +263,6 @@ initData();
         btsave = new javax.swing.JLabel();
         btremove = new javax.swing.JLabel();
         btnovo = new javax.swing.JLabel();
-        txtentrada = new javax.swing.JTextField();
         combonucleo = new javax.swing.JComboBox();
         lbproximo = new javax.swing.JLabel();
         magicScroll1 = new br.ufrpe.bcc.continuous.components.MagicScroll();
@@ -294,8 +272,8 @@ initData();
         lbnucleoatual = new javax.swing.JLabel();
         lbanterior = new javax.swing.JLabel();
         comboturno = new javax.swing.JComboBox();
-        txtsaida = new javax.swing.JTextField();
         combohabilitacao = new javax.swing.JComboBox();
+        dateentrada = new org.jdesktop.swingx.JXDatePicker();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1342, 591));
@@ -346,18 +324,6 @@ initData();
         btnovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnovoMouseClicked(evt);
-            }
-        });
-
-        txtentrada.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtentrada.setForeground(new java.awt.Color(130, 130, 130));
-        txtentrada.setText("entrada");
-        txtentrada.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtentradaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtentradaFocusLost(evt);
             }
         });
 
@@ -436,18 +402,6 @@ initData();
         comboturno.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         comboturno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- turno --" }));
 
-        txtsaida.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtsaida.setForeground(new java.awt.Color(130, 130, 130));
-        txtsaida.setText("saída");
-        txtsaida.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtsaidaFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtsaidaFocusLost(evt);
-            }
-        });
-
         combohabilitacao.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         combohabilitacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- habilitação --" }));
 
@@ -474,18 +428,14 @@ initData();
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(txtentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(238, 238, 238))
-                                            .addComponent(combohabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(dateentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(combonucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtsaida, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(combohabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(comboturno, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 495, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 910, Short.MAX_VALUE)
@@ -507,25 +457,26 @@ initData();
                     .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(magicScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsave, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btremove, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnovo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combohabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtentrada, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                            .addComponent(dateentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(comboturno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combonucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtsaida, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)))
-                    .addComponent(lbcodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(comboturno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(combohabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lbcodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -561,29 +512,6 @@ initData();
         }
     }//GEN-LAST:event_txtnomeFocusLost
 
-    private void txtentradaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtentradaFocusGained
-        if (txtentrada.getText().equals("entrada")) {
-            txtentrada.setText(null);
-        }
-    }//GEN-LAST:event_txtentradaFocusGained
-
-    private void txtentradaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtentradaFocusLost
-        if (txtentrada.getText().equals("")) {
-            txtentrada.setText("entrada");
-        }
-    }//GEN-LAST:event_txtentradaFocusLost
-
-    private void txtsaidaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtsaidaFocusGained
-        if (txtsaida.getText().equals("saída")) {
-            txtsaida.setText(null);
-        }
-    }//GEN-LAST:event_txtsaidaFocusGained
-
-    private void txtsaidaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtsaidaFocusLost
-        if (txtsaida.getText().equals("")) {
-            txtsaida.setText("Saída");
-        }
-    }//GEN-LAST:event_txtsaidaFocusLost
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnovo;
     private javax.swing.JLabel btremove;
@@ -591,6 +519,7 @@ initData();
     private javax.swing.JComboBox combohabilitacao;
     private javax.swing.JComboBox combonucleo;
     private javax.swing.JComboBox comboturno;
+    private org.jdesktop.swingx.JXDatePicker dateentrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbanterior;
     private javax.swing.JLabel lbcodigo;
@@ -598,8 +527,6 @@ initData();
     private javax.swing.JLabel lbproximo;
     private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll1;
     private javax.swing.JPanel pnShow;
-    private javax.swing.JTextField txtentrada;
     private javax.swing.JTextField txtnome;
-    private javax.swing.JTextField txtsaida;
     // End of variables declaration//GEN-END:variables
 }

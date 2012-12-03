@@ -217,7 +217,8 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                 try {
                     UnidadeCurricular uc = new UnidadeCurricular();
                     uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
-                    uc.setConteudoProgramatico(txtementa.getText().trim());
+                    String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
+                    uc.setConteudoProgramatico(ementa);
 
                     for (Nucleo nc : nucleos) {
                         if (nc.getNome().equals((String) combonucleo.getSelectedItem())) {

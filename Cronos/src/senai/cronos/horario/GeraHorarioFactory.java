@@ -28,6 +28,8 @@ public class GeraHorarioFactory {
             throw new IllegalArgumentException("FAIL! Opcoes corrompidas! -> 'horario' ");
         }
     }
+
     public static final int CONTINUO = 0;
+    
     public static final int ALTERNADO = 1;
 }

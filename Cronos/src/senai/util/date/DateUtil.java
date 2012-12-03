@@ -183,15 +183,8 @@ public class DateUtil {
     public static List<Date> getDiasUteis(Date inicio, Date fim, List<Date> feriados) {
         List<Date> diasUteis = DateUtil.getDiasUteis(inicio, fim);
 
-        // Varre a lista de dias uteis tirando todos os feriados
-        List<Date> listaFeiraPraEvitarBugDoJava = new ArrayList<>();
-        Collections.copy(diasUteis, listaFeiraPraEvitarBugDoJava);
-        for (Iterator<Date> it = listaFeiraPraEvitarBugDoJava.iterator(); it.hasNext();) {
-            Date dt = it.next();
-            if (feriados.contains(dt)) {
-                diasUteis.remove(dt);
-            }
-        }
+        for (Date feriado : feriados)
+            diasUteis.remove(feriado);
 
         return diasUteis;
     }

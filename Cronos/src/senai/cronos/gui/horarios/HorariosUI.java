@@ -23,6 +23,7 @@ import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.gui.custom.ImageLoader;
+import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.Tile;
 
 /**
@@ -68,9 +69,9 @@ public class HorariosUI extends javax.swing.JPanel {
     }
 
     private void loadEffects() {
-        btexibir.addMouseListener(new LinkHandler());
-        btgerar.addMouseListener(new LinkHandler());
-        btopcoes.addMouseListener(new LinkHandler());
+        btexibir.addMouseListener(new LinkEffectHandler());
+        btgerar.addMouseListener(new LinkEffectHandler());
+        btopcoes.addMouseListener(new LinkEffectHandler());
     }
 
     /**
@@ -86,18 +87,18 @@ public class HorariosUI extends javax.swing.JPanel {
     /*
      * CLASSES INTERNAS ANONIMAS VOLTADAS PARA OFERECER SERVICOS PARA SEUS CLIENTES
      */
-    
+
     /**
      * Classe interna que gera o efeito de carregamento no Loading
      */
     static class LoadingEffect implements ActionListener {
 
         private JLabel lbLoading;
-        
+
         LoadingEffect(JLabel lb) {
             lbLoading = lb;
         }
-        
+
         private int turn = 0;
             private String[] chars = {" ", ".", "..", "..."};
 
@@ -110,13 +111,13 @@ public class HorariosUI extends javax.swing.JPanel {
                     turn = 0;
                 }
             }
-        
+
     }
-    
+
     /**
      * Classe interna que prove o Serviço de carregar turmas do banco de dados e retornar
      * em forma de "TILES", peças da cor do sistema.
-     * 
+     *
      * É uma maneira de centralizar essa funcionalidade em um unico lugar e oferecer a todos
      * os modulos instalados em HorariosUI
      */
@@ -168,7 +169,7 @@ public class HorariosUI extends javax.swing.JPanel {
 
     /**
      * Classe que prove o servico de tratamento do evento de clicar em cima da tile
-     * 
+     *
      */
     static class TileClickedHandler extends MouseAdapter {
 
@@ -241,13 +242,12 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btgerar.setBackground(ColorManager.getColor("button"));
         btgerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btgerar.setForeground(new java.awt.Color(255, 255, 255));
+        btgerar.setForeground(new java.awt.Color(0, 0, 0));
         btgerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btgerar.setText("gerar");
         btgerar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btgerar.setMaximumSize(new java.awt.Dimension(100, 25));
         btgerar.setMinimumSize(new java.awt.Dimension(100, 25));
-        btgerar.setOpaque(true);
         btgerar.setPreferredSize(new java.awt.Dimension(100, 25));
         btgerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,13 +257,12 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btexibir.setBackground(ColorManager.getColor("button"));
         btexibir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btexibir.setForeground(new java.awt.Color(255, 255, 255));
+        btexibir.setForeground(new java.awt.Color(0, 0, 0));
         btexibir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btexibir.setText("exibir");
         btexibir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btexibir.setMaximumSize(new java.awt.Dimension(100, 25));
         btexibir.setMinimumSize(new java.awt.Dimension(100, 25));
-        btexibir.setOpaque(true);
         btexibir.setPreferredSize(new java.awt.Dimension(100, 25));
         btexibir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -273,13 +272,12 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btopcoes.setBackground(ColorManager.getColor("button"));
         btopcoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btopcoes.setForeground(new java.awt.Color(255, 255, 255));
+        btopcoes.setForeground(new java.awt.Color(0, 0, 0));
         btopcoes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btopcoes.setText("opções");
         btopcoes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btopcoes.setMaximumSize(new java.awt.Dimension(100, 25));
         btopcoes.setMinimumSize(new java.awt.Dimension(100, 25));
-        btopcoes.setOpaque(true);
         btopcoes.setPreferredSize(new java.awt.Dimension(100, 25));
         btopcoes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -297,7 +295,7 @@ public class HorariosUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 1160, Short.MAX_VALUE)
+                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btexibir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +307,7 @@ public class HorariosUI extends javax.swing.JPanel {
                         .addComponent(bthome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lbModulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1157, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );

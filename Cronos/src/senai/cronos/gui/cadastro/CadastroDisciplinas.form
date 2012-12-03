@@ -91,7 +91,7 @@
                   <Component id="lbproximo" alignment="3" min="-2" pref="25" max="-2" attributes="1"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="magicScroll1" pref="311" max="32767" attributes="0"/>
+              <Component id="magicScroll1" pref="316" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btsave" alignment="3" min="-2" pref="25" max="-2" attributes="1"/>
