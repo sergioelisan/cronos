@@ -43,8 +43,8 @@ public abstract class GeraHorario {
      */
     public void gerarHorario(Turma turma) throws Exception {
         this.turma = turma;
-        alocarAulas(turma.getHorario() );
-        alocarDocentes(turma.getHorario() );
+        alocarAulas(turma.getHorarioWrapper().getHorario() );
+        alocarDocentes(turma.getHorarioWrapper() );
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public abstract void alocarAulas(Horario horario) throws ClassNotFoundException, SQLException;
+    public abstract void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException;
 
     /**
      * Retorna as disciplinas de um curso

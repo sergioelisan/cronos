@@ -16,19 +16,19 @@ public class Splash extends JWindow {
     private JProgressBar progressBar;
     private int progressStage = 0;
     private static Splash instance = new Splash();
-    
+
     public int MAX = 3;
 
     /**
      * Construtor... Inicializa os componentes e seta como visivel a tela
      */
-    private Splash() {        
+    private Splash() {
         setSize(dim);
         setLocationRelativeTo(null);
         setContentPane(new SplashPanel());
-        init();        
+        init();
     }
-    
+
     /*
      * Interfaces públicas
      */
@@ -61,7 +61,7 @@ public class Splash extends JWindow {
      * Finaliza este Splash
      */
     public void stop() {
-        dispose();        
+        dispose();
     }
 
     /**
@@ -85,7 +85,7 @@ public class Splash extends JWindow {
         int width = (int) (dim.width * 0.55);
         int height = (int) (dim.height * 0.02);
         int x = (int) (dim.width - width) / 2;
-        int y = (int) (dim.height * 0.83);
+        int y = (int) (dim.height * 0.82);
 
         progressBar.setForeground(Color.white);
         progressBar.setBackground(Color.decode("0x87AADE") );

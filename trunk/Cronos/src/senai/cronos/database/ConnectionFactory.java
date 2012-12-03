@@ -30,8 +30,8 @@ public class ConnectionFactory {
      * @throws SQLException
      */
     Connection getConnection() throws SQLException {
-        Connection con = DriverManager.getConnection(url, user, passwd);
-        return con;
+        try { Class.forName(driver); } catch (Exception ex) {}
+        return DriverManager.getConnection(url, user, passwd);
     }
 
     private String user;

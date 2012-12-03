@@ -1,7 +1,8 @@
 package senai.cronos.gui.horarios;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JPanel;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
@@ -15,6 +16,7 @@ public class HorarioUI extends javax.swing.JPanel {
     private String mes;
     private Turma turma;
     private List<HorarioTile> tiles;
+    private Map<Integer, JPanel> slots;
 
     public HorarioUI(String mes, Turma turma, List<HorarioTile> tiles) {
         initComponents();
@@ -34,56 +36,64 @@ public class HorarioUI extends javax.swing.JPanel {
     private void init() {
         lbmes.setText(mes);
         lbturma.setText(turma.getNome());
+        createSlots();
 
-        int inicial = tiles.get(0).getDiaSemana() - 3;
-
+        int semana   = 0;
+        int dia      = 0;
         for (HorarioTile ct : tiles) {
-            getSlots().get(++inicial).add(ct);
+            semana = (ct.getDiaSemana() <= dia) ? (semana + 7) : semana;
+            dia = ct.getDiaSemana();
+            slots.get(ct.getDiaSemana() + semana).add(ct);
         }
     }
 
     /**
      * retorna um slot ideintificado por sua id
      */
-    private List<JPanel> getSlots() {
-        List<JPanel> panels = new ArrayList<>();
-
-        panels.add(slot2);
-        panels.add(slot3);
-        panels.add(slot4);
-        panels.add(slot5);
-        panels.add(slot6);
-
-        panels.add(slot9);
-        panels.add(slot10);
-        panels.add(slot11);
-        panels.add(slot12);
-        panels.add(slot13);
-
-        panels.add(slot16);
-        panels.add(slot17);
-        panels.add(slot18);
-        panels.add(slot19);
-        panels.add(slot20);
-
-        panels.add(slot23);
-        panels.add(slot24);
-        panels.add(slot25);
-        panels.add(slot26);
-        panels.add(slot27);
-
-        panels.add(slot30);
-        panels.add(slot31);
-        panels.add(slot32);
-        panels.add(slot33);
-        panels.add(slot34);
-
-        panels.add(slot37);
-        panels.add(slot38);
-        panels.add(slot39);
-        panels.add(slot40);
-
-        return panels;
+    private void createSlots() {
+        slots = new HashMap<>();
+        slots.put(1, slot1);
+        slots.put(2, slot2);
+        slots.put(3, slot3);
+        slots.put(4, slot4);
+        slots.put(5, slot5);
+        slots.put(6, slot6);
+        slots.put(7, slot7);
+        slots.put(8, slot8);
+        slots.put(9, slot9);
+        slots.put(10, slot10);
+        slots.put(11, slot11);
+        slots.put(12, slot12);
+        slots.put(13, slot13);
+        slots.put(14, slot14);
+        slots.put(15, slot15);
+        slots.put(16, slot16);
+        slots.put(17, slot17);
+        slots.put(18, slot18);
+        slots.put(19, slot19);
+        slots.put(20, slot20);
+        slots.put(21, slot21);
+        slots.put(22, slot22);
+        slots.put(23, slot23);
+        slots.put(24, slot24);
+        slots.put(25, slot25);
+        slots.put(26, slot26);
+        slots.put(27, slot27);
+        slots.put(28, slot28);
+        slots.put(29, slot29);
+        slots.put(30, slot30);
+        slots.put(31, slot31);
+        slots.put(32, slot32);
+        slots.put(33, slot33);
+        slots.put(34, slot34);
+        slots.put(35, slot35);
+        slots.put(36, slot36);
+        slots.put(37, slot37);
+        slots.put(38, slot38);
+        slots.put(39, slot39);
+        slots.put(40, slot40);
+        slots.put(41, slot41);
+        slots.put(42, slot42);
     }
 
     @SuppressWarnings("unchecked")
@@ -112,8 +122,8 @@ public class HorarioUI extends javax.swing.JPanel {
         slot4 = new javax.swing.JPanel();
         slot3 = new javax.swing.JPanel();
         slot17 = new javax.swing.JPanel();
-        slot41 = new javax.swing.JPanel();
         slot42 = new javax.swing.JPanel();
+        slot41 = new javax.swing.JPanel();
         slot25 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         slot12 = new javax.swing.JPanel();
@@ -304,19 +314,19 @@ public class HorarioUI extends javax.swing.JPanel {
         slot17.setPreferredSize(new java.awt.Dimension(60, 80));
         slot17.setLayout(new java.awt.BorderLayout());
 
-        slot41.setBackground(new java.awt.Color(255, 255, 255));
-        slot41.setMaximumSize(new java.awt.Dimension(60, 80));
-        slot41.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot41.setName("slot28"); // NOI18N
-        slot41.setPreferredSize(new java.awt.Dimension(60, 80));
-        slot41.setLayout(new java.awt.BorderLayout());
-
         slot42.setBackground(new java.awt.Color(255, 255, 255));
         slot42.setMaximumSize(new java.awt.Dimension(60, 80));
         slot42.setMinimumSize(new java.awt.Dimension(60, 80));
-        slot42.setName("slot27"); // NOI18N
+        slot42.setName("slot28"); // NOI18N
         slot42.setPreferredSize(new java.awt.Dimension(60, 80));
         slot42.setLayout(new java.awt.BorderLayout());
+
+        slot41.setBackground(new java.awt.Color(255, 255, 255));
+        slot41.setMaximumSize(new java.awt.Dimension(60, 80));
+        slot41.setMinimumSize(new java.awt.Dimension(60, 80));
+        slot41.setName("slot27"); // NOI18N
+        slot41.setPreferredSize(new java.awt.Dimension(60, 80));
+        slot41.setLayout(new java.awt.BorderLayout());
 
         slot25.setBackground(new java.awt.Color(255, 255, 255));
         slot25.setMaximumSize(new java.awt.Dimension(60, 80));
@@ -716,9 +726,9 @@ public class HorarioUI extends javax.swing.JPanel {
                                     .addComponent(slot28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(slot14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(slot42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(slot41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(slot41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(slot42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -830,8 +840,8 @@ public class HorarioUI extends javax.swing.JPanel {
                                 .addComponent(slot28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(slot42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(slot41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(slot41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(slot42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

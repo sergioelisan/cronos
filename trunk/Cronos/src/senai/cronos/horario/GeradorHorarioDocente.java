@@ -31,7 +31,7 @@ public class GeradorHorarioDocente {
 
         for (Turma turma : Fachada.<Turma>get(Turma.class)) {
             Turno turno = turma.getTurno();
-            Horario horario = turma.getHorario();
+            Horario horario = turma.getHorarioWrapper();
 
             for (Date dia : horario.getHorario().keySet()) {
                 Tupla<Aula, Aula> diaDeTrabalho = horario.getHorario().get(dia);

@@ -230,7 +230,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                     pnHorarios.removeAll();
 
                     Turma turma = Fachada.<Turma>get(Turma.class, id);
-                    horario = turma.getHorario();
+                    horario = turma.getHorarioWrapper();
 
                     if (!horario.getHorario().isEmpty()) {
 
