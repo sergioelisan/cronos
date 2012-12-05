@@ -157,7 +157,7 @@ public class Home extends javax.swing.JPanel {
         });
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 75));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 2, 75));
 
         magicScroll1.setActiveWheelGesture(true);
         magicScroll1.setMaximumSize(new java.awt.Dimension(1200, 400));
@@ -168,7 +168,7 @@ public class Home extends javax.swing.JPanel {
         pnApps.setMinimumSize(new java.awt.Dimension(1000, 3000));
         pnApps.setOpaque(false);
         pnApps.setPreferredSize(new java.awt.Dimension(1200, 3000));
-        pnApps.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 6, 6));
+        pnApps.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 3, 3));
 
         horariotile.setBackground(ColorManager.getColor("home.horarios"));
         horariotile.setMaximumSize(new java.awt.Dimension(320, 165));
@@ -309,8 +309,8 @@ public class Home extends javax.swing.JPanel {
         pnApps.add(docentestile);
 
         turmastile.setBackground(ColorManager.getColor("home.turmas"));
-        turmastile.setMaximumSize(new java.awt.Dimension(319, 165));
-        turmastile.setPreferredSize(new java.awt.Dimension(319, 165));
+        turmastile.setMaximumSize(new java.awt.Dimension(330, 165));
+        turmastile.setPreferredSize(new java.awt.Dimension(330, 165));
         turmastile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 turmastileMouseClicked(evt);
@@ -331,7 +331,7 @@ public class Home extends javax.swing.JPanel {
         turmastileLayout.setHorizontalGroup(
             turmastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, turmastileLayout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
+                .addContainerGap(245, Short.MAX_VALUE)
                 .addComponent(lbturmas)
                 .addContainerGap())
         );
@@ -346,7 +346,8 @@ public class Home extends javax.swing.JPanel {
         pnApps.add(turmastile);
 
         cadastrotile.setBackground(ColorManager.getColor("home.cadastro"));
-        cadastrotile.setPreferredSize(new java.awt.Dimension(215, 165));
+        cadastrotile.setMaximumSize(new java.awt.Dimension(226, 165));
+        cadastrotile.setPreferredSize(new java.awt.Dimension(226, 165));
         cadastrotile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cadastrotileMouseClicked(evt);
@@ -373,9 +374,9 @@ public class Home extends javax.swing.JPanel {
                 .addGroup(cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cadastrotileLayout.createSequentialGroup()
                         .addComponent(lbcadastro)
-                        .addGap(0, 127, Short.MAX_VALUE))
+                        .addGap(0, 134, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
-                        .addGap(0, 95, Short.MAX_VALUE)
+                        .addGap(0, 106, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addContainerGap())
         );
@@ -546,9 +547,7 @@ public class Home extends javax.swing.JPanel {
                         .addComponent(lbtitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1167, Short.MAX_VALUE)
                         .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbuser)))
+                    .addComponent(lbuser))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
