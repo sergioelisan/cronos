@@ -8,7 +8,6 @@ import java.util.Date;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
-import senai.cronos.entidades.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.Turno;
 import senai.util.Tupla;
@@ -31,10 +30,10 @@ public class GeradorHorarioDocente {
 
         for (Turma turma : Fachada.<Turma>get(Turma.class)) {
             Turno turno = turma.getTurno();
-            Horario horario = turma.getHorarioWrapper();
+            Horario wrapper = turma.getHorario();
 
-            for (Date dia : horario.getHorario().keySet()) {
-                Tupla<Aula, Aula> diaDeTrabalho = horario.getHorario().get(dia);
+            for (Date dia : wrapper.getHorario().keySet()) {
+                Tupla<Aula, Aula> diaDeTrabalho = wrapper.getHorario().get(dia);
 
                 if (diaDeTrabalho.getPrimeiro().getDocente().equals(doc))
                     horarioDocente.add(dia, turno, diaDeTrabalho.getPrimeiro(), Tupla.PRIMEIRA);

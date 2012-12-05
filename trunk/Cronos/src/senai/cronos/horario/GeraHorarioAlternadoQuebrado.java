@@ -3,7 +3,9 @@ package senai.cronos.horario;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
+import senai.cronos.Fachada;
 import senai.cronos.entidades.Aula;
+import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.util.Tupla;
 import senai.util.date.DateUtil;
@@ -70,6 +72,33 @@ public class GeraHorarioAlternadoQuebrado extends GeraHorario {
             modo = (modo == 3) ? 0 : ++modo;
         }
 
+    }
+
+    @Override
+    public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
+        Horario wrapper = new Horario(horario);
+
+        for (Aula aula : wrapper.getAulas() ) {
+            Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
+
+            for (Docente docente : Fachada.buscaDocente(getTurma().getNucleo())) {
+                boolean disponivel = true;
+
+                for (Date dia : dias.keySet()) {
+                    Integer metade = dias.get(dia).getPrimeiro() ? Tupla.PRIMEIRA : Tupla.SEGUNDA;
+
+                    if (!docente.getHorarioDocente().isDisponivel(dia, getTurma().getTurno(), metade)) {
+                        disponivel = false;
+                        break;
+                    }
+                }
+
+                if (disponivel) {
+                    aula.setDocente(docente);
+                }
+            }
+
+        }
     }
 
 }

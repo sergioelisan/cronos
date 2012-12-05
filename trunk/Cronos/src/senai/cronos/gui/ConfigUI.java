@@ -99,8 +99,8 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void saveFeriado() {
         try {
-            Date feriado = pickFeriado.getDate();
-            String descricao = txtdescricao.getText().trim();
+            Date feriado = dateFeriado.getDate();
+            String descricao = txtFeriado.getText().trim();
             Feriado f = new Feriado(feriado, descricao);
             Fachada.add(f);
 
@@ -153,8 +153,8 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void saveNucleo() {
         try {
-            String nome = txtnomenucleo.getText().trim();
-            String descricao = txtdescricao.getText().trim();
+            String nome = txtNucleo.getText().trim();
+            String descricao = txtFeriado.getText().trim();
             Nucleo nucleo = new Nucleo(nome, descricao);
 
             Fachada.add(nucleo);
@@ -206,10 +206,10 @@ public class ConfigUI extends javax.swing.JPanel {
         btaddferiado = new javax.swing.JLabel();
         btremoveferiado = new javax.swing.JLabel();
         panelferiadoadd = new javax.swing.JPanel();
-        pickFeriado = new org.jdesktop.swingx.JXDatePicker();
+        dateFeriado = new org.jdesktop.swingx.JXDatePicker();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtdescricao = new javax.swing.JTextField();
+        txtFeriado = new javax.swing.JTextField();
         btcancelarferiado = new javax.swing.JLabel();
         btsaveferiado = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -219,7 +219,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btaddnucleo = new javax.swing.JLabel();
         btremovenucleo = new javax.swing.JLabel();
         panelAddNucleo = new javax.swing.JPanel();
-        txtnomenucleo = new javax.swing.JTextField();
+        txtNucleo = new javax.swing.JTextField();
         btsavenucleo = new javax.swing.JLabel();
         btcancelarnucleo = new javax.swing.JLabel();
 
@@ -284,7 +284,7 @@ public class ConfigUI extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(datepickerInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(datepickerInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, Short.MAX_VALUE)
                             .addComponent(datepickerFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -347,9 +347,9 @@ public class ConfigUI extends javax.swing.JPanel {
 
         panelferiadoadd.setOpaque(false);
 
-        pickFeriado.addActionListener(new java.awt.event.ActionListener() {
+        dateFeriado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pickFeriadoActionPerformed(evt);
+                dateFeriadoActionPerformed(evt);
             }
         });
 
@@ -399,11 +399,11 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addGroup(panelferiadoaddLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pickFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelferiadoaddLayout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         panelferiadoaddLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel6, jLabel9});
@@ -413,15 +413,18 @@ public class ConfigUI extends javax.swing.JPanel {
             .addGroup(panelferiadoaddLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelferiadoaddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
                     .addGroup(panelferiadoaddLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelferiadoaddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(pickFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelferiadoaddLayout.createSequentialGroup()
+                        .addComponent(txtFeriado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(panelferiadoaddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelferiadoaddLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(dateFeriado, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(panelferiadoaddLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsaveferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btcancelarferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -444,12 +447,11 @@ public class ConfigUI extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btremoveferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 197, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelferiadoadd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addComponent(panelferiadoadd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,8 +465,8 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addComponent(btremoveferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btaddferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(panelferiadoadd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelferiadoadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         jPanel3.setOpaque(false);
@@ -502,15 +504,15 @@ public class ConfigUI extends javax.swing.JPanel {
 
         panelAddNucleo.setOpaque(false);
 
-        txtnomenucleo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtnomenucleo.setForeground(new java.awt.Color(153, 153, 153));
-        txtnomenucleo.setText("novo núcleo");
-        txtnomenucleo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtnomenucleoFocusLost(evt);
-            }
+        txtNucleo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNucleo.setForeground(new java.awt.Color(153, 153, 153));
+        txtNucleo.setText("novo núcleo");
+        txtNucleo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtnomenucleoFocusGained(evt);
+                txtNucleoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNucleoFocusLost(evt);
             }
         });
 
@@ -545,7 +547,7 @@ public class ConfigUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddNucleoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelAddNucleoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtnomenucleo)
+                    .addComponent(txtNucleo)
                     .addGroup(panelAddNucleoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btcancelarnucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -557,7 +559,7 @@ public class ConfigUI extends javax.swing.JPanel {
             panelAddNucleoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAddNucleoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtnomenucleo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelAddNucleoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsavenucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -606,19 +608,16 @@ public class ConfigUI extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bthome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 804, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)))
+                        .addComponent(jLabel1))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(95, 95, 95)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(504, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -629,10 +628,14 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -664,10 +667,15 @@ public class ConfigUI extends javax.swing.JPanel {
 
     private void btcancelarferiadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btcancelarferiadoMouseClicked
         panelferiadoadd.setVisible(false);
+        txtFeriado.setText(null);
+        dateFeriado.setDate(null);
     }//GEN-LAST:event_btcancelarferiadoMouseClicked
 
     private void btsaveferiadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btsaveferiadoMouseClicked
         saveFeriado();
+        panelferiadoadd.setVisible(false);
+        txtFeriado.setText(null);
+        dateFeriado.setDate(null);
     }//GEN-LAST:event_btsaveferiadoMouseClicked
 
     private void btaddnucleoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btaddnucleoMouseClicked
@@ -685,27 +693,27 @@ public class ConfigUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btsavenucleoMouseClicked
 
     private void btcancelarnucleoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btcancelarnucleoMouseClicked
-        txtnomenucleo.setText(null);
+        txtNucleo.setText(null);
         panelAddNucleo.setVisible(false);
     }//GEN-LAST:event_btcancelarnucleoMouseClicked
 
-    private void pickFeriadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pickFeriadoActionPerformed
+    private void dateFeriadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFeriadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pickFeriadoActionPerformed
+    }//GEN-LAST:event_dateFeriadoActionPerformed
 
-    private void txtnomenucleoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomenucleoFocusGained
-        if (txtnomenucleo.getText().trim().equals("novo núcleo")) {
-            txtnomenucleo.setText(null);
-            txtnomenucleo.setForeground(Color.BLACK);
+    private void txtNucleoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNucleoFocusGained
+        if (txtNucleo.getText().trim().equals("novo núcleo")) {
+            txtNucleo.setText(null);
+            txtNucleo.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_txtnomenucleoFocusGained
+    }//GEN-LAST:event_txtNucleoFocusGained
 
-    private void txtnomenucleoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomenucleoFocusLost
-       if (!txtnomenucleo.getText().trim().equals("novo núcleo")) {
-            txtnomenucleo.setText("novo núcleo");
-            txtnomenucleo.setForeground(Color.GRAY);
+    private void txtNucleoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNucleoFocusLost
+       if (!txtNucleo.getText().trim().equals("novo núcleo")) {
+            txtNucleo.setText("novo núcleo");
+            txtNucleo.setForeground(Color.GRAY);
         }
-    }//GEN-LAST:event_txtnomenucleoFocusLost
+    }//GEN-LAST:event_txtNucleoFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btaddferiado;
@@ -717,6 +725,7 @@ public class ConfigUI extends javax.swing.JPanel {
     private javax.swing.JLabel btremovenucleo;
     private javax.swing.JLabel btsaveferiado;
     private javax.swing.JLabel btsavenucleo;
+    private org.jdesktop.swingx.JXDatePicker dateFeriado;
     private org.jdesktop.swingx.JXDatePicker datepickerFim;
     private org.jdesktop.swingx.JXDatePicker datepickerInicio;
     private javax.swing.JLabel jLabel1;
@@ -736,8 +745,7 @@ public class ConfigUI extends javax.swing.JPanel {
     private javax.swing.JList listaNucleos;
     private javax.swing.JPanel panelAddNucleo;
     private javax.swing.JPanel panelferiadoadd;
-    private org.jdesktop.swingx.JXDatePicker pickFeriado;
-    private javax.swing.JTextField txtdescricao;
-    private javax.swing.JTextField txtnomenucleo;
+    private javax.swing.JTextField txtFeriado;
+    private javax.swing.JTextField txtNucleo;
     // End of variables declaration//GEN-END:variables
 }

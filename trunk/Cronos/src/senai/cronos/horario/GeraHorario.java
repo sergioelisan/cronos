@@ -1,13 +1,9 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import senai.cronos.Fachada;
 import senai.cronos.entidades.*;
 import senai.util.Tupla;
@@ -43,8 +39,8 @@ public abstract class GeraHorario {
      */
     public void gerarHorario(Turma turma) throws Exception {
         this.turma = turma;
-        alocarAulas(turma.getHorarioWrapper().getHorario() );
-        alocarDocentes(turma.getHorarioWrapper() );
+        alocarAulas(turma.getHorario().getHorario() );
+        alocarDocentes(turma.getHorario().getHorario() );
     }
 
     /**
@@ -55,6 +51,12 @@ public abstract class GeraHorario {
      * @throws SQLException
      */
     public abstract void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException;
+
+    /**
+     * Aloca os docentes no horario ja determinado
+     * @param horarioWrapper
+     */
+    public abstract void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception;
 
     /**
      * Retorna as disciplinas de um curso
@@ -75,7 +77,7 @@ public abstract class GeraHorario {
         aula.setDisciplina(uc);
         aula.setLab(uc.getLab());
         aula.setDocente(Docente.PADRAO);
-
+        
         return aula;
     }
 
@@ -90,54 +92,9 @@ public abstract class GeraHorario {
         return (uc.getCargaHoraria() / horasPorDia) + (uc.getCargaHoraria() % horasPorDia);
     }
 
-    /**
-     * Aloca os docentes no horario ja determinado
-     * @param horarioWrapper
-     */
-    private void alocarDocentes(Horario horarioWrapper) throws Exception {
-        Map<Aula, Map<Integer, List<Date> > > diasDeAula = getDiasAula(horarioWrapper);
-
-        for (Aula a : diasDeAula.keySet() ) {
-            List<Docente> docentesCandidatos = Fachada.buscaDocente(turma.getNucleo());
-
-        }
-
-    }
-
-    /**
-     * Coloca em um dicionario os dias que cada UnidadeCurricular será lecionada
-     * @param horarioWrapper
-     * @return
-     */
-    private Map<Aula, Map<Integer, List<Date> > > getDiasAula(Horario horarioWrapper) {
-        Set<Aula> aulas = new HashSet<>();
-        Map<Aula, Map<Integer, List<Date> > > diasDeAula = new HashMap<>();
-
-        // adiciona instancias unicas de cada Aula em um conjunto
-        for(Date dia : horarioWrapper.getHorario().keySet()) {
-            aulas.add(horarioWrapper.getHorario().get(dia).getPrimeiro() );
-            aulas.add(horarioWrapper.getHorario().get(dia).getSegundo() );
-        }
-
-        // cria um dicionario usando as instancias unicas de Aulas, que serao
-        // associadas aos dias que elas sao lecionadas
-        for(Aula aula : aulas) {
-            Map<Integer, List<Date> > ocorrencia = new HashMap<>();
-            ocorrencia.put(Tupla.PRIMEIRA, new ArrayList<Date>());
-            ocorrencia.put(Tupla.SEGUNDA, new ArrayList<Date>());
-            diasDeAula.put(aula, ocorrencia);
-        }
-
-        // le os dias que cada Aula será lecionada e joga no conjunto correspondente
-        for(Date dia : horarioWrapper.getHorario().keySet() ) {
-            Aula a1 = horarioWrapper.getHorario().get(dia).getPrimeiro();
-            diasDeAula.get(a1).get(Tupla.PRIMEIRA).add(dia);
-
-            Aula a2 = horarioWrapper.getHorario().get(dia).getSegundo();
-            diasDeAula.get(a2).get(Tupla.SEGUNDA).add(dia);
-        }
-
-        return diasDeAula;
+    /** */
+    public Turma getTurma() {
+        return turma;
     }
 
 }

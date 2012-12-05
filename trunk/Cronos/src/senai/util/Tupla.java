@@ -1,5 +1,7 @@
 package senai.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,12 +14,19 @@ public class Tupla<K, V> {
     public static final Integer PRIMEIRA = 0;
     public static final Integer SEGUNDA = 1;
 
+    /**
+     * vetor que armazena os elementos da tupla
+     */
+    private List<Object> elementos;
+
     public Tupla() {
+        elementos = new ArrayList<>();
     }
 
     public Tupla(K primeiro, V segundo) {
-        this.primeiro = primeiro;
-        this.segundo = segundo;
+        this();
+        elementos.add(Tupla.PRIMEIRA, primeiro);
+        elementos.add(Tupla.SEGUNDA, segundo);
     }
 
     /**
@@ -25,12 +34,8 @@ public class Tupla<K, V> {
      * @param objeto
      * @param posicao
      */
-    public void insert(Object objeto, Integer posicao) {
-        if (posicao == Tupla.PRIMEIRA) {
-            this.setPrimeiro((K) objeto);
-        } else {
-            this.setSegundo((V) objeto);
-        }
+    public void set(Object objeto, Integer posicao) {
+        list().add(posicao, objeto);
     }
 
     /**
@@ -39,30 +44,54 @@ public class Tupla<K, V> {
      * @return
      */
     public Object get(Integer posicao) {
-        if (posicao == Tupla.PRIMEIRA) {
-            return getPrimeiro();
-        } else {
-            return getSegundo();
-        }
+        return list().get(posicao);
+    }
+
+    /**
+     * empacota os elementos da tupla numa lista
+     *
+     * NOT SAFE!!!
+     *
+     * @return array with tuple elements
+     */
+    public List<Object> list() {
+        return elementos;
+    }
+
+    /** verifica a existencia de um objeto na tupla */
+    public boolean contains(Object obj) {
+        return elementos.contains(obj);
     }
 
     public K getPrimeiro() {
-        return primeiro;
+        return (K) elementos.get(Tupla.PRIMEIRA);
     }
 
     public void setPrimeiro(K primeiro) {
-        this.primeiro = primeiro;
+        elementos.set(Tupla.PRIMEIRA, primeiro);
     }
 
     public V getSegundo() {
-        return segundo;
+        return (V) elementos.get(Tupla.SEGUNDA);
     }
 
     public void setSegundo(V segundo) {
-        this.segundo = segundo;
+        elementos.set(Tupla.SEGUNDA, segundo);
     }
 
     @Override
+    // hashcode()
+    // <editor-fold defaultstate="collapsed">
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.elementos);
+        return hash;
+    }
+    // </editor-fold>
+
+    @Override
+    // equals()
+    // <editor-fold defaultstate="collapsed">
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -71,27 +100,20 @@ public class Tupla<K, V> {
             return false;
         }
         final Tupla<K, V> other = (Tupla<K, V>) obj;
-        if (!Objects.equals(this.primeiro, other.primeiro)) {
-            return false;
-        }
-        if (!Objects.equals(this.segundo, other.segundo)) {
+        if (!Objects.equals(this.elementos, other.elementos)) {
             return false;
         }
         return true;
     }
+    // </editor-fold>
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.primeiro);
-        hash = 97 * hash + Objects.hashCode(this.segundo);
-        return hash;
-    }
-
-    @Override
+    // toString()
+    // <editor-fold defaultstate="collapsed">
     public String toString() {
-        return "Tupla { " + "primeiro = " + primeiro + ", segundo = " + segundo + '}';
+        return "Tupla{" + "elementos=" + elementos + '}';
     }
-    private K primeiro;
-    private V segundo;
+    // </editor-fold>
+
+
 }

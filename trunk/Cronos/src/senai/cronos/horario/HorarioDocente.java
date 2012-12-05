@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
-import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Turno;
 import senai.util.Tupla;
 
@@ -51,7 +50,7 @@ public class HorarioDocente {
      * @param half
      */
     public void add(Date dia, Turno turno, Aula aula, Integer half) {
-        horario.get(dia).get(turno).insert(aula, half);
+        horario.get(dia).get(turno).set(aula, half);
     }
 
     /**
@@ -61,7 +60,7 @@ public class HorarioDocente {
      * @param half
      */
     public void remove(Date dia, Turno turno, Integer half) {
-        horario.get(dia).get(turno).insert(Aula.PADRAO, half);
+        horario.get(dia).get(turno).set(Aula.PADRAO, half);
     }
 
     /**
@@ -89,8 +88,21 @@ public class HorarioDocente {
      * @return
      */
     public double getPercentualOcupacao() {
-        // TODO Desenvolver a logica de calculo da ocupacao de um docente
-        return 0.1;
+        int ocupacao = 0;
+        int slots = horario.keySet().size() * 2 * 2;
+
+        for (Date dia : horario.keySet() ) {
+            for (Turno turno : horario.get(dia).keySet() ) {
+                Tupla<Aula, Aula> aulas = horario.get(dia).get(turno);
+                if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.PADRAO) )
+                    ocupacao++;
+
+                if (!aulas.get(Tupla.SEGUNDA).equals(Aula.PADRAO) )
+                    ocupacao++;
+            }
+        }
+
+        return (ocupacao * 100) / slots;
     }
 
     /**
