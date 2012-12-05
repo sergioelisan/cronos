@@ -11,19 +11,24 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.entidades.Formacao;
 import senai.cronos.entidades.Turno;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.util.Aleatorio;
+import senai.util.Observador;
 
 /**
  *
@@ -33,7 +38,7 @@ import senai.util.Aleatorio;
  *
  * @author Carlos Melo eSergio Lisan
  */
-public class CadastroDocente extends javax.swing.JPanel {
+public class CadastroDocente extends javax.swing.JPanel implements Observador {
 
     /**
      * Lista de nucleos que agrupam os docentes
@@ -60,40 +65,38 @@ public class CadastroDocente extends javax.swing.JPanel {
             comboformacao.addItem(f.name().toLowerCase());
         }
 
-        comboturnos.addItem(Turno.MANHA.name().toLowerCase());
-        comboturnos.addItem(Turno.TARDE.name().toLowerCase());
-        comboturnos.addItem(Turno.NOITE.name().toLowerCase());
-        comboturnos.addItem(Turno.MANHA.name().toLowerCase() + " e " + Turno.TARDE.name().toLowerCase());
-        comboturnos.addItem(Turno.MANHA.name().toLowerCase() + " e " + Turno.NOITE.name().toLowerCase());
-        comboturnos.addItem(Turno.TARDE.name().toLowerCase() + " e " + Turno.NOITE.name().toLowerCase());
+        comboturnos.addItem("manhã");
+        comboturnos.addItem("tarde");
+        comboturnos.addItem("noite");
+        comboturnos.addItem("manhã e tarde");
+        comboturnos.addItem("manhã e noite");
+        comboturnos.addItem("tarde e noite");
 
-        initData();
+        // recebe atualizacoes do DAONucleo assim que alguma coisa for alterada
+        try {
+            DAOFactory.getDao(Nucleo.class).registra(this);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
+
+        update();
     }
 
     /**
      * inicializa os dados de disciplinas
      */
-    private void initData() {
-        Thread t = new Thread(new Runnable() {
+    private void loadNucleosCombobox() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    nucleos = Fachada.<Nucleo>get(Nucleo.class);
-
-                    combonucleo.removeAllItems();
-                    combonucleo.addItem("-- núcleos --");
-                    for (Nucleo nc : nucleos) {
-                        combonucleo.addItem(nc.getNome());
-                    }
-
-                } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregar dados:\n" + ex);
+                combonucleo.removeAllItems();
+                combonucleo.addItem("-- núcleos --");
+                for (Nucleo nc : nucleos) {
+                    combonucleo.addItem(nc.getNome());
                 }
+
             }
-        });
-
-        t.start();
-
+        }).start();
         load();
     }
 
@@ -102,7 +105,7 @@ public class CadastroDocente extends javax.swing.JPanel {
      * grafica e manda-o para a fachada salva-lo
      */
     private void save() {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -111,98 +114,61 @@ public class CadastroDocente extends javax.swing.JPanel {
                     docente.setContratacao(datecontratacao.getDate());
                     docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
                     docente.setNome(txtnome.getText().trim());
-
-                    if (comboturnos.getSelectedIndex() == 1) {
-                        docente.setPrimeiroTurno(Turno.MANHA);
-                        docente.setSegundoTurno(null);
-                    } else if (comboturnos.getSelectedIndex() == 2) {
-                        docente.setPrimeiroTurno(Turno.TARDE);
-                        docente.setSegundoTurno(null);
-                    } else if (comboturnos.getSelectedIndex() == 3) {
-                        docente.setPrimeiroTurno(Turno.NOITE);
-                        docente.setSegundoTurno(null);
-                    } else if (comboturnos.getSelectedIndex() == 4) {
-                        docente.setPrimeiroTurno(Turno.MANHA);
-                        docente.setSegundoTurno(Turno.TARDE);
-                    } else if (comboturnos.getSelectedIndex() == 5) {
-                        docente.setPrimeiroTurno(Turno.MANHA);
-                        docente.setSegundoTurno(Turno.NOITE);
-                    } else if (comboturnos.getSelectedIndex() == 6) {
-                        docente.setPrimeiroTurno(Turno.TARDE);
-                        docente.setSegundoTurno(Turno.NOITE);
-                    }
-
-                    for (Nucleo nc : nucleos) {
-                        if (nc.getNome().equals((String) combonucleo.getSelectedItem())) {
-                            docente.setNucleo(nc);
-                        }
-                    }
+                    docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1 ));
+                    docente.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1) );
                     docente.setScore(1);
 
-                    if (!Fachada.existeDocente(txtmatricula.getText() ) ) {
-                        Fachada.add(docente);
-                        JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+                    if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
+                        CronosAPI.add(docente);                        
                     } else {
-                        Fachada.update(docente);
-                        JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+                        CronosAPI.update(docente);                        
                     }
 
                     // Adiciona proficiencias-padrao para o novo docente
-                    for (UnidadeCurricular uc : Fachada.buscaDisciplinas(docente.getNucleo())) {
-                        Proficiencia proficiencia = new Proficiencia(docente, uc, Aleatorio.alec(1, 10), Aleatorio.alec(1, 10));
-
+                    for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
+                        Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
                         docente.getProficiencias().add(proficiencia);
-                        Fachada.add(proficiencia);
+                        CronosAPI.add(proficiencia);
                     }
-
                 } catch (ClassNotFoundException | SQLException e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Problemas ao adicionar Docente:\n" + e);
+                    Alerta.jogarAviso(e.getMessage());
+                } finally {
+                    novo();
                 }
-
-                initData();
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
      * Trata com a fachada a remocao de um objeto Docente, por sua matricula
      */
     private void remove() {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 String code = txtmatricula.getText();
                 if (!code.equals("matrícula")) {
                     Integer id = Integer.parseInt(code);
                     try {
-                        Fachada.remove(Docente.class, id);
+                        CronosAPI.remove(Docente.class, id);
                     } catch (ClassNotFoundException | SQLException e) {
-                        JOptionPane.showMessageDialog(null, "FAIL! Problemas ao remover o Docente:\n" + e);
-                    }
-                    load();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um docente para ser removido!");
-                    return;
+                        Alerta.jogarAviso(e.getMessage() );
+                    } finally {
+                        novo();
+                    }                                        
                 }
-
-
-                JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                initData();
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
      * inicializa os elementos usados para inserir dados dos docentes.
      */
     private void novo() {
+        load();
         txtmatricula.setText("matrícula");
-        datecontratacao.setDate(null);
         txtnome.setText("nome");
+        datecontratacao.setDate(null);        
         comboformacao.setSelectedIndex(0);
         combonucleo.setSelectedIndex(0);
         comboturnos.setSelectedIndex(0);
@@ -214,17 +180,17 @@ public class CadastroDocente extends javax.swing.JPanel {
      */
     private void load() {
         pnShow.removeAll();
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     List<Docente> docentes;
                     if (posicao == -1) {
-                        docentes = Fachada.<Docente>get(Docente.class);
+                        docentes = CronosAPI.<Docente>get(Docente.class);
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = Fachada.buscaDocente(nucleo);
+                        docentes = CronosAPI.buscaDocentes(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 
@@ -243,9 +209,7 @@ public class CadastroDocente extends javax.swing.JPanel {
                 }
 
             }
-        });
-
-        t.start();
+        }).start();
         pnShow.repaint();
     }
 
@@ -256,38 +220,33 @@ public class CadastroDocente extends javax.swing.JPanel {
      * @param matricula
      */
     private void show(final String matricula) {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Docente dc = Fachada.<Docente>get(Docente.class, Integer.parseInt(matricula));
+                    Docente dc = CronosAPI.<Docente>get(Docente.class, Integer.parseInt(matricula));
                     txtmatricula.setText(String.valueOf(dc.getMatricula()));
-                    datecontratacao.setDate(dc.getContratacao() );
+                    datecontratacao.setDate(dc.getContratacao());
                     txtnome.setText(dc.getNome());
                     comboformacao.setSelectedIndex(dc.getFormacao().ordinal() + 1);
                     combonucleo.setSelectedItem(dc.getNucleo().getNome());
-
-                    if (dc.getPrimeiroTurno().equals(Turno.MANHA) && dc.getSegundoTurno() == null) {
-                        comboturnos.setSelectedIndex(1);
-                    } else if (dc.getPrimeiroTurno().equals(Turno.TARDE) && dc.getSegundoTurno() == null) {
-                        comboturnos.setSelectedIndex(2);
-                    } else if (dc.getPrimeiroTurno().equals(Turno.NOITE) && dc.getSegundoTurno() == null) {
-                        comboturnos.setSelectedIndex(3);
-                    } else if (dc.getPrimeiroTurno().equals(Turno.MANHA) && dc.getSegundoTurno().equals(Turno.TARDE)) {
-                        comboturnos.setSelectedIndex(4);
-                    } else if (dc.getPrimeiroTurno().equals(Turno.MANHA) && dc.getSegundoTurno().equals(Turno.NOITE)) {
-                        comboturnos.setSelectedIndex(5);
-                    } else if (dc.getPrimeiroTurno().equals(Turno.TARDE) && dc.getSegundoTurno().equals(Turno.NOITE)) {
-                        comboturnos.setSelectedIndex(6);
-                    }
+                    comboturnos.setSelectedIndex(dc.getTurno().ordinal() + 1 );
 
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
+                    Alerta.jogarAviso(ex.getMessage() );
                 }
             }
-        });
+        }).start();
+    }
 
-        t.start();
+    @Override
+    public void update() {
+        try {
+            nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
+            loadNucleosCombobox();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
     }
 
     /**

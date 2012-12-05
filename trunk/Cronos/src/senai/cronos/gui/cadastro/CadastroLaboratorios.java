@@ -10,10 +10,10 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Laboratorio;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
@@ -35,14 +35,17 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
     }
 
     private void novo() {
+        load();
         lbcodigo.setText("código");
         txtdescricao.setText("descrição");
         txtnome.setText("nome");
     }
 
+    /**
+     * salva um novo lab no banco
+     */
     private void save() {
-        Thread thread = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 Laboratorio lab = new Laboratorio();
@@ -50,96 +53,89 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
                 lab.setDescricao(txtdescricao.getText().trim());
 
                 String code = lbcodigo.getText();
-
                 try {
                     if (code.equals("código")) {
-                        Fachada.add(lab);
-                        JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
+                        CronosAPI.add(lab);
                     } else {
-                        Integer id = Integer.parseInt(code);
-                        lab.setId(id);
-                        Fachada.update(lab);
-                        JOptionPane.showMessageDialog(null, "Alterado com sucesso");
+                        lab.setId(Integer.parseInt(code));
+                        CronosAPI.update(lab);
                     }
-                } catch (ClassNotFoundException | SQLException e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Problemas ao salvar:\n" + e);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Alerta.jogarAviso(ex.getMessage());
+                } finally {
+                    novo();
                 }
-
-                load();
             }
-        });
-
-        thread.start();
+        }).start();
     }
 
+    /**
+     * remove um lab do banco
+     */
     private void remove() {
-        Thread thread = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 String code = lbcodigo.getText();
                 if (!code.equals("código")) {
                     Integer id = Integer.parseInt(code);
-
                     try {
-                        Fachada.remove(Laboratorio.class, id);
-                        JOptionPane.showMessageDialog(null, "Removido com sucesso");
+                        CronosAPI.remove(Laboratorio.class, id);
                         load();
-                    } catch (ClassNotFoundException | SQLException e) {
-                        JOptionPane.showMessageDialog(null, "FAIL! Problemas ao salvar:\n" + e);
+                    } catch (ClassNotFoundException | SQLException ex) {
+                        Alerta.jogarAviso(ex.getMessage());
+                    } finally {
+                        novo();
                     }
-                } else {
-                     JOptionPane.showMessageDialog(null, "Selecione um laboratório para ser removido!");
-                    return;
                 }
             }
-        });
-
-        thread.start();
+        }).start();
     }
 
+    /**
+     * carrega os labs do banco
+     */
     private void load() {
         pnShow.removeAll();
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    List<Laboratorio> laboratorios = Fachada.<Laboratorio>get(Laboratorio.class);
-                    for (Laboratorio labs : laboratorios) {
+                    List<Laboratorio> laboratorios = CronosAPI.<Laboratorio>get(Laboratorio.class);
+                    for (Laboratorio lab : laboratorios) {
                         Tile ct = new Tile();
-                        ct.setId(labs.getNome() + " - " + labs.getDescricao());
-                        ct.setNome(String.valueOf(labs.getId()));
+                        ct.setId(lab.getId() + "");
+                        ct.setNome(lab.getNome());
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregar os laboratorios:\n" + ex);
+                    Alerta.jogarAviso(ex.getMessage());
                 }
             }
-        });
-
-        t.start();
+        }).start();
         pnShow.repaint();
     }
 
+    /**
+     * exibe os labs do banco
+     *
+     * @param code
+     */
     private void show(final String code) {
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Laboratorio lab = Fachada.<Laboratorio>get(Laboratorio.class, Integer.parseInt(code));
+                    Laboratorio lab = CronosAPI.<Laboratorio>get(Laboratorio.class, Integer.parseInt(code));
                     lbcodigo.setText(String.valueOf(lab.getId()));
                     txtnome.setText(lab.getNome());
                     txtdescricao.setText(lab.getDescricao());
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
+                    Alerta.jogarAviso(ex.getMessage());
                 }
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
@@ -156,7 +152,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
                 tile = (Tile) e.getSource();
             }
 
-            show(tile.getNome());
+            show(tile.getId());
         }
     }
 

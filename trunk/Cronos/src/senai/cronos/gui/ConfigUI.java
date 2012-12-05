@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.LinkEffectHandler;
@@ -54,8 +54,8 @@ public class ConfigUI extends javax.swing.JPanel {
             btcancelarnucleo.addMouseListener(new LinkEffectHandler());
             btsavenucleo.addMouseListener(new LinkEffectHandler());
 
-            Date inicio = Fachada.getInicioCalendario();
-            Date fim = Fachada.getFimCalendario();
+            Date inicio = CronosAPI.getInicioCalendario();
+            Date fim = CronosAPI.getFimCalendario();
 
             datepickerFim.setDate(fim);
             datepickerInicio.setDate(inicio);
@@ -78,7 +78,7 @@ public class ConfigUI extends javax.swing.JPanel {
 
 
             // logica de carregamento de feriados
-            List<Feriado> feriados = Fachada.<Feriado>get(Feriado.class);
+            List<Feriado> feriados = CronosAPI.<Feriado>get(Feriado.class);
             Collections.sort(feriados);
 
             DefaultListModel<Feriado> lm = new DefaultListModel<>();
@@ -102,7 +102,7 @@ public class ConfigUI extends javax.swing.JPanel {
             Date feriado = dateFeriado.getDate();
             String descricao = txtFeriado.getText().trim();
             Feriado f = new Feriado(feriado, descricao);
-            Fachada.add(f);
+            CronosAPI.add(f);
 
             loadFeriados();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -117,7 +117,7 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void removeFeriado(Feriado f) {
         try {
-            Fachada.remove(Feriado.class, f.getDia());
+            CronosAPI.remove(Feriado.class, f.getDia());
             loadFeriados();
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao remover feriado\n" + ex);
@@ -132,7 +132,7 @@ public class ConfigUI extends javax.swing.JPanel {
             ((DefaultListModel<Nucleo>)listaNucleos.getModel()).clear();
 
             // logica de carregamento de feriados
-            List<Nucleo> nucleos = Fachada.<Nucleo>get(Nucleo.class);
+            List<Nucleo> nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
             Collections.sort(nucleos);
 
             DefaultListModel<Nucleo> lm = new DefaultListModel<>();
@@ -157,7 +157,7 @@ public class ConfigUI extends javax.swing.JPanel {
             String descricao = txtFeriado.getText().trim();
             Nucleo nucleo = new Nucleo(nome, descricao);
 
-            Fachada.add(nucleo);
+            CronosAPI.add(nucleo);
             loadNucleos();
             panelAddNucleo.setVisible(false);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -172,7 +172,7 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void removeNucleo(Nucleo n) {
         try {
-            Fachada.remove(Nucleo.class, n.getId());
+            CronosAPI.remove(Nucleo.class, n.getId());
             loadNucleos();
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas ao remover núcleo\n" + ex);
@@ -645,13 +645,13 @@ public class ConfigUI extends javax.swing.JPanel {
 
     private void datepickerInicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_datepickerInicioPropertyChange
         if (evt.getPropertyName().equals("date")) {
-            Fachada.setInicioCalendario(datepickerInicio.getDate());
+            CronosAPI.setInicioCalendario(datepickerInicio.getDate());
         }
     }//GEN-LAST:event_datepickerInicioPropertyChange
 
     private void datepickerFimPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_datepickerFimPropertyChange
-        if (evt.getPropertyName().equals("date")) {
-            Fachada.setFimCalendario(datepickerFim.getDate());
+        if (datepickerFim.getDate().equals("date")) {
+            CronosAPI.setFimCalendario(datepickerFim.getDate());
         }
     }//GEN-LAST:event_datepickerFimPropertyChange
 

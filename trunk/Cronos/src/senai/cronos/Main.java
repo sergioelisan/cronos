@@ -88,9 +88,9 @@ public class Main {
      */
     private void loadCalendar() throws ClassNotFoundException, SQLException, ParseException {
         splash.upBar();
-        Date inicio = Fachada.getInicioCalendario();
-        Date fim    = Fachada.getFimCalendario();
-        Main.CALENDARIO = new Calendario(inicio, fim, Fachada.<Feriado>get(Feriado.class) );
+        Date inicio = CronosAPI.getInicioCalendario();
+        Date fim    = CronosAPI.getFimCalendario();
+        Main.CALENDARIO = new Calendario(inicio, fim, CronosAPI.<Feriado>get(Feriado.class) );
     }
 
     /**

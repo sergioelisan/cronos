@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Proficiencia;
@@ -99,7 +99,7 @@ public class DAOProficiencia extends DAO<Proficiencia> {
                 p.setDocente(doc);
                 p.setLecionado(rs.getInt("nivel"));
                 p.setScoreTemp(rs.getInt("scoretemp"));
-                p.setUnidadecurricular(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina")));
+                p.setUnidadecurricular(CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina")));
                 profs.add(p);
             }
         } catch (Exception ex) {

@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
@@ -229,7 +229,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                     pnLegendas.removeAll();
                     pnHorarios.removeAll();
 
-                    Turma turma = Fachada.<Turma>get(Turma.class, id);
+                    Turma turma = CronosAPI.<Turma>get(Turma.class, id);
                     horario = turma.getHorario();
 
                     if (!horario.getHorario().isEmpty()) {

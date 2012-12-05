@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
@@ -88,8 +88,8 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
                 UnidadeCurricular uc = new UnidadeCurricular();
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-                uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
+                uc.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                uc.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
@@ -117,8 +117,8 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
             while (rs.next()) {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-                uc.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
+                uc.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                uc.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));

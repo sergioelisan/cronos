@@ -5,7 +5,7 @@
 package senai.cronos.horario;
 
 import java.util.Date;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Turma;
@@ -28,7 +28,7 @@ public class GeradorHorarioDocente {
     public HorarioDocente generate(Docente doc) throws Exception {
         HorarioDocente horarioDocente = HorarioDocente.create();
 
-        for (Turma turma : Fachada.<Turma>get(Turma.class)) {
+        for (Turma turma : CronosAPI.<Turma>get(Turma.class)) {
             Turno turno = turma.getTurno();
             Horario wrapper = turma.getHorario();
 

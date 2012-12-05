@@ -3,7 +3,7 @@ package senai.cronos.horario;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Map;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.UnidadeCurricular;
@@ -39,7 +39,7 @@ public class GeraHorarioContinuo extends GeraHorario {
         for (Aula aula : wrapper.getAulas()) {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
-            for (Docente docente : Fachada.buscaDocente(getTurma().getNucleo())) {
+            for (Docente docente : CronosAPI.buscaDocentes(getTurma().getNucleo())) {
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {

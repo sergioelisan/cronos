@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.gui.cadastro.CadastroUI;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.horarios.HorariosUI;
@@ -36,7 +36,7 @@ public class CronosFrame extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-                Fachada.quit();
+                CronosAPI.quit();
             }
         });
 

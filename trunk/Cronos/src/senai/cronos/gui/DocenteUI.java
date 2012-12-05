@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.gui.custom.ImageLoader;
@@ -57,7 +57,7 @@ public class DocenteUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    nucleos = Fachada.<Nucleo>get(Nucleo.class);
+                    nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas os nucleos:\n" + ex);
                 }
@@ -84,11 +84,11 @@ public class DocenteUI extends javax.swing.JPanel {
                 List<Docente> docentes;
                 try {
                     if (posicao == -1) {
-                        docentes = Fachada.<Docente>get(Docente.class);
+                        docentes = CronosAPI.<Docente>get(Docente.class);
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = Fachada.buscaDocente(nucleo);
+                        docentes = CronosAPI.buscaDocentes(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 
@@ -120,7 +120,7 @@ public class DocenteUI extends javax.swing.JPanel {
             public void run() {
                 try {
                     Integer matricula = Integer.parseInt(id);
-                    Docente doc = Fachada.<Docente>get(Docente.class, matricula);
+                    Docente doc = CronosAPI.<Docente>get(Docente.class, matricula);
 
                     lbformacao.setText("formação: " + doc.getFormacao().name());
                     lbmatricula.setText("matricula: " + doc.getMatricula().toString());

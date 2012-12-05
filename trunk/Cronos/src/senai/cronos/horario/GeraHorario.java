@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.*;
 import senai.util.Tupla;
 
@@ -65,8 +65,8 @@ public abstract class GeraHorario {
      * @throws SQLException
      */
     public List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
-        List<UnidadeCurricular> disciplinas = Fachada.buscaDisciplinas(Nucleo.COMUM);
-        disciplinas.addAll(Fachada.buscaDisciplinas(turma.getNucleo() ) );
+        List<UnidadeCurricular> disciplinas = CronosAPI.buscaDisciplinas(Nucleo.COMUM);
+        disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo() ) );
 
         return disciplinas;
     }

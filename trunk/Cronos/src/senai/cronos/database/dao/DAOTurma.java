@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
@@ -170,7 +170,7 @@ public class DAOTurma extends DAO<Turma> {
                 Turma t = new Turma();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                t.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
@@ -200,7 +200,7 @@ public class DAOTurma extends DAO<Turma> {
             while (rs.next()) {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                t.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
@@ -232,14 +232,14 @@ public class DAOTurma extends DAO<Turma> {
                 Date dia = rs.getDate("dia");
 
                 Aula a1 = Aula.create();
-                a1.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente1")));
-                a1.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
-                a1.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
+                a1.setDocente(CronosAPI.<Docente>get(Docente.class, rs.getInt("docente1")));
+                a1.setDisciplina(CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina1")));
+                a1.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio1")));
 
                 Aula a2 = Aula.create();
-                a2.setDocente(Fachada.<Docente>get(Docente.class, rs.getInt("docente2")));
-                a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
-                a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
+                a2.setDocente(CronosAPI.<Docente>get(Docente.class, rs.getInt("docente2")));
+                a2.setDisciplina(CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
+                a2.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
 
                 horario.put(dia, new Tupla<>(a1, a2));
             }

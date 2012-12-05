@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
@@ -63,7 +63,7 @@ public class TurmaUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    List<Turma> turmas = Fachada.<Turma>get(Turma.class);
+                    List<Turma> turmas = CronosAPI.<Turma>get(Turma.class);
                     for (Turma t : turmas) {
                         Tile ct = new Tile();
                         ct.setNome(t.getNome());
@@ -90,7 +90,7 @@ public class TurmaUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    Turma turma = Fachada.buscaTurma(nome);
+                    Turma turma = CronosAPI.buscaTurma(nome);
                     lbid.setText(String.valueOf(turma.getId()));
                     lbnome.setText(turma.getNome());
                     lbnucleo.setText("nucleo: " + turma.getNucleo().getNome());

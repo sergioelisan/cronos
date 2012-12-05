@@ -16,9 +16,9 @@ public class Docente implements Comparable<Docente> {
     }
 
     /* METODOS DE NEGOCIO PARA UM DOCENTE  */
-
     /**
      * Retorna as unidades curriculares das proficiencias deste docente
+     *
      * @return
      */
     public List<UnidadeCurricular> getUnidadesCurriculares() {
@@ -33,11 +33,12 @@ public class Docente implements Comparable<Docente> {
 
     /**
      * adiciona uma proficiencia, ou adiciona pontos a proficiencia.
+     *
      * @param uc Unidade Curricular desta proficiencia
      */
     public void addProficiencia(UnidadeCurricular uc) {
         for (Proficiencia p : proficiencias) {
-            if(p.getDisciplina().equals(uc)) {
+            if (p.getDisciplina().equals(uc)) {
                 p.setLecionado(p.getLecionado() + 1);
                 p.setScoreTemp(p.getScoreTemp() - 1);
                 return;
@@ -49,11 +50,12 @@ public class Docente implements Comparable<Docente> {
 
     /**
      * remove uma proficiencia
+     *
      * @param prof
      */
     public void removeProficiencia(UnidadeCurricular uc) {
         for (Proficiencia prof : proficiencias) {
-            if(prof.getDisciplina().equals(uc)) {
+            if (prof.getDisciplina().equals(uc)) {
                 proficiencias.remove(prof);
             }
         }
@@ -64,7 +66,6 @@ public class Docente implements Comparable<Docente> {
      * METODOS ACESSORES
      *
      */
-
     @Override
     public int compareTo(Docente o) {
         return score > o.score ? 1 : score == o.score ? 0 : -1;
@@ -112,6 +113,33 @@ public class Docente implements Comparable<Docente> {
 
     public HorarioDocente getHorarioDocente() throws Exception {
         return new GeradorHorarioDocente().generate(this);
+    }
+
+    public void setTurno(Turno turno) {
+        if (turno.equals(Turno.MANHA) || turno.equals(Turno.TARDE) || turno.equals(Turno.NOITE)) {
+            primeiroTurno = turno;
+        } else if (turno.equals(Turno.MANHA_TARDE)) {
+            primeiroTurno = Turno.MANHA;
+            segundoTurno = Turno.TARDE;
+        } else if (turno.equals(Turno.MANHA_NOITE)) {
+            primeiroTurno = Turno.MANHA;
+            segundoTurno = Turno.NOITE;
+        } else  {
+            primeiroTurno = Turno.TARDE;
+            segundoTurno = Turno.NOITE;
+        }
+    }
+    
+    public Turno getTurno() {
+        if (segundoTurno == null)
+            return primeiroTurno;
+        else if (primeiroTurno.equals(Turno.MANHA) && segundoTurno.equals(Turno.TARDE)) 
+            return Turno.MANHA_TARDE;
+        else if (primeiroTurno.equals(Turno.MANHA) && segundoTurno.equals(Turno.NOITE)) 
+            return Turno.MANHA_NOITE;
+        else 
+            return Turno.TARDE_NOITE;
+        
     }
 
     public Turno getPrimeiroTurno() {
@@ -201,51 +229,42 @@ public class Docente implements Comparable<Docente> {
                 + ", primeiroTurno = " + primeiroTurno
                 + ", segundoTurno = " + segundoTurno + '}';
     }
-
     /**
      * matricula que serve como identificador unico do docente
      */
     private Integer matricula = 1;
-
     /**
      * nome do docente
      */
     private String nome = "Extra Quadro";
-
     /**
      * Inteiro que contem um numero arbitrario sobre a formacao do docente
      */
     private Formacao formacao = Formacao.MEDIO;
-
     /**
      * data de contratacao do docente
      */
     private Date contratacao = new Date();
-
     /**
      * nucleo em que o docente preferencialmente trabalha
      */
     private Nucleo nucleo = new Nucleo();
-
     /**
      * lista de proficiencias do docente
      */
     private List<Proficiencia> proficiencias = new ArrayList<>();
-
     /**
      * pontuacao do docente. esse atributo é relacionado com a formacao e o
      * tempo de casa do docente
      */
     private int score = 0;
-
     /**
      * Turno de operacao do docente
      */
-    private Turno primeiroTurno = Turno.MANHA;
-
+    private Turno primeiroTurno = null;
     /**
      * docentes geralmente trabalham em dois turnos, nao necessariamento
      * seguidos
      */
-    private Turno segundoTurno = Turno.TARDE;
+    private Turno segundoTurno = null;
 }
