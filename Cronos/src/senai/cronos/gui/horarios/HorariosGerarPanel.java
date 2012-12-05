@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.entidades.Turma;
@@ -262,7 +262,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     pnHorarios.removeAll();
                     calendarios.clear();
 
-                    actualTurma = Fachada.<Turma>get(Turma.class, id);
+                    actualTurma = CronosAPI.<Turma>get(Turma.class, id);
 
                     // Gera o horario
                     GeraHorarioFactory.getGerador().gerarHorario(actualTurma);

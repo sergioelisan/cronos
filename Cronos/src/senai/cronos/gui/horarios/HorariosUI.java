@@ -18,7 +18,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.CronosFrame;
@@ -134,7 +134,7 @@ public class HorariosUI extends javax.swing.JPanel {
         @Override
         public void run() {
             try {
-                List<Turma> turmas = Fachada.<Turma>get(Turma.class);
+                List<Turma> turmas = CronosAPI.<Turma>get(Turma.class);
                 for (Turma t : turmas) {
                     Tile tile = new Tile();
                     tile.setNome(t.getNome());

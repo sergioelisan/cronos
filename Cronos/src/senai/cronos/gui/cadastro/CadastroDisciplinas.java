@@ -13,13 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.Observador;
 
 /**
  *
@@ -29,7 +32,7 @@ import senai.cronos.gui.custom.LinkEffectHandler;
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class CadastroDisciplinas extends javax.swing.JPanel {
+public class CadastroDisciplinas extends javax.swing.JPanel implements Observador {
 
     /**
      * Lista de nucleos que agrupam as unidades curriculares
@@ -57,41 +60,36 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
         btremove.addMouseListener(new LinkEffectHandler());
         btsave.addMouseListener(new LinkEffectHandler());
 
-        initData();
+        try {
+            DAOFactory.getDao(Laboratorio.class).registra(this);
+            DAOFactory.getDao(Nucleo.class).registra(this);
+        } catch (Exception e) {
+            Alerta.jogarAviso(e.getMessage());
+        }
+
+        update();
     }
 
     /**
      * inicializa os dados de disciplinas
      */
-    private void initData() {
-        Thread t = new Thread(new Runnable() {
-
+    private void loadComboboxes() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    nucleos = Fachada.<Nucleo>get(Nucleo.class);
-                    labs = Fachada.<Laboratorio>get(Laboratorio.class);
+                combonucleo.removeAllItems();
+                combonucleo.addItem("-- núcleos --");
+                for (Nucleo nc : nucleos) {
+                    combonucleo.addItem(nc.getNome());
+                }
 
-                    combonucleo.removeAllItems();
-                    combonucleo.addItem("-- núcleos --");
-                    for (Nucleo nc : nucleos) {
-                        combonucleo.addItem(nc.getNome());
-                    }
-
-                    combolab.removeAllItems();
-                    combolab.addItem("-- laboratórios --");
-                    for (Laboratorio lb : labs) {
-                        combolab.addItem(lb.getNome());
-                    }
-
-                } catch (ClassNotFoundException | SQLException ex) {
-
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregar dados:\n" + ex);
+                combolab.removeAllItems();
+                combolab.addItem("-- laboratórios --");
+                for (Laboratorio lb : labs) {
+                    combolab.addItem(lb.getNome());
                 }
             }
-        });
-
-        t.start();
+        }).start();
         load();
     }
 
@@ -102,18 +100,17 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
      */
     private void load() {
         pnShow.removeAll();
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     List<UnidadeCurricular> disciplinas;
                     if (posicao == -1) {
-                        disciplinas = Fachada.<UnidadeCurricular>get(UnidadeCurricular.class);
+                        disciplinas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class);
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nu = nucleos.get(posicao);
-                        disciplinas = Fachada.buscaDisciplinas(nu);
+                        disciplinas = CronosAPI.buscaDisciplinas(nu);
                         lbnucleoatual.setText(nu.getNome().toLowerCase());
                     }
 
@@ -125,13 +122,10 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                         pnShow.add(ct);
                     }
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregas a disciplina:\n" + ex);
-
+                    Alerta.jogarAviso(ex.getMessage() );
                 }
             }
-        });
-
-        t.start();
+        }).start();
         pnShow.repaint();
     }
 
@@ -141,12 +135,11 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
      * @param nome
      */
     private void show(final String nome) {
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    UnidadeCurricular uc = Fachada.buscaDisciplina(nome);
+                    UnidadeCurricular uc = CronosAPI.buscaDisciplina(nome);
                     lbcodigo.setText(String.valueOf(uc.getId()));
                     txtnome.setText(uc.getNome());
                     combonucleo.setSelectedItem(uc.getNucleo().getNome());
@@ -155,18 +148,17 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                     txtmodulo.setText(String.valueOf(uc.getModulo()));
                     txtementa.setText(uc.getConteudoProgramatico());
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes da disciplina:\n" + ex);
+                    Alerta.jogarAviso(ex.getMessage() );
                 }
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
      * limpa os campos para adicionarem informacoes neles
      */
     private void novo() {
+        load();
         lbcodigo.setText("código");
         txtcarga.setText("carga horária");
         txtementa.setText("conteúdo programático");
@@ -180,38 +172,29 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
      * Remove um objeto do banco de dados
      */
     private void remove() {
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 String code = lbcodigo.getText();
                 if (!code.equals("código")) {
                     Integer id = Integer.parseInt(code);
                     try {
-                        Fachada.remove(UnidadeCurricular.class, id);
-                        initData();
-                        JOptionPane.showMessageDialog(null, "Removido com sucesso!");
+                        CronosAPI.remove(UnidadeCurricular.class, id);
                     } catch (ClassNotFoundException | SQLException e) {
-                        JOptionPane.showMessageDialog(null, "FAIL! Problemas ao remover Disciplina:\n" + e);
+                        Alerta.jogarAviso(e.getMessage());
+                    } finally {
+                        novo();
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione uma disciplina para ser removida!");
-                    return;
                 }
-
-
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
      * salva um objeto no banco de dados
      */
     private void save() {
-        Thread t = new Thread(new Runnable() {
-
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -219,41 +202,25 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
                     uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
                     String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
                     uc.setConteudoProgramatico(ementa);
-
-                    for (Nucleo nc : nucleos) {
-                        if (nc.getNome().equals((String) combonucleo.getSelectedItem())) {
-                            uc.setNucleo(nc);
-                        }
-                    }
-
-                    for (Laboratorio lab : labs) {
-                        if (lab.getNome().equals((String) combolab.getSelectedItem())) {
-                            uc.setLab(lab);
-                        }
-                    }
-
+                    uc.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
+                    uc.setLab(labs.get(combolab.getSelectedIndex() - 1));
                     uc.setModulo(Integer.parseInt(txtmodulo.getText().trim()));
                     uc.setNome(txtnome.getText().trim());
 
                     String code = lbcodigo.getText();
                     if (code.equals("código")) {
-                        Fachada.add(uc);
-                        JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+                        CronosAPI.add(uc);
                     } else {
                         uc.setId(Integer.parseInt(code));
-                        Fachada.update(uc);
-                        JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+                        CronosAPI.update(uc);
                     }
                 } catch (ClassNotFoundException | SQLException e) {
-                    JOptionPane.showMessageDialog(null, "FAIL! Problemas ao adicionar Disciplina:\n" + e);
+                    Alerta.jogarAviso(e.getMessage() );
+                } finally {
+                    novo();
                 }
-
-
-                initData();
             }
-        });
-
-        t.start();
+        }).start();
     }
 
     /**
@@ -280,6 +247,17 @@ public class CadastroDisciplinas extends javax.swing.JPanel {
             posicao = nucleos.size() - 1;
         }
         load();
+    }
+
+    @Override
+    public void update() {
+        try {
+            labs = CronosAPI.<Laboratorio>get(Laboratorio.class);
+            nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
+            loadComboboxes();
+        } catch (Exception e) {
+            Alerta.jogarAviso(e.getMessage());
+        }
     }
 
     /**

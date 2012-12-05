@@ -7,26 +7,26 @@ import java.util.Date;
 import java.util.List;
 import senai.cronos.database.dao.DAO;
 import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.database.vectors.UnidadesCurriculares;
-import senai.cronos.database.vectors.Docentes;
-import senai.cronos.database.vectors.Laboratorios;
-import senai.cronos.database.vectors.Nucleos;
-import senai.cronos.database.vectors.Repository;
-import senai.cronos.database.vectors.RepositoryFactory;
-import senai.cronos.database.vectors.Turmas;
+import senai.cronos.database.cache.UnidadesCurriculares;
+import senai.cronos.database.cache.Docentes;
+import senai.cronos.database.cache.Laboratorios;
+import senai.cronos.database.cache.Nucleos;
+import senai.cronos.database.cache.Cache;
+import senai.cronos.database.cache.CacheFactory;
+import senai.cronos.database.cache.Turmas;
 import senai.cronos.entidades.*;
 import senai.cronos.properties.Preferencias;
 
 /**
  *
- * Classe que representa uma fachada para esconder o funcionamento do
- * subsistema. Abstrai toda a complexidade para as camadas superiores.
+ * Interface Pública do SENAI Cronos. Métodos que acessam os subsistemas da
+ * aplicação e oferecem serviços para o próprio sistema e apps clientes.
  *
  * @author Sergio Lisan e Carlos melo
  */
-public class Fachada {
+public class CronosAPI {
 
-    private Fachada() {
+    private CronosAPI() {
     }
 
     /**
@@ -88,7 +88,7 @@ public class Fachada {
      * @throws SQLException
      */
     public static <T> List<T> get(Class c) throws ClassNotFoundException, SQLException {
-        Repository<T> repositorio = RepositoryFactory.getRepository(c);
+        Cache<T> repositorio = CacheFactory.getRepository(c);
         return repositorio.get();
     }
 
@@ -103,11 +103,11 @@ public class Fachada {
      * @throws SQLException
      */
     public static <T> T get(Class c, Integer id) throws ClassNotFoundException, SQLException {
-        Repository<T> repositorio = RepositoryFactory.getRepository(c);
+        Cache<T> repositorio = CacheFactory.getRepository(c);
         return repositorio.get(c, id);
     }
 
-    /* Metodos de pesquisa */
+    /* Metodos de busca para docentes */
 
     /**
      * Retorna um docente buscando pelo nome
@@ -115,18 +115,19 @@ public class Fachada {
      * @param nome
      * @return
      */
-    public static Docente buscaDocente(String nome) throws ClassNotFoundException, SQLException {
-        return Docentes.instance().buscaDocente(nome);
+    public static Docente buscaDocenteNome(String nome) throws ClassNotFoundException, SQLException {
+        return Docentes.instance().buscaDocenteNome(nome);
     }
-
+    
     /**
-     * Verifica se o docente existe
-     *
-     * @param mat
-     * @return existe
+     * procura por um docente por sua matricula
+     * @param matricula
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException 
      */
-    public static boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException {
-        return Docentes.instance().existeDocente(matricula);
+    public static Docente buscaDocenteMatricula(String matricula) throws ClassNotFoundException, SQLException {
+        return Docentes.instance().buscaDocenteMatricula(matricula);
     }
 
     /**
@@ -135,19 +136,11 @@ public class Fachada {
      * @param nucleo
      * @return
      */
-    public static List<Docente> buscaDocente(Nucleo nucleo) throws ClassNotFoundException, SQLException {
+    public static List<Docente> buscaDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         return Docentes.instance().buscaDocentes(nucleo);
     }
-
-    /**
-     * Retorna o melhor docente de uma unidade curricular
-     *
-     * @param uc
-     * @return
-     */
-    public static Docente melhorDocente(UnidadeCurricular uc) throws ClassNotFoundException, SQLException {
-        return UnidadesCurriculares.instance().melhorDocente(uc);
-    }
+    
+    /* Metodos de busca para disciplinas */
 
     /**
      * Retorna uma disciplina (Unidade Curricular) identificada pelo seu nome
@@ -180,6 +173,8 @@ public class Fachada {
         return UnidadesCurriculares.instance().buscaDisciplina(nucleo, modulo);
     }
 
+    /* Metodos de busca para Turmas */
+    
     /**
      * Retorna uma turma identificada pelo nome
      *
@@ -205,6 +200,8 @@ public class Fachada {
     public static List<Turma> buscaTurma(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         return Turmas.instance().buscaTurma(nucleo);
     }
+    
+    /* Outros metodos de busca */
 
     /**
      * retorna um nucleo pelo nome

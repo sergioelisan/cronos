@@ -1,6 +1,6 @@
 package senai.cronos.horario;
 
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 
 /**
  * Fabrica o gerador de horario, de acordo com as opcoes do sistema.
@@ -10,8 +10,8 @@ import senai.cronos.Fachada;
 public class GeraHorarioFactory {
 
     public static GeraHorario getGerador() {
-        int alternancia = Fachada.getAlternancia();
-        int aulasPorDia = Fachada.getAulasDia();
+        int alternancia = CronosAPI.getAlternancia();
+        int aulasPorDia = CronosAPI.getAulasDia();
 
         if (alternancia == ALTERNADO && aulasPorDia == 0) {
             return new GeraHorarioAlternado();

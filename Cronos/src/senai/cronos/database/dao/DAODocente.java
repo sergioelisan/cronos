@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.*;
 import senai.cronos.entidades.Formacao;
@@ -51,7 +51,7 @@ public class DAODocente extends DAO<Docente> {
     public void remove(Serializable id) throws SQLException {
         open();
         String query;
-        int n = Fachada.getAulasDia();
+        int n = CronosAPI.getAulasDia();
         query = DatabaseUtil.query("horario.delete.docente1");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -116,14 +116,10 @@ public class DAODocente extends DAO<Docente> {
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
                 docente.setNome(rs.getString("nome"));
-                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                docente.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));
-
-                // TODO implementar a logica de captacao dos dados da ocupacao do docente.
-                //docente.setOcupacao(ocup.get(docente));
-
                 docente.setProficiencias(prof.get(docente));
                 docentes.add(docente);
             }
@@ -150,7 +146,7 @@ public class DAODocente extends DAO<Docente> {
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
                 docente.setNome(rs.getString("nome"));
-                docente.setNucleo(Fachada.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                docente.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));

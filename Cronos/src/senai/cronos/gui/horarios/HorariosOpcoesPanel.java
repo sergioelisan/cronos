@@ -5,7 +5,7 @@
  */
 package senai.cronos.gui.horarios;
 
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 
 /**
  *
@@ -16,13 +16,13 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
     public HorariosOpcoesPanel() {
         initComponents();
 
-        if (Fachada.getAulasDia() == 0) {
+        if (CronosAPI.getAulasDia() == 0) {
             checkBoxAulasDia.setSelected(false);
         } else {
             checkBoxAulasDia.setSelected(true);
         }
 
-        if (Fachada.getAlternancia() == 0) {
+        if (CronosAPI.getAlternancia() == 0) {
             checkBoxAlternancia.setSelected(false);
         } else {
             checkBoxAlternancia.setSelected(true);
@@ -120,17 +120,17 @@ public class HorariosOpcoesPanel extends javax.swing.JPanel {
 
     private void checkBoxAlternanciaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxAlternanciaItemStateChanged
         if (checkBoxAlternancia.isSelected()) {
-            Fachada.setAlternacia(1);
+            CronosAPI.setAlternacia(1);
         } else {
-            Fachada.setAlternacia(0);
+            CronosAPI.setAlternacia(0);
         }
     }//GEN-LAST:event_checkBoxAlternanciaItemStateChanged
 
     private void checkBoxAulasDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkBoxAulasDiaItemStateChanged
         if (checkBoxAulasDia.isSelected()) {
-            Fachada.setAulasDia(1);
+            CronosAPI.setAulasDia(1);
         } else {
-            Fachada.setAulasDia(0);
+            CronosAPI.setAulasDia(0);
         }
     }//GEN-LAST:event_checkBoxAulasDiaItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
+import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.custom.ImageLoader;
@@ -56,7 +56,7 @@ public class DisciplinaUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    nucleos = Fachada.<Nucleo>get(Nucleo.class);
+                    nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas os nucleos:\n" + ex);
                 }
@@ -81,11 +81,11 @@ public class DisciplinaUI extends javax.swing.JPanel {
                 try {
                 List<UnidadeCurricular> disciplinas;
                 if (posicao == -1) {
-                    disciplinas = Fachada.<UnidadeCurricular>get(UnidadeCurricular.class);
+                    disciplinas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class);
                     lbnucleoatual.setText("todos");
                 } else {
                     Nucleo nucleo = nucleos.get(posicao);
-                    disciplinas = Fachada.buscaDisciplinas(nucleo);
+                    disciplinas = CronosAPI.buscaDisciplinas(nucleo);
                     lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                 }
 
@@ -117,7 +117,7 @@ public class DisciplinaUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    UnidadeCurricular uc = Fachada.buscaDisciplina(nome);
+                    UnidadeCurricular uc = CronosAPI.buscaDisciplina(nome);
 
                     lbnome.setText(uc.getNome());
                     lbnucleo.setText("núcleo: " + uc.getNucleo().getNome());

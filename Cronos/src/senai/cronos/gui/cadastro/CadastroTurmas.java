@@ -9,28 +9,26 @@ import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import senai.cronos.Fachada;
-import senai.cronos.database.vectors.Turmas;
+import senai.cronos.CronosAPI;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
-import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Habilitacao;
 import senai.cronos.entidades.Turno;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class CadastroTurmas extends javax.swing.JPanel {
+public class CadastroTurmas extends javax.swing.JPanel implements Observador {
 
     private List<Nucleo> nucleos;
     private int posicao = -1;
@@ -48,28 +46,31 @@ public class CadastroTurmas extends javax.swing.JPanel {
             combohabilitacao.addItem(hab.name().toLowerCase());
         }
 
-        comboturno.addItem(Turno.MANHA.name().toLowerCase());
-        comboturno.addItem(Turno.TARDE.name().toLowerCase());
-        comboturno.addItem(Turno.NOITE.name().toLowerCase());
+        comboturno.addItem("manhã");
+        comboturno.addItem("tarde");
+        comboturno.addItem("noite");
 
-        initData();
+        // recebe atualizacoes do DAONucleo assim que alguma coisa for alterada
+        try {
+            DAOFactory.getDao(Nucleo.class).registra(this);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
+
+        update();
     }
 
-    private void initData() {
+    /**
+     * carrega os nucleos para o combobox
+     */
+    private void loadNucleosCombobox() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    nucleos = Fachada.<Nucleo>get(Nucleo.class);
-
-                    combonucleo.removeAllItems();
-                    combonucleo.addItem("-- núcleos --");
-                    for (Nucleo nc : nucleos) {
-                        combonucleo.addItem(nc.getNome());
-                    }
-
-                } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregar dados:\n" + ex);
+                combonucleo.removeAllItems();
+                combonucleo.addItem("-- núcleos --");
+                for (Nucleo nc : nucleos) {
+                    combonucleo.addItem(nc.getNome());
                 }
             }
         });
@@ -79,76 +80,66 @@ public class CadastroTurmas extends javax.swing.JPanel {
         load();
     }
 
+    /**
+     * salva uma nova turma no banco
+     */
     private void save() {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+
                 try {
-                    Turma t = new Turma();
+                    Turma turma = new Turma();
+                    turma.setNome(txtnome.getText().trim());
+                    turma.setEntrada(dateentrada.getDate());
+                    turma.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
+                    turma.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
+                    turma.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
 
-                    DateFormat fmt = DateFormat.getDateInstance();
-                    t.setEntrada(dateentrada.getDate() );
-                    t.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
-                    t.setNome(txtnome.getText().trim());
-
-                    for (Nucleo nc : nucleos) {
-                        if (nc.getNome().equals((String) combonucleo.getSelectedItem())) {
-                            t.setNucleo(nc);
-                        }
-                    }
-
-                    t.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
-                    //Integer id=Fachada.getIDTurma();
-                    String code = lbcodigo.getText();
-                    if (code.equals("matrícula") || code.equals("código")) {
-                        //t.setId(id);
-                        Fachada.add(t);
-                        JOptionPane.showMessageDialog(null, "Adicionado com sucesso!");
+                    if (lbcodigo.getText().equals("código")) {
+                        CronosAPI.add(turma);
                     } else {
-                        t.setId(Integer.parseInt(code));
-                        Fachada.update(t);
-                        JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+                        turma.setId(Integer.parseInt(lbcodigo.getText()));
+                        CronosAPI.update(turma);
                     }
 
                 } catch (ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao cadastrar turma. Verifique banco de dados ou dados inseridos|" + e);
+                    Alerta.jogarAviso(e.getMessage());
+                } finally {
+                    novo();
                 }
-                initData();
             }
-        });
-        t.start();
-
-        load();
+        }).start();
     }
 
+    /**
+     * remove uma turma do banco
+     */
     private void remove() {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 String code = lbcodigo.getText();
                 if (!code.equals("código")) {
                     try {
                         Integer id = Integer.parseInt(code);
-                        Fachada.remove(Horario.class, id);
-                        Fachada.remove(Turma.class, id);
-                        JOptionPane.showMessageDialog(null, "Removido com sucesso!");
-                        // load();
+                        CronosAPI.remove(Turma.class, id);
                     } catch (ClassNotFoundException | SQLException e) {
-                        JOptionPane.showMessageDialog(null, "Problemas ao remover a turma. Verifique banco de dados ou dados inseridos");
+                        Alerta.jogarAviso(e.getMessage());
+                    } finally {
+                        novo();
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione uma turma para ser removida!");
-                    return;
                 }
-                initData();
             }
-        });
-        t.start();
-        load();
+        }).start();
     }
 
+    /**
+     * limpa os campos pra inserção de novos dados
+     */
     private void novo() {
-        lbcodigo.setText("matrícula");
+        load();
+        lbcodigo.setText("código");
         txtnome.setText("nome");
         dateentrada.setDate(null);
         combohabilitacao.setSelectedIndex(0);
@@ -156,19 +147,22 @@ public class CadastroTurmas extends javax.swing.JPanel {
         comboturno.setSelectedIndex(0);
     }
 
+    /**
+     * carrega uma turma selecionada
+     */
     private void load() {
         pnShow.removeAll();
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     List<Turma> turmas;
                     if (posicao == -1) {
-                        turmas = Fachada.<Turma>get(Turma.class);
+                        turmas = CronosAPI.<Turma>get(Turma.class);
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        turmas = Fachada.buscaTurma(nucleo);
+                        turmas = CronosAPI.buscaTurma(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 
@@ -179,36 +173,53 @@ public class CadastroTurmas extends javax.swing.JPanel {
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
+
                 } catch (ClassNotFoundException | SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregas a turma:\n" + ex);
+                    Alerta.jogarAviso(ex.getMessage());
                 }
 
             }
-        });
-
-        t.start();
+        }).start();
         pnShow.repaint();
     }
 
+    /**
+     * Exibe os dados de uma turma selecionada
+     *
+     * @param nome
+     */
     private void show(final String nome) {
-        Thread t = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Turma t = Fachada.buscaTurma(nome);
+                    Turma t = CronosAPI.buscaTurma(nome);
                     lbcodigo.setText(String.valueOf(t.getId()));
-                    dateentrada.setDate(t.getEntrada() );
+                    dateentrada.setDate(t.getEntrada());
                     txtnome.setText(t.getNome());
                     combohabilitacao.setSelectedIndex(t.getHabilitacao() + 1);
                     combonucleo.setSelectedItem(t.getNucleo().getNome());
                     comboturno.setSelectedIndex(t.getTurno().ordinal() + 1);
 
-                } catch (ClassNotFoundException | SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Problemas ao carregar a turma:\n" + e);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Alerta.jogarAviso(ex.getMessage());
                 }
             }
-        });
-        t.start();
+        }).start();
+    }
+
+    @Override
+    /**
+     * Assim que a base de dados é atualizada, esse metodo atualiza os dados da
+     * GUI de cadastro
+     */
+    public void update() {
+        try {
+            nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
+            loadNucleosCombobox();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
     }
 
     /**
@@ -511,7 +522,6 @@ public class CadastroTurmas extends javax.swing.JPanel {
             txtnome.setText("nome");
         }
     }//GEN-LAST:event_txtnomeFocusLost
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnovo;
     private javax.swing.JLabel btremove;
