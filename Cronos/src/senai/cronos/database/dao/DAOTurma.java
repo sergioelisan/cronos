@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import senai.cronos.Fachada;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
-import senai.cronos.entidades.Horario;
+import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
@@ -58,7 +57,7 @@ public class DAOTurma extends DAO<Turma> {
         open();
         String query = DatabaseUtil.query("horario.insert");
 
-        Horario u = t.getHorarioWrapper();
+        Horario u = t.getHorario();
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -135,7 +134,7 @@ public class DAOTurma extends DAO<Turma> {
         open();
         String query = DatabaseUtil.query("horario.update");
 
-        Horario u = t.getHorarioWrapper();
+        Horario u = t.getHorario();
 
         for (Date dia : u.getHorario().keySet()) {
             try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -220,14 +219,14 @@ public class DAOTurma extends DAO<Turma> {
 
     public Horario getHorario(Integer turmaID) throws SQLException {
         open();
-        Horario horario = Horario.create();
+        Horario wrapper = new Horario();
         String query = DatabaseUtil.query("horario.get");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) turmaID);
             ResultSet rs = ps.executeQuery();
 
-            Map<Date, Tupla<Aula, Aula>> h = horario.getHorario();
+            Map<Date, Tupla<Aula, Aula>> horario = wrapper.getHorario();
 
             while (rs.next()) {
                 Date dia = rs.getDate("dia");
@@ -242,7 +241,7 @@ public class DAOTurma extends DAO<Turma> {
                 a2.setDisciplina(Fachada.<UnidadeCurricular>get(UnidadeCurricular.class, rs.getInt("disciplina2")));
                 a2.setLab(Fachada.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio2")));
 
-                h.put(dia, new Tupla<>(a1, a2));
+                horario.put(dia, new Tupla<>(a1, a2));
             }
 
 
@@ -252,6 +251,6 @@ public class DAOTurma extends DAO<Turma> {
 
         close();
 
-        return horario;
+        return wrapper;
     }
 }

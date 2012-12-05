@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
-import senai.cronos.entidades.Horario;
+import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.util.date.DateUtil;
@@ -31,7 +31,7 @@ public class HorarioUIFactory {
      */
     public HorarioUIFactory(Turma turma) {
         this.turma = turma;
-        this.horario = turma.getHorarioWrapper();
+        this.horario = turma.getHorario();
         loadCalendars();
     }
 

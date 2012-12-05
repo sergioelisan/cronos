@@ -1,5 +1,6 @@
 package senai.cronos.entidades;
 
+import senai.cronos.horario.Horario;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -73,7 +74,7 @@ public class Turma {
     /**
      * @return the horario
      */
-    public Horario getHorarioWrapper() {
+    public Horario getHorario() {
         return horario;
     }
 
@@ -83,6 +84,7 @@ public class Turma {
     public void setHorario(Horario horario) {
         this.horario = horario;
     }
+
 
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -172,7 +174,7 @@ public class Turma {
     /**
      * horario da turma
      */
-    private Horario horario = Horario.create();
+    private Horario horario = new Horario();
 
     /**
      * habilitacao

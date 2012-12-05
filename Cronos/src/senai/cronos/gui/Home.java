@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.Timer;
+import senai.cronos.Main;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.BlinkEffectHandler;
 
@@ -28,6 +29,7 @@ public class Home extends javax.swing.JPanel {
         initComponents();
         rotinas();
         initEffects();
+        lbuser.setText(Main.VERSAO);
     }
 
     @Override
@@ -129,7 +131,7 @@ public class Home extends javax.swing.JPanel {
 
         lbtitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lbtitle.setForeground(ColorManager.getColor("foreground"));
-        lbtitle.setText("Home");
+        lbtitle.setText("página inicial");
 
         lbhora.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lbhora.setForeground(ColorManager.getColor("foreground"));
@@ -139,7 +141,7 @@ public class Home extends javax.swing.JPanel {
         lbdata.setText("carregando...");
 
         lbuser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbuser.setText("usuário");
+        lbuser.setText("versão");
 
         btConfig.setBackground(ColorManager.getColor("button"));
         btConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -225,7 +227,7 @@ public class Home extends javax.swing.JPanel {
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(lbhorarioicon, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -248,7 +250,7 @@ public class Home extends javax.swing.JPanel {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         horariotileLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jLabel5, jLabel6, jLabel7});
@@ -291,7 +293,7 @@ public class Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(docentestileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                    .addComponent(lbdocentesicon, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
+                    .addComponent(lbdocentesicon, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
                 .addContainerGap())
         );
         docentestileLayout.setVerticalGroup(
@@ -329,7 +331,7 @@ public class Home extends javax.swing.JPanel {
         turmastileLayout.setHorizontalGroup(
             turmastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, turmastileLayout.createSequentialGroup()
-                .addContainerGap(236, Short.MAX_VALUE)
+                .addContainerGap(234, Short.MAX_VALUE)
                 .addComponent(lbturmas)
                 .addContainerGap())
         );
@@ -338,7 +340,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(turmastileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbturmas)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         pnApps.add(turmastile);
@@ -373,7 +375,7 @@ public class Home extends javax.swing.JPanel {
                         .addComponent(lbcadastro)
                         .addGap(0, 127, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
-                        .addGap(0, 99, Short.MAX_VALUE)
+                        .addGap(0, 95, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addContainerGap())
         );
@@ -382,7 +384,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(lbcadastro)
                 .addGap(12, 12, 12))
         );
@@ -416,7 +418,7 @@ public class Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                    .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
                 .addContainerGap())
         );
         disciplinastileLayout.setVerticalGroup(
@@ -424,7 +426,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(disciplinastileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbdisciplinas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap())
         );
@@ -459,7 +461,7 @@ public class Home extends javax.swing.JPanel {
                 .addGroup(reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(reportstileLayout.createSequentialGroup()
                         .addComponent(lbrelatorio)
-                        .addGap(0, 201, Short.MAX_VALUE))
+                        .addGap(0, 197, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportstileLayout.createSequentialGroup()
                         .addGap(0, 204, Short.MAX_VALUE)
                         .addComponent(jLabel3)))
@@ -513,7 +515,7 @@ public class Home extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(helptileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbajuda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                    .addComponent(lbajudaicon, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                    .addComponent(lbajudaicon, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
                 .addContainerGap())
         );
         helptileLayout.setVerticalGroup(
@@ -521,7 +523,7 @@ public class Home extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, helptileLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbajudaicon, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(lbajuda)
                 .addContainerGap())
         );
@@ -539,18 +541,21 @@ public class Home extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1342, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(lbtitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1246, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1167, Short.MAX_VALUE)
                         .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbhora)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbdata)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1036, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbuser)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbdata)
+                    .addComponent(lbhora))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -560,12 +565,13 @@ public class Home extends javax.swing.JPanel {
                     .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbtitle))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
+                .addComponent(lbhora)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbdata)
-                    .addComponent(lbuser)
-                    .addComponent(lbhora))
+                    .addComponent(lbuser))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

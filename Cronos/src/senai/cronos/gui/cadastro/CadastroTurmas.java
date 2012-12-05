@@ -19,7 +19,7 @@ import senai.cronos.Fachada;
 import senai.cronos.database.vectors.Turmas;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
-import senai.cronos.entidades.Horario;
+import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Habilitacao;
 import senai.cronos.entidades.Turno;
 import senai.cronos.gui.ColorManager;
