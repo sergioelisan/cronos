@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
@@ -19,15 +21,15 @@ import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class DisciplinaUI extends javax.swing.JPanel {
+public class DisciplinaUI extends javax.swing.JPanel implements Observador {
 
     private CronosFrame main;
-
     private List<Nucleo> nucleos;
     private int posicao = -1;
 
@@ -36,6 +38,17 @@ public class DisciplinaUI extends javax.swing.JPanel {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
+        
+        try {
+            CronosAPI.subscribe(UnidadeCurricular.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage() );
+        }
+
+    }
+
+    @Override
+    public void update() {
         initData();
     }
 
@@ -52,7 +65,6 @@ public class DisciplinaUI extends javax.swing.JPanel {
      */
     private void initData() {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -79,23 +91,23 @@ public class DisciplinaUI extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                List<UnidadeCurricular> disciplinas;
-                if (posicao == -1) {
-                    disciplinas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class);
-                    lbnucleoatual.setText("todos");
-                } else {
-                    Nucleo nucleo = nucleos.get(posicao);
-                    disciplinas = CronosAPI.buscaDisciplinas(nucleo);
-                    lbnucleoatual.setText(nucleo.getNome().toLowerCase());
-                }
+                    List<UnidadeCurricular> disciplinas;
+                    if (posicao == -1) {
+                        disciplinas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class);
+                        lbnucleoatual.setText("todos");
+                    } else {
+                        Nucleo nucleo = nucleos.get(posicao);
+                        disciplinas = CronosAPI.buscaDisciplinas(nucleo);
+                        lbnucleoatual.setText(nucleo.getNome().toLowerCase());
+                    }
 
-                for (UnidadeCurricular d : disciplinas) {
-                    Tile ct = new Tile();
-                    ct.setNome(d.getNome());
-                    ct.setId(String.valueOf(d.getCargaHoraria()) + "h");
-                    ct.setClickEvent(new TileClickedHandler());
-                    pnShow.add(ct);
-                }
+                    for (UnidadeCurricular d : disciplinas) {
+                        Tile ct = new Tile();
+                        ct.setNome(d.getNome());
+                        ct.setId(String.valueOf(d.getCargaHoraria()) + "h");
+                        ct.setClickEvent(new TileClickedHandler());
+                        pnShow.add(ct);
+                    }
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas a disciplina:\n" + ex);
 

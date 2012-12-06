@@ -109,6 +109,7 @@ public class DAODocente extends DAO<Docente> {
             ResultSet rs = ps.executeQuery();
 
             DAOProficiencia prof = (DAOProficiencia) DAOFactory.getDao(Proficiencia.class);
+            DAO<Nucleo> dao = DAOFactory.getDao(Nucleo.class);
 
             while (rs.next()) {
                 Docente docente = new Docente();
@@ -116,14 +117,14 @@ public class DAODocente extends DAO<Docente> {
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
                 docente.setNome(rs.getString("nome"));
-                docente.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                docente.setNucleo(dao.get(rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));
                 docente.setProficiencias(prof.get(docente));
                 docentes.add(docente);
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (Exception ex) {
             // TODO Tratar essa excecao direitinho
         }
 
@@ -141,23 +142,23 @@ public class DAODocente extends DAO<Docente> {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
+            DAO<Nucleo> dao = DAOFactory.getDao(Nucleo.class);
+
             while (rs.next()) {
                 docente.setMatricula(rs.getInt("matricula"));
                 docente.setContratacao(rs.getDate("contratacao"));
                 docente.setFormacao(Formacao.getFormacao(rs.getInt("formacao")));
                 docente.setNome(rs.getString("nome"));
-                docente.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                docente.setNucleo(dao.get(rs.getInt("nucleo")));
                 docente.setPrimeiroTurno(Turno.getTurno(rs.getInt("primeiroturno")));
                 docente.setSegundoTurno(Turno.getTurno(rs.getInt("segundoturno")));
                 docente.setScore(rs.getInt("score"));
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (Exception ex) {
             // TODO Tratar essa excecao direitinho
         }
 
         close();
         return docente;
     }
-
-
 }

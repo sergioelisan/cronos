@@ -52,8 +52,8 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
 
         // recebe atualizacoes do DAONucleo assim que alguma coisa for alterada
         try {
-            DAOFactory.getDao(Nucleo.class).registra(this);
-        } catch (ClassNotFoundException | SQLException ex) {
+            CronosAPI.subscribe(Nucleo.class, this);
+        } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
 
@@ -355,6 +355,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             }
         });
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         magicScroll1.setActiveWheelGesture(true);
         magicScroll1.setMaximumSize(new java.awt.Dimension(1900, 310));
         magicScroll1.setMinimumSize(new java.awt.Dimension(990, 310));
@@ -446,7 +447,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                                         .addComponent(combohabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(comboturno, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 495, Short.MAX_VALUE))
+                        .addGap(0, 499, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 910, Short.MAX_VALUE)

@@ -78,7 +78,7 @@ public abstract class DAO<T> implements Observado {
     }
     
     /** lista de observadores */
-    private List<Observador> observadores = new ArrayList<>();
+    protected List<Observador> observadores = new ArrayList<>();
     
     /** conexao com o banco */
     protected Connection con;

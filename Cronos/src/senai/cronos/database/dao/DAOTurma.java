@@ -166,11 +166,13 @@ public class DAOTurma extends DAO<Turma> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
+            DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
+            
             while (rs.next()) {
                 Turma t = new Turma();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));                
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
@@ -180,7 +182,8 @@ public class DAOTurma extends DAO<Turma> {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("DAOTURMA GET(): " + e.getMessage());
+            e.printStackTrace();
         }
 
         close();
@@ -197,10 +200,12 @@ public class DAOTurma extends DAO<Turma> {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
+            DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
+            
             while (rs.next()) {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
+                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));                
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
@@ -210,7 +215,8 @@ public class DAOTurma extends DAO<Turma> {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("DAOTURMA GET(ID): " + e.getMessage());
+            e.printStackTrace();
         }
 
         close();
@@ -246,7 +252,8 @@ public class DAOTurma extends DAO<Turma> {
 
 
         } catch (Exception e) {
-            System.out.println(e.getMessage() );
+            System.out.println("DAOTURMA GETHORARIO(ID): " + e.getMessage());
+            e.printStackTrace();
         }
 
         close();

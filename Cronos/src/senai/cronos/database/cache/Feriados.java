@@ -20,10 +20,17 @@ public class Feriados implements Observador, Cache<Feriado> {
 
     private List<Feriado> feriados;
 
-    private static Feriados instance = new Feriados();
+    private static Feriados instance;
 
     public static Feriados instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new Feriados();
     }
 
     private Feriados() {

@@ -41,7 +41,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbproximo" min="-2" pref="151" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="magicScroll1" alignment="0" pref="1318" max="32767" attributes="0"/>
+                  <Component id="magicScroll1" alignment="0" pref="1322" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -263,6 +263,7 @@
     </Component>
     <Container class="br.ufrpe.bcc.continuous.components.MagicScroll" name="magicScroll1">
       <Properties>
+        <Property name="verticalScrollBarPolicy" type="int" value="20"/>
         <Property name="activeWheelGesture" type="boolean" value="true"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[1900, 310]"/>

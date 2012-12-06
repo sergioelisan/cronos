@@ -17,10 +17,17 @@ import senai.cronos.entidades.Nucleo;
 public final class Docentes implements Observador, Cache<Docente> {
 
     private List<Docente> docentes;
-    private static Docentes instance = new Docentes();
+    private static Docentes instance;
 
     public static Docentes instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new Docentes();
     }
 
     private Docentes() {

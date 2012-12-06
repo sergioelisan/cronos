@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
@@ -22,24 +24,30 @@ import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.horarios.HorariosExibirPanel;
 import senai.cronos.gui.horarios.HorariosGerarPanel;
 import senai.cronos.gui.horarios.HorariosUI;
+import senai.util.Observador;
 
 /**
  *
  * @author Serginho
  */
-public class TurmaUI extends javax.swing.JPanel {
+public class TurmaUI extends javax.swing.JPanel implements Observador {
 
     private CronosFrame main;
 
     public TurmaUI(CronosFrame main) {
         this.main = main;
         initComponents();
-        loadTurmas();
-
+        
         btgerar.addMouseListener(new LinkEffectHandler());
         btver.addMouseListener(new LinkEffectHandler());
         btgerar.setVisible(false);
         btver.setVisible(false);
+        
+        try {
+            CronosAPI.subscribe(Turma.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage() );
+        }
     }
 
     @Override
@@ -109,6 +117,11 @@ public class TurmaUI extends javax.swing.JPanel {
         t.start();
         btgerar.setVisible(false);
         btver.setVisible(false);
+    }
+
+    @Override
+    public void update() {
+        loadTurmas();
     }
 
     /**

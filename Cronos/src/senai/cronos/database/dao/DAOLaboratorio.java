@@ -85,7 +85,6 @@ public class DAOLaboratorio extends DAO<Laboratorio> {
         }
 
         close();
-
         return laboratorios;
     }
 
@@ -114,5 +113,5 @@ public class DAOLaboratorio extends DAO<Laboratorio> {
 
         return lb;
     }
-
+    
 }

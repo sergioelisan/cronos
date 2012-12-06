@@ -2,8 +2,6 @@ package senai.cronos.database.cache;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
 import senai.util.Observador;
 import senai.cronos.entidades.Laboratorio;
@@ -16,10 +14,17 @@ public class Laboratorios implements Observador, Cache<Laboratorio> {
 
     private List<Laboratorio> laboratorios;
 
-    private static Laboratorios instance = new Laboratorios();
+    private static Laboratorios instance;
 
     public static Laboratorios instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new Laboratorios();
     }
 
     private Laboratorios() {
@@ -27,26 +32,19 @@ public class Laboratorios implements Observador, Cache<Laboratorio> {
             DAOFactory.getDao(Laboratorio.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Laboratorios.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage() );
         }
     }
 
     @Override
     public void update() {
         try {
-            laboratorios = DAOFactory.getDao(Laboratorio.class).get();
+            laboratorios = DAOFactory.getDao(Laboratorio.class).get();            
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
     }
-
-    /**
-     * @return the laboratorios
-     */
-    public List<Laboratorio> getLaboratorios() {
-        return laboratorios;
-    }
-
+  
     @Override
     public List<Laboratorio> get() {
         return laboratorios;

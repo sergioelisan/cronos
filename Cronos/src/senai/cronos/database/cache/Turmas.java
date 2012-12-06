@@ -17,10 +17,17 @@ import senai.cronos.entidades.Turma;
 public final class Turmas implements Observador, Cache<Turma> {
 
     private List<Turma> turmas;
-    private static Turmas instance = new Turmas();
+    private static Turmas instance;
 
     public static Turmas instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new Turmas();
     }
 
     private Turmas() {

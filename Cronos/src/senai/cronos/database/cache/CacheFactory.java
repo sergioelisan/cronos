@@ -1,8 +1,5 @@
 package senai.cronos.database.cache;
 
-import senai.cronos.entidades.*;
-import senai.util.date.Feriado;
-
 /**
  *
  * @author sergio lisan e carlos melo
