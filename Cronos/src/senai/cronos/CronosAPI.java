@@ -149,7 +149,11 @@ public class CronosAPI {
     public static Docente buscaDocenteMatricula(String matricula) throws ClassNotFoundException, SQLException {
         return Docentes.instance().buscaDocenteMatricula(matricula);
     }
-
+ 
+    
+    public static boolean existeDocente(String matricula)throws ClassNotFoundException, SQLException{
+ return Docentes.instance().existeDocente(matricula);
+ }
     /**
      * retorna os docentes de um determinado nucleo.
      *
