@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import senai.cronos.CronosAPI;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
@@ -84,12 +83,15 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
+            DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
+            DAO<Laboratorio> daolab = DAOFactory.getDao(Laboratorio.class);
+            
             while (rs.next()) {
                 UnidadeCurricular uc = new UnidadeCurricular();
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-                uc.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
+                uc.setNucleo(daonucleo.get(rs.getInt("nucleo")));
+                uc.setLab(daolab.get(rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));
@@ -100,7 +102,6 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
         }
 
         close();
-
         return disciplinas;
     }
 
@@ -114,11 +115,14 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
             ps.setInt(1, (Integer) id);
             ResultSet rs = ps.executeQuery();
 
+            DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
+            DAO<Laboratorio> daolab = DAOFactory.getDao(Laboratorio.class);
+            
             while (rs.next()) {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
-                uc.setNucleo(CronosAPI.<Nucleo>get(Nucleo.class, rs.getInt("nucleo")));
-                uc.setLab(CronosAPI.<Laboratorio>get(Laboratorio.class, rs.getInt("laboratorio")));
+                uc.setNucleo(daonucleo.get(rs.getInt("nucleo")));
+                uc.setLab(daolab.get(rs.getInt("laboratorio")));
                 uc.setCargaHoraria(rs.getInt("carga"));
                 uc.setModulo(rs.getInt("modulo"));
                 uc.setConteudoProgramatico(rs.getString("ementa"));

@@ -23,6 +23,8 @@ import senai.cronos.gui.custom.LinkEffectHandler;
  * @author Sergio Lisan
  */
 public class CadastroLaboratorios extends javax.swing.JPanel {
+    
+    private List<Laboratorio> laboratorios;
 
     public CadastroLaboratorios() {
         initComponents();
@@ -31,7 +33,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
         btremove.addMouseListener(new LinkEffectHandler());
         btsave.addMouseListener(new LinkEffectHandler());
 
-        load();
+        novo();
     }
 
     private void novo() {
@@ -81,7 +83,6 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
                     Integer id = Integer.parseInt(code);
                     try {
                         CronosAPI.remove(Laboratorio.class, id);
-                        load();
                     } catch (ClassNotFoundException | SQLException ex) {
                         Alerta.jogarAviso(ex.getMessage());
                     } finally {
@@ -101,7 +102,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
             @Override
             public void run() {
                 try {
-                    List<Laboratorio> laboratorios = CronosAPI.<Laboratorio>get(Laboratorio.class);
+                    laboratorios = CronosAPI.<Laboratorio>get(Laboratorio.class);
                     for (Laboratorio lab : laboratorios) {
                         Tile ct = new Tile();
                         ct.setId(lab.getId() + "");
@@ -246,6 +247,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
             }
         });
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         magicScroll1.setMaximumSize(new java.awt.Dimension(1900, 355));
         magicScroll1.setMinimumSize(new java.awt.Dimension(990, 355));
         magicScroll1.setPreferredSize(new java.awt.Dimension(1900, 355));
@@ -270,7 +272,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 1318, Short.MAX_VALUE)
+                    .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 1322, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
@@ -298,7 +300,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsave, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)

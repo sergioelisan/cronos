@@ -20,12 +20,13 @@ import senai.cronos.gui.custom.ImageLoader;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.HorarioDocente;
+import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class DocenteUI extends javax.swing.JPanel {
+public class DocenteUI extends javax.swing.JPanel implements Observador {
 
     private CronosFrame main;
     private List<Nucleo> nucleos;
@@ -36,8 +37,14 @@ public class DocenteUI extends javax.swing.JPanel {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
+        
+        try {
+            CronosAPI.subscribe(Docente.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
 
-        initData();
+        
     }
 
     @Override
@@ -167,6 +174,11 @@ public class DocenteUI extends javax.swing.JPanel {
         }
 
         loadDocentes();
+    }
+
+    @Override
+    public void update() {
+        initData();
     }
 
     /**

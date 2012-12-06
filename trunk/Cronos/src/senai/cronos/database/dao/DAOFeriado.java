@@ -55,9 +55,7 @@ public class DAOFeriado extends DAO<Feriado>{
 
     @Override
     public void update(Feriado u) throws SQLException {
-        //open();
         throw new UnsupportedOperationException("Not supported yet.");
-        //close();
     }
 
     @Override

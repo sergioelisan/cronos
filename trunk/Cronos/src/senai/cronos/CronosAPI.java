@@ -16,6 +16,7 @@ import senai.cronos.database.cache.CacheFactory;
 import senai.cronos.database.cache.Turmas;
 import senai.cronos.entidades.*;
 import senai.cronos.properties.Preferencias;
+import senai.util.Observador;
 
 /**
  *
@@ -36,7 +37,11 @@ public class CronosAPI {
         Main.quit();
     }
 
-    /* Metodos de persistencia */
+    /* 
+     * 
+     * API de Persistencia (usa o Cache para acelerar a aplicação) 
+     * 
+     */
 
     /**
      * Adiciona um objeto de uma entidade de classe T ao banco de dados.
@@ -107,7 +112,22 @@ public class CronosAPI {
         return repositorio.get(c, id);
     }
 
-    /* Metodos de busca para docentes */
+    /*
+     * 
+     * API de assinatura de eventos na base de dados
+     * 
+     */
+    
+    public static void subscribe(Class assistido, Observador assinante) throws Exception {
+        DAOFactory.getDao(assistido).registra(assinante);
+        assinante.update();
+    }
+    
+    /*
+     * 
+     * API de busca (usa o Cache para acelerar a aplicacão)
+     * 
+     */
 
     /**
      * Retorna um docente buscando pelo nome
@@ -140,8 +160,6 @@ public class CronosAPI {
         return Docentes.instance().buscaDocentes(nucleo);
     }
     
-    /* Metodos de busca para disciplinas */
-
     /**
      * Retorna uma disciplina (Unidade Curricular) identificada pelo seu nome
      *
@@ -173,8 +191,6 @@ public class CronosAPI {
         return UnidadesCurriculares.instance().buscaDisciplina(nucleo, modulo);
     }
 
-    /* Metodos de busca para Turmas */
-    
     /**
      * Retorna uma turma identificada pelo nome
      *
@@ -201,16 +217,6 @@ public class CronosAPI {
         return Turmas.instance().buscaTurma(nucleo);
     }
     
-    /* Outros metodos de busca */
-
-    /**
-     * retorna um nucleo pelo nome
-     *
-     * @param nome
-     * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
-     */
     public static Nucleo buscaNucleo(String nome) throws ClassNotFoundException, SQLException {
         for (Nucleo nc : Nucleos.instance().get()) {
             if (nc.getNome().equals(nome)) {
@@ -239,13 +245,21 @@ public class CronosAPI {
         return null;
     }
 
-    /* Métodos de utilidade */
+    /* 
+     * 
+     * API de Utilidades
+     * 
+     */
     
     public static int getQuantidadeDiasLetivos() {
         return Main.CALENDARIO.getDiasUteis().size();
     }
 
-    /* Métodos para recuperação de dados das Preferencias do sistema */
+    /* 
+     * 
+     * API de preferencias do Sistema
+     * 
+     */
 
     /**
      * retorna o numero de aulas por dia

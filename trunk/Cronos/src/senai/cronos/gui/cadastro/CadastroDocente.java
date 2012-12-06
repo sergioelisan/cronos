@@ -74,8 +74,8 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
 
         // recebe atualizacoes do DAONucleo assim que alguma coisa for alterada
         try {
-            DAOFactory.getDao(Nucleo.class).registra(this);
-        } catch (ClassNotFoundException | SQLException ex) {
+            CronosAPI.subscribe(Nucleo.class, this);
+        } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
 
@@ -376,6 +376,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             }
         });
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         magicScroll1.setActiveWheelGesture(true);
         magicScroll1.setMaximumSize(new java.awt.Dimension(1900, 310));
         magicScroll1.setMinimumSize(new java.awt.Dimension(990, 310));
@@ -454,7 +455,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
                         .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 1318, Short.MAX_VALUE)
+                    .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 1322, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)

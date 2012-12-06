@@ -30,7 +30,6 @@ public class DAONucleo extends DAO<Nucleo> {
         String query = DatabaseUtil.query("nucleo.insert");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
-            ps.setString(2, u.getDesc());
             ps.execute();
         }
         close();
@@ -55,7 +54,6 @@ public class DAONucleo extends DAO<Nucleo> {
         String query = DatabaseUtil.query("nucleo.update");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, u.getNome());
-            ps.setString(2, u.getDesc());
             ps.setInt(3, u.getId());
             ps.execute();
         }
@@ -78,14 +76,12 @@ public class DAONucleo extends DAO<Nucleo> {
                 Nucleo lb = new Nucleo();
                 lb.setId(rs.getInt("id"));
                 lb.setNome(rs.getString("nome"));
-                lb.setDesc(rs.getString("descricao"));
 
                 laboratorios.add(lb);
             }
         }
 
         close();
-
         return laboratorios;
     }
 
@@ -105,7 +101,6 @@ public class DAONucleo extends DAO<Nucleo> {
             while (rs.next()) {
                 lb.setId(rs.getInt("id"));
                 lb.setNome(rs.getString("nome"));
-                lb.setDesc(rs.getString("descricao"));
 
             }
         }

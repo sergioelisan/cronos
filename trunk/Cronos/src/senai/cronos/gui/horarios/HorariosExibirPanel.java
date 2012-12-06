@@ -14,14 +14,16 @@ import javax.swing.*;
 import senai.cronos.CronosAPI;
 import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient {
+public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
     private static HorariosExibirPanel instance = new HorariosExibirPanel();
 
@@ -67,8 +69,14 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         add(pnLoading, "LOADING");
         add(pnTurmas, "TURMAS");
         add(pnCalendarios, "CALENDARIOS");
+        
+        try {
+            CronosAPI.subscribe(Turma.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
 
-        loadTurmas();
+        
         show("TURMAS");
     }
 
@@ -290,4 +298,9 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update() {
+        loadTurmas();
+    }
 }

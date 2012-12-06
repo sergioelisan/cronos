@@ -11,20 +11,24 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import senai.cronos.CronosAPI;
 import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.entidades.Turma;
+import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.GeraHorarioFactory;
+import senai.util.Observador;
 
 /**
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient {
+public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
     private List<HorarioUI> calendarios = new ArrayList<>();
     private Turma actualTurma;
@@ -75,8 +79,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         add(pnLoading, "LOADING");
         add(pnTurmas, "TURMAS");
         add(pnCalendarios, "CALENDARIOS");
+        
+        try {
+            CronosAPI.subscribe(Turma.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        }
 
-        loadTurmas();
         show("TURMAS");
     }
 
@@ -305,4 +314,9 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update() {
+        loadTurmas();
+    }
 }

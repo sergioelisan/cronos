@@ -17,10 +17,17 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
     private List<UnidadeCurricular> disciplinas;
 
-    private static UnidadesCurriculares instance = new UnidadesCurriculares();
+    private static UnidadesCurriculares instance;
 
     public static UnidadesCurriculares instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new UnidadesCurriculares();
     }
 
     private UnidadesCurriculares() {

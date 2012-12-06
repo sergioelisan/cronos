@@ -8,6 +8,14 @@ import java.text.ParseException;
 import java.util.Date;
 import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
+import senai.cronos.database.cache.Docentes;
+import senai.cronos.database.cache.Feriados;
+import senai.cronos.database.cache.Laboratorios;
+import senai.cronos.database.cache.Nucleos;
+import senai.cronos.database.cache.Turmas;
+import senai.cronos.database.cache.UnidadesCurriculares;
+import senai.cronos.database.dao.DAO;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.CronosFrame;
 import senai.util.date.Calendario;
@@ -45,9 +53,10 @@ public class Main {
     public void init() {
         try {
             splash.start();
-            // updateSystem();
-            loadDatabase();
+            // updateSystem();            
+            loadDatabase();            
             loadCalendar();
+            loadCache();            
             loadUI();
             splash.stop();
         } catch (Exception ex) {
@@ -82,15 +91,32 @@ public class Main {
         System.setProperty("derby.system.home", userDir);
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
     }
+    
+    /**
+     * carrega os dados do banco e os coloca em cache na memoria
+     * @throws Exception 
+     */
+    private void loadCache() throws Exception {
+        splash.upBar();
+        
+        Feriados.start();
+        Laboratorios.start();
+        Nucleos.start();
+        Docentes.start();        
+        UnidadesCurriculares.start();        
+        Turmas.start();
+    }
 
-     /**
+    /**
      * Carrega as configuracoes do sistema
      */
     private void loadCalendar() throws ClassNotFoundException, SQLException, ParseException {
         splash.upBar();
         Date inicio = CronosAPI.getInicioCalendario();
         Date fim    = CronosAPI.getFimCalendario();
-        Main.CALENDARIO = new Calendario(inicio, fim, CronosAPI.<Feriado>get(Feriado.class) );
+        
+        DAO<Feriado> dao = DAOFactory.getDao(Feriado.class);        
+        Main.CALENDARIO = new Calendario(inicio, fim, dao.get());
     }
 
     /**

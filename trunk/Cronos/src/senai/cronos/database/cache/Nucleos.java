@@ -2,8 +2,6 @@ package senai.cronos.database.cache;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
 import senai.util.Observador;
 import senai.cronos.entidades.Nucleo;
@@ -16,10 +14,17 @@ public class Nucleos implements Observador, Cache<Nucleo> {
 
     private List<Nucleo> nucleos;
 
-    private static Nucleos instance = new Nucleos();
+    private static Nucleos instance;
 
     public static Nucleos instance() {
         return instance;
+    }
+    
+    /**
+     * Inicia o cache
+     */
+    public static void start() {
+        instance = new Nucleos();
     }
 
     private Nucleos() {
@@ -27,7 +32,7 @@ public class Nucleos implements Observador, Cache<Nucleo> {
             DAOFactory.getDao(Nucleo.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Nucleos.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage() );
         }
     }
 
@@ -38,13 +43,6 @@ public class Nucleos implements Observador, Cache<Nucleo> {
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
-    }
-
-    /**
-     * @return the laboratorios
-     */
-    public List<Nucleo> getNucleos() {
-        return nucleos;
     }
 
     @Override

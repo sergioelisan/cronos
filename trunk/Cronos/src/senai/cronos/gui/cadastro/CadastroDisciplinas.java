@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import senai.cronos.CronosAPI;
@@ -61,10 +60,10 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         btsave.addMouseListener(new LinkEffectHandler());
 
         try {
-            DAOFactory.getDao(Laboratorio.class).registra(this);
-            DAOFactory.getDao(Nucleo.class).registra(this);
-        } catch (Exception e) {
-            Alerta.jogarAviso(e.getMessage());
+            CronosAPI.subscribe(Nucleo.class, this);
+            CronosAPI.subscribe(Laboratorio.class, this);
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage());
         }
 
         update();
@@ -311,7 +310,6 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         jLabel1.setText("disciplinas");
 
         txtnome.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtnome.setForeground(new java.awt.Color(0, 0, 0));
         txtnome.setText("nome");
         txtnome.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -326,7 +324,6 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         combonucleo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- núcleo --" }));
 
         txtcarga.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtcarga.setForeground(new java.awt.Color(0, 0, 0));
         txtcarga.setText("carga horária");
         txtcarga.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -338,7 +335,6 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         });
 
         txtmodulo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtmodulo.setForeground(new java.awt.Color(0, 0, 0));
         txtmodulo.setText("módulo");
         txtmodulo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -351,7 +347,6 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
 
         txtementa.setColumns(20);
         txtementa.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        txtementa.setForeground(new java.awt.Color(0, 0, 0));
         txtementa.setLineWrap(true);
         txtementa.setRows(5);
         txtementa.setText("conteúdo programático");
@@ -369,7 +364,6 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         combolab.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- laboratório --" }));
 
         lbcodigo.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        lbcodigo.setForeground(new java.awt.Color(0, 0, 0));
         lbcodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbcodigo.setText("código");
         lbcodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(190, 190, 190)));
@@ -413,6 +407,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
             }
         });
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         magicScroll1.setActiveWheelGesture(true);
         magicScroll1.setMaximumSize(new java.awt.Dimension(1900, 310));
         magicScroll1.setMinimumSize(new java.awt.Dimension(990, 310));
@@ -505,7 +500,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                                 .addComponent(combolab, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtcarga, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -519,7 +514,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                     .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsave, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)

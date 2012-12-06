@@ -64,7 +64,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="495" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="499" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lbnucleoatual" min="-2" pref="100" max="-2" attributes="0"/>
@@ -248,6 +248,7 @@
     </Component>
     <Container class="br.ufrpe.bcc.continuous.components.MagicScroll" name="magicScroll1">
       <Properties>
+        <Property name="verticalScrollBarPolicy" type="int" value="20"/>
         <Property name="activeWheelGesture" type="boolean" value="true"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[1900, 310]"/>
