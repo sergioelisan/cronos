@@ -85,9 +85,9 @@ public class Main {
     private void loadDatabase() throws Exception {
         splash.upBar();
 
-        String cronosDatabaseDir = ".cronos";
+        String cronosDatabaseDir = "documents\\banco";
         String userDir = System.getProperty("user.home") + File.separator + cronosDatabaseDir;
-
+        println(userDir);
         System.setProperty("derby.system.home", userDir);
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
     }

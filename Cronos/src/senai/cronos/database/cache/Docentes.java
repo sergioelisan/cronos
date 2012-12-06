@@ -85,17 +85,15 @@ public final class Docentes implements Observador, Cache<Docente> {
         }
         return null;
     }
-
-    public boolean existeDocente(String matricula) {
-        for (Docente dc : getDocentes()) {
-            if (dc.getMatricula().equals(Integer.parseInt(matricula) ) ) {
+ public boolean existeDocente(String matricula)throws ClassNotFoundException, SQLException {
+  for (Docente dc : getDocentes()) {
+            if (dc.getMatricula().equals(matricula)) {
                 return true;
             }
         }
         return false;
-    }
-
-
+  }
+   
     @Override
     public void update() {
         try {
