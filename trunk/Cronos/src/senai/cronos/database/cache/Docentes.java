@@ -22,7 +22,7 @@ public final class Docentes implements Observador, Cache<Docente> {
     public static Docentes instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -69,22 +69,32 @@ public final class Docentes implements Observador, Cache<Docente> {
         }
         return null;
     }
-    
+
     /**
      * procura um docente por sua matricula
      * @param matricula
      * @return
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Docente buscaDocenteMatricula(String matricula) throws ClassNotFoundException, SQLException {
         for (Docente dc : getDocentes()) {
-            if (dc.getMatricula().equals(matricula)) {
+            if (dc.getMatricula().equals(Integer.parseInt(matricula) ) ) {
                 return dc;
             }
         }
         return null;
     }
+
+    public boolean existeDocente(String matricula) {
+        for (Docente dc : getDocentes()) {
+            if (dc.getMatricula().equals(Integer.parseInt(matricula) ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void update() {

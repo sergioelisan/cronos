@@ -84,6 +84,8 @@ public class DAOTurma extends DAO<Turma> {
 
     @Override
     public void remove(Serializable id) throws SQLException {
+        removeHorario(id);
+        
         open();
         String query = DatabaseUtil.query("turma.delete");
 
@@ -91,6 +93,7 @@ public class DAOTurma extends DAO<Turma> {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
+        
         close();
         notifica();
     }
