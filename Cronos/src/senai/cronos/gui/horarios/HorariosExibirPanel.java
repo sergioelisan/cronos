@@ -9,15 +9,18 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.swing.*;
 import senai.cronos.CronosAPI;
+import senai.cronos.entidades.Aula;
 import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.util.Observador;
+import senai.util.Tupla;
 
 /**
  *
@@ -53,7 +56,25 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         initComponents();
         setLayout(new CardLayout());
 
+        JScrollPane scrollTurmas = new JScrollPane(pnTurmas);
+        scrollTurmas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollTurmas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollTurmas.setOpaque(false);
+        scrollTurmas.setBorder(null);
+        scrollTurmas.setMaximumSize(new Dimension(1300, 9000) );
+        scrollTurmas.setMinimumSize(new Dimension(900, 9000) );
+        scrollTurmas.setPreferredSize(new Dimension(1300, 9000) );
+
+        scrollTurmas.getViewport().setMaximumSize(new Dimension(1300, 9000) );
+        scrollTurmas.getViewport().setMinimumSize(new Dimension(900, 9000) );
+        scrollTurmas.getViewport().setPreferredSize(new Dimension(1300, 9000) );
+
+        scrollTurmas.getViewport().setOpaque(false);
+
         pnTurmas.setLayout(new FlowLayout(FlowLayout.LEFT));
+        pnTurmas.setMinimumSize(new Dimension(900, 9000) );
+        pnTurmas.setPreferredSize(new Dimension(1300, 9000) );
+        pnTurmas.setMaximumSize(new Dimension(1300, 9000) );
         pnTurmas.setOpaque(false);
 
         createCalendarComponents();
@@ -67,16 +88,16 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         pnLoading.add(lbLoading);
 
         add(pnLoading, "LOADING");
-        add(pnTurmas, "TURMAS");
+        add(scrollTurmas, "TURMAS");
         add(pnCalendarios, "CALENDARIOS");
-        
+
         try {
             CronosAPI.subscribe(Turma.class, this);
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        
+
         show("TURMAS");
     }
 
@@ -240,7 +261,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                     Turma turma = CronosAPI.<Turma>get(Turma.class, id);
                     horario = turma.getHorario();
 
-                    if (!horario.getHorario().isEmpty()) {
+                    if (!horario.isVazio() ) {
 
                         HorarioUIFactory factory = new HorarioUIFactory(turma);
                         calendarios = factory.getCalendarios();
@@ -303,4 +324,5 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
     public void update() {
         loadTurmas();
     }
+
 }

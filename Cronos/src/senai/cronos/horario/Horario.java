@@ -51,6 +51,7 @@ public class Horario {
     /*
      * Serviços prestados por esta classe
      */
+
     /**
      * Retorna instancias das aulas lecionadas dentro do horario
      */
@@ -91,6 +92,20 @@ public class Horario {
         }
 
         return diasLecionados;
+    }
+
+    /**
+     * verifica se o horario esta vazio e nao tem nenhuma aula alocada
+     * @return
+     */
+    public boolean isVazio() {
+        for (Date dia : getHorario().keySet() ) {
+            Tupla<Aula, Aula> diaDeAula = getHorario().get(dia);
+            if (!diaDeAula.getPrimeiro().equals(Aula.PADRAO) && !diaDeAula.getSegundo().equals(Aula.PADRAO) )
+                return false;
+        }
+
+        return true;
     }
 
     /*

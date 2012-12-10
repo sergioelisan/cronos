@@ -28,7 +28,7 @@ public class CronosFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-        setLookAndFeel();
+        //setLookAndFeel();
         loadPanels();
         Switch(CronosFrame.PRESENTATION);
 
