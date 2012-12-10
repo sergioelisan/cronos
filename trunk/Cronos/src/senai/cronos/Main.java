@@ -18,6 +18,7 @@ import senai.cronos.database.dao.DAO;
 import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.CronosFrame;
+import senai.cronos.util.CronosFiles;
 import senai.util.date.Calendario;
 import senai.util.date.Feriado;
 import static senai.util.debug.Debug.println;
@@ -53,10 +54,10 @@ public class Main {
     public void init() {
         try {
             splash.start();
-            // updateSystem();            
-            loadDatabase();            
+            // updateSystem();
+            loadDatabase();
             loadCalendar();
-            loadCache();            
+            loadCache();
             loadUI();
             splash.stop();
         } catch (Exception ex) {
@@ -85,25 +86,22 @@ public class Main {
     private void loadDatabase() throws Exception {
         splash.upBar();
 
-        String cronosDatabaseDir = "documents\\banco";
-        String userDir = System.getProperty("user.home") + File.separator + cronosDatabaseDir;
-        println(userDir);
-        System.setProperty("derby.system.home", userDir);
+        System.setProperty("derby.system.home", CronosFiles.getCronosDatabase() );
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
     }
-    
+
     /**
      * carrega os dados do banco e os coloca em cache na memoria
-     * @throws Exception 
+     * @throws Exception
      */
     private void loadCache() throws Exception {
         splash.upBar();
-        
+
         Feriados.start();
         Laboratorios.start();
         Nucleos.start();
-        Docentes.start();        
-        UnidadesCurriculares.start();        
+        UnidadesCurriculares.start();
+        Docentes.start();
         Turmas.start();
     }
 
@@ -114,8 +112,8 @@ public class Main {
         splash.upBar();
         Date inicio = CronosAPI.getInicioCalendario();
         Date fim    = CronosAPI.getFimCalendario();
-        
-        DAO<Feriado> dao = DAOFactory.getDao(Feriado.class);        
+
+        DAO<Feriado> dao = DAOFactory.getDao(Feriado.class);
         Main.CALENDARIO = new Calendario(inicio, fim, dao.get());
     }
 

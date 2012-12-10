@@ -57,8 +57,8 @@ public class ConfigUI extends javax.swing.JPanel {
             Date inicio = CronosAPI.getInicioCalendario();
             Date fim = CronosAPI.getFimCalendario();
 
-            datepickerFim.setDate(fim);
             datepickerInicio.setDate(inicio);
+            datepickerFim.setDate(fim);
 
             loadFeriados();
             loadNucleos();
@@ -75,7 +75,6 @@ public class ConfigUI extends javax.swing.JPanel {
     private void loadFeriados() {
         try {
             ((DefaultListModel<Feriado>)listFeriados.getModel()).clear();
-
 
             // logica de carregamento de feriados
             List<Feriado> feriados = CronosAPI.<Feriado>get(Feriado.class);
@@ -650,8 +649,12 @@ public class ConfigUI extends javax.swing.JPanel {
     }//GEN-LAST:event_datepickerInicioPropertyChange
 
     private void datepickerFimPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_datepickerFimPropertyChange
-        if (datepickerFim.getDate().equals("date")) {
-            CronosAPI.setFimCalendario(datepickerFim.getDate());
+        if (evt.getPropertyName().equals("date")) {
+
+            if (datepickerInicio.getDate().compareTo(datepickerFim.getDate()) < 0)
+                CronosAPI.setFimCalendario(datepickerFim.getDate());
+            else
+                JOptionPane.showMessageDialog(null, "O fim do calendario nao pode ser antes do inicio");
         }
     }//GEN-LAST:event_datepickerFimPropertyChange
 

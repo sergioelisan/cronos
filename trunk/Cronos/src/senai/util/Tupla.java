@@ -35,7 +35,7 @@ public class Tupla<K, V> {
      * @param posicao
      */
     public void set(Object objeto, Integer posicao) {
-        list().add(posicao, objeto);
+        list().set(posicao, objeto);
     }
 
     /**
@@ -60,23 +60,23 @@ public class Tupla<K, V> {
 
     /** verifica a existencia de um objeto na tupla */
     public boolean contains(Object obj) {
-        return elementos.contains(obj);
+        return list().contains(obj);
     }
 
     public K getPrimeiro() {
-        return (K) elementos.get(Tupla.PRIMEIRA);
+        return (K) get(Tupla.PRIMEIRA);
     }
 
     public void setPrimeiro(K primeiro) {
-        elementos.set(Tupla.PRIMEIRA, primeiro);
+        set(primeiro, Tupla.PRIMEIRA);
     }
 
     public V getSegundo() {
-        return (V) elementos.get(Tupla.SEGUNDA);
+        return (V) get(Tupla.SEGUNDA);
     }
 
     public void setSegundo(V segundo) {
-        elementos.set(Tupla.SEGUNDA, segundo);
+        set(segundo, Tupla.SEGUNDA);
     }
 
     @Override

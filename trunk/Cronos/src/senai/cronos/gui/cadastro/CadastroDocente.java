@@ -86,17 +86,12 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * inicializa os dados de disciplinas
      */
     private void loadNucleosCombobox() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                combonucleo.removeAllItems();
-                combonucleo.addItem("-- núcleos --");
-                for (Nucleo nc : nucleos) {
-                    combonucleo.addItem(nc.getNome());
-                }
+        combonucleo.removeAllItems();
+        combonucleo.addItem("-- núcleos --");
+        for (Nucleo nc : nucleos) {
+            combonucleo.addItem(nc.getNome());
+        }
 
-            }
-        }).start();
         load();
     }
 

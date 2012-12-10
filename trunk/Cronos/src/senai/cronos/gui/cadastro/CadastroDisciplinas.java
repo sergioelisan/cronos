@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.UnidadeCurricular;
@@ -73,22 +72,18 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
      * inicializa os dados de disciplinas
      */
     private void loadComboboxes() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                combonucleo.removeAllItems();
-                combonucleo.addItem("-- núcleos --");
-                for (Nucleo nc : nucleos) {
-                    combonucleo.addItem(nc.getNome());
-                }
+        combonucleo.removeAllItems();
+        combonucleo.addItem("-- núcleos --");
+        for (Nucleo nc : nucleos) {
+            combonucleo.addItem(nc.getNome());
+        }
 
-                combolab.removeAllItems();
-                combolab.addItem("-- laboratórios --");
-                for (Laboratorio lb : labs) {
-                    combolab.addItem(lb.getNome());
-                }
-            }
-        }).start();
+        combolab.removeAllItems();
+        combolab.addItem("-- laboratórios --");
+        for (Laboratorio lb : labs) {
+            combolab.addItem(lb.getNome());
+        }
+
         load();
     }
 
@@ -121,7 +116,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                         pnShow.add(ct);
                     }
                 } catch (ClassNotFoundException | SQLException ex) {
-                    Alerta.jogarAviso(ex.getMessage() );
+                    Alerta.jogarAviso(ex.getMessage());
                 }
             }
         }).start();
@@ -147,7 +142,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                     txtmodulo.setText(String.valueOf(uc.getModulo()));
                     txtementa.setText(uc.getConteudoProgramatico());
                 } catch (ClassNotFoundException | SQLException ex) {
-                    Alerta.jogarAviso(ex.getMessage() );
+                    Alerta.jogarAviso(ex.getMessage());
                 }
             }
         }).start();
@@ -214,7 +209,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                         CronosAPI.update(uc);
                     }
                 } catch (ClassNotFoundException | SQLException e) {
-                    Alerta.jogarAviso(e.getMessage() );
+                    Alerta.jogarAviso(e.getMessage());
                 } finally {
                     novo();
                 }

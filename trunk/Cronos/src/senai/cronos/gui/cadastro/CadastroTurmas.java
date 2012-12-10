@@ -11,9 +11,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.Habilitacao;
@@ -55,6 +53,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             CronosAPI.subscribe(Nucleo.class, this);
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
+            ex.printStackTrace(System.out);
         }
 
         update();
@@ -64,18 +63,11 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      * carrega os nucleos para o combobox
      */
     private void loadNucleosCombobox() {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                combonucleo.removeAllItems();
-                combonucleo.addItem("-- núcleos --");
-                for (Nucleo nc : nucleos) {
-                    combonucleo.addItem(nc.getNome());
-                }
-            }
-        });
-
-        t.start();
+        combonucleo.removeAllItems();
+        combonucleo.addItem("-- núcleos --");
+        for (Nucleo nc : nucleos) {
+            combonucleo.addItem(nc.getNome());
+        }
 
         load();
     }
@@ -84,54 +76,48 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      * salva uma nova turma no banco
      */
     private void save() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        try {
+            Turma turma = new Turma();
+            turma.setNome(txtnome.getText().trim());
+            turma.setEntrada(dateentrada.getDate());
+            turma.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
+            turma.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
+            turma.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
 
-                try {
-                    Turma turma = new Turma();
-                    turma.setNome(txtnome.getText().trim());
-                    turma.setEntrada(dateentrada.getDate());
-                    turma.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
-                    turma.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
-                    turma.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
-
-                    if (lbcodigo.getText().equals("código")) {
-                        CronosAPI.add(turma);
-                    } else {
-                        turma.setId(Integer.parseInt(lbcodigo.getText()));
-                        CronosAPI.update(turma);
-                    }
-
-                } catch (ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
-                    Alerta.jogarAviso(e.getMessage());
-                } finally {
-                    novo();
-                }
+            if (lbcodigo.getText().equals("código")) {
+                CronosAPI.add(turma);
+            } else {
+                turma.setId(Integer.parseInt(lbcodigo.getText()));
+                CronosAPI.update(turma);
             }
-        }).start();
+
+        } catch (ClassNotFoundException | SQLException | HeadlessException | NumberFormatException e) {
+            Alerta.jogarAviso(e.getMessage());
+            e.printStackTrace(System.out);
+        } finally {
+            novo();
+        }
+
     }
 
     /**
      * remove uma turma do banco
      */
     private void remove() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String code = lbcodigo.getText();
-                if (!code.equals("código")) {
-                    try {
-                        Integer id = Integer.parseInt(code);
-                        CronosAPI.remove(Turma.class, id);
-                    } catch (ClassNotFoundException | SQLException e) {
-                        Alerta.jogarAviso(e.getMessage());
-                    } finally {
-                        novo();
-                    }
-                }
+        String code = lbcodigo.getText();
+        if (!code.equals("código")) {
+            try {
+                Integer id = Integer.parseInt(code);
+                CronosAPI
+                        .remove(Turma.class, id);
+            } catch (ClassNotFoundException | SQLException e) {
+                Alerta.jogarAviso(e.getMessage());
+                e.printStackTrace(System.out);
+            } finally {
+                novo();
             }
-        }).start();
+        }
+
     }
 
     /**
@@ -157,9 +143,12 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             public void run() {
                 try {
                     List<Turma> turmas;
+
+
                     if (posicao == -1) {
                         turmas = CronosAPI.<Turma>get(Turma.class);
-                        lbnucleoatual.setText("todos");
+                        lbnucleoatual.setText(
+                                "todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
                         turmas = CronosAPI.buscaTurma(nucleo);
@@ -176,6 +165,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
 
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
+                    ex.printStackTrace(System.out);
                 }
 
             }
@@ -203,6 +193,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
 
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
+                    ex.printStackTrace(System.out);
                 }
             }
         }).start();
@@ -219,6 +210,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             loadNucleosCombobox();
         } catch (ClassNotFoundException | SQLException ex) {
             Alerta.jogarAviso(ex.getMessage());
+            ex.printStackTrace(System.out);
         }
     }
 
