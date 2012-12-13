@@ -5,18 +5,30 @@
  */
 package senai.cronos.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.Proficiencia;
 import senai.cronos.gui.custom.ImageLoader;
+import senai.cronos.gui.custom.Linha;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.HorarioDocente;
@@ -137,9 +149,10 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
                     HorarioDocente hd = doc.getHorarioDocente();
-                    lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao() * 100) + "%");
+                   lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao() * 100) + "%");
 
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
                 }
             }
@@ -220,6 +233,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         pnShow = new javax.swing.JPanel();
         lbnucleoatual = new javax.swing.JLabel();
         pnOcupacao = new javax.swing.JPanel();
+        lbproficiencia = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1366, 768));
@@ -377,6 +391,20 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
 
         pnOcupacao.setOpaque(false);
 
+        lbproficiencia.setBackground(new java.awt.Color(255, 255, 255));
+        lbproficiencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbproficiencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbproficiencia.setText("Ajustar Proficiências ");
+        lbproficiencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbproficiencia.setMaximumSize(new java.awt.Dimension(100, 25));
+        lbproficiencia.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbproficiencia.setPreferredSize(new java.awt.Dimension(100, 25));
+        lbproficiencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbproficienciaMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -399,9 +427,11 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                                 .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE))
                         .addGap(128, 128, 128)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbproficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -417,13 +447,14 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbproficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(pnOcupacao, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                .addComponent(pnOcupacao, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -444,6 +475,39 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btconfigMouseClicked
 
+    private void lbproficienciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbproficienciaMouseClicked
+        JDialog d=new JDialog();
+        JPanel jContentPane = new JPanel();  
+        jContentPane.setLayout(new GridLayout(0,1, 2, 0));
+        AjustarProficiencia pa=new AjustarProficiencia();
+        ArrayList<Linha> linhas=new ArrayList();
+        try {
+            Docente doc = CronosAPI.<Docente>get(Docente.class, Integer.parseInt(lbmatricula.getText().replace("matricula: ", "")));
+            ArrayList<Proficiencia> prof=(ArrayList<Proficiencia>) doc.getProficiencias();
+            pa.setjLabel1(doc.getNome());
+            pa.setSize(420, 60);
+            jContentPane.add(pa);
+            for(Proficiencia p:prof){
+                Linha linha=new Linha(doc.getNome());
+                linha.setSize(400, 45);
+                linha.setjLabel1(p.getDisciplina().getNome());
+                linhas.add(linha);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DocenteUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DocenteUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(Linha l:linhas){
+            jContentPane.add(l);
+        }
+        d.add(jContentPane);
+        d.pack();
+        d.setSize(900, 600);
+        d.show();
+           
+    }//GEN-LAST:event_lbproficienciaMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
     private javax.swing.JLabel bthome;
@@ -456,6 +520,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
     private javax.swing.JLabel lbnucleo;
     private javax.swing.JLabel lbnucleoatual;
     private javax.swing.JLabel lbocupacao;
+    private javax.swing.JLabel lbproficiencia;
     private javax.swing.JLabel lbproximo;
     private javax.swing.JLabel lbscore;
     private javax.swing.JLabel lbturnos;

@@ -79,18 +79,22 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        update();
+        //update();
     }
 
     /**
      * inicializa os dados de disciplinas
      */
     private void loadNucleosCombobox() {
-        combonucleo.removeAllItems();
-        combonucleo.addItem("-- núcleos --");
-        for (Nucleo nc : nucleos) {
-            combonucleo.addItem(nc.getNome());
-        }
+       /* new Thread(new Runnable() {
+            @Override
+            public void run() {
+         */       
+                combonucleo.removeAllItems();
+                combonucleo.addItem("-- núcleos --");
+                for (Nucleo nc : nucleos) {
+                    combonucleo.addItem(nc.getNome());
+                }
 
         load();
     }
@@ -99,6 +103,15 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * Cria um objeto Docente com os dados inseridos nos elementos da Interface
      * grafica e manda-o para a fachada salva-lo
      */
+   private Nucleo getNucleo(String nome){
+       for(Nucleo nc:nucleos){
+           
+           if(nc.getNome().equals(nome)){
+               return nc;
+           }
+       }
+       return null;
+   }
     private void save() {
         try {
             Docente docente = new Docente();
@@ -107,9 +120,11 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
             docente.setNome(txtnome.getText().trim());
             docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1));
-            docente.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
+            System.out.println(combonucleo.getSelectedItem());
+            docente.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
             docente.setScore(1);
-
+            docente.removeProficienciaDocente();
+            docente.addProcienciaInicial(getNucleo(combonucleo.getSelectedItem().toString()));
             if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
                 CronosAPI.add(docente);
             } else {
@@ -225,6 +240,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
 
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
         }).start();

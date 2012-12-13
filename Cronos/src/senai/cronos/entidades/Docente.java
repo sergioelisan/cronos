@@ -1,6 +1,10 @@
 package senai.cronos.entidades;
 
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.CronosAPI;
 import senai.cronos.horario.GeradorHorarioDocente;
 import senai.cronos.horario.HorarioDocente;
 
@@ -47,11 +51,61 @@ public class Docente implements Comparable<Docente> {
         Proficiencia prof = new Proficiencia(this, uc, 10, 1);
         proficiencias.add(prof);
     }
-
+    /**
+     * muda o valor da proficiencia
+     * @param uc
+     * @param valor 
+     */
+    public void updateProficiencia(Proficiencia pf,int valor) throws ClassNotFoundException, SQLException{
+        
+        for (Proficiencia p : proficiencias) {
+            if (p.equals(pf)) {
+                p.setLecionado(valor);
+                proficiencias.add(p);
+                System.out.println("aqui"+p.toString());
+                CronosAPI.update(p);
+                return;
+            }
+        }
+        
+        
+    }
+    /**
+     * adiciona prociência minima em todas as ucs do núcleo
+     * 
+     * @param 
+     */
+    public void addProcienciaInicial(Nucleo nucleo) throws ClassNotFoundException, SQLException{
+    ArrayList<UnidadeCurricular> ucs=(ArrayList<UnidadeCurricular>) CronosAPI.buscaDisciplinas(nucleo);
+     for(UnidadeCurricular uc : ucs){
+        Proficiencia prof = new Proficiencia(this, uc, 1, 1);
+        proficiencias.add(prof); 
+     }
+    }
     /**
      * remove uma proficiencia
      *
      * @param prof
+     */
+    /**
+     * remove as proficiencias do docente
+     * @param dc 
+     */
+    public void removeProficienciaDocente(){
+        try {
+            CronosAPI.remove(Proficiencia.class, this.getMatricula());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Docente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Docente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               
+            
+        
+    }
+    /**
+     * 
+     * @param uc 
      */
     public void removeProficiencia(UnidadeCurricular uc) {
         for (Proficiencia prof : proficiencias) {
@@ -59,6 +113,19 @@ public class Docente implements Comparable<Docente> {
                 proficiencias.remove(prof);
             }
         }
+    }
+    /**
+     * retorna a proficiencia de uma disciplina
+     * @param uc
+     * @return 
+     */
+    public Proficiencia getProficiencia(String nuc){
+        for(Proficiencia p:proficiencias){
+            if(p.getDisciplina().getNome().equals(nuc)){
+                return p;
+            }
+        }
+        return null;
     }
 
     /*
@@ -267,4 +334,5 @@ public class Docente implements Comparable<Docente> {
      * seguidos
      */
     private Turno segundoTurno = null;
+    
 }

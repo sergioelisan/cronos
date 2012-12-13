@@ -18,14 +18,15 @@ public class CronosFiles {
      * @return
      */
     public static String getCronosDatabase() {
-        String cronosDatabaseDir = "document\\banco";
+        String cronosDatabaseDir = "Documents\\banco";
         File databaseDir = new File(cronosDatabaseDir);
 
-        if (!databaseDir.isDirectory() ) {
+        if (databaseDir.isDirectory() ) {
             cronosDatabaseDir = ".cronos";
         }
 
         return System.getProperty("user.home") + File.separator + cronosDatabaseDir;
     }
+    
 
 }

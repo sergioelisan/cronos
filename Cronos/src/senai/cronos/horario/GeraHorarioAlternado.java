@@ -1,6 +1,7 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import senai.cronos.CronosAPI;
@@ -60,8 +61,12 @@ public class GeraHorarioAlternado extends GeraHorario {
     @Override
     public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
         Horario wrapper = new Horario(horario);
-
+        ArrayList<Docente> docentes;
         for (Aula aula : wrapper.getAulas()) {
+            docentes=aula.getDisciplina().bestDocentes();
+            for(Docente docente:docentes){
+                System.out.println(docente.toString());
+            }
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
             for (Docente docente : CronosAPI.buscaDocentes(getTurma().getNucleo())) {
@@ -69,15 +74,17 @@ public class GeraHorarioAlternado extends GeraHorario {
 
                 for (Date dia : dias.keySet()) {
                     Integer metade = dias.get(dia).getPrimeiro() ? Tupla.PRIMEIRA : Tupla.SEGUNDA;
-
+                    
                     if (!docente.getHorarioDocente().isDisponivel(dia, getTurma().getTurno(), metade)) {
                         disponivel = false;
                         break;
                     }
                 }
-
+                
                 if (disponivel) {
                     aula.setDocente(docente);
+                }else{
+                    
                 }
             }
 
