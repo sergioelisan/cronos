@@ -9,6 +9,7 @@ import senai.cronos.database.dao.DAOFactory;
 import senai.util.Observador;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.UnidadeCurricular;
 
 /**
  *
@@ -72,6 +73,7 @@ public final class Docentes implements Observador, Cache<Docente> {
 
     /**
      * procura um docente por sua matricula
+     *
      * @param matricula
      * @return
      * @throws ClassNotFoundException
@@ -79,21 +81,22 @@ public final class Docentes implements Observador, Cache<Docente> {
      */
     public Docente buscaDocenteMatricula(String matricula) throws ClassNotFoundException, SQLException {
         for (Docente dc : getDocentes()) {
-            if (dc.getMatricula().equals(Integer.parseInt(matricula) ) ) {
+            if (dc.getMatricula().equals(Integer.parseInt(matricula))) {
                 return dc;
             }
         }
         return null;
     }
- public boolean existeDocente(String matricula)throws ClassNotFoundException, SQLException {
-  for (Docente dc : getDocentes()) {
-            if (dc.getMatricula().equals(matricula)) {
+
+    public boolean existeDocente(String matricula) throws ClassNotFoundException, SQLException {
+        for (Docente dc : getDocentes()) {
+            if (dc.getMatricula().equals(Integer.parseInt(matricula) ) ) {
                 return true;
             }
         }
         return false;
-  }
-   
+    }
+
     @Override
     public void update() {
         try {
@@ -123,5 +126,9 @@ public final class Docentes implements Observador, Cache<Docente> {
             }
         }
         return null;
+    }
+
+    public List<Docente> bestDocente(UnidadeCurricular uc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

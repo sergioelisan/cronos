@@ -85,7 +85,6 @@ public class Main {
      */
     private void loadDatabase() throws Exception {
         splash.upBar();
-        System.out.println(CronosFiles.getCronosDatabase());
 
         System.setProperty("derby.system.home", CronosFiles.getCronosDatabase() );
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
