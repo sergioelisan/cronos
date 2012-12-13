@@ -142,7 +142,8 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         toolbox.add(lbPrint);
 
         pnHorarios.setLayout(new CardLayout());
-
+        pnHorarios.setBackground(new Color(20,20,200,1));
+        
         setaDireita.setHorizontalAlignment(JLabel.CENTER);
         setaDireita.setOpaque(true);
         setaDireita.setBackground(Color.white);
@@ -172,7 +173,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         });
 
         pnLegendas.setPreferredSize(new Dimension(810, 200));
-        pnLegendas.setBackground(Color.white);
+        pnLegendas.setBackground(new Color(50,50,200,0));
         pnLegendas.setOpaque(true);
 
         pnCalendarios.setLayout(new BorderLayout());

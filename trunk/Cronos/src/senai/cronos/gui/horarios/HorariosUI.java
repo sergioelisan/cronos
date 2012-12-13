@@ -8,6 +8,7 @@ package senai.cronos.gui.horarios;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -242,7 +243,6 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btgerar.setBackground(ColorManager.getColor("button"));
         btgerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btgerar.setForeground(new java.awt.Color(0, 0, 0));
         btgerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btgerar.setText("gerar");
         btgerar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -257,7 +257,6 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btexibir.setBackground(ColorManager.getColor("button"));
         btexibir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btexibir.setForeground(new java.awt.Color(0, 0, 0));
         btexibir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btexibir.setText("exibir");
         btexibir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -272,7 +271,6 @@ public class HorariosUI extends javax.swing.JPanel {
 
         btopcoes.setBackground(ColorManager.getColor("button"));
         btopcoes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btopcoes.setForeground(new java.awt.Color(0, 0, 0));
         btopcoes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btopcoes.setText("opções");
         btopcoes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -285,6 +283,7 @@ public class HorariosUI extends javax.swing.JPanel {
             }
         });
 
+        container.setBackground(new Color(20,20,200,0));
         container.setOpaque(false);
         container.setLayout(new java.awt.BorderLayout());
 
@@ -325,7 +324,7 @@ public class HorariosUI extends javax.swing.JPanel {
                     .addComponent(btexibir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btgerar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

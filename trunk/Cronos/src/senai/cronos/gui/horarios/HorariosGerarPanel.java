@@ -188,7 +188,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         });
 
         pnLegendas.setPreferredSize(new Dimension(810, 200));
-        pnLegendas.setBackground(Color.white);
+        pnLegendas.setBackground(new Color(50,50,200,0));
         pnLegendas.setOpaque(true);
 
         pnCalendarios.setLayout(new BorderLayout());

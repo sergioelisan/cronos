@@ -149,7 +149,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
                     HorarioDocente hd = doc.getHorarioDocente();
-                   lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao() * 100) + "%");
+                   lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao()) + "%");
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
