@@ -29,6 +29,12 @@ public class Linha extends javax.swing.JPanel {
         this.nome=nome;
         
     }
+    public Linha(String nome, int valor){
+        initComponents();
+        this.nome=nome;
+        this.jSlider1.setValue(valor);
+        
+    }
 
     public JLabel getjLabel1() {
         return jLabel1;
@@ -42,8 +48,10 @@ public class Linha extends javax.swing.JPanel {
         return jSlider1;
     }
 
-    public void setjSlider1(JSlider jSlider1) {
-        this.jSlider1 = jSlider1;
+    public void setjSlider1(int n) {
+         synchronized (this){
+             this.jSlider1.setValue(n);
+         }
     }
 
     /**
@@ -105,7 +113,9 @@ public class Linha extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-   JSlider source = (JSlider)evt.getSource();
+   
+        JSlider source = (JSlider)evt.getSource();
+    
    Docente doc=new Docente();
    UnidadeCurricular uc=new UnidadeCurricular();
    Proficiencia p=new Proficiencia();
@@ -117,7 +127,6 @@ public class Linha extends javax.swing.JPanel {
             try {
                 doc=CronosAPI.buscaDocenteNome(nome);
                 p=doc.getProficiencia(jLabel1.getText());
-                 System.out.println(p.getDisciplina().toString());
                 doc.updateProficiencia(p, fps);
                 
             } catch (ClassNotFoundException ex) {
@@ -126,9 +135,7 @@ public class Linha extends javax.swing.JPanel {
                 Logger.getLogger(Linha.class.getName()).log(Level.SEVERE, null, ex);
             }
             jLabel2.setText(String.valueOf(fps));
-        //System.out.println(jLabel2.getText());
-    } 
-    
+   }
     }//GEN-LAST:event_jSlider1StateChanged
 private String nome;
     // Variables declaration - do not modify//GEN-BEGIN:variables
