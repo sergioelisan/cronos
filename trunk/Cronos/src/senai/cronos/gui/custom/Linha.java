@@ -14,6 +14,7 @@ import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.gui.Alerta;
 
 /**
  *
@@ -26,14 +27,15 @@ public class Linha extends javax.swing.JPanel {
      */
     public Linha(String nome) {
         initComponents();
-        this.nome=nome;
-        
+        this.nome = nome;
+
     }
-    public Linha(String nome, int valor){
+
+    public Linha(String nome, int valor) {
         initComponents();
-        this.nome=nome;
+        this.nome = nome;
         this.jSlider1.setValue(valor);
-        
+
     }
 
     public JLabel getjLabel1() {
@@ -49,9 +51,9 @@ public class Linha extends javax.swing.JPanel {
     }
 
     public void setjSlider1(int n) {
-         synchronized (this){
-             this.jSlider1.setValue(n);
-         }
+        synchronized (this) {
+            this.jSlider1.setValue(n);
+        }
     }
 
     /**
@@ -113,31 +115,27 @@ public class Linha extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-   
-        JSlider source = (JSlider)evt.getSource();
-    
-   Docente doc=new Docente();
-   UnidadeCurricular uc=new UnidadeCurricular();
-   Proficiencia p=new Proficiencia();
-  
-   if (!source.getValueIsAdjusting()) {
-        int fps = (int)source.getValue();
-        System.out.println(jLabel1.getText());
-        
+        JSlider source = (JSlider) evt.getSource();
+        Docente doc = new Docente();
+        UnidadeCurricular uc = new UnidadeCurricular();
+        Proficiencia p = new Proficiencia();
+
+        if (!source.getValueIsAdjusting()) {
+            int fps = (int) source.getValue();
+            System.out.println(jLabel1.getText());
+
             try {
-                doc=CronosAPI.buscaDocenteNome(nome);
-                p=doc.getProficiencia(jLabel1.getText());
+                doc = CronosAPI.buscaDocenteNome(nome);
+                p = doc.getProficiencia(CronosAPI.buscaDisciplina(jLabel1.getText()));
                 doc.updateProficiencia(p, fps);
-                
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Linha.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Linha.class.getName()).log(Level.SEVERE, null, ex);
+
+            } catch (Exception ex) {
+                Alerta.jogarAviso(ex.getMessage() );
             }
             jLabel2.setText(String.valueOf(fps));
-   }
+        }
     }//GEN-LAST:event_jSlider1StateChanged
-private String nome;
+    private String nome;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
