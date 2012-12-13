@@ -15,19 +15,17 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
 
     public UnidadeCurricular() {
     }
-public ArrayList<Docente> bestDocentes() throws ClassNotFoundException, SQLException{
-    List<Proficiencia> proficiencias = new ArrayList<>();
+public ArrayList<Docente> bestDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException{
     ArrayList<Docente> bestDocente=new ArrayList();
-     ArrayList<Docente> docentes=new ArrayList();
-    //docentes=CronosAPI.
-    for(Proficiencia p:proficiencias){
-        if(p.getDisciplina().equals(this)&&p.getLecionado()>6){
-         //   bestdocente.add(p.getDocente());
+    List<Docente> docentes;
+    docentes=CronosAPI.buscaDocentes(nucleo);
+    for(Docente doc:docentes){
+        Proficiencia p=doc.getProficiencia(this.getNome());
+        if(p.getLecionado()>7){
+            bestDocente.add(doc);
         }
-        
     }
-     return null;
-    
+     return bestDocente;
 }
     public UnidadeCurricular(String nome, Nucleo nucleo,
             int cargaHoraria, Integer modulo, String conteudoProgramatico, Laboratorio lab) {
