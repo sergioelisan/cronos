@@ -163,8 +163,14 @@ public class CronosAPI {
         return Docentes.instance().buscaDocentes(nucleo);
     }
     
+    /**
+     * retorna uma lista com os melhores docentes para uma determinada disciplina
+     * @param uc
+     * @return
+     * @throws Exception 
+     */
     public static List<Docente> bestDocentes(UnidadeCurricular uc) throws Exception {
-        return Docentes.instance().bestDocente(uc);
+        return Docentes.instance().bestDocentes(uc);
     }
 
     /**

@@ -33,14 +33,17 @@ public class GeraHorarioContinuo extends GeraHorario {
 
     }
 
+    private Docente lastDocente = Docente.PADRAO;
+    
     @Override
     public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
         Horario wrapper = new Horario(horario);
-        List<Docente> docentes = CronosAPI.buscaDocentes(getTurma().getNucleo());
         
         for (Aula aula : wrapper.getAulas() ) {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
+            List<Docente> docentes = CronosAPI.bestDocentes(aula.getDisciplina() );
+            
             for (Docente docente : docentes) {
                 boolean disponivel = true;
 
@@ -51,10 +54,10 @@ public class GeraHorarioContinuo extends GeraHorario {
                     }
                 }
 
-                if (disponivel && getTurma().getTurno().isInside(docente.getTurno() )) {
-                    docente.getTurno();
+                if ((disponivel && !lastDocente.equals(docente)) 
+                        && getTurma().getTurno().isInside(docente.getTurno() )) {
                     aula.setDocente(docente);
-                    docentes.remove(docente);
+                    lastDocente = docente;
                     break;
                 }
                 

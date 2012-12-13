@@ -96,6 +96,22 @@ public final class Docentes implements Observador, Cache<Docente> {
         }
         return false;
     }
+    
+    /**
+     * Método que retorna os melhores docentes para uma determinada unidade curricular
+     * @param uc
+     * @return 
+     */
+    public List<Docente> bestDocentes(UnidadeCurricular uc) throws Exception {
+        List<Docente> bestDocentes   = new ArrayList<>();
+        
+        for (Docente doc : buscaDocentes(uc.getNucleo() ) ) {
+            if (doc.getProficiencia(uc) != null && doc.getProficiencia(uc).getLecionado() > 7)
+                bestDocentes.add(doc);
+        }
+        
+        return bestDocentes;
+    }
 
     @Override
     public void update() {
@@ -128,7 +144,4 @@ public final class Docentes implements Observador, Cache<Docente> {
         return null;
     }
 
-    public List<Docente> bestDocente(UnidadeCurricular uc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
