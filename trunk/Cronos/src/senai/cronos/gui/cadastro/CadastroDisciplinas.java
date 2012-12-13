@@ -183,6 +183,15 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
             }
         }).start();
     }
+    private Nucleo getNucleo(String nome){
+       for(Nucleo nc:nucleos){
+           
+           if(nc.getNome().equals(nome)){
+               return nc;
+           }
+       }
+       return null;
+   }
 
     /**
      * salva um objeto no banco de dados
@@ -196,11 +205,11 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                     uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
                     String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
                     uc.setConteudoProgramatico(ementa);
-                    uc.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
+                    //uc.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
                     uc.setLab(labs.get(combolab.getSelectedIndex() - 1));
                     uc.setModulo(Integer.parseInt(txtmodulo.getText().trim()));
                     uc.setNome(txtnome.getText().trim());
-
+                    uc.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
                     String code = lbcodigo.getText();
                     if (code.equals("código")) {
                         CronosAPI.add(uc);

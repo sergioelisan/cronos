@@ -1,6 +1,11 @@
 package senai.cronos.entidades;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import senai.cronos.CronosAPI;
+import senai.cronos.entidades.Docente;
 
 /**
  *
@@ -10,7 +15,20 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
 
     public UnidadeCurricular() {
     }
-
+public ArrayList<Docente> bestDocentes() throws ClassNotFoundException, SQLException{
+    List<Proficiencia> proficiencias = new ArrayList<>();
+    ArrayList<Docente> bestDocente=new ArrayList();
+     ArrayList<Docente> docentes=new ArrayList();
+    //docentes=CronosAPI.
+    for(Proficiencia p:proficiencias){
+        if(p.getDisciplina().equals(this)&&p.getLecionado()>6){
+         //   bestdocente.add(p.getDocente());
+        }
+        
+    }
+     return null;
+    
+}
     public UnidadeCurricular(String nome, Nucleo nucleo,
             int cargaHoraria, Integer modulo, String conteudoProgramatico, Laboratorio lab) {
         this.nome = nome;
