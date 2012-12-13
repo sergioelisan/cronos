@@ -2,6 +2,7 @@ package senai.cronos.horario;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
@@ -35,11 +36,12 @@ public class GeraHorarioContinuo extends GeraHorario {
     @Override
     public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
         Horario wrapper = new Horario(horario);
-
-        for (Aula aula : wrapper.getAulas()) {
+        List<Docente> docentes = CronosAPI.buscaDocentes(getTurma().getNucleo());
+        
+        for (Aula aula : wrapper.getAulas() ) {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
-            for (Docente docente : CronosAPI.buscaDocentes(getTurma().getNucleo())) {
+            for (Docente docente : docentes) {
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {
@@ -49,11 +51,17 @@ public class GeraHorarioContinuo extends GeraHorario {
                     }
                 }
 
-                if (disponivel) {
+                if (disponivel && getTurma().getTurno().isInside(docente.getTurno() )) {
+                    docente.getTurno();
                     aula.setDocente(docente);
+                    docentes.remove(docente);
+                    break;
                 }
+                
             }
 
         }
+        
     }
+    
 }

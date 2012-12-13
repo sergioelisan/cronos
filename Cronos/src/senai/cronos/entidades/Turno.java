@@ -16,4 +16,20 @@ public enum Turno {
     public static Turno getTurno(Integer i) {
         return values()[i];
     }
+
+    /**
+     * verifica se um turno esta dentro de outros dois turnos
+     * @param t
+     * @return 
+     */
+    public boolean isInside(Turno t) {
+        if (this.equals(Turno.MANHA) && (t.equals(Turno.MANHA_TARDE) || t.equals(Turno.MANHA_NOITE))) {
+            return true;
+        } else if (this.equals(Turno.TARDE) && (t.equals(Turno.MANHA_TARDE) || t.equals(Turno.TARDE_NOITE))) {
+            return true;
+        } else if (this.equals(Turno.NOITE) && (t.equals(Turno.TARDE_NOITE) || t.equals(Turno.MANHA_NOITE))) {
+            return true;
+        } else
+            return false;
+    }
 }

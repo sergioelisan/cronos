@@ -149,9 +149,9 @@ public class HorarioUIFactory {
             if (uc != null && !uc.getNome().isEmpty()) {
                 JLabel label = new JLabel();
                 label.setOpaque(true);
-                label.setPreferredSize(new Dimension(450, 25));
-                label.setMinimumSize(new Dimension(450, 25));
-                label.setMaximumSize(new Dimension(450, 25));
+                label.setPreferredSize(new Dimension(800, 25));
+                label.setMinimumSize(new Dimension(800, 25));
+                label.setMaximumSize(new Dimension(800, 25));
                 label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
                 label.setForeground(Color.white);
                 label.setBackground(dicionarioCores.get(uc));

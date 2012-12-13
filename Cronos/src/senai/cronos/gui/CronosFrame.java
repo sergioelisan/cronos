@@ -108,6 +108,7 @@ public class CronosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    
     public static final String HOME = "home";
     public static final String HORARIOS = "horarios";
     public static final String DOCENTES = "docentes";
