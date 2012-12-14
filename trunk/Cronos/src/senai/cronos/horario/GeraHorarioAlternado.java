@@ -64,14 +64,8 @@ public class GeraHorarioAlternado extends GeraHorario {
         Horario wrapper = new Horario(horario);
         ArrayList<Docente> docentes;
         for (Aula aula : wrapper.getAulas()) {
-          //  docentes=aula.getDisciplina().bestDocentes();
-            //for(Docente docente:docentes){
-           //     System.out.println(docente.toString());
-           // }
-            Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
-
-            //for (Docente docente : CronosAPI.buscaDocentes(getTurma().getNucleo())) {
-        for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina())) {
+         Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
+         for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina())) {
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {
@@ -83,7 +77,7 @@ public class GeraHorarioAlternado extends GeraHorario {
                     }
                 }
                 
-                if (disponivel&&!lastDocente.equals(docente)) {
+                if (disponivel&&!lastDocente.equals(docente)&& getTurma().getTurno().isInside(docente.getTurno() )) {
                     aula.setDocente(docente);
                 }else{
                     

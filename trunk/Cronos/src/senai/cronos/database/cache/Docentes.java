@@ -9,6 +9,7 @@ import senai.cronos.database.dao.DAOFactory;
 import senai.util.Observador;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
 
 /**
@@ -106,8 +107,9 @@ public final class Docentes implements Observador, Cache<Docente> {
         List<Docente> bestDocentes   = new ArrayList<>();
         
         for (Docente doc : buscaDocentes(uc.getNucleo() ) ) {
-            if (doc.getProficiencia(uc) != null && doc.getProficiencia(uc).getLecionado() > 7)
+            if (doc.getProficiencia(uc) != null && doc.getProficiencia(uc).getLecionado() > 6) {
                 bestDocentes.add(doc);
+            }
         }
         
         return bestDocentes;
