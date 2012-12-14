@@ -77,6 +77,9 @@ public class Aula {
         if (!Objects.equals(this.lab, other.lab)) {
             return false;
         }
+         if (!Objects.equals(this.turma, other.turma)) {
+            return false;
+        }
         return true;
     }
 
@@ -87,6 +90,7 @@ public class Aula {
         hash = 53 * hash + Objects.hashCode(this.disciplina);
         hash = 53 * hash + Objects.hashCode(this.docente);
         hash = 53 * hash + Objects.hashCode(this.lab);
+        hash = 53 * hash + Objects.hashCode(this.turma);
         return hash;
     }
 
@@ -98,9 +102,18 @@ public class Aula {
     private Integer id = 0;
     
     private UnidadeCurricular disciplina = new UnidadeCurricular();
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
     
     private Docente docente = new Docente();
     
     private Laboratorio lab = new Laboratorio();
+    private Turma turma=new Turma();
     
 }
