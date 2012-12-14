@@ -20,6 +20,7 @@ public class Docente implements Comparable<Docente> {
     }
 
     /* METODOS DE NEGOCIO PARA UM DOCENTE  */
+    
     /**
      * Retorna as unidades curriculares das proficiencias deste docente
      *

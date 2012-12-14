@@ -95,6 +95,11 @@ public class DAODocente extends DAO<Docente> {
         }
 
         close();
+        
+        DAO<Proficiencia> daoprof = DAOProficiencia.getInstance();
+        for (Proficiencia p : u.getProficiencias() )
+            daoprof.update(p);
+        
         notifica();
     }
 

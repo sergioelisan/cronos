@@ -110,6 +110,7 @@ public class Main {
      */
     private void loadCalendar() throws ClassNotFoundException, SQLException, ParseException {
         splash.upBar();
+        
         Date inicio = CronosAPI.getInicioCalendario();
         Date fim    = CronosAPI.getFimCalendario();
 
@@ -122,6 +123,7 @@ public class Main {
      */
     private void loadUI() {
         splash.upBar();
+        
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

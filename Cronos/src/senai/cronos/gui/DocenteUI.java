@@ -6,29 +6,23 @@
 package senai.cronos.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
 import senai.cronos.gui.custom.ImageLoader;
-import senai.cronos.gui.custom.Linha;
+import senai.cronos.gui.custom.ProficienciaSlider;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.HorarioDocente;
@@ -49,14 +43,16 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
-        
+        lbProficiencias.addMouseListener(new LinkEffectHandler());
+        lbProficiencias.setVisible(false);
+
         try {
             CronosAPI.subscribe(Docente.class, this);
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        
+
     }
 
     @Override
@@ -97,7 +93,6 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
     private void loadDocentes() {
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 List<Docente> docentes;
@@ -134,7 +129,6 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
      */
     private void showDocenteInfo(final String id) {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -149,8 +143,13 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                     lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
 
                     HorarioDocente hd = doc.getHorarioDocente();
-                   lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao()) + "%");
-
+                    lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao()) + "%");
+                    
+                    pndocentedata.updateUI();
+                    DocenteUI.this.updateUI();
+                    
+                    lbProficiencias.setVisible(true);
+                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
@@ -219,23 +218,20 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         bthome = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btconfig = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        lbturnos = new javax.swing.JLabel();
+        pndocentedata = new javax.swing.JPanel();
+        lbnome = new javax.swing.JLabel();
+        lbmatricula = new javax.swing.JLabel();
+        lbformacao = new javax.swing.JLabel();
         lbnucleo = new javax.swing.JLabel();
         lbscore = new javax.swing.JLabel();
-        lbformacao = new javax.swing.JLabel();
-        lbmatricula = new javax.swing.JLabel();
-        lbnome = new javax.swing.JLabel();
+        lbturnos = new javax.swing.JLabel();
         lbocupacao = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         lbproximo = new javax.swing.JLabel();
         lbanterior = new javax.swing.JLabel();
         scroll = new br.ufrpe.bcc.continuous.components.MagicScroll();
         pnShow = new javax.swing.JPanel();
         lbnucleoatual = new javax.swing.JLabel();
-        pnOcupacao = new javax.swing.JPanel();
-        lbproficiencia = new javax.swing.JLabel();
+        lbProficiencias = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1366, 768));
@@ -272,15 +268,20 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             }
         });
 
-        jPanel2.setMaximumSize(new java.awt.Dimension(379, 381));
-        jPanel2.setMinimumSize(new java.awt.Dimension(379, 381));
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pndocentedata.setBackground(new Color(50,50,200,20));
+        pndocentedata.setMaximumSize(new java.awt.Dimension(455, 244));
+        pndocentedata.setMinimumSize(new java.awt.Dimension(455, 244));
+        pndocentedata.setPreferredSize(new java.awt.Dimension(455, 245));
 
-        jPanel1.setOpaque(false);
+        lbnome.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        lbnome.setForeground(ColorManager.getColor("foreground"));
+        lbnome.setText("docente");
 
-        lbturnos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbturnos.setText("turnos");
+        lbmatricula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbmatricula.setText("matrícula");
+
+        lbformacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbformacao.setText("formação");
 
         lbnucleo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbnucleo.setText("núcleo");
@@ -288,76 +289,47 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         lbscore.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbscore.setText("score");
 
-        lbformacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbformacao.setText("formação");
-
-        lbmatricula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbmatricula.setText("matrícula");
-
-        lbnome.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-        lbnome.setForeground(ColorManager.getColor("foreground"));
-        lbnome.setText("docente");
+        lbturnos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbturnos.setText("turnos");
 
         lbocupacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbocupacao.setText("ocupação");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 32, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbnome, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbocupacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                            .addComponent(lbturnos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbscore, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbnucleo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbformacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbmatricula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGap(0, 33, Short.MAX_VALUE)))
+        javax.swing.GroupLayout pndocentedataLayout = new javax.swing.GroupLayout(pndocentedata);
+        pndocentedata.setLayout(pndocentedataLayout);
+        pndocentedataLayout.setHorizontalGroup(
+            pndocentedataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pndocentedataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pndocentedataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbscore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbmatricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbformacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbnucleo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbturnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbocupacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 11, Short.MAX_VALUE)
-                    .addComponent(lbnome)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbmatricula)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbformacao)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbnucleo)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbscore)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbturnos)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbocupacao)
-                    .addGap(0, 12, Short.MAX_VALUE)))
+        pndocentedataLayout.setVerticalGroup(
+            pndocentedataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pndocentedataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbnome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbmatricula)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbformacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbnucleo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbscore)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbturnos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbocupacao)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
-
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 2, 420, 220));
-
-        jPanel3.setBackground(new Color(50,50,200,20));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 420, 230));
 
         lbproximo.setBackground(new java.awt.Color(255, 255, 255));
         lbproximo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -387,6 +359,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             }
         });
 
+        scroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setActiveWheelGesture(true);
 
         pnShow.setMaximumSize(new java.awt.Dimension(835, 1080));
@@ -407,19 +380,17 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         lbnucleoatual.setOpaque(true);
         lbnucleoatual.setPreferredSize(new java.awt.Dimension(100, 25));
 
-        pnOcupacao.setOpaque(false);
-
-        lbproficiencia.setBackground(new java.awt.Color(255, 255, 255));
-        lbproficiencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbproficiencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbproficiencia.setText("Ajustar Proficiências ");
-        lbproficiencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lbproficiencia.setMaximumSize(new java.awt.Dimension(100, 25));
-        lbproficiencia.setMinimumSize(new java.awt.Dimension(100, 25));
-        lbproficiencia.setPreferredSize(new java.awt.Dimension(100, 25));
-        lbproficiencia.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbProficiencias.setBackground(new java.awt.Color(255, 255, 255));
+        lbProficiencias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbProficiencias.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbProficiencias.setText("ajustar proficiências");
+        lbProficiencias.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbProficiencias.setMaximumSize(new java.awt.Dimension(100, 25));
+        lbProficiencias.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbProficiencias.setPreferredSize(new java.awt.Dimension(100, 25));
+        lbProficiencias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbproficienciaMouseClicked(evt);
+                lbProficienciasMouseClicked(evt);
             }
         });
 
@@ -430,7 +401,6 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnOcupacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bthome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -438,22 +408,20 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(427, 427, 427)
                                 .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(lbproficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(249, 249, 249))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(289, 289, 289))
+                            .addComponent(pndocentedata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -469,14 +437,15 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbproficiencia, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pndocentedata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 369, Short.MAX_VALUE))
                     .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(pnOcupacao, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -497,44 +466,29 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btconfigMouseClicked
 
-    private void lbproficienciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbproficienciaMouseClicked
-        JDialog d=new JDialog();
-        JPanel jContentPane = new JPanel();  
-        jContentPane.setLayout(new GridLayout(0,1, 2, 0));
-        AjustarProficiencia pa=new AjustarProficiencia();
-        ArrayList<Linha> linhas=new ArrayList();
+    private void lbProficienciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbProficienciasMouseClicked
         try {
-            Docente doc = CronosAPI.<Docente>get(Docente.class, Integer.parseInt(lbmatricula.getText().replace("matricula: ", "")));
-            ArrayList<Proficiencia> prof=(ArrayList<Proficiencia>) doc.getProficiencias();
-            pa.setjLabel1(doc.getNome());
-            pa.setSize(420, 60);
-            jContentPane.add(pa);
-            for(Proficiencia p:prof){
-                Linha linha=new Linha(doc.getNome(),p.getLecionado());
-                linha.setSize(400, 45);
-                linha.setjLabel1(p.getDisciplina().getNome());
-                linhas.add(linha);
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DocenteUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        for(Linha l:linhas){
-            jContentPane.add(l);
-        }
-        d.add(jContentPane);
-        d.pack();
-        d.setSize(900, 600);
-        d.setVisible(true);
-           
-    }//GEN-LAST:event_lbproficienciaMouseClicked
-
+            Docente doc = CronosAPI.buscaDocenteMatricula(lbmatricula.getText().replace("matricula: ", "") );
+            List<ProficienciaSlider> sliders = new ArrayList<>();
+            
+            for (Proficiencia p : doc.getProficiencias())
+                sliders.add(new ProficienciaSlider(p));
+            
+            JDialog profcDialog = new JDialog();
+            profcDialog.setSize(new Dimension(750, 450) );
+            profcDialog.setLocationRelativeTo(null);
+            
+            DocenteProficienciaUI dpUI = new DocenteProficienciaUI(profcDialog, doc, sliders);
+            profcDialog.setContentPane(dpUI);
+            
+            profcDialog.setVisible(true);
+        } catch (Exception ex) { Alerta.jogarAviso(ex.getMessage() ); }
+    }//GEN-LAST:event_lbProficienciasMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
     private javax.swing.JLabel bthome;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lbProficiencias;
     private javax.swing.JLabel lbanterior;
     private javax.swing.JLabel lbformacao;
     private javax.swing.JLabel lbmatricula;
@@ -542,12 +496,11 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
     private javax.swing.JLabel lbnucleo;
     private javax.swing.JLabel lbnucleoatual;
     private javax.swing.JLabel lbocupacao;
-    private javax.swing.JLabel lbproficiencia;
     private javax.swing.JLabel lbproximo;
     private javax.swing.JLabel lbscore;
     private javax.swing.JLabel lbturnos;
-    private javax.swing.JPanel pnOcupacao;
     private javax.swing.JPanel pnShow;
+    private javax.swing.JPanel pndocentedata;
     private br.ufrpe.bcc.continuous.components.MagicScroll scroll;
     // End of variables declaration//GEN-END:variables
 }
