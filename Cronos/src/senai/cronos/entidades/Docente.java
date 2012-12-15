@@ -65,7 +65,6 @@ public class Docente implements Comparable<Docente> {
             if (p.equals(pf)) {
                 p.setLecionado(valor);
                 proficiencias.add(p);
-                System.out.println("aqui" + p.toString());
                 CronosAPI.update(p);
                 return;
             }
