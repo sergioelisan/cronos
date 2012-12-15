@@ -104,14 +104,28 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
             return false;
         }
         final UnidadeCurricular other = (UnidadeCurricular) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
+        if (!Objects.equals(this.nucleo, other.nucleo)) {
+            return false;
+        }
+        if (!Objects.equals(this.cargaHoraria, other.cargaHoraria)) {
+            return false;
+        }
+        if (!Objects.equals(this.modulo, other.modulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.lab, other.lab)) {
+            return false;
+        }
         return true;
     }
+
+    
 
     @Override
     public int hashCode() {

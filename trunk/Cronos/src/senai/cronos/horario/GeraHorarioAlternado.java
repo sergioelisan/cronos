@@ -66,7 +66,8 @@ public class GeraHorarioAlternado extends GeraHorario {
         for (Aula aula : wrapper.getAulas()) {            
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
             
-            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina() ) ) {
+            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina()) ) {
+                
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {
