@@ -4,13 +4,14 @@
  */
 package senai.cronos.gui;
 
-import java.awt.Component;
 import java.util.List;
 import javax.swing.JDialog;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
+import senai.cronos.entidades.Proficiencia;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.ProficienciaSlider;
+import senai.util.concurrency.Paralell;
 
 /**
  *
@@ -23,15 +24,32 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
      */
     public DocenteProficienciaUI(JDialog container, Docente doc, List<ProficienciaSlider> sliders) {
         initComponents();
-
         lbOK.addMouseListener(new LinkEffectHandler());
-
-        for (ProficienciaSlider slider : sliders) {
-            pnProficiencias.add(slider);
-        }
-
+        alocateUnidadesCurriculares(sliders);
         this.container = container;
         this.doc = doc;
+    }
+
+    /**
+     * Aloca as disciplinas na aba dedicada de cada modulo
+     *
+     * @param sliders
+     */
+    private void alocateUnidadesCurriculares(final List<ProficienciaSlider> sliders) {
+        Paralell.start(new Runnable() {
+            public void run() {
+                for (ProficienciaSlider slider : sliders) {
+                    int mod = slider.getProficiencia().getDisciplina().getModulo();
+                    switch(mod) {
+                        case 1: pnProficiencias.add(slider); break;
+                        case 2: pnProficiencias2.add(slider); break;
+                        case 3: pnProficiencias3.add(slider); break; 
+                        case 4: pnProficiencias4.add(slider); break;
+                    }
+                    
+                }
+            }
+        });
     }
 
     /**
@@ -43,20 +61,20 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        magicScroll1 = new br.ufrpe.bcc.continuous.components.MagicScroll();
-        pnProficiencias = new javax.swing.JPanel();
         lbOK = new javax.swing.JLabel();
         lbstatus = new javax.swing.JLabel();
+        abaProficiencias = new javax.swing.JTabbedPane();
+        magicScroll1 = new br.ufrpe.bcc.continuous.components.MagicScroll();
+        pnProficiencias = new javax.swing.JPanel();
+        magicScroll2 = new br.ufrpe.bcc.continuous.components.MagicScroll();
+        pnProficiencias2 = new javax.swing.JPanel();
+        magicScroll3 = new br.ufrpe.bcc.continuous.components.MagicScroll();
+        pnProficiencias3 = new javax.swing.JPanel();
+        magicScroll4 = new br.ufrpe.bcc.continuous.components.MagicScroll();
+        pnProficiencias4 = new javax.swing.JPanel();
 
         setMaximumSize(new java.awt.Dimension(650, 447));
         setMinimumSize(new java.awt.Dimension(650, 447));
-
-        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        pnProficiencias.setMaximumSize(new java.awt.Dimension(630, 32767));
-        pnProficiencias.setMinimumSize(new java.awt.Dimension(630, 350));
-        pnProficiencias.setPreferredSize(new java.awt.Dimension(630, 1300));
-        magicScroll1.setViewportView(pnProficiencias);
 
         lbOK.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbOK.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -73,6 +91,42 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
         lbstatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lbstatus.setText(bundle.getString("DocenteProficienciaUI.lbstatus.text")); // NOI18N
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        pnProficiencias.setMaximumSize(new java.awt.Dimension(630, 32767));
+        pnProficiencias.setMinimumSize(new java.awt.Dimension(630, 350));
+        pnProficiencias.setPreferredSize(new java.awt.Dimension(630, 1300));
+        magicScroll1.setViewportView(pnProficiencias);
+
+        abaProficiencias.addTab(bundle.getString("DocenteProficienciaUI.magicScroll1.TabConstraints.tabTitle"), magicScroll1); // NOI18N
+
+        magicScroll2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        pnProficiencias2.setMaximumSize(new java.awt.Dimension(630, 32767));
+        pnProficiencias2.setMinimumSize(new java.awt.Dimension(630, 350));
+        pnProficiencias2.setPreferredSize(new java.awt.Dimension(630, 1300));
+        magicScroll2.setViewportView(pnProficiencias2);
+
+        abaProficiencias.addTab(bundle.getString("DocenteProficienciaUI.magicScroll2.TabConstraints.tabTitle"), magicScroll2); // NOI18N
+
+        magicScroll3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        pnProficiencias3.setMaximumSize(new java.awt.Dimension(630, 32767));
+        pnProficiencias3.setMinimumSize(new java.awt.Dimension(630, 350));
+        pnProficiencias3.setPreferredSize(new java.awt.Dimension(630, 1300));
+        magicScroll3.setViewportView(pnProficiencias3);
+
+        abaProficiencias.addTab(bundle.getString("DocenteProficienciaUI.magicScroll3.TabConstraints.tabTitle"), magicScroll3); // NOI18N
+
+        magicScroll4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        pnProficiencias4.setMaximumSize(new java.awt.Dimension(630, 32767));
+        pnProficiencias4.setMinimumSize(new java.awt.Dimension(630, 350));
+        pnProficiencias4.setPreferredSize(new java.awt.Dimension(630, 1300));
+        magicScroll4.setViewportView(pnProficiencias4);
+
+        abaProficiencias.addTab(bundle.getString("DocenteProficienciaUI.magicScroll4.TabConstraints.tabTitle"), magicScroll4); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,18 +134,18 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(abaProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lbstatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lbstatus, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                .addComponent(abaProficiencias, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -103,7 +157,7 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
     private void lbOKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbOKMouseClicked
         new Thread(new Runnable() {
             public void run() {
-                try {                    
+                try {
                     CronosAPI.update(doc);
                     container.dispose();
                 } catch (Exception ex) {
@@ -112,19 +166,25 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
 
             }
         }).start();
+        
         lbOK.setVisible(false);
         lbstatus.setText("Atualizando, aguarde...");
-        pnProficiencias.removeAll();
-        
+        abaProficiencias.removeAll();
+
     }//GEN-LAST:event_lbOKMouseClicked
-    
     private Docente doc;
     private JDialog container;
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane abaProficiencias;
     private javax.swing.JLabel lbOK;
     private javax.swing.JLabel lbstatus;
     private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll1;
+    private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll2;
+    private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll3;
+    private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll4;
     private javax.swing.JPanel pnProficiencias;
+    private javax.swing.JPanel pnProficiencias2;
+    private javax.swing.JPanel pnProficiencias3;
+    private javax.swing.JPanel pnProficiencias4;
     // End of variables declaration//GEN-END:variables
 }
