@@ -69,7 +69,7 @@ public class CronosAPI {
         DAO dao = DAOFactory.getDao(c);
         dao.remove(id);
     }
-
+    
     /**
      * Altera um objeto da classe T no banco de dados
      *

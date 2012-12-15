@@ -9,6 +9,7 @@ import java.util.List;
 import senai.cronos.database.DatabaseUtil;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 
 /**
@@ -45,6 +46,10 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
 
     @Override
     public void remove(Serializable id) throws SQLException {
+        // Remove da tabela de proficiencias antes de remover a disciplina
+        DAOProficiencia daoprof = (DAOProficiencia) DAOProficiencia.getInstance();
+        daoprof.removeUC(id);
+        
         open();
         String query = DatabaseUtil.query("disciplina.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {

@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.entidades.Nucleo;
+import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
@@ -417,10 +418,10 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         magicScroll1.setMinimumSize(new java.awt.Dimension(990, 310));
         magicScroll1.setPreferredSize(new java.awt.Dimension(1900, 310));
 
-        pnShow.setMaximumSize(new java.awt.Dimension(1340, 3000));
+        pnShow.setMaximumSize(new java.awt.Dimension(1340, 9000));
         pnShow.setMinimumSize(new java.awt.Dimension(900, 3000));
         pnShow.setOpaque(false);
-        pnShow.setPreferredSize(new java.awt.Dimension(1340, 3000));
+        pnShow.setPreferredSize(new java.awt.Dimension(1340, 9000));
         pnShow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
         magicScroll1.setViewportView(pnShow);
 

@@ -29,7 +29,7 @@ public abstract class DAO<T> implements Observado {
      * @param id
      */
     public abstract void remove(Serializable id) throws SQLException;
-
+    
     /**
      * altera um elemento do banco de dados
      * @param u

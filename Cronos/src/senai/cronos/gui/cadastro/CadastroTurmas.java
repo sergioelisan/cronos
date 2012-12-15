@@ -73,6 +73,22 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
     }
 
     /**
+     * retorna o núcleo
+     *
+     * @param nome
+     * @return
+     */
+    private Nucleo getNucleo(String nome) {
+        for (Nucleo nc : nucleos) {
+
+            if (nc.getNome().equals(nome)) {
+                return nc;
+            }
+        }
+        return null;
+    }
+
+    /**
      * salva uma nova turma no banco
      */
     private void save() {
@@ -82,7 +98,8 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             turma.setEntrada(dateentrada.getDate());
             turma.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
             turma.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
-            turma.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
+            System.out.println(combonucleo.getSelectedItem());
+            turma.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
 
             if (lbcodigo.getText().equals("código")) {
                 CronosAPI.add(turma);
@@ -97,7 +114,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
         } finally {
             novo();
         }
-
+        load();
     }
 
     /**
@@ -108,8 +125,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
         if (!code.equals("código")) {
             try {
                 Integer id = Integer.parseInt(code);
-                CronosAPI
-                        .remove(Turma.class, id);
+                CronosAPI.remove(Turma.class, id);
             } catch (ClassNotFoundException | SQLException e) {
                 Alerta.jogarAviso(e.getMessage());
                 e.printStackTrace(System.out);
@@ -117,7 +133,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                 novo();
             }
         }
-
+        load();
     }
 
     /**
