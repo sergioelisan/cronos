@@ -138,6 +138,7 @@ public class HorariosUI extends javax.swing.JPanel {
         @Override
         public void run() {
             try {
+                panel.removeAll();
                 List<Turma> turmas = CronosAPI.<Turma>get(Turma.class);
                 for (Turma t : turmas) {
                     Tile tile = new Tile();

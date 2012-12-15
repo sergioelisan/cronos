@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import senai.cronos.Main;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.*;
 import senai.util.Tupla;
+import senai.util.date.DateUtil;
 
 /**
  * Classe abstrata que armazena a ordem e algumas partes do algoritmo de geração
@@ -64,9 +66,14 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
-        List<UnidadeCurricular> disciplinas = CronosAPI.buscaDisciplinas(Nucleo.COMUM);
-        disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo() ) );
+     public List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
+       int dias=DateUtil.diferencaDias(turma.getEntrada(),Main.CALENDARIO.getDiasUteis().get(0));
+       int modulo=dias/180+1;
+       System.out.println(dias);
+       System.out.println(modulo);
+       List<UnidadeCurricular> disciplinas = CronosAPI.buscaDisciplinas(Nucleo.COMUM,modulo);
+       
+       disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo(),modulo ) );
 
         return disciplinas;
     }

@@ -71,6 +71,24 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
         return unidades;
     }
+    /**
+     * metodo que retorna as disciplinas de uma turma
+     * @param t a ser pesquisada
+     * @return uma lista de unidades curriculares
+     */
+    public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, int modulo) throws ClassNotFoundException, SQLException {
+        List<UnidadeCurricular> unidades = new ArrayList<>();
+        for (UnidadeCurricular uc : get()) {
+            if (uc.getNucleo().equals(nucleo)&&uc.getModulo().equals(modulo)) {
+                unidades.add(uc);
+            }
+        }
+        // Ordena da maior carga horaria para a menor
+        Collections.sort(unidades);
+        Collections.reverse(unidades);
+
+        return unidades;
+    }
 
     /**
      * retorna as disciplinas de uma turma em um determinado modulo

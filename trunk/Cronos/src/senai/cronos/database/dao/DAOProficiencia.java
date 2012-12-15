@@ -54,6 +54,22 @@ public class DAOProficiencia extends DAO<Proficiencia> {
         }
         close();
     }
+    
+    /**
+     * Remove as referencias de uma unidade curricular da tabela de proficiencias
+     * @param id
+     * @throws SQLException 
+     */
+    public void removeUC(Serializable id) throws SQLException {
+        open();
+        String query = DatabaseUtil.query("proficiencia.delete.uc");
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, (Integer) id);
+            ps.execute();
+        }
+        close();
+    }
 
     @Override
     public void update(Proficiencia p) throws SQLException {
