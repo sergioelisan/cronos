@@ -28,5 +28,10 @@ public class Linux implements OperatingSystem {
     public String getName() {
         return OperatingSystem.LINUX;
     }
+    
+    @Override
+    public String getLookAndFeel() {
+        return "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+    }
 
 }

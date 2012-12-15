@@ -2,7 +2,6 @@ package senai.cronos.horario;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
@@ -42,9 +41,7 @@ public class GeraHorarioContinuo extends GeraHorario {
         for (Aula aula : wrapper.getAulas() ) {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
-            List<Docente> docentes = CronosAPI.bestDocentes(aula.getDisciplina() );
-            
-            for (Docente docente : docentes) {
+            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina() )) {
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {

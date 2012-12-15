@@ -22,6 +22,8 @@ public interface OperatingSystem {
      * Retorna o nome do sistema operacional
      */
     String getName();
+    
+    String getLookAndFeel();
 
 
     // Sistemas operacionais suportados
