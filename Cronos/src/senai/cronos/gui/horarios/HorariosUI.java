@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,6 +37,7 @@ public class HorariosUI extends javax.swing.JPanel {
 
     private CronosFrame main;
     private static HorariosUI instance = new HorariosUI();
+    
 
     public static HorariosUI getInstance() {
         return instance;
@@ -139,7 +142,7 @@ public class HorariosUI extends javax.swing.JPanel {
                 for (Turma t : turmas) {
                     Tile tile = new Tile();
                     tile.setNome(t.getNome());
-                    tile.setId(t.getId() + "");
+                    tile.setId(t.getNucleo().getNome()+ "");
                     tile.setClickEvent(new TileClickedHandler(client));
                     panel.add(tile);
                 }
@@ -181,6 +184,7 @@ public class HorariosUI extends javax.swing.JPanel {
         }
 
         @Override
+        
         public void mouseClicked(MouseEvent e) {
             Tile tile;
             if (e.getSource() instanceof JLabel) {
@@ -188,10 +192,20 @@ public class HorariosUI extends javax.swing.JPanel {
             } else {
                 tile = (Tile) e.getSource();
             }
-            action.action(Integer.parseInt(tile.getId()));
+            try {
+                for(Turma t:CronosAPI.<Turma>get(Turma.class)){
+                   if(t.getNome().equals(tile.getNome())){
+                        action.action(t.getId());
+                }
+            }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(HorariosUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(HorariosUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -360,4 +374,5 @@ public class HorariosUI extends javax.swing.JPanel {
     private javax.swing.JPanel container;
     private javax.swing.JLabel lbModulo;
     // End of variables declaration//GEN-END:variables
+    private static List<Turma> turmas;
 }
