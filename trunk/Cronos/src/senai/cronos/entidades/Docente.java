@@ -207,6 +207,10 @@ public class Docente implements Comparable<Docente> {
         }
     }
 
+    /**
+     * retorna o turno do docente de acordo com a enumeracao Turno
+     * @return 
+     */
     public Turno getTurno() {
         if (segundoTurno.equals(primeiroTurno)) {
             return primeiroTurno;
