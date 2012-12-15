@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -19,6 +20,7 @@ import senai.cronos.entidades.Proficiencia;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
+import senai.cronos.gui.custom.Dialog;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.util.Observador;
@@ -119,9 +121,11 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
                 }
+                
+                pnShow.repaint();
             }
         }).start();
-        pnShow.repaint();
+        
     }
 
     /**
@@ -167,64 +171,56 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
      * Remove um objeto do banco de dados
      */
     private void remove() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String code = lbcodigo.getText();
-                if (!code.equals("código")) {
-                    Integer id = Integer.parseInt(code);
-                    try {
-                        CronosAPI.remove(UnidadeCurricular.class, id);
-                    } catch (ClassNotFoundException | SQLException e) {
-                        Alerta.jogarAviso(e.getMessage());
-                    } finally {
-                        novo();
-                    }
-                }
+        JDialog dialog = Dialog.getDialog("Removendo Disciplina. Aguarde...");
+
+        String code = lbcodigo.getText();
+        if (!code.equals("código")) {
+            Integer id = Integer.parseInt(code);
+            try {
+                CronosAPI.remove(UnidadeCurricular.class, id);
+            } catch (ClassNotFoundException | SQLException e) {
+                Alerta.jogarAviso(e.getMessage());
+            } finally {
+                novo();
+                dialog.dispose();
             }
-        }).start();
+        }
     }
-    private Nucleo getNucleo(String nome){
-       for(Nucleo nc:nucleos){
-           
-           if(nc.getNome().equals(nome)){
-               return nc;
-           }
-       }
-       return null;
-   }
 
     /**
      * salva um objeto no banco de dados
      */
     private void save() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UnidadeCurricular uc = new UnidadeCurricular();
-                    uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
-                    String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
-                    uc.setConteudoProgramatico(ementa);
-                    //uc.setNucleo(nucleos.get(combonucleo.getSelectedIndex() - 1));
-                    uc.setLab(labs.get(combolab.getSelectedIndex() - 1));
-                    uc.setModulo(Integer.parseInt(txtmodulo.getText().trim()));
-                    uc.setNome(txtnome.getText().trim());
-                    uc.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
-                    String code = lbcodigo.getText();
-                    if (code.equals("código")) {
-                        CronosAPI.add(uc);
-                    } else {
-                        uc.setId(Integer.parseInt(code));
-                        CronosAPI.update(uc);
-                    }
-                } catch (ClassNotFoundException | SQLException e) {
-                    Alerta.jogarAviso(e.getMessage());
-                } finally {
-                    novo();
-                }
+        JDialog dialog = Dialog.getDialog("Salvando Disciplina. Aguarde...");
+
+        try {
+            UnidadeCurricular uc = new UnidadeCurricular();
+            uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
+            
+            String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
+            uc.setConteudoProgramatico(ementa);
+            
+            uc.setNucleo(CronosAPI.buscaNucleo((String) combonucleo.getSelectedItem() ) );
+            uc.setLab(labs.get(combolab.getSelectedIndex() - 1));
+            uc.setModulo(Integer.parseInt(txtmodulo.getText().trim()));
+            uc.setNome(txtnome.getText().trim());
+            
+            String code = lbcodigo.getText();
+            
+            if (code.equals("código")) {
+                CronosAPI.add(uc);
+            } else {
+                
+                uc.setId(Integer.parseInt(code));
+                CronosAPI.update(uc);
             }
-        }).start();
+            
+        } catch (ClassNotFoundException | SQLException e) {
+            Alerta.jogarAviso(e.getMessage());
+        } finally {
+            novo();
+            dialog.dispose();
+        }
     }
 
     /**

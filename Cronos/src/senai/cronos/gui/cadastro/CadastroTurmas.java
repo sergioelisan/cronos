@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Nucleo;
@@ -18,6 +19,7 @@ import senai.cronos.entidades.Habilitacao;
 import senai.cronos.entidades.Turno;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
+import senai.cronos.gui.custom.Dialog;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.util.Observador;
@@ -92,6 +94,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      * salva uma nova turma no banco
      */
     private void save() {
+        JDialog dialog = Dialog.getDialog("Salvando Turma. Aguarde...");
         try {
             Turma turma = new Turma();
             turma.setNome(txtnome.getText().trim());
@@ -113,6 +116,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             e.printStackTrace(System.out);
         } finally {
             novo();
+            dialog.dispose();
         }
         load();
     }
@@ -121,6 +125,8 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      * remove uma turma do banco
      */
     private void remove() {
+        JDialog dialog = Dialog.getDialog("Removendo Turma. Aguarde...");
+        
         String code = lbcodigo.getText();
         if (!code.equals("código")) {
             try {
@@ -131,6 +137,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                 e.printStackTrace(System.out);
             } finally {
                 novo();
+                dialog.dispose();
             }
         }
         load();
@@ -183,10 +190,9 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                     Alerta.jogarAviso(ex.getMessage());
                     ex.printStackTrace(System.out);
                 }
-
+                pnShow.repaint();
             }
-        }).start();
-        pnShow.repaint();
+        }).start();        
     }
 
     /**

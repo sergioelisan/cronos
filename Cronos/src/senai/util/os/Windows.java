@@ -74,4 +74,9 @@ public class Windows implements OperatingSystem {
     public String getName() {
         return OperatingSystem.WINDOWS;
     }
+    
+    @Override
+    public String getLookAndFeel() {
+        return "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+    }
 }

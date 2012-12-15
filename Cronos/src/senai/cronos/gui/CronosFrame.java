@@ -28,7 +28,7 @@ public class CronosFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-        //setLookAndFeel();
+        setLookAndFeel();
         loadPanels();
         Switch(CronosFrame.PRESENTATION);
 
@@ -46,12 +46,8 @@ public class CronosFrame extends javax.swing.JFrame {
     /** Verifica qual o sistema operacional e carrega a devida Look And Feel */
     private void setLookAndFeel() {
         OperatingSystem os = OSFactory.getOperatingSystem();
-        String lookAndFell = os.getName().equals(OperatingSystem.WINDOWS)
-                ? "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
-                : "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-
         try {
-            UIManager.setLookAndFeel(lookAndFell);
+            UIManager.setLookAndFeel(os.getLookAndFeel() );
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             System.out.println("problemas na definicao do estilo do sistema");

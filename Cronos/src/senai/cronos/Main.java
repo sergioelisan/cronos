@@ -19,6 +19,7 @@ import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.CronosFiles;
+import senai.util.concurrency.Paralell;
 import senai.util.date.Calendario;
 import senai.util.date.Feriado;
 import static senai.util.debug.Debug.println;
@@ -29,15 +30,17 @@ import static senai.util.debug.Debug.println;
  */
 public class Main {
 
-    /** Versao atual do codigo */
+    /**
+     * Versao atual do codigo
+     */
     public static final String VERSAO = Versoes.BETA2;
-
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */
     public static Calendario CALENDARIO;
-
-    /** janelinha que aparece indicando o carregamento do sistema */
+    /**
+     * janelinha que aparece indicando o carregamento do sistema
+     */
     private Splash splash = Splash.getInstance();
 
     /**
@@ -86,12 +89,13 @@ public class Main {
     private void loadDatabase() throws Exception {
         splash.upBar();
 
-        System.setProperty("derby.system.home", CronosFiles.getCronosDatabase() );
+        System.setProperty("derby.system.home", CronosFiles.getCronosDatabase());
         new NetworkServerControlImpl().start(new PrintWriter(System.out));
     }
 
     /**
      * carrega os dados do banco e os coloca em cache na memoria
+     *
      * @throws Exception
      */
     private void loadCache() throws Exception {
@@ -102,7 +106,7 @@ public class Main {
         Nucleos.start();
         UnidadesCurriculares.start();
         Docentes.start();
-        Turmas.start();
+        Turmas.start();        
     }
 
     /**
@@ -110,9 +114,9 @@ public class Main {
      */
     private void loadCalendar() throws ClassNotFoundException, SQLException, ParseException {
         splash.upBar();
-        
+
         Date inicio = CronosAPI.getInicioCalendario();
-        Date fim    = CronosAPI.getFimCalendario();
+        Date fim = CronosAPI.getFimCalendario();
 
         DAO<Feriado> dao = DAOFactory.getDao(Feriado.class);
         Main.CALENDARIO = new Calendario(inicio, fim, dao.get());
@@ -123,7 +127,7 @@ public class Main {
      */
     private void loadUI() {
         splash.upBar();
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -148,11 +152,11 @@ public class Main {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException ex) {
-            Alerta.jogarAviso(ex.getMessage() );
+            Alerta.jogarAviso(ex.getMessage());
         }
 
         InputStreamReader isr = new InputStreamReader(url.openStream());
-        BufferedReader br     = new BufferedReader(isr);
+        BufferedReader br = new BufferedReader(isr);
 
         String linha;
         while ((linha = br.readLine()) != null) {
@@ -169,10 +173,10 @@ public class Main {
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException ex) {
-            Alerta.jogarAviso(ex.getMessage() );
+            Alerta.jogarAviso(ex.getMessage());
         }
 
-        if (Double.parseDouble(recentVersion) > Double.parseDouble(Main.VERSAO) ) {
+        if (Double.parseDouble(recentVersion) > Double.parseDouble(Main.VERSAO)) {
             File f = update.gravaArquivoDeURL(url, System.getProperty("user.dir"), Main.VERSAO, recentVersion);
             if (update.isS()) {
                 Runtime.getRuntime().exec(System.getProperty("user.dir") + "\\update.exe");
@@ -180,5 +184,4 @@ public class Main {
             }
         }
     }
-
 }

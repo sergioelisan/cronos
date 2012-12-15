@@ -8,15 +8,11 @@ package senai.cronos.gui.cadastro;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -25,9 +21,9 @@ import senai.cronos.entidades.Formacao;
 import senai.cronos.entidades.Turno;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
+import senai.cronos.gui.custom.Dialog;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
-import senai.util.Aleatorio;
 import senai.util.Observador;
 
 /**
@@ -79,22 +75,18 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        //update();
+        update();
     }
 
     /**
      * inicializa os dados de disciplinas
      */
     private void loadNucleosCombobox() {
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-         */       
-                combonucleo.removeAllItems();
-                combonucleo.addItem("-- núcleos --");
-                for (Nucleo nc : nucleos) {
-                    combonucleo.addItem(nc.getNome());
-                }
+        combonucleo.removeAllItems();
+        combonucleo.addItem("-- núcleos --");
+        for (Nucleo nc : nucleos) {
+            combonucleo.addItem(nc.getNome());
+        }
 
         load();
     }
@@ -103,16 +95,9 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * Cria um objeto Docente com os dados inseridos nos elementos da Interface
      * grafica e manda-o para a fachada salva-lo
      */
-   private Nucleo getNucleo(String nome){
-       for(Nucleo nc:nucleos){
-           
-           if(nc.getNome().equals(nome)){
-               return nc;
-           }
-       }
-       return null;
-   }
     private void save() {
+        JDialog dialog = Dialog.getDialog("Salvando Docente. Aguarde...");
+
         try {
             Docente docente = new Docente();
             docente.setMatricula(Integer.parseInt(txtmatricula.getText()));
@@ -120,27 +105,28 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
             docente.setNome(txtnome.getText().trim());
             docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1));
-            System.out.println(combonucleo.getSelectedItem());
-            docente.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
+            docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
             docente.setScore(1);
             docente.removeProficienciaDocente();
-            docente.addProcienciaInicial(getNucleo(combonucleo.getSelectedItem().toString()));
+            docente.addProcienciaInicial(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
+
             if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
                 CronosAPI.add(docente);
+
+                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
+                    Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
+                    docente.getProficiencias().add(proficiencia);
+                    CronosAPI.add(proficiencia);
+                }
+
             } else {
                 CronosAPI.update(docente);
-            }
-
-            // Adiciona proficiencias-padrao para o novo docente
-            for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
-                Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
-                docente.getProficiencias().add(proficiencia);
-                CronosAPI.add(proficiencia);
             }
         } catch (ClassNotFoundException | SQLException e) {
             Alerta.jogarAviso(e.getMessage());
         } finally {
             novo();
+            dialog.dispose();
         }
 
     }
@@ -149,22 +135,21 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * Trata com a fachada a remocao de um objeto Docente, por sua matricula
      */
     private void remove() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String code = txtmatricula.getText();
-                if (!code.equals("matrícula")) {
-                    Integer id = Integer.parseInt(code);
-                    try {
-                        CronosAPI.remove(Docente.class, id);
-                    } catch (ClassNotFoundException | SQLException e) {
-                        Alerta.jogarAviso(e.getMessage());
-                    } finally {
-                        novo();
-                    }
-                }
+        JDialog dialog = Dialog.getDialog("Salvando Docente. Aguarde...");
+        
+        String code = txtmatricula.getText();
+        if (!code.equals("matrícula")) {
+            Integer id = Integer.parseInt(code);
+            try {
+                CronosAPI.remove(Docente.class, id);
+            } catch (ClassNotFoundException | SQLException e) {
+                Alerta.jogarAviso(e.getMessage());
+            } finally {
+                novo();
+                dialog.dispose();
             }
-        }).start();
+        }
+
     }
 
     /**
@@ -209,14 +194,14 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
                             pnShow.add(ct);
                         }
                     }
+
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas o docente:\n" + ex);
-
                 }
-
+                
+                pnShow.repaint();
             }
         }).start();
-        pnShow.repaint();
     }
 
     /**
@@ -273,7 +258,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             show(tile.getId());
         }
     }
-
+    
     /**
      * passa para o proximo nucleo
      */

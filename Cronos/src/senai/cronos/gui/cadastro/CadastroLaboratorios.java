@@ -9,12 +9,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Laboratorio;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
+import senai.cronos.gui.custom.Dialog;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 
@@ -23,7 +25,7 @@ import senai.cronos.gui.custom.LinkEffectHandler;
  * @author Sergio Lisan
  */
 public class CadastroLaboratorios extends javax.swing.JPanel {
-    
+
     private List<Laboratorio> laboratorios;
 
     public CadastroLaboratorios() {
@@ -47,50 +49,46 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
      * salva um novo lab no banco
      */
     private void save() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Laboratorio lab = new Laboratorio();
-                lab.setNome(txtnome.getText().trim());
-                lab.setDescricao(txtdescricao.getText().trim());
+        JDialog dialog = Dialog.getDialog("Salvando Lab. Aguarde...");
 
-                String code = lbcodigo.getText();
-                try {
-                    if (code.equals("código")) {
-                        CronosAPI.add(lab);
-                    } else {
-                        lab.setId(Integer.parseInt(code));
-                        CronosAPI.update(lab);
-                    }
-                } catch (ClassNotFoundException | SQLException ex) {
-                    Alerta.jogarAviso(ex.getMessage());
-                } finally {
-                    novo();
-                }
+        Laboratorio lab = new Laboratorio();
+        lab.setNome(txtnome.getText().trim());
+        lab.setDescricao(txtdescricao.getText().trim());
+
+        String code = lbcodigo.getText();
+        try {
+            if (code.equals("código")) {
+                CronosAPI.add(lab);
+            } else {
+                lab.setId(Integer.parseInt(code));
+                CronosAPI.update(lab);
             }
-        }).start();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Alerta.jogarAviso(ex.getMessage());
+        } finally {
+            novo();
+            dialog.dispose();
+        }
     }
 
     /**
      * remove um lab do banco
      */
     private void remove() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String code = lbcodigo.getText();
-                if (!code.equals("código")) {
-                    Integer id = Integer.parseInt(code);
-                    try {
-                        CronosAPI.remove(Laboratorio.class, id);
-                    } catch (ClassNotFoundException | SQLException ex) {
-                        Alerta.jogarAviso(ex.getMessage());
-                    } finally {
-                        novo();
-                    }
-                }
+        JDialog dialog = Dialog.getDialog("Removendo Lab. Aguarde...");
+        String code = lbcodigo.getText();
+        if (!code.equals("código")) {
+            Integer id = Integer.parseInt(code);
+            try {
+                CronosAPI.remove(Laboratorio.class, id);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Alerta.jogarAviso(ex.getMessage());
+            } finally {
+                novo();
+                dialog.dispose();
             }
-        }).start();
+        }
+
     }
 
     /**
@@ -113,9 +111,9 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
                 }
+                pnShow.repaint();
             }
         }).start();
-        pnShow.repaint();
     }
 
     /**

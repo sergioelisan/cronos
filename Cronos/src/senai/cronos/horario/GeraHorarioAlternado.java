@@ -1,7 +1,6 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import senai.cronos.CronosAPI;
@@ -57,35 +56,39 @@ public class GeraHorarioAlternado extends GeraHorario {
         }
 
     }
+    
     private Docente lastDocente = Docente.PADRAO;
 
     @Override
     public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
         Horario wrapper = new Horario(horario);
-        ArrayList<Docente> docentes;
-        for (Aula aula : wrapper.getAulas()) {
-         Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
-         for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina())) {
+        
+        for (Aula aula : wrapper.getAulas()) {            
+            Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
+            
+            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina() ) ) {
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {
                     Integer metade = dias.get(dia).getPrimeiro() ? Tupla.PRIMEIRA : Tupla.SEGUNDA;
-                    
+
                     if (!docente.getHorarioDocente().isDisponivel(dia, getTurma().getTurno(), metade)) {
                         disponivel = false;
                         break;
                     }
                 }
-                
-                if (disponivel&&!lastDocente.equals(docente)&& getTurma().getTurno().isInside(docente.getTurno() )) {
+
+                if (disponivel && !lastDocente.equals(docente) 
+                        && getTurma().getTurno().isInside(docente.getTurno() ) ) {
                     aula.setDocente(docente);
                     lastDocente = docente;
                     break;
-                }else{
-                    
-                }
+                } 
+                
             }
 
         }
+        
     }
+    
 }

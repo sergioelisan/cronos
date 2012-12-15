@@ -107,7 +107,7 @@ public final class Docentes implements Observador, Cache<Docente> {
         List<Docente> bestDocentes   = new ArrayList<>();
         
         for (Docente doc : buscaDocentes(uc.getNucleo() ) ) {
-            if (doc.getProficiencia(uc) != null && doc.getProficiencia(uc).getLecionado() > 6) {
+            if (doc.getProficiencia(uc) != null && doc.getProficiencia(uc).getLecionado() > 5) {
                 bestDocentes.add(doc);
             }
         }

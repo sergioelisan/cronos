@@ -52,6 +52,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             Alerta.jogarAviso(ex.getMessage());
         }
 
+        update();
 
     }
 
@@ -362,10 +363,10 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         scroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setActiveWheelGesture(true);
 
-        pnShow.setMaximumSize(new java.awt.Dimension(835, 1080));
+        pnShow.setMaximumSize(new java.awt.Dimension(835, 6000));
         pnShow.setMinimumSize(new java.awt.Dimension(835, 1080));
         pnShow.setOpaque(false);
-        pnShow.setPreferredSize(new java.awt.Dimension(835, 1080));
+        pnShow.setPreferredSize(new java.awt.Dimension(835, 6000));
         pnShow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         scroll.setViewportView(pnShow);
 

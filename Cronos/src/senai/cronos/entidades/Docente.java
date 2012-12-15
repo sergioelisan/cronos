@@ -194,6 +194,7 @@ public class Docente implements Comparable<Docente> {
     public void setTurno(Turno turno) {
         if (turno.equals(Turno.MANHA) || turno.equals(Turno.TARDE) || turno.equals(Turno.NOITE)) {
             primeiroTurno = turno;
+            segundoTurno  = turno;
         } else if (turno.equals(Turno.MANHA_TARDE)) {
             primeiroTurno = Turno.MANHA;
             segundoTurno = Turno.TARDE;
@@ -207,7 +208,7 @@ public class Docente implements Comparable<Docente> {
     }
 
     public Turno getTurno() {
-        if (segundoTurno == null) {
+        if (segundoTurno.equals(primeiroTurno)) {
             return primeiroTurno;
         } else if (primeiroTurno.equals(Turno.MANHA) && segundoTurno.equals(Turno.TARDE)) {
             return Turno.MANHA_TARDE;
