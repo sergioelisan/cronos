@@ -485,7 +485,11 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             profcDialog.setContentPane(dpUI);
             
             profcDialog.setVisible(true);
-        } catch (Exception ex) { Alerta.jogarAviso(ex.getMessage() ); }
+        } catch (Exception ex) { 
+            System.out.println(ex);
+            Alerta.jogarAviso(ex.getMessage() ); 
+        
+        }
     }//GEN-LAST:event_lbProficienciasMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
