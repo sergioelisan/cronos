@@ -90,4 +90,8 @@ public class ProficienciaSlider extends javax.swing.JPanel {
     private javax.swing.JLabel lbDisciplina;
     private javax.swing.JSlider slider;
     // End of variables declaration//GEN-END:variables
+
+    public Proficiencia getProficiencia() {
+        return proficiencia;
+    }
 }
