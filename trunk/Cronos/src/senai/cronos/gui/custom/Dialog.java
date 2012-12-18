@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import senai.util.concurrency.Paralell;
 
 /**
@@ -26,17 +27,20 @@ public class Dialog {
      */
     public static JDialog getDialog(final String message) {
         final JDialog dialog = new JDialog();
+        final JPanel panel = new JPanel(new BorderLayout());
         
         Paralell.start(new Runnable() {
+            @Override
             public void run() {
                 dialog.setSize(new Dimension(400, 200));
                 dialog.setLocationRelativeTo(null);
 
-                JPanel panel = new JPanel(new BorderLayout());
+                
                 panel.setMinimumSize(new Dimension(380, 180));
                 panel.setMaximumSize(new Dimension(380, 180));
+               
                 panel.add(new JLabel(message), BorderLayout.CENTER);
-
+                
                 dialog.setContentPane(panel);
                 dialog.setVisible(true);
             }

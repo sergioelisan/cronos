@@ -20,6 +20,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
+import senai.cronos.database.dao.DAO;
+import senai.cronos.database.dao.DAODocente;
+import senai.cronos.database.dao.DAOProficiencia;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -474,9 +477,10 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             Docente doc = CronosAPI.buscaDocenteMatricula(lbmatricula.getText().replace("matricula: ", "") );
             List<ProficienciaSlider> sliders = new ArrayList<>();
             
-            for (Proficiencia p : doc.getProficiencias())
+            for (Proficiencia p : doc.getProficiencias()) {
                 sliders.add(new ProficienciaSlider(p));
-            
+            }
+                
             JDialog profcDialog = new JDialog();
             profcDialog.setSize(new Dimension(750, 450) );
             profcDialog.setLocationRelativeTo(null);
@@ -485,7 +489,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             profcDialog.setContentPane(dpUI);
             
             profcDialog.setVisible(true);
-        } catch (Exception ex) { 
+        } catch (ClassNotFoundException | SQLException ex) { 
             System.out.println(ex);
             Alerta.jogarAviso(ex.getMessage() ); 
         

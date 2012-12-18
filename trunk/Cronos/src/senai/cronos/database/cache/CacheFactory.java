@@ -23,7 +23,7 @@ public class CacheFactory {
                             
             case "senai.cronos.entidades.UnidadeCurricular": 
                 return UnidadesCurriculares.instance();
-                
+
             case "senai.util.date.Feriado": 
                 return Feriados.instance();
                 
