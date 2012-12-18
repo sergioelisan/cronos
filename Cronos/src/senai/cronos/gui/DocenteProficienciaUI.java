@@ -4,11 +4,11 @@
  */
 package senai.cronos.gui;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JDialog;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Docente;
-import senai.cronos.entidades.Proficiencia;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.ProficienciaSlider;
 import senai.util.concurrency.Paralell;
@@ -37,6 +37,7 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
      */
     private void alocateUnidadesCurriculares(final List<ProficienciaSlider> sliders) {
         Paralell.start(new Runnable() {
+            @Override
             public void run() {
                 for (ProficienciaSlider slider : sliders) {
                     int mod = slider.getProficiencia().getDisciplina().getModulo();
@@ -156,11 +157,12 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
 
     private void lbOKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbOKMouseClicked
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 try {
                     CronosAPI.update(doc);
                     container.dispose();
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
                 }
 

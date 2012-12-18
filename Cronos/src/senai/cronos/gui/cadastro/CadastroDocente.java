@@ -13,6 +13,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
+import senai.cronos.database.cache.CacheFactory;
+import senai.cronos.database.cache.Docentes;
+import senai.cronos.database.dao.DAODocente;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -108,17 +111,14 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
             docente.setScore(1);
             docente.removeProficienciaDocente();
-            docente.addProcienciaInicial(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
-
             if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
-                CronosAPI.add(docente);
-
+               CronosAPI.add(docente);
                 for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
                     Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
-                    docente.getProficiencias().add(proficiencia);
+                    docente.addProfienciaInicial(proficiencia);
                     CronosAPI.add(proficiencia);
                 }
-
+                
             } else {
                 CronosAPI.update(docente);
             }
@@ -126,10 +126,11 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             Alerta.jogarAviso(e.getMessage());
         } finally {
             novo();
+            Docentes.start();
             dialog.dispose();
         }
-
-    }
+     
+}
 
     /**
      * Trata com a fachada a remocao de um objeto Docente, por sua matricula

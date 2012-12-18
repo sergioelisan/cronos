@@ -78,12 +78,9 @@ public class Docente implements Comparable<Docente> {
      *
      * @param
      */
-    public void addProcienciaInicial(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        ArrayList<UnidadeCurricular> ucs = (ArrayList<UnidadeCurricular>) CronosAPI.buscaDisciplinas(nucleo);
-        for (UnidadeCurricular uc : ucs) {
-            Proficiencia prof = new Proficiencia(this, uc, 1, 1);
-            proficiencias.add(prof);
-        }
+    public void addProfienciaInicial(Proficiencia pf) {
+        pf.setLecionado(1);
+        proficiencias.add(pf);
     }
 
     /**
