@@ -84,6 +84,10 @@ public class ProficienciaSlider extends javax.swing.JPanel {
         proficiencia.setLecionado(sld.getValue());
     }//GEN-LAST:event_sliderStateChanged
     
+    public Proficiencia getProficiencia() {
+        return proficiencia;
+    }
+    
     private Proficiencia proficiencia;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -91,7 +95,4 @@ public class ProficienciaSlider extends javax.swing.JPanel {
     private javax.swing.JSlider slider;
     // End of variables declaration//GEN-END:variables
 
-    public Proficiencia getProficiencia() {
-        return proficiencia;
-    }
 }

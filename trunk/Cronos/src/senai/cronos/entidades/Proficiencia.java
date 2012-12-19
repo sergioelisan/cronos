@@ -82,7 +82,7 @@ public class Proficiencia implements Comparable<Proficiencia> {
 
     @Override
     public String toString() {
-        return "Proficiencia{" + "unidadecurricular=" + unidadecurricular + ", scoretemp=" + scoretemp + ", lecionado=" + lecionado + '}';
+        return "Proficiencia{" + "unidadecurricular=" + unidadecurricular.getId() + ", lecionado=" + lecionado + '}';
     }
 
     @Override

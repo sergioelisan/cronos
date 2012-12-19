@@ -42,6 +42,7 @@ public class GeraHorarioContinuo extends GeraHorario {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
 
             for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina() )) {
+                System.out.println(aula.getDisciplina().getNome() + " " + docente.getNome() );
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {

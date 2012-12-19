@@ -42,6 +42,11 @@ public class DAOProficiencia extends DAO<Proficiencia> {
         }
         close();
     }
+    
+    public void addAll(List<Proficiencia> proficiencias) throws SQLException {
+        for (Proficiencia p : proficiencias)
+            add(p);
+    }
 
     @Override
     public void remove(Serializable id) throws SQLException {

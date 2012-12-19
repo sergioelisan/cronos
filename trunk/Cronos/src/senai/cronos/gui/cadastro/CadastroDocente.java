@@ -108,16 +108,16 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
             docente.setNome(txtnome.getText().trim());
             docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1));
+            
+            System.out.println(combonucleo.getSelectedItem().toString() );
             docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
+            
             docente.setScore(1);
-            docente.removeProficienciaDocente();
-            if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
-               CronosAPI.add(docente);
-                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
-                    Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
-                    docente.addProfienciaInicial(proficiencia);
-                    CronosAPI.add(proficiencia);
-                }
+            
+            if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {  
+                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo() ) ) 
+                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5) );                
+                CronosAPI.add(docente);
                 
             } else {
                 CronosAPI.update(docente);
