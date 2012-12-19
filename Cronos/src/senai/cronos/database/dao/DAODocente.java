@@ -44,6 +44,10 @@ public class DAODocente extends DAO<Docente> {
         }
 
         close();
+        
+        DAOProficiencia daoprof = (DAOProficiencia) DAOProficiencia.getInstance();
+        daoprof.addAll(u.getProficiencias());
+        
         notifica();
     }
 
@@ -51,17 +55,19 @@ public class DAODocente extends DAO<Docente> {
     public void remove(Serializable id) throws SQLException {
         open();
         String query;
-        int n = CronosAPI.getAulasDia();
+        
         query = DatabaseUtil.query("horario.delete.docente1");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
+        
         query = DatabaseUtil.query("horario.delete.docente2");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
+        
         query = DatabaseUtil.query("docente.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);

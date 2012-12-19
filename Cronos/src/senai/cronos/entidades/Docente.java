@@ -19,125 +19,6 @@ public class Docente implements Comparable<Docente> {
     public Docente() {
     }
 
-    /* METODOS DE NEGOCIO PARA UM DOCENTE  */
-    
-    /**
-     * Retorna as unidades curriculares das proficiencias deste docente
-     *
-     * @return
-     */
-    public List<UnidadeCurricular> getUnidadesCurriculares() {
-        List<UnidadeCurricular> disciplinas = new ArrayList<>();
-
-        for (Proficiencia p : this.getProficiencias()) {
-            disciplinas.add(p.getDisciplina());
-        }
-
-        return disciplinas;
-    }
-
-    /**
-     * adiciona uma proficiencia, ou adiciona pontos a proficiencia.
-     *
-     * @param uc Unidade Curricular desta proficiencia
-     */
-    public void addProficiencia(UnidadeCurricular uc) {
-        for (Proficiencia p : proficiencias) {
-            if (p.getDisciplina().equals(uc)) {
-                p.setLecionado(p.getLecionado() + 1);
-                p.setScoreTemp(p.getScoreTemp() - 1);
-                return;
-            }
-        }
-        Proficiencia prof = new Proficiencia(this, uc, 10, 1);
-        proficiencias.add(prof);
-    }
-
-    /**
-     * muda o valor da proficiencia
-     *
-     * @param uc
-     * @param valor
-     */
-    public void updateProficiencia(Proficiencia pf, int valor) throws ClassNotFoundException, SQLException {
-
-        for (Proficiencia p : proficiencias) {
-            if (p.equals(pf)) {
-                p.setLecionado(valor);
-                proficiencias.add(p);
-                CronosAPI.update(p);
-                return;
-            }
-        }
-
-
-    }
-
-    /**
-     * adiciona prociência minima em todas as ucs do núcleo
-     *
-     * @param
-     */
-    public void addProfienciaInicial(Proficiencia pf) {
-        pf.setLecionado(1);
-        proficiencias.add(pf);
-    }
-
-    /**
-     * remove uma proficiencia
-     *
-     * @param prof
-     */
-    /**
-     * remove as proficiencias do docente
-     *
-     * @param dc
-     */
-    public void removeProficienciaDocente() {
-        try {
-            CronosAPI.remove(Proficiencia.class, this.getMatricula());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Docente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Docente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-
-    }
-
-    /**
-     *
-     * @param uc
-     */
-    public void removeProficiencia(UnidadeCurricular uc) {
-        for (Proficiencia prof : proficiencias) {
-            if (prof.getDisciplina().equals(uc)) {
-                proficiencias.remove(prof);
-            }
-        }
-    }
-
-    /**
-     * retorna a proficiencia de uma disciplina
-     *
-     * @param uc
-     * @return
-     */
-    public Proficiencia getProficiencia(UnidadeCurricular uc) {
-        for (Proficiencia p : proficiencias) {
-            if (p.getDisciplina().equals(uc)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    /*
-     *
-     * METODOS ACESSORES
-     *
-     */
     @Override
     public int compareTo(Docente o) {
         return score > o.score ? 1 : score == o.score ? 0 : -1;
@@ -234,6 +115,21 @@ public class Docente implements Comparable<Docente> {
 
     public void setProficiencias(List<Proficiencia> proficiencias) {
         this.proficiencias = proficiencias;
+    }
+    
+    /**
+     * retorna a proficiencia de uma disciplina
+     *
+     * @param uc
+     * @return
+     */
+    public Proficiencia getProficiencia(UnidadeCurricular uc) {
+        for (Proficiencia p : proficiencias) {
+            if (p.getDisciplina().equals(uc)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     public int getScore() {

@@ -19,6 +19,7 @@ import senai.cronos.entidades.Turma;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
+import senai.cronos.gui.custom.Tile;
 import senai.cronos.horario.GeraHorarioFactory;
 import senai.cronos.horario.Horario;
 import senai.util.Observador;
@@ -31,20 +32,18 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
     private List<HorarioUI> calendarios = new ArrayList<>();
     private Turma actualTurma;
-
+    private JPanel pnGerar = new JPanel();
     private JPanel pnTurmas = new JPanel();
     private JPanel pnCalendarios = new JPanel();
     private JPanel pnHorarios = new JPanel();
     private JPanel pnLegendas = new JPanel();
     private JPanel pnLoading = new JPanel();
-
     private JLabel lbLoading = new JLabel();
     private JLabel setaDireita = new JLabel(">");
     private JLabel setaEsquerda = new JLabel("<");
     private JLabel lbVoltar = new JLabel("voltar");
     private JLabel lbSave = new JLabel("salvar");
     private JLabel lbPrint = new JLabel("imprimir");
-
     private Timer animacao;
     private final int DELAY = 500;
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
@@ -67,21 +66,48 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         scrollTurmas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollTurmas.setOpaque(false);
         scrollTurmas.setBorder(null);
-        scrollTurmas.setMaximumSize(new Dimension(1300, 9000) );
-        scrollTurmas.setMinimumSize(new Dimension(900, 9000) );
-        scrollTurmas.setPreferredSize(new Dimension(1300, 9000) );
+        scrollTurmas.setMaximumSize(new Dimension(1300, 9000));
+        scrollTurmas.setMinimumSize(new Dimension(900, 9000));
+        scrollTurmas.setPreferredSize(new Dimension(1300, 9000));
 
-        scrollTurmas.getViewport().setMaximumSize(new Dimension(1300, 9000) );
-        scrollTurmas.getViewport().setMinimumSize(new Dimension(900, 9000) );
-        scrollTurmas.getViewport().setPreferredSize(new Dimension(1300, 9000) );
+        scrollTurmas.getViewport().setMaximumSize(new Dimension(1300, 9000));
+        scrollTurmas.getViewport().setMinimumSize(new Dimension(900, 9000));
+        scrollTurmas.getViewport().setPreferredSize(new Dimension(1300, 9000));
 
         scrollTurmas.getViewport().setOpaque(false);
 
         pnTurmas.setLayout(new FlowLayout(FlowLayout.LEFT));
-        pnTurmas.setMinimumSize(new Dimension(900, 9000) );
-        pnTurmas.setPreferredSize(new Dimension(1300, 9000) );
-        pnTurmas.setMaximumSize(new Dimension(1300, 9000) );
+        pnTurmas.setMinimumSize(new Dimension(900, 9000));
+        pnTurmas.setPreferredSize(new Dimension(1300, 9000));
+        pnTurmas.setMaximumSize(new Dimension(1300, 9000));
         pnTurmas.setOpaque(false);
+
+        pnGerar.setLayout(new FlowLayout());
+        pnGerar.setMinimumSize(new Dimension(900, 768));
+        pnGerar.setPreferredSize(new Dimension(1300, 768));
+        pnGerar.setMaximumSize(new Dimension(1300, 1080));
+        pnGerar.setOpaque(false);
+        
+        Tile todas = new Tile();
+        todas.setNome("Todas as turmas");
+        todas.setId("");
+        todas.setClickEvent(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                gerarTodasTurmas();
+            }
+        });
+        
+        Tile turmas = new Tile();
+        turmas.setNome("Escolher turma");
+        turmas.setId("");
+        turmas.setClickEvent(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                show("TURMAS");
+            }
+        });
+        
+        pnGerar.add(todas);
+        pnGerar.add(turmas);
 
         createCalendarComponents();
 
@@ -96,6 +122,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         add(pnLoading, "LOADING");
         add(scrollTurmas, "TURMAS");
         add(pnCalendarios, "CALENDARIOS");
+        add(pnGerar, "GERAR");
 
         try {
             CronosAPI.subscribe(Turma.class, this);
@@ -103,7 +130,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        show("TURMAS");
+        show("GERAR");
     }
 
     /**
@@ -161,11 +188,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
         pnHorarios.setLayout(new CardLayout());
 
+        Dimension setaDIM = new Dimension(40, 150);
+
         setaDireita.setHorizontalAlignment(JLabel.CENTER);
         setaDireita.setOpaque(true);
         setaDireita.setBackground(Color.white);
         setaDireita.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaDireita.setPreferredSize(new Dimension(80, 150));
+        setaDireita.setPreferredSize(setaDIM);
         setaDireita.addMouseListener(new LinkEffectHandler());
         setaDireita.addMouseListener(new MouseAdapter() {
             @Override
@@ -178,7 +207,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         setaEsquerda.setOpaque(true);
         setaEsquerda.setBackground(Color.white);
         setaEsquerda.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaEsquerda.setPreferredSize(new Dimension(80, 150));
+        setaEsquerda.setPreferredSize(setaDIM);
         setaEsquerda.addMouseListener(new LinkEffectHandler());
         setaEsquerda.addMouseListener(new MouseAdapter() {
             @Override
@@ -188,7 +217,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         });
 
         pnLegendas.setPreferredSize(new Dimension(810, 200));
-        pnLegendas.setBackground(new Color(50,50,200,0));
+        pnLegendas.setBackground(new Color(50, 50, 200, 0));
         pnLegendas.setOpaque(true);
 
         pnCalendarios.setLayout(new BorderLayout());
@@ -273,6 +302,20 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
     }
 
     /**
+     * Gera o horario para todas as turmas
+     */
+    private void gerarTodasTurmas() {
+        try {
+            for (Turma t : CronosAPI.<Turma>get(Turma.class)) {
+                gerarHorario(t);
+            }
+            HorariosUI.getInstance().move("exibir");
+        } catch (Exception e) {
+            Alerta.jogarAviso("Problemas ao gerar horario para todas as turmas:" + e);
+        }
+    }
+
+    /**
      * Gera um horario a partir de um ID de uma turma, e exibe
      *
      * @param id
@@ -290,31 +333,32 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     actualTurma = CronosAPI.<Turma>get(Turma.class, id);
 
                     if (!actualTurma.getHorario().isVazio()) {
-                        if ( JOptionPane
-                                .showConfirmDialog( null,
-                                                    "Deseja sobrescrever o Horário já existente?",
-                                                    "Sobrescrita de Horário",
-                                                    JOptionPane.YES_NO_OPTION,
-                                                    JOptionPane.WARNING_MESSAGE)
-                              == JOptionPane.YES_OPTION) {
+                        if (JOptionPane
+                                .showConfirmDialog(null,
+                                "Deseja sobrescrever o Horário já existente?",
+                                "Sobrescrita de Horário",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.WARNING_MESSAGE)
+                                == JOptionPane.YES_OPTION) {
 
-                            actualTurma.setHorario(new Horario() );
+                            actualTurma.setHorario(new Horario());
                         }
 
                     }
 
-
                     // Gera o horario
-                    GeraHorarioFactory.getGerador().gerarHorario(actualTurma);
+                    gerarHorario(actualTurma);
 
                     HorarioUIFactory factory = new HorarioUIFactory(actualTurma);
                     calendarios = factory.getCalendarios();
 
-                    for (HorarioUI calendario : calendarios)
+                    for (HorarioUI calendario : calendarios) {
                         pnHorarios.add(calendario, calendario.getMes().toLowerCase());
+                    }
 
-                    for (JLabel legenda : factory.getLegendas() )
+                    for (JLabel legenda : factory.getLegendas()) {
                         pnLegendas.add(legenda);
+                    }
 
                     stopLoading();
                     show("CALENDARIOS");
@@ -331,6 +375,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
         thread.start();
         startLoading();
+    }
+
+    /**
+     * Gera o horario de uma turma
+     */
+    private void gerarHorario(Turma turma) throws Exception {
+        GeraHorarioFactory.getGerador().gerarHorario(turma);
     }
 
     @SuppressWarnings("unchecked")

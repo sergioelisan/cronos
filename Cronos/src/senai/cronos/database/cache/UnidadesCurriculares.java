@@ -111,14 +111,14 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
     @Override
     public void update() {
         try {
-            disciplinas = DAOFactory.getDao(UnidadeCurricular.class).get();
+            disciplinas = DAOFactory.getDao(UnidadeCurricular.class).get();            
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
     }
 
     @Override
-    public List<UnidadeCurricular> get() {
+    public List<UnidadeCurricular> get() {        
         return disciplinas;
     }
 

@@ -79,7 +79,7 @@ public class GeraHorarioAlternado extends GeraHorario {
                     }
                 }
 
-                if (disponivel && !lastDocente.equals(docente) 
+                if ( (disponivel && !lastDocente.equals(docente)) 
                         && getTurma().getTurno().isInside(docente.getTurno() ) ) {
                     aula.setDocente(docente);
                     lastDocente = docente;

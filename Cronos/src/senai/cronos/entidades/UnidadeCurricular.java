@@ -16,19 +16,6 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
     public UnidadeCurricular() {
     }
 
-    public ArrayList<Docente> bestDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException {
-        ArrayList<Docente> bestDocente = new ArrayList();
-        List<Docente> docentes;
-        docentes = CronosAPI.buscaDocentes(nucleo);
-        for (Docente doc : docentes) {
-            Proficiencia p = doc.getProficiencia(this);
-            if (p.getLecionado() > 7) {
-                bestDocente.add(doc);
-            }
-        }
-        return bestDocente;
-    }
-
     public UnidadeCurricular(String nome, Nucleo nucleo,
             int cargaHoraria, Integer modulo, String conteudoProgramatico, Laboratorio lab) {
         this.nome = nome;
@@ -100,13 +87,16 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
         if (obj == null) {
             return false;
         }
+        
         if (getClass() != obj.getClass()) {
             return false;
         }
+        
         final UnidadeCurricular other = (UnidadeCurricular) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
@@ -147,7 +137,7 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
 
     @Override
     public int compareTo(UnidadeCurricular o) {
-        return cargaHoraria > o.cargaHoraria ? 1 : cargaHoraria == o.cargaHoraria ? 0 : -1;
+        return modulo > o.modulo ? 1 : modulo == o.modulo ? 0 : -1;
     }
     /**
      * ideintificador unico
