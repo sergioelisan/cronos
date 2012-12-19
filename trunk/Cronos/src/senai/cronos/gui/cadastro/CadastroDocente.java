@@ -109,7 +109,6 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setNome(txtnome.getText().trim());
             docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1));
             
-            System.out.println(combonucleo.getSelectedItem().toString() );
             docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
             
             docente.setScore(1);

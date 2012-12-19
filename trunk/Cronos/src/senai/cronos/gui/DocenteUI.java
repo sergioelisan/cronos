@@ -490,7 +490,6 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             
             profcDialog.setVisible(true);
         } catch (ClassNotFoundException | SQLException ex) { 
-            System.out.println(ex);
             Alerta.jogarAviso(ex.getMessage() ); 
         
         }

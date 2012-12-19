@@ -37,7 +37,6 @@ public class HorariosUI extends javax.swing.JPanel {
 
     private CronosFrame main;
     private static HorariosUI instance = new HorariosUI();
-    
 
     public static HorariosUI getInstance() {
         return instance;
@@ -91,7 +90,6 @@ public class HorariosUI extends javax.swing.JPanel {
     /*
      * CLASSES INTERNAS ANONIMAS VOLTADAS PARA OFERECER SERVICOS PARA SEUS CLIENTES
      */
-
     /**
      * Classe interna que gera o efeito de carregamento no Loading
      */
@@ -102,28 +100,26 @@ public class HorariosUI extends javax.swing.JPanel {
         LoadingEffect(JLabel lb) {
             lbLoading = lb;
         }
-
         private int turn = 0;
-            private String[] chars = {" ", ".", "..", "..."};
+        private String[] chars = {" ", ".", "..", "..."};
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                lbLoading.setText("carregando " + chars[turn]);
-                turn++;
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            lbLoading.setText("carregando " + chars[turn]);
+            turn++;
 
-                if (turn == chars.length) {
-                    turn = 0;
-                }
+            if (turn == chars.length) {
+                turn = 0;
             }
-
+        }
     }
 
     /**
-     * Classe interna que prove o Serviço de carregar turmas do banco de dados e retornar
-     * em forma de "TILES", peças da cor do sistema.
+     * Classe interna que prove o Serviço de carregar turmas do banco de dados e
+     * retornar em forma de "TILES", peças da cor do sistema.
      *
-     * É uma maneira de centralizar essa funcionalidade em um unico lugar e oferecer a todos
-     * os modulos instalados em HorariosUI
+     * É uma maneira de centralizar essa funcionalidade em um unico lugar e
+     * oferecer a todos os modulos instalados em HorariosUI
      */
     static class LoadTurmas implements Runnable {
 
@@ -143,7 +139,7 @@ public class HorariosUI extends javax.swing.JPanel {
                 for (Turma t : turmas) {
                     Tile tile = new Tile();
                     tile.setNome(t.getNome());
-                    tile.setId(t.getNucleo().getNome()+ "");
+                    tile.setId(t.getNucleo().getNome() + "");
                     tile.setClickEvent(new TileClickedHandler(client));
                     panel.add(tile);
                 }
@@ -154,8 +150,8 @@ public class HorariosUI extends javax.swing.JPanel {
     }
 
     /**
-     * Classe que gerará objetos HANDLER para tratar os efeitos graficos, quando o mouse
-     * passa por cima dos elementos que o implementam
+     * Classe que gerará objetos HANDLER para tratar os efeitos graficos, quando
+     * o mouse passa por cima dos elementos que o implementam
      */
     static class LinkHandler extends MouseAdapter {
 
@@ -173,7 +169,8 @@ public class HorariosUI extends javax.swing.JPanel {
     }
 
     /**
-     * Classe que prove o servico de tratamento do evento de clicar em cima da tile
+     * Classe que prove o servico de tratamento do evento de clicar em cima da
+     * tile
      *
      */
     static class TileClickedHandler extends MouseAdapter {
@@ -185,7 +182,6 @@ public class HorariosUI extends javax.swing.JPanel {
         }
 
         @Override
-        
         public void mouseClicked(MouseEvent e) {
             Tile tile;
             if (e.getSource() instanceof JLabel) {
@@ -194,11 +190,11 @@ public class HorariosUI extends javax.swing.JPanel {
                 tile = (Tile) e.getSource();
             }
             try {
-                for(Turma t:CronosAPI.<Turma>get(Turma.class)){
-                   if(t.getNome().equals(tile.getNome())){
+                for (Turma t : CronosAPI.<Turma>get(Turma.class)) {
+                    if (t.getNome().equals(tile.getNome())) {
                         action.action(t.getId());
+                    }
                 }
-            }
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(HorariosUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -206,7 +202,7 @@ public class HorariosUI extends javax.swing.JPanel {
             }
         }
     }
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -349,6 +345,7 @@ public class HorariosUI extends javax.swing.JPanel {
 
     private void btgerarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btgerarMouseClicked
         move("gerar");
+        HorariosGerarPanel.getInstance().show("GERAR");
     }//GEN-LAST:event_btgerarMouseClicked
 
     private void btexibirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btexibirMouseClicked

@@ -65,7 +65,7 @@ public class UpdateCronos {
             fos.close();
             s = true;
 
-            System.out.println(">download, ok!!!");
+            System.out.println("> download, ok!!!");
             u.setVisible(false);
             dia.dispose();
 
