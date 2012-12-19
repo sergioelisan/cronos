@@ -50,7 +50,7 @@ public class CronosFrame extends javax.swing.JFrame {
             UIManager.setLookAndFeel(os.getLookAndFeel() );
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            System.out.println("problemas na definicao do estilo do sistema");
+            Alerta.jogarAviso("problemas na definicao do estilo do sistema");
         }
     }
 

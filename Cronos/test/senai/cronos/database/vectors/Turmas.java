@@ -3,12 +3,11 @@ package senai.cronos.database.vectors;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import senai.cronos.database.dao.DAOFactory;
 import senai.util.Observador;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Turma;
+import senai.cronos.gui.Alerta;
 
 /**
  *
@@ -28,7 +27,7 @@ public final class Turmas implements Observador, Repository<Turma> {
             DAOFactory.getDao(Turma.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Problemas com o vetor de turmas");
+            Alerta.jogarAviso("Problemas com o vetor de turmas");
         }
     }
 

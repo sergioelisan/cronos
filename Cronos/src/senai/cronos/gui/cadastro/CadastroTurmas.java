@@ -101,7 +101,6 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             turma.setEntrada(dateentrada.getDate());
             turma.setHabilitacao(combohabilitacao.getSelectedIndex() - 1);
             turma.setTurno(Turno.getTurno(comboturno.getSelectedIndex() - 1));
-            System.out.println(combonucleo.getSelectedItem());
             turma.setNucleo(getNucleo(combonucleo.getSelectedItem().toString()));
 
             if (lbcodigo.getText().equals("código")) {

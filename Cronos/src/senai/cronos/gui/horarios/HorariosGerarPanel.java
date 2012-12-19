@@ -82,12 +82,12 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         pnTurmas.setMaximumSize(new Dimension(1300, 9000));
         pnTurmas.setOpaque(false);
 
-        pnGerar.setLayout(new FlowLayout());
+        pnGerar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 250));
         pnGerar.setMinimumSize(new Dimension(900, 768));
         pnGerar.setPreferredSize(new Dimension(1300, 768));
         pnGerar.setMaximumSize(new Dimension(1300, 1080));
         pnGerar.setOpaque(false);
-        
+
         Tile todas = new Tile();
         todas.setNome("Todas as turmas");
         todas.setId("");
@@ -96,7 +96,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                 gerarTodasTurmas();
             }
         });
-        
+
         Tile turmas = new Tile();
         turmas.setNome("Escolher turma");
         turmas.setId("");
@@ -105,9 +105,9 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                 show("TURMAS");
             }
         });
-        
-        pnGerar.add(todas);
+
         pnGerar.add(turmas);
+        pnGerar.add(todas);
 
         createCalendarComponents();
 
@@ -262,7 +262,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      *
      * @param panel
      */
-    private void show(String panel) {
+    public void show(String panel) {
         ((CardLayout) getLayout()).show(this, panel);
     }
 
@@ -305,14 +305,21 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      * Gera o horario para todas as turmas
      */
     private void gerarTodasTurmas() {
-        try {
-            for (Turma t : CronosAPI.<Turma>get(Turma.class)) {
-                gerarHorario(t);
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    for (Turma t : CronosAPI.<Turma>get(Turma.class)) {
+                        gerarHorario(t);
+                    }
+                    stopLoading();
+                    HorariosUI.getInstance().move("exibir");
+                } catch (Exception e) {
+                    Alerta.jogarAviso("Problemas ao gerar horario para todas as turmas:" + e);
+                }
             }
-            HorariosUI.getInstance().move("exibir");
-        } catch (Exception e) {
-            Alerta.jogarAviso("Problemas ao gerar horario para todas as turmas:" + e);
-        }
+        }).start();
+
+        startLoading();
     }
 
     /**

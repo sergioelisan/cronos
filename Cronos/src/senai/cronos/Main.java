@@ -33,7 +33,7 @@ public class Main {
     /**
      * Versao atual do codigo
      */
-    public static final String VERSAO = Versoes.BETA2;
+    public static final String VERSAO = Versoes.BETA3;
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */
