@@ -11,6 +11,7 @@ import java.util.TreeMap;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.util.Tupla;
+import senai.util.date.DateUtil;
 
 /**
  * Classe wrapper da estrutura de dados que compoe um horario. Prove serviços de
@@ -92,6 +93,29 @@ public class Horario {
         }
 
         return diasLecionados;
+    }
+    
+    /**
+     * divide o horario em meses
+     * @param horario
+     * @return 
+     */
+    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> separaHorarioEmMeses() {
+        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
+
+        Date primeiroDia = Main.CALENDARIO.getDiasUteis().get(0); // pega o primeiro mes do calendario
+        Date ultimoDia = Main.CALENDARIO.getDiasUteis().get(Main.CALENDARIO.getDiasUteis().size() - 1); // pega o ultim mes do calendario
+
+        // cria os dicionarios respectivos de cada mes
+        for (Integer mes =  DateUtil.getMes(primeiroDia);
+                     mes <= DateUtil.getMes(ultimoDia);
+                     mes++ )
+            horarios.put(mes, new TreeMap<Date, Tupla<Aula, Aula>>());
+
+        for (Date dia : getHorario().keySet())
+            horarios.get(DateUtil.getMes(dia) ).put(dia, getHorario().get(dia) );
+
+        return horarios;
     }
 
     /**
