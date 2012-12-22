@@ -68,9 +68,9 @@ public abstract class GeraHorario {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-     public List<UnidadeCurricular> getDisciplinas() throws ClassNotFoundException, SQLException {
+     public List<UnidadeCurricular> getDisciplinas(int modulo) throws ClassNotFoundException, SQLException {
        int dias=DateUtil.diferencaDias(turma.getEntrada(),Main.CALENDARIO.getDiasUteis().get(0));
-       int modulo = (dias / 180) + 1;
+       //int modulo = (dias / 180) + 1;
        List<UnidadeCurricular> disciplinas = CronosAPI.buscaDisciplinas(Nucleo.COMUM,modulo);
        
        disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo(),modulo) );
