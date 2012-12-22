@@ -40,7 +40,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btconfig" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="pnContainer" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pnContainer" alignment="0" pref="1346" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lkdocentes" linkSize="1" min="-2" pref="104" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -74,7 +74,7 @@
                   <Component id="lklaboratorio" linkSize="2" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="pnContainer" pref="611" max="32767" attributes="0"/>
+              <Component id="pnContainer" pref="614" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

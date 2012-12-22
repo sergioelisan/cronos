@@ -140,6 +140,9 @@ public class Docente implements Comparable<Docente> {
         this.score = score;
     }
 
+    public void limpaProficiencia(){
+        this.proficiencias.removeAll(proficiencias);
+    }
     public Turno getSegundoTurno() {
         return segundoTurno;
     }
