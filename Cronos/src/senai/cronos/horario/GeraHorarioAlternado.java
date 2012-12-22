@@ -1,14 +1,9 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -30,8 +25,7 @@ public class GeraHorarioAlternado extends GeraHorario {
            
              
            }
-           for (Date dia : keySet) 
-                    System.out.println("modulo:"+modulo+"//dia:"+dia.toString());
+          
            int modo = 0;      
            TreeSet ts=new TreeSet();
            ts.addAll(keySet);
@@ -112,7 +106,6 @@ public class GeraHorarioAlternado extends GeraHorario {
        for (Date dia2 : horario.keySet()) {
            
            if (horario.get(dia2).getPrimeiro().equals(Aula.PADRAO)) {
-              // System.out.println(dia2.toString()); 
                set.add(dia2);
             }
         }
