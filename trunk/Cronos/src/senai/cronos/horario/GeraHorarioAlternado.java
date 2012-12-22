@@ -2,7 +2,10 @@ package senai.cronos.horario;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
@@ -14,6 +17,8 @@ public class GeraHorarioAlternado extends GeraHorario {
 
     @Override
     public void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException {
+
+
         int modo = 0;
         for (UnidadeCurricular uc : getDisciplinas()) {
             Aula aula = getAula(uc);
@@ -54,20 +59,49 @@ public class GeraHorarioAlternado extends GeraHorario {
 
             modo = (modo == 0) ? 1 : 0;
         }
+        limparHorario(horario);
 
     }
-    
+
+    public void limparHorario(Map<Date, Tupla<Aula, Aula>> horario) {
+       
+        Date[] datas = new Date[500];
+        horario.keySet().toArray(datas);
+        
+        Map<Date, Tupla<Aula, Aula>> temp = new TreeMap<>() ;
+        for (int j = 0; j < horario.size(); j++) {
+            for (int i = 0; i < horario.size(); i++) {
+                if (horario.get(datas[i]).getPrimeiro().equals(Aula.PADRAO)
+                        && horario.get(datas[i]).getSegundo().equals(Aula.PADRAO)) {
+                    
+                } else {
+                    temp.put(datas[j], horario.get(datas[i]));
+                    j++;
+                }
+            }
+            horario.clear();
+           horario.putAll(temp);
+        }
+      
+     
+        for (Date dia : horario.keySet()) {
+               
+            if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)||horario.get(dia).getPrimeiro()==null) {
+                System.out.println("aqui");
+            }
+        }
+    }
     private Docente lastDocente = Docente.PADRAO;
 
     @Override
     public void alocarDocentes(Map<Date, Tupla<Aula, Aula>> horario) throws Exception {
         Horario wrapper = new Horario(horario);
-        
-        for (Aula aula : wrapper.getAulas()) {            
+
+        for (Aula aula : wrapper.getAulas()) {
             Map<Date, Tupla<Boolean, Boolean>> dias = wrapper.getDiasLecionados(aula);
-            
-            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina()) ) {
-                
+
+            for (Docente docente : CronosAPI.bestDocentes(aula.getDisciplina())) {
+
                 boolean disponivel = true;
 
                 for (Date dia : dias.keySet()) {
@@ -79,17 +113,16 @@ public class GeraHorarioAlternado extends GeraHorario {
                     }
                 }
 
-                if ( (disponivel && !lastDocente.equals(docente)) 
-                        && getTurma().getTurno().isInside(docente.getTurno() ) ) {
+                if ((disponivel && !lastDocente.equals(docente))
+                        && getTurma().getTurno().isInside(docente.getTurno())) {
                     aula.setDocente(docente);
                     lastDocente = docente;
                     break;
-                } 
-                
+                }
+
             }
 
         }
-        
+
     }
-    
 }

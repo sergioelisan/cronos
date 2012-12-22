@@ -9,6 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import senai.cronos.CronosAPI;
 import senai.cronos.database.cache.CacheFactory;
 import senai.cronos.database.cache.Docentes;
 import senai.cronos.database.dao.DAODocente;
+import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -53,7 +56,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      */
     public CadastroDocente() {
         initComponents();
-
+    
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
         btnovo.addMouseListener(new LinkEffectHandler());
@@ -77,7 +80,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
-
+        
         update();
     }
 
@@ -112,21 +115,35 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
             
             docente.setScore(1);
-            
+            docente.limpaProficiencia();
+            CronosAPI.remove(Proficiencia.class, docente.getMatricula());
             if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {  
                 for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo() ) ) 
                     docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5) );                
                 CronosAPI.add(docente);
                 
             } else {
+                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
+                    Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
+                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5) );  
+                    CronosAPI.add(proficiencia);
+                }
                 CronosAPI.update(docente);
             }
         } catch (ClassNotFoundException | SQLException e) {
             Alerta.jogarAviso(e.getMessage());
         } finally {
-            novo();
-            Docentes.start();
+           /*
+            try {
+                DAOFactory.getDao(Docente.class).notifica();
+                DAOFactory.getDao(Docente.class).close();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
             dialog.dispose();
+             novo();
         }
      
 }
@@ -256,6 +273,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             }
 
             show(tile.getId());
+            load();
         }
     }
     
