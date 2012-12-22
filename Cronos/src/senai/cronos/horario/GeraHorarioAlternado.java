@@ -1,10 +1,14 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
@@ -17,16 +21,19 @@ public class GeraHorarioAlternado extends GeraHorario {
 
     @Override
     public void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException {
-
-
+Set<Date> keySet = null;
+       for(int modulo=1;modulo<3;modulo++){
+           if(keySet==null){
+              keySet=horario.keySet(); 
+           }
         int modo = 0;
-        for (UnidadeCurricular uc : getDisciplinas()) {
+        for (UnidadeCurricular uc : getDisciplinas(modulo)) {
             Aula aula = getAula(uc);
             int total = getQuantidadeDeDias(uc, GeraHorario.TURNO_INTEIRO);
 
             for (int i = 0; i < total; i++) {
                 OUTER:
-                for (Date dia : horario.keySet()) {
+                for (Date dia : keySet) {
                     String diaSemana = DateUtil.getNomeDia(dia);
                     if (modo == 0) {
                         switch (diaSemana) {
@@ -59,37 +66,44 @@ public class GeraHorarioAlternado extends GeraHorario {
 
             modo = (modo == 0) ? 1 : 0;
         }
-        limparHorario(horario);
-
+        if(modulo<2) keySet=limparHorario(horario,modulo);
+       }
     }
 
-    public void limparHorario(Map<Date, Tupla<Aula, Aula>> horario) {
-       
+    public Set<Date> limparHorario(Map<Date, Tupla<Aula, Aula>> horario, int t) {
+        Set<Date> set=new HashSet();
         Date[] datas = new Date[500];
-        horario.keySet().toArray(datas);
-        
-        Map<Date, Tupla<Aula, Aula>> temp = new TreeMap<>() ;
-        for (int j = 0; j < horario.size(); j++) {
-            for (int i = 0; i < horario.size(); i++) {
-                if (horario.get(datas[i]).getPrimeiro().equals(Aula.PADRAO)
+        Map<Date, Tupla<Aula, Aula>> temp = new TreeMap<>();
+        temp=Horario.create();
+        temp.keySet().toArray(datas);
+        int cont=0;
+        for (int j = 0; j <= temp.size()-1; j++) {
+             if(cont>2) break;
+             for (int i = 0; i <= horario.size()-1; i++) {
+                 if (horario.get(datas[i]).getPrimeiro().equals(Aula.PADRAO)
                         && horario.get(datas[i]).getSegundo().equals(Aula.PADRAO)) {
-                    
-                } else {
+                     cont++;
+                 } else {
+                    if(j>=temp.size()) break;
                     temp.put(datas[j], horario.get(datas[i]));
                     j++;
-                }
-            }
-            horario.clear();
-           horario.putAll(temp);
+                    cont=0;
+                 }
+             }
         }
-      
+       horario.clear();
+       horario.putAll(temp);
      
-        for (Date dia : horario.keySet()) {
-               
-            if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)||horario.get(dia).getPrimeiro()==null) {
-                System.out.println("aqui");
+       for (Date dia2 : horario.keySet()) {
+           
+           if (horario.get(dia2).getPrimeiro().equals(Aula.PADRAO)) {
+               System.out.println(dia2.toString()); 
+               set.add(dia2);
             }
         }
+       
+    
+        return set;
     }
     private Docente lastDocente = Docente.PADRAO;
 

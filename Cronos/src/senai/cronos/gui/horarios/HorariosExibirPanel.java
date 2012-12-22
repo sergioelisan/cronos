@@ -9,18 +9,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 import javax.swing.*;
 import senai.cronos.CronosAPI;
-import senai.cronos.entidades.Aula;
 import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.util.Observador;
-import senai.util.Tupla;
 
 /**
  *
@@ -184,7 +181,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         pnCalendarios.add(setaEsquerda, BorderLayout.WEST);
         pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
         pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
-        pnCalendarios.add(pnLegendas, BorderLayout.SOUTH);
+        pnCalendarios.add(new JScrollPane(pnLegendas), BorderLayout.SOUTH);
     }
 
     /**
