@@ -86,6 +86,11 @@ public class HorariosUI extends javax.swing.JPanel {
         ((CardLayout) container.getLayout()).show(container, modulo);
         lbModulo.setText(modulo);
     }
+    
+    public void exibir(Integer turmaID) {
+        move("exibir");
+        HorariosExibirPanel.getInstance().action(turmaID);
+    }
 
     /*
      * CLASSES INTERNAS ANONIMAS VOLTADAS PARA OFERECER SERVICOS PARA SEUS CLIENTES

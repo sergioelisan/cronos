@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.*;
 import javax.swing.JLabel;
-import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.horario.Horario;
@@ -29,9 +28,9 @@ public class HorarioUIFactory {
      *
      * @param horario
      */
-    public HorarioUIFactory(Turma turma) {
-        this.turma = turma;
-        this.horario = turma.getHorario();
+    public HorarioUIFactory(Turma t) {
+        turma = t;
+        horario = t.getHorario();
         loadCalendars();
     }
 
@@ -64,7 +63,7 @@ public class HorarioUIFactory {
         calendarios = new ArrayList<>();
 
         // divide o horario geral para um sub horario pra cada mes
-        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horariosMes = divideHorario();
+        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horariosMes = horario.separaHorarioEmMeses();
         // atribui cores para cada uma das disciplinas
         Map<UnidadeCurricular, Color> dicionarioCores = loadCoresELegendas();
 
@@ -165,30 +164,6 @@ public class HorarioUIFactory {
         }
 
         return dicionarioCores;
-    }
-
-    /**
-     * separa o horario integral em varios sub-horarios divididos pelo seu mes
-     *
-     * @param horario
-     * @return
-     */
-    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> divideHorario() {
-        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
-
-        Date primeiroDia = Main.CALENDARIO.getDiasUteis().get(0); // pega o primeiro mes do calendario
-        Date ultimoDia = Main.CALENDARIO.getDiasUteis().get(Main.CALENDARIO.getDiasUteis().size() - 1); // pega o ultim mes do calendario
-
-        // cria os dicionarios respectivos de cada mes
-        for (Integer mes =  DateUtil.getMes(primeiroDia);
-                     mes <= DateUtil.getMes(ultimoDia);
-                     mes++ )
-            horarios.put(mes, new TreeMap<Date, Tupla<Aula, Aula>>());
-
-        for (Date dia : horario.getHorario().keySet())
-            horarios.get(DateUtil.getMes(dia) ).put(dia, horario.getHorario().get(dia) );
-
-        return horarios;
     }
 
     /**

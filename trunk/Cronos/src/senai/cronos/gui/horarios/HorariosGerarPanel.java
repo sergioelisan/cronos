@@ -22,6 +22,7 @@ import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.horario.GeraHorarioFactory;
 import senai.cronos.horario.Horario;
+import senai.cronos.util.Export;
 import senai.util.Observador;
 
 /**
@@ -121,11 +122,9 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
         add(pnLoading, "LOADING");
         add(scrollTurmas, "TURMAS");
-        add(pnCalendarios, "CALENDARIOS");
         add(pnGerar, "GERAR");
 
-        try {
-            CronosAPI.subscribe(Turma.class, this);
+        try { CronosAPI.subscribe(Turma.class, this);
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
@@ -195,11 +194,24 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         setaDireita.setBackground(Color.white);
         setaDireita.setFont(new Font("Segoe UI", Font.BOLD, 26));
         setaDireita.setPreferredSize(setaDIM);
-        setaDireita.addMouseListener(new LinkEffectHandler());
         setaDireita.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 next();
+            }
+            
+             @Override
+            public void mouseEntered(MouseEvent evt) {
+                JLabel lb = (JLabel) evt.getSource();
+                lb.setForeground(Color.WHITE);
+                lb.setBackground(Color.BLUE);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                JLabel lb = (JLabel) evt.getSource();
+                lb.setForeground(Color.BLACK);
+                lb.setBackground(Color.WHITE);
             }
         });
 
@@ -208,16 +220,35 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         setaEsquerda.setBackground(Color.white);
         setaEsquerda.setFont(new Font("Segoe UI", Font.BOLD, 26));
         setaEsquerda.setPreferredSize(setaDIM);
-        setaEsquerda.addMouseListener(new LinkEffectHandler());
         setaEsquerda.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 previous();
             }
+            
+            @Override
+            public void mouseEntered(MouseEvent evt) {
+                JLabel lb = (JLabel) evt.getSource();
+                lb.setForeground(Color.WHITE);
+                lb.setBackground(Color.BLUE);
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                JLabel lb = (JLabel) evt.getSource();
+                lb.setForeground(Color.BLACK);
+                lb.setBackground(Color.WHITE);
+            }
         });
 
-        pnLegendas.setPreferredSize(new Dimension(810, 200));
-        pnLegendas.setBackground(new Color(50, 50, 200, 0));
+        JScrollPane scrollLegendas = new JScrollPane(pnLegendas);
+        scrollLegendas.setBorder(null);
+        scrollLegendas.setMaximumSize(new Dimension(810, 200));
+        scrollLegendas.setPreferredSize(new Dimension(810, 200));
+        scrollLegendas.setMinimumSize(new Dimension(810, 200));
+        scrollLegendas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        pnLegendas.setPreferredSize(new Dimension(810, 800));
+        pnLegendas.setBackground(Color.WHITE);
         pnLegendas.setOpaque(true);
 
         pnCalendarios.setLayout(new BorderLayout());
@@ -227,7 +258,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         pnCalendarios.add(setaDireita, BorderLayout.EAST);
         pnCalendarios.add(setaEsquerda, BorderLayout.WEST);
         pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
-        pnCalendarios.add(pnLegendas, BorderLayout.SOUTH);
+        pnCalendarios.add(scrollLegendas, BorderLayout.SOUTH);
     }
 
     /**
@@ -299,6 +330,12 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      * Imprime o horario em PDF
      */
     private void print() {
+        try {
+            new Export(actualTurma).generate();
+            JOptionPane.showMessageDialog(null, "Arquivo enviado para a Área de Trabalho");
+        } catch (Exception ex) {
+            Alerta.jogarAviso("Nao foi possivel gerar o arquivo Excel:\n" + ex);
+        }
     }
 
     /**
@@ -333,10 +370,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
             @Override
             public void run() {
                 try {
-                    pnLegendas.removeAll();
-                    pnHorarios.removeAll();
-                    calendarios.clear();
-
                     actualTurma = CronosAPI.<Turma>get(Turma.class, id);
 
                     if (!actualTurma.getHorario().isVazio()) {
@@ -356,20 +389,10 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     // Gera o horario
                     gerarHorario(actualTurma);
 
-                    HorarioUIFactory factory = new HorarioUIFactory(actualTurma);
-                    calendarios = factory.getCalendarios();
-
-                    for (HorarioUI calendario : calendarios) {
-                        pnHorarios.add(calendario, calendario.getMes().toLowerCase());
-                    }
-
-                    for (JLabel legenda : factory.getLegendas()) {
-                        pnLegendas.add(legenda);
-                    }
-
                     stopLoading();
                     show("CALENDARIOS");
-                    ((CardLayout) pnHorarios.getLayout()).show(pnHorarios, calendarios.get(calendarios.size() - 1).getMes());
+                    
+                    HorariosUI.getInstance().exibir(actualTurma.getId() );
 
                 } catch (Exception e) {
                     stopLoading();
