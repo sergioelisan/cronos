@@ -111,8 +111,8 @@ public class HorarioUIFactory {
      */
     public Map<UnidadeCurricular, Color> loadCoresELegendas() {
         // cria uma disciplina nula que vai ocupar o espaco vazio
-        Map<UnidadeCurricular, Docente> docs = new HashMap<>();
-        Set<UnidadeCurricular> disciplinas = new HashSet<>();
+        Map<UnidadeCurricular, Docente> docs = new LinkedHashMap<>();
+        Set<UnidadeCurricular> disciplinas = new LinkedHashSet<>();
 
         for (Date dia : horario.getHorario().keySet()) {
             Tupla<Aula, Aula> aulas = horario.getHorario().get(dia);
@@ -155,7 +155,7 @@ public class HorarioUIFactory {
                 label.setForeground(Color.white);
                 label.setBackground(dicionarioCores.get(uc));
 
-                String text = " [" + uc.getCargaHoraria() + "h] sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
+                String text = " [" + uc.getCargaHoraria() + "h], módulo"+uc.getModulo()+" sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
                 label.setText(text);
 
                 legendas.add(label);

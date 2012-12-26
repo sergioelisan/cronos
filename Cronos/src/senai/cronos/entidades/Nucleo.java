@@ -1,5 +1,6 @@
 package senai.cronos.entidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Objects;
  *
  * @author Carlos Melo e Sergio Lisan
  */
-public class Nucleo implements Comparable<Nucleo> {
+public class Nucleo implements Comparable<Nucleo>, Serializable {
 
     /** Nucleo comum a todas as disciplinas  */
     public static final Nucleo COMUM = Nucleo.getCommon();
