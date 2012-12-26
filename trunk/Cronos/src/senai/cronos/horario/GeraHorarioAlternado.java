@@ -1,16 +1,20 @@
 package senai.cronos.horario;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import senai.cronos.CronosAPI;
+import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.UnidadeCurricular;
+import senai.cronos.util.FileText;
 import senai.util.Tupla;
 import senai.util.date.DateUtil;
 
@@ -18,15 +22,23 @@ public class GeraHorarioAlternado extends GeraHorario {
 
     @Override
     public void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException {
+       
+        List<UnidadeCurricular> list=new FileText().importar(getTurma().getNome()+".tur");
+        for(UnidadeCurricular l:list){
+           
+        }
         Set<Date> keySet = null;
-       for(int modulo=1;modulo<3;modulo++){
+       for(int modulo=1;modulo<5;modulo++){
+           List<UnidadeCurricular> sl=new ArrayList<>();
+           for(UnidadeCurricular slu:list){
+               if(slu.getModulo()==modulo){
+                   sl.add(slu);
+               }
+           }
            if(keySet==null){
               keySet=horario.keySet();
-           
-             
            }
-          
-           int modo = 0;      
+           int modo = 0;
            TreeSet ts=new TreeSet();
            ts.addAll(keySet);
            if(ts.first().toString().contains("fri")||ts.first().toString().contains("wed")||ts.first().toString().contains("mon")){
@@ -34,8 +46,7 @@ public class GeraHorarioAlternado extends GeraHorario {
                     }else{
                         modo=1;
                     }
-       
-        for (UnidadeCurricular uc : getDisciplinas(modulo)) {
+           for (UnidadeCurricular uc : sl) {
             Aula aula = getAula(uc);
             int total = getQuantidadeDeDias(uc, GeraHorario.TURNO_INTEIRO);
 
@@ -75,7 +86,7 @@ public class GeraHorarioAlternado extends GeraHorario {
 
             modo = (modo == 0) ? 1 : 0;
         }
-        if(modulo<3) keySet=limparHorario(horario,modulo);
+        if(modulo<5) keySet=limparHorario(horario,modulo);
        }
     }
 
@@ -87,7 +98,7 @@ public class GeraHorarioAlternado extends GeraHorario {
         temp.keySet().toArray(datas);
         int cont=0;
         for (int j = 0; j <= temp.size()-1; j++) {
-             if(cont>2) break;
+             if(cont>=2) break;
              for (int i = 0; i <= horario.size()-1; i++) {
                  if (horario.get(datas[i]).getPrimeiro().equals(Aula.PADRAO)
                         && horario.get(datas[i]).getSegundo().equals(Aula.PADRAO)) {

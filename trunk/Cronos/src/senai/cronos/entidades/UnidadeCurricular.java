@@ -1,5 +1,6 @@
 package senai.cronos.entidades;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import senai.cronos.entidades.Docente;
  *
  * @author sergio lisan e carlos melo
  */
-public class UnidadeCurricular implements Comparable<UnidadeCurricular> {
+public class UnidadeCurricular implements Comparable<UnidadeCurricular>, Serializable{
 
     public UnidadeCurricular() {
     }

@@ -1,12 +1,13 @@
 package senai.cronos.entidades;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Representa uma sala de aula ou um laboratorio da escola
  * @author Carlos Melo e sergio lisan
  */
-public class Laboratorio {
+public class Laboratorio implements Serializable{
 
     public Laboratorio() {
     }
