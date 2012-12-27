@@ -13,16 +13,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.dao.DAO;
-import senai.cronos.database.dao.DAODocente;
-import senai.cronos.database.dao.DAOProficiencia;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -31,6 +26,7 @@ import senai.cronos.gui.custom.ProficienciaSlider;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.horario.HorarioDocente;
+import senai.cronos.util.ExportHorarioDocente;
 import senai.util.Observador;
 
 /**
@@ -40,6 +36,7 @@ import senai.util.Observador;
 public class DocenteUI extends javax.swing.JPanel implements Observador {
 
     private CronosFrame main;
+    private Docente docenteSelecionado;
     private List<Nucleo> nucleos;
     private int posicao = -1;
 
@@ -50,6 +47,9 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         lbanterior.addMouseListener(new LinkEffectHandler());
         lbProficiencias.addMouseListener(new LinkEffectHandler());
         lbProficiencias.setVisible(false);
+
+        btexport.addMouseListener(new LinkEffectHandler());
+        btexport.setVisible(false);
 
         try {
             CronosAPI.subscribe(Docente.class, this);
@@ -139,23 +139,24 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             public void run() {
                 try {
                     Integer matricula = Integer.parseInt(id);
-                    Docente doc = CronosAPI.<Docente>get(Docente.class, matricula);
+                    docenteSelecionado = CronosAPI.<Docente>get(Docente.class, matricula);
 
-                    lbformacao.setText("formação: " + doc.getFormacao().name());
-                    lbmatricula.setText("matricula: " + doc.getMatricula().toString());
-                    lbnome.setText(doc.getNome());
-                    lbnucleo.setText("núcleo: " + doc.getNucleo().getNome());
-                    lbscore.setText("score: " + String.valueOf(doc.getScore()));
-                    lbturnos.setText("turnos: " + doc.getPrimeiroTurno().name().toLowerCase() + " e " + doc.getSegundoTurno().name().toLowerCase());
+                    lbformacao.setText("formação: " + docenteSelecionado.getFormacao().name());
+                    lbmatricula.setText("matricula: " + docenteSelecionado.getMatricula().toString());
+                    lbnome.setText(docenteSelecionado.getNome());
+                    lbnucleo.setText("núcleo: " + docenteSelecionado.getNucleo().getNome());
+                    lbscore.setText("score: " + String.valueOf(docenteSelecionado.getScore()));
+                    lbturnos.setText("turnos: " + docenteSelecionado.getPrimeiroTurno().name().toLowerCase() + " e " + docenteSelecionado.getSegundoTurno().name().toLowerCase());
 
-                    HorarioDocente hd = doc.getHorarioDocente();
+                    HorarioDocente hd = docenteSelecionado.getHorarioDocente();
                     lbocupacao.setText("ocupação: " + String.valueOf(hd.getPercentualOcupacao()) + "%");
-                    
+
                     pndocentedata.updateUI();
                     DocenteUI.this.updateUI();
-                    
+
                     lbProficiencias.setVisible(true);
-                    
+                    btexport.setVisible(true);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes do docente:\n" + ex);
@@ -238,6 +239,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         pnShow = new javax.swing.JPanel();
         lbnucleoatual = new javax.swing.JLabel();
         lbProficiencias = new javax.swing.JLabel();
+        btexport = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1366, 768));
@@ -400,6 +402,20 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
             }
         });
 
+        btexport.setBackground(new java.awt.Color(255, 255, 255));
+        btexport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btexport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btexport.setText("exp. horário do docente");
+        btexport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btexport.setMaximumSize(new java.awt.Dimension(100, 25));
+        btexport.setMinimumSize(new java.awt.Dimension(100, 25));
+        btexport.setPreferredSize(new java.awt.Dimension(100, 25));
+        btexport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btexportMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -424,10 +440,12 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                             .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pndocentedata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(289, 289, 289))
-                            .addComponent(pndocentedata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btexport, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(289, 289, 289)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -450,7 +468,9 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         .addComponent(pndocentedata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 369, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btexport, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 326, Short.MAX_VALUE))
                     .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -473,29 +493,35 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
     }//GEN-LAST:event_btconfigMouseClicked
 
     private void lbProficienciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbProficienciasMouseClicked
-        try {
-            Docente doc = CronosAPI.buscaDocenteMatricula(lbmatricula.getText().replace("matricula: ", "") );
-            List<ProficienciaSlider> sliders = new ArrayList<>();
-            
-            for (Proficiencia p : doc.getProficiencias()) {
-                sliders.add(new ProficienciaSlider(p));
-            }
-                
-            JDialog profcDialog = new JDialog();
-            profcDialog.setSize(new Dimension(750, 450) );
-            profcDialog.setLocationRelativeTo(null);
-            
-            DocenteProficienciaUI dpUI = new DocenteProficienciaUI(profcDialog, doc, sliders);
-            profcDialog.setContentPane(dpUI);
-            
-            profcDialog.setVisible(true);
-        } catch (ClassNotFoundException | SQLException ex) { 
-            Alerta.jogarAviso(ex.getMessage() ); 
-        
+        List<ProficienciaSlider> sliders = new ArrayList<>();
+
+        for (Proficiencia p : docenteSelecionado.getProficiencias()) {
+            sliders.add(new ProficienciaSlider(p));
         }
+
+        JDialog profcDialog = new JDialog();
+        profcDialog.setSize(new Dimension(750, 450));
+        profcDialog.setLocationRelativeTo(null);
+
+        DocenteProficienciaUI dpUI = new DocenteProficienciaUI(profcDialog, docenteSelecionado, sliders);
+        profcDialog.setContentPane(dpUI);
+
+        profcDialog.setVisible(true);
+
     }//GEN-LAST:event_lbProficienciasMouseClicked
+
+    private void btexportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btexportMouseClicked
+        try {
+            new ExportHorarioDocente(docenteSelecionado).exportarHorarioDocente();
+            JOptionPane.showMessageDialog(null, "Arquivo enviado para a Área de Trabalho");
+        } catch (Exception ex) {
+            Alerta.jogarAviso("Nao foi possivel gerar o arquivo Excel:\n" + ex);
+            ex.printStackTrace(System.out);
+        }
+    }//GEN-LAST:event_btexportMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
+    private javax.swing.JLabel btexport;
     private javax.swing.JLabel bthome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbProficiencias;

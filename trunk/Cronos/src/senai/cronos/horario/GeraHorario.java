@@ -43,7 +43,6 @@ public abstract class GeraHorario {
     public void gerarHorario(Turma turma) throws Exception {
         this.turma = turma;
         alocarAulas(turma.getHorario().getHorario());
-
         alocarDocentes(turma.getHorario().getHorario());
 
     }
@@ -73,12 +72,8 @@ public abstract class GeraHorario {
      * @throws SQLException
      */
     public List<UnidadeCurricular> getDisciplinas(int modulo) throws ClassNotFoundException, SQLException {
-        int dias = DateUtil.diferencaDias(turma.getEntrada(), Main.CALENDARIO.getDiasUteis().get(0));
-        //int modulo = (dias / 180) + 1;
         List<UnidadeCurricular> disciplinas = CronosAPI.buscaDisciplinas(Nucleo.COMUM, modulo);
-
         disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo(), modulo));
-
         return disciplinas;
     }
     
@@ -102,7 +97,8 @@ public abstract class GeraHorario {
         aula.setDisciplina(uc);
         aula.setLab(uc.getLab());
         aula.setDocente(Docente.PADRAO);
-
+        aula.setTurma(turma);
+        
         return aula;
     }
 
