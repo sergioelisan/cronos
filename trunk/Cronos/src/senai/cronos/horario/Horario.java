@@ -1,13 +1,13 @@
 package senai.cronos.horario;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.util.Tupla;
@@ -29,7 +29,22 @@ public class Horario {
     public static Map<Date, Tupla<Aula, Aula>> create() {
         Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
         for (Date diaUtil : Main.CALENDARIO.getDiasUteis()) {
-            horario.put(diaUtil, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
+            horario.put(diaUtil, new Tupla<>(Aula.VAZIA, Aula.VAZIA));
+        }
+
+        return horario;
+    }
+
+    /**
+     * cria um horario a partir de uma lista sugerida de dias
+     *
+     * @param diasUteis
+     * @return
+     */
+    public static Map<Date, Tupla<Aula, Aula>> create(List<Date> diasUteis) {
+        Map<Date, Tupla<Aula, Aula>> horario = new TreeMap<>();
+        for (Date diaUtil : diasUteis) {
+            horario.put(diaUtil, new Tupla<>(Aula.VAZIA, Aula.VAZIA));
         }
 
         return horario;
@@ -43,15 +58,18 @@ public class Horario {
     }
 
     /**
+     * Construtor padrao
+     */
+    public Horario(List<Date> diasUteis) {
+        this.horario = Horario.create(diasUteis);
+    }
+
+    /**
      * construtor vazio
      */
     public Horario(Map<Date, Tupla<Aula, Aula>> horario) {
         this.horario = horario;
     }
-
-    /*
-     * Serviços prestados por esta classe
-     */
 
     /**
      * Retorna instancias das aulas lecionadas dentro do horario
@@ -94,47 +112,76 @@ public class Horario {
 
         return diasLecionados;
     }
-    
+
     /**
      * divide o horario em meses
+     *
      * @param horario
-     * @return 
+     * @return
      */
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> separaHorarioEmMeses() {
         Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarios = new TreeMap<>();
+        TreeSet<Date> dias = new TreeSet<>(getHorario().keySet());
 
-        Date primeiroDia = Main.CALENDARIO.getDiasUteis().get(0); // pega o primeiro mes do calendario
-        Date ultimoDia = Main.CALENDARIO.getDiasUteis().get(Main.CALENDARIO.getDiasUteis().size() - 1); // pega o ultim mes do calendario
-
-        // cria os dicionarios respectivos de cada mes
-        for (Integer mes =  DateUtil.getMes(primeiroDia);
-                     mes <= DateUtil.getMes(ultimoDia);
-                     mes++ )
+        for (Integer mes = DateUtil.getMes(dias.first()); mes <= DateUtil.getMes(dias.last()); mes++) {
             horarios.put(mes, new TreeMap<Date, Tupla<Aula, Aula>>());
+        }
 
-        for (Date dia : getHorario().keySet())
-            horarios.get(DateUtil.getMes(dia) ).put(dia, getHorario().get(dia) );
+        for (Date dia : getHorario().keySet()) {
+            horarios.get(DateUtil.getMes(dia)).put(dia, getHorario().get(dia));
+        }
 
         return horarios;
     }
 
     /**
+     * Retorna os primeiros horarios do ano
+     * @return 
+     */
+    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getPrimeiroSemestre() {
+        return getMeses(new int[]{1, 2, 3, 4, 5, 6});
+    }
+
+    /**
+     * Retorna os horarios dos primeiros meses do ano
+     * @return 
+     */
+    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getSegundoSemestre() {
+        return getMeses(new int[]{7, 8, 9, 10, 11, 12});
+    }
+
+    /**
+     * retorna os horarios de determinados meses
+     * @param meses
+     * @return 
+     */
+    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getMeses(int... meses) {
+        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarioParticionado = separaHorarioEmMeses();
+        Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarioResultante = new TreeMap<>();
+
+        for (int mes : meses) {
+            horarioResultante.put(mes, horarioParticionado.get(mes));
+        }
+
+        return horarioResultante;
+    }
+
+    /**
      * verifica se o horario esta vazio e nao tem nenhuma aula alocada
+     *
      * @return
      */
     public boolean isVazio() {
-        for (Date dia : getHorario().keySet() ) {
+        for (Date dia : getHorario().keySet()) {
             Tupla<Aula, Aula> diaDeAula = getHorario().get(dia);
-            if (!diaDeAula.getPrimeiro().equals(Aula.PADRAO) && !diaDeAula.getSegundo().equals(Aula.PADRAO) )
+            if (!diaDeAula.getPrimeiro().equals(Aula.VAZIA) && !diaDeAula.getSegundo().equals(Aula.VAZIA)) {
                 return false;
+            }
         }
 
         return true;
     }
 
-    /*
-     * equals, hashcode e campos da instancia
-     */
     /**
      * @return the horario
      */
@@ -148,34 +195,7 @@ public class Horario {
     public void setHorario(Map<Date, Tupla<Aula, Aula>> horario) {
         this.horario = horario;
     }
-
-    @Override
-    // equals()
-    // <editor-fold defaultstate="collapsed">
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Horario other = (Horario) obj;
-        if (!Objects.equals(this.horario, other.horario)) {
-            return false;
-        }
-        return true;
-    }
-    // </editor-fold>
-
-    @Override
-    // hashcode()
-    // <editor-fold defaultstate="collapsed">
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.getHorario());
-        return hash;
-    }
-    // </editor-fold>
+    
     /**
      * estrutura de dados que essa classe envolve
      */

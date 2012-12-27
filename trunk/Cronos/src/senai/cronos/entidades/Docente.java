@@ -213,7 +213,7 @@ public class Docente implements Comparable<Docente> {
     /**
      * nome do docente
      */
-    private String nome = "Extra Quadro";
+    private String nome = "Professor SENAI";
     /**
      * Inteiro que contem um numero arbitrario sobre a formacao do docente
      */

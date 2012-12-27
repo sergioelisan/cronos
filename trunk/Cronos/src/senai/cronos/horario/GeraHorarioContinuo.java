@@ -19,7 +19,7 @@ public class GeraHorarioContinuo extends GeraHorario {
 
             for (int i = 0; i < total; i++) {
                 for (Date dia : horario.keySet()) {
-                    if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                    if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                         horario.get(dia).setPrimeiro(aula);
                         horario.get(dia).setSegundo(aula);
 
