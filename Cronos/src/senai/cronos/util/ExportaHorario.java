@@ -4,7 +4,6 @@
  */
 package senai.cronos.util;
 
-import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Turma;
@@ -44,42 +42,23 @@ public class ExportaHorario {
 
         createDicionarioDeCores();
 
-        Sheet sheet1 = createSheet(turma.getNome() + " - 1º semestre");
+        Sheet sheet1 = ExportUtils.createSheet(wb, turma.getNome() + " - 1º semestre");
         createStructure(sheet1);
         paintStructure(sheet1);
         setCellsData(sheet1, turma.getHorario().getPrimeiroSemestre(), 1);
 
-        Sheet sheet2 = createSheet(turma.getNome() + " - 2º semestre");
+        Sheet sheet2 = ExportUtils.createSheet(wb, turma.getNome() + " - 2º semestre");
         createStructure(sheet2);
         paintStructure(sheet2);
         setCellsData(sheet2, turma.getHorario().getSegundoSemestre(), 2);
 
-        save(turma.getNome());
+        ExportUtils.save(wb, turma.getNome());
     }
 
     private void createDicionarioDeCores() {
         dicAulaCor = new HashMap<>();
         Set<Aula> aulas = turma.getHorario().getAulas();
-        IndexedColors[] cores = new IndexedColors[19];
-        cores[0] = IndexedColors.AQUA;
-        cores[1] = IndexedColors.LIGHT_BLUE;
-        cores[2] = IndexedColors.LIGHT_CORNFLOWER_BLUE;
-        cores[3] = IndexedColors.BRIGHT_GREEN;
-        cores[4] = IndexedColors.YELLOW;
-        cores[5] = IndexedColors.CORAL;
-        cores[6] = IndexedColors.CORNFLOWER_BLUE;
-        cores[7] = IndexedColors.LIGHT_GREEN;
-        cores[8] = IndexedColors.LIGHT_ORANGE;
-        cores[9] = IndexedColors.LIGHT_YELLOW;
-        cores[10] = IndexedColors.LIGHT_TURQUOISE;
-        cores[11] = IndexedColors.SEA_GREEN;
-        cores[12] = IndexedColors.ORANGE;
-        cores[13] = IndexedColors.GOLD;
-        cores[14] = IndexedColors.GREEN;
-        cores[15] = IndexedColors.INDIGO;
-        cores[16] = IndexedColors.LAVENDER;
-        cores[17] = IndexedColors.LEMON_CHIFFON;
-        cores[18] = IndexedColors.PINK;
+        IndexedColors[] cores = ExportUtils.getColors();
 
         int i = 0;
         for (Aula aula : aulas) {
@@ -95,9 +74,9 @@ public class ExportaHorario {
 
         for (short r = 0; r <= COLUMN_LENGHT; r++) {
             rows[r] = sheet.createRow(r);
+            rows[r].setHeight((short) 380);
             for (short c = 0; c < ROW_LENGHT; c++) {
-                rows[r].createCell(c);
-                rows[r].setHeight((short) 380);
+                rows[r].createCell(c);                
             }
         }
 
@@ -286,15 +265,5 @@ public class ExportaHorario {
             ++legendaRow;
         }
     }
-
-    private Sheet createSheet(String nome) {
-        return wb.createSheet(WorkbookUtil.createSafeSheetName(nome));
-    }
-
-    private void save(String filename) throws Exception {
-        String file = CronosFiles.getCronosExportDir() + filename + ".xlsx";
-        try (FileOutputStream fo = new FileOutputStream(file)) {
-            wb.write(fo);
-        }
-    }
+    
 }

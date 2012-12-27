@@ -7,21 +7,22 @@ import java.util.Objects;
  * @author Carlos Melo e sergio lisan
  */
 public class Aula {
-    
+
     /**
      * Aula padrao, vazia, usada para ocupar um espaço e evitar nulos
      */
     public static final Aula VAZIA = Aula.create();
-    
+
     /**
      * Cria uma instancia padrao de Aula
+     *
      * @return aula
      */
     public static Aula create() {
         return new Aula();
     }
-    
-    public Aula() {        
+
+    public Aula() {
     }
 
     public UnidadeCurricular getDisciplina() {
@@ -55,6 +56,14 @@ public class Aula {
     public void setLab(Laboratorio lab) {
         this.lab = lab;
     }
+    
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -77,7 +86,7 @@ public class Aula {
         if (!Objects.equals(this.lab, other.lab)) {
             return false;
         }
-         if (!Objects.equals(this.turma, other.turma)) {
+        if (!Objects.equals(this.turma, other.turma)) {
             return false;
         }
         return true;
@@ -98,22 +107,10 @@ public class Aula {
     public String toString() {
         return "Aula{" + "id=" + id + ", disciplina=" + disciplina + ", docente=" + docente + ", lab=" + lab + '}';
     }
-
+    
     private Integer id = 0;
-    
     private UnidadeCurricular disciplina = new UnidadeCurricular();
-
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
-    
     private Docente docente = new Docente();
-    
     private Laboratorio lab = new Laboratorio();
-    private Turma turma=new Turma();
-    
+    private Turma turma = new Turma();
 }
