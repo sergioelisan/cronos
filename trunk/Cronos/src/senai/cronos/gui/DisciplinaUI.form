@@ -40,19 +40,19 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btconfig" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="lbnucleoatual" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lbanterior" min="-2" pref="151" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="lbproximo" min="-2" pref="151" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="magicScroll1" min="-2" max="-2" attributes="0"/>
+                          <Component id="magicScroll1" pref="995" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="128" max="32767" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" pref="333" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -68,7 +68,7 @@
                   <Component id="bthome" alignment="0" max="32767" attributes="1"/>
                   <Component id="jLabel1" alignment="0" pref="0" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace type="separate" max="32767" attributes="0"/>
+              <EmptySpace type="separate" pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbnucleoatual" alignment="3" min="-2" pref="25" max="-2" attributes="1"/>
                   <Component id="lbanterior" alignment="3" min="-2" pref="25" max="-2" attributes="1"/>
@@ -147,12 +147,15 @@
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[379, 381]"/>
+          <Dimension value="[260, 381]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[379, 381]"/>
+          <Dimension value="[200, 381]"/>
         </Property>
         <Property name="opaque" type="boolean" value="false"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[200, 381]"/>
+        </Property>
       </Properties>
 
       <Layout>
@@ -162,21 +165,20 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="355" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lbnome" min="-2" pref="355" max="-2" attributes="1"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="lbnucleo" alignment="0" max="32767" attributes="1"/>
-                              <Component id="lbcarga" alignment="0" max="32767" attributes="1"/>
+                              <Component id="lbcarga" alignment="0" pref="194" max="32767" attributes="1"/>
                               <Component id="lbmodulo" alignment="0" max="32767" attributes="1"/>
                               <Component id="lblab" alignment="0" max="32767" attributes="1"/>
                           </Group>
                           <EmptySpace min="129" pref="129" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lbnome" max="32767" attributes="1"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -196,8 +198,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblab" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="125" max="-2" attributes="0"/>
-                  <EmptySpace pref="254" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="212" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -292,6 +294,7 @@
     </Component>
     <Container class="br.ufrpe.bcc.continuous.components.MagicScroll" name="magicScroll1">
       <Properties>
+        <Property name="verticalScrollBarPolicy" type="int" value="20"/>
         <Property name="activeWheelGesture" type="boolean" value="true"/>
       </Properties>
 
@@ -300,14 +303,14 @@
         <Container class="javax.swing.JPanel" name="pnShow">
           <Properties>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[835, 1080]"/>
+              <Dimension value="[835, 3080]"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[835, 1080]"/>
+              <Dimension value="[600, 3080]"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[835, 1080]"/>
+              <Dimension value="[600, 3080]"/>
             </Property>
           </Properties>
 

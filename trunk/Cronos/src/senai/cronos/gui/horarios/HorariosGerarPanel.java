@@ -57,23 +57,23 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         scrollTurmas.setBorder(null);
         scrollTurmas.setMaximumSize(new Dimension(1300, 9000));
         scrollTurmas.setMinimumSize(new Dimension(900, 9000));
-        scrollTurmas.setPreferredSize(new Dimension(1300, 9000));
+        scrollTurmas.setPreferredSize(new Dimension(980, 9000));
 
         scrollTurmas.getViewport().setMaximumSize(new Dimension(1300, 9000));
         scrollTurmas.getViewport().setMinimumSize(new Dimension(900, 9000));
-        scrollTurmas.getViewport().setPreferredSize(new Dimension(1300, 9000));
+        scrollTurmas.getViewport().setPreferredSize(new Dimension(9800, 9000));
 
         scrollTurmas.getViewport().setOpaque(false);
 
         pnTurmas.setLayout(new FlowLayout(FlowLayout.LEFT));
         pnTurmas.setMinimumSize(new Dimension(900, 9000));
-        pnTurmas.setPreferredSize(new Dimension(1300, 9000));
+        pnTurmas.setPreferredSize(new Dimension(900, 9000));
         pnTurmas.setMaximumSize(new Dimension(1300, 9000));
         pnTurmas.setOpaque(false);
 
         pnGerar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 250));
         pnGerar.setMinimumSize(new Dimension(900, 768));
-        pnGerar.setPreferredSize(new Dimension(1300, 768));
+        pnGerar.setPreferredSize(new Dimension(900, 768));
         pnGerar.setMaximumSize(new Dimension(1300, 1080));
         pnGerar.setOpaque(false);
 

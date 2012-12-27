@@ -5,6 +5,8 @@
 package senai.cronos.util;
 
 import java.io.FileOutputStream;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -25,6 +27,25 @@ public class ExportUtils {
         try (FileOutputStream fo = new FileOutputStream(file)) {
             wb.write(fo);
         }
+    }
+    
+    public static void paintCell(Workbook wb, Cell cell, IndexedColors background) {
+        CellStyle cs = wb.createCellStyle();
+        cs.setFillForegroundColor(background.getIndex());
+        cs.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        cs.setBorderBottom(CellStyle.BORDER_THIN);
+        cs.setBorderTop(CellStyle.BORDER_THIN);
+        cs.setBorderLeft(CellStyle.BORDER_THIN);
+        cs.setBorderRight(CellStyle.BORDER_THIN);
+        cell.setCellStyle(cs);
+        alignCell(cell);
+    }
+
+    public static void alignCell(Cell cell) {
+        CellStyle cs = cell.getCellStyle();
+        cs.setAlignment(CellStyle.ALIGN_CENTER);
+        cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        cell.setCellStyle(cs);
     }
     
     public static IndexedColors[] getColors() {

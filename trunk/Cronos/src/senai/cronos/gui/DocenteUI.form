@@ -41,26 +41,20 @@
                       <Component id="btconfig" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="lbnucleoatual" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="427" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="lbanterior" min="-2" pref="151" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lbproximo" min="-2" pref="151" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="scroll" min="-2" max="-2" attributes="0"/>
+                          <Component id="scroll" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="56" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="pndocentedata" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lbProficiencias" min="-2" pref="166" max="-2" attributes="0"/>
-                                  <Component id="btexport" min="-2" pref="166" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="289" max="-2" attributes="0"/>
-                          </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pndocentedata" min="-2" pref="0" max="-2" attributes="0"/>
+                          <Component id="lbProficiencias" min="-2" pref="166" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -76,7 +70,7 @@
                   <Component id="btconfig" alignment="0" min="-2" max="-2" attributes="1"/>
                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jLabel1" alignment="0" min="0" pref="0" max="32767" attributes="1"/>
-                      <Component id="bthome" alignment="0" max="32767" attributes="1"/>
+                      <Component id="bthome" alignment="0" pref="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -88,7 +82,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="pndocentedata" min="-2" max="-2" attributes="1"/>
+                      <Component id="pndocentedata" min="-2" pref="0" max="-2" attributes="1"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lbProficiencias" min="-2" pref="25" max="-2" attributes="1"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -171,35 +165,34 @@
           <Dimension value="[455, 244]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[455, 244]"/>
+          <Dimension value="[200, 244]"/>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[455, 245]"/>
+          <Dimension value="[200, 245]"/>
         </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbscore" max="32767" attributes="0"/>
-                      <Component id="lbnome" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lbmatricula" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lbformacao" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lbnucleo" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="lbocupacao" pref="311" max="32767" attributes="0"/>
                       <Component id="lbturnos" alignment="0" max="32767" attributes="0"/>
-                      <Component id="lbocupacao" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lbscore" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lbnucleo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lbformacao" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lbmatricula" alignment="0" max="32767" attributes="0"/>
+                      <Component id="lbnome" alignment="0" min="-2" pref="311" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="lbnome" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lbmatricula" min="-2" max="-2" attributes="0"/>
@@ -213,7 +206,7 @@
                   <Component id="lbturnos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lbocupacao" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -344,11 +337,11 @@
               <Dimension value="[835, 6000]"/>
             </Property>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[835, 1080]"/>
+              <Dimension value="[600, 1080]"/>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[835, 6000]"/>
+              <Dimension value="[600, 6000]"/>
             </Property>
           </Properties>
 

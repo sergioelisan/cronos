@@ -65,17 +65,17 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         scrollTurmas.setBorder(null);
         scrollTurmas.setMaximumSize(new Dimension(1300, 9000));
         scrollTurmas.setMinimumSize(new Dimension(900, 9000));
-        scrollTurmas.setPreferredSize(new Dimension(1300, 9000));
+        scrollTurmas.setPreferredSize(new Dimension(900, 9000));
 
         scrollTurmas.getViewport().setMaximumSize(new Dimension(1300, 9000));
         scrollTurmas.getViewport().setMinimumSize(new Dimension(900, 9000));
-        scrollTurmas.getViewport().setPreferredSize(new Dimension(1300, 9000));
+        scrollTurmas.getViewport().setPreferredSize(new Dimension(900, 9000));
 
         scrollTurmas.getViewport().setOpaque(false);
 
         pnTurmas.setLayout(new FlowLayout(FlowLayout.LEFT));
         pnTurmas.setMinimumSize(new Dimension(900, 9000));
-        pnTurmas.setPreferredSize(new Dimension(1300, 9000));
+        pnTurmas.setPreferredSize(new Dimension(900, 9000));
         pnTurmas.setMaximumSize(new Dimension(1300, 9000));
         pnTurmas.setOpaque(false);
 

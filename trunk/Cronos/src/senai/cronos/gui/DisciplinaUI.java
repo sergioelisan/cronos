@@ -5,14 +5,13 @@
  */
 package senai.cronos.gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
@@ -41,6 +40,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
         
         try {
             CronosAPI.subscribe(UnidadeCurricular.class, this);
+            reloadPNShow();
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage() );
         }
@@ -50,6 +50,12 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
     @Override
     public void update() {
         initData();
+    }
+    
+    private void reloadPNShow() throws ClassNotFoundException, SQLException {
+        int w = pnShow.getPreferredSize().width;
+        int turmas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class).size();
+        pnShow.setPreferredSize(new Dimension(w, ((110 * turmas) / 3)));
     }
 
     @Override
@@ -138,6 +144,8 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                     lbmodulo.setText("módulo: " + String.valueOf(uc.getModulo()));
                     pnementa.setText(uc.getConteudoProgramatico());
 
+                    reloadPNShow();
+                    
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes da turma:\n" + ex);
                 }
@@ -249,9 +257,10 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
             }
         });
 
-        jPanel2.setMaximumSize(new java.awt.Dimension(379, 381));
-        jPanel2.setMinimumSize(new java.awt.Dimension(379, 381));
+        jPanel2.setMaximumSize(new java.awt.Dimension(260, 381));
+        jPanel2.setMinimumSize(new java.awt.Dimension(200, 381));
         jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 381));
 
         lbmodulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbmodulo.setText("módulo");
@@ -281,18 +290,17 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbnome, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lbnucleo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbcarga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbcarga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                             .addComponent(lbmodulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblab, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(129, 129, 129))))
+                        .addGap(129, 129, 129))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,8 +316,8 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblab)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         lbproximo.setBackground(new java.awt.Color(255, 255, 255));
@@ -326,12 +334,13 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
             }
         });
 
+        magicScroll1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         magicScroll1.setActiveWheelGesture(true);
 
-        pnShow.setMaximumSize(new java.awt.Dimension(835, 1080));
-        pnShow.setMinimumSize(new java.awt.Dimension(835, 1080));
+        pnShow.setMaximumSize(new java.awt.Dimension(835, 3080));
+        pnShow.setMinimumSize(new java.awt.Dimension(600, 3080));
         pnShow.setOpaque(false);
-        pnShow.setPreferredSize(new java.awt.Dimension(835, 1080));
+        pnShow.setPreferredSize(new java.awt.Dimension(600, 3080));
         pnShow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         magicScroll1.setViewportView(pnShow);
 
@@ -373,17 +382,17 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lbproximo, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(magicScroll1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(magicScroll1, javax.swing.GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -394,7 +403,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                     .addComponent(btconfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bthome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbnucleoatual, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbanterior, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
