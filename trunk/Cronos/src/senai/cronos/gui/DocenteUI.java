@@ -405,7 +405,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         btexport.setBackground(new java.awt.Color(255, 255, 255));
         btexport.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btexport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btexport.setText("exp. horário do docente");
+        btexport.setText("horário docente");
         btexport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btexport.setMaximumSize(new java.awt.Dimension(100, 25));
         btexport.setMinimumSize(new java.awt.Dimension(100, 25));
@@ -468,9 +468,9 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         .addComponent(pndocentedata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lbProficiencias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btexport, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 326, Short.MAX_VALUE))
+                        .addGap(0, 333, Short.MAX_VALUE))
                     .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
