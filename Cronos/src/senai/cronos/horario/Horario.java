@@ -86,6 +86,20 @@ public class Horario {
         return aulas;
     }
 
+    public Set<Aula> getAulasSemestre(int semestre) {
+        Set<Aula> aulas = new HashSet<>();
+
+        for (Map<Date, Tupla<Aula, Aula>> horariomes : getSemestre(semestre).values()) {
+            for (Date dia : horariomes.keySet()) {
+                for (Object aula : horariomes.get(dia).list()) {
+                    aulas.add((Aula) aula);
+                }
+            }
+        }
+
+        return aulas;
+    }
+
     /**
      * Retorna os dias de ocorrencia de uma determinada aula
      *
@@ -134,17 +148,27 @@ public class Horario {
         return horarios;
     }
 
+    public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getSemestre(int semestre) {
+        if (semestre == 1) {
+            return getMeses(new int[]{2, 3, 4, 5, 6});
+        } else {
+            return getMeses(new int[]{7, 8, 9, 10, 11, 12});
+        }
+    }
+
     /**
      * Retorna os primeiros horarios do ano
-     * @return 
+     *
+     * @return
      */
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getPrimeiroSemestre() {
-        return getMeses(new int[]{1, 2, 3, 4, 5, 6});
+        return getMeses(new int[]{2, 3, 4, 5, 6});
     }
 
     /**
      * Retorna os horarios dos primeiros meses do ano
-     * @return 
+     *
+     * @return
      */
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getSegundoSemestre() {
         return getMeses(new int[]{7, 8, 9, 10, 11, 12});
@@ -152,8 +176,9 @@ public class Horario {
 
     /**
      * retorna os horarios de determinados meses
+     *
      * @param meses
-     * @return 
+     * @return
      */
     public Map<Integer, Map<Date, Tupla<Aula, Aula>>> getMeses(int... meses) {
         Map<Integer, Map<Date, Tupla<Aula, Aula>>> horarioParticionado = separaHorarioEmMeses();
@@ -195,7 +220,6 @@ public class Horario {
     public void setHorario(Map<Date, Tupla<Aula, Aula>> horario) {
         this.horario = horario;
     }
-    
     /**
      * estrutura de dados que essa classe envolve
      */

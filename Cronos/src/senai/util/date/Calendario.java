@@ -3,6 +3,7 @@ package senai.util.date;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe que instancias objetos que encapsulam os dias uteis de um periodo
@@ -24,6 +25,9 @@ public class Calendario {
             diasDeFeriado.add(f.getDia());
         }
 
+        this.feriados = diasDeFeriado;
+        this.inicio = inicio;
+        this.fim = fim;
         diasUteis = DateUtil.getDiasUteis(inicio, fim, diasDeFeriado);
     }
 
@@ -34,6 +38,14 @@ public class Calendario {
     public List<Date> getDiasUteis() {
         return diasUteis;
     }
+    
+    public Map<Integer, List<Date> > getDiasUteisSeparadosEmMeses() {
+        return DateUtil.getDiasUteisSeparadosPorMes(inicio, fim, feriados);
+    }
 
     private List<Date> diasUteis;
+    
+    private Date inicio;
+    private Date fim;
+    private List<Date> feriados;
 }

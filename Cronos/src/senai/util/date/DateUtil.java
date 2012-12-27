@@ -188,5 +188,21 @@ public class DateUtil {
 
         return diasUteis;
     }
+    
+    public static Map<Integer, List<Date>> getDiasUteisSeparadosPorMes(Date inicio, Date fim, List<Date> feriados) {
+        Map<Integer, List<Date>> meses = new TreeMap<>();
+        List<Date> diasUteis = getDiasUteis(inicio, fim, feriados);
+        
+        for (Integer mes = DateUtil.getMes(diasUteis.get(0)); 
+                mes <= DateUtil.getMes(diasUteis.get(diasUteis.size() - 1)); mes++) {
+            meses.put(mes, new ArrayList<Date>());
+        }
+
+        for (Date dia : diasUteis) {
+            meses.get(DateUtil.getMes(dia)).add(dia);
+        }
+        
+        return meses;
+    }
 
 }
