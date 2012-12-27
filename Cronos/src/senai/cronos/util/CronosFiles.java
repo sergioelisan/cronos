@@ -30,5 +30,23 @@ public class CronosFiles {
         return userHome + File.separator + cronosDatabaseDir;
     }
     
+    /**
+     * Retorna o path para o diretorio usado para armazenar os xlsx exportados
+     * com os horarios das turmas
+     * @return 
+     */
+    public static String getCronosExportDir() {
+        String userHome = System.getProperty("user.home");
+        
+        String desktop = "Desktop";
+        File databaseDir = new File(userHome + File.separator + desktop);
+
+        if (!databaseDir.exists()) {
+            desktop = "";
+        }
+
+        return userHome + File.separator + desktop + File.separator;
+    }
+    
 
 }

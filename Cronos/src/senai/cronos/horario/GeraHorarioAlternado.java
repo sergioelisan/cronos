@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import senai.cronos.CronosAPI;
-import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.UnidadeCurricular;
@@ -60,7 +59,7 @@ public class GeraHorarioAlternado extends GeraHorario {
                             case DateUtil.SEG:
                             case DateUtil.QUA:
                             case DateUtil.SEX:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                                     horario.get(dia).setPrimeiro(aula);
                                     horario.get(dia).setSegundo(aula);
 
@@ -72,7 +71,7 @@ public class GeraHorarioAlternado extends GeraHorario {
                         switch (diaSemana) {
                             case DateUtil.TER:
                             case DateUtil.QUI:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                                     horario.get(dia).setPrimeiro(aula);
                                     horario.get(dia).setSegundo(aula);
 
@@ -100,8 +99,8 @@ public class GeraHorarioAlternado extends GeraHorario {
         for (int j = 0; j <= temp.size()-1; j++) {
              if(cont>=2) break;
              for (int i = 0; i <= horario.size()-1; i++) {
-                 if (horario.get(datas[i]).getPrimeiro().equals(Aula.PADRAO)
-                        && horario.get(datas[i]).getSegundo().equals(Aula.PADRAO)) {
+                 if (horario.get(datas[i]).getPrimeiro().equals(Aula.VAZIA)
+                        && horario.get(datas[i]).getSegundo().equals(Aula.VAZIA)) {
                      cont++;
                  } else {
                     if(j>=temp.size()) break;
@@ -116,7 +115,7 @@ public class GeraHorarioAlternado extends GeraHorario {
      
        for (Date dia2 : horario.keySet()) {
            
-           if (horario.get(dia2).getPrimeiro().equals(Aula.PADRAO)) {
+           if (horario.get(dia2).getPrimeiro().equals(Aula.VAZIA)) {
                set.add(dia2);
             }
         }

@@ -22,11 +22,11 @@ public class GeraHorarioContinuoQuebrado extends GeraHorario {
                 OUTER:
                 for (Date dia : horario.keySet()) {
                     if (modo == Tupla.PRIMEIRA) {
-                        if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                        if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                             horario.get(dia).setPrimeiro(aula);
 
                             break OUTER;
-                        } else if (horario.get(dia).getSegundo().equals(Aula.PADRAO)) {
+                        } else if (horario.get(dia).getSegundo().equals(Aula.VAZIA)) {
                             horario.get(dia).setSegundo(aula);
 
                             break OUTER;

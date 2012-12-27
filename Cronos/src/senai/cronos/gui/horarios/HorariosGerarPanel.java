@@ -9,20 +9,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.dao.DAOFactory;
-import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.Alerta;
-import senai.cronos.gui.ColorManager;
-import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.Tile;
 import senai.cronos.horario.GeraHorarioFactory;
 import senai.cronos.horario.Horario;
-import senai.cronos.util.Export;
 import senai.util.Observador;
 
 /**
@@ -31,22 +24,17 @@ import senai.util.Observador;
  */
 public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
-    private List<HorarioUI> calendarios = new ArrayList<>();
     private Turma actualTurma;
-    private JPanel pnGerar = new JPanel();
-    private JPanel pnTurmas = new JPanel();
-    private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios = new JPanel();
-    private JPanel pnLegendas = new JPanel();
+    
+    private JPanel pnGerar = new JPanel();    
+    private JPanel pnTurmas = new JPanel();    
     private JPanel pnLoading = new JPanel();
+    
     private JLabel lbLoading = new JLabel();
-    private JLabel setaDireita = new JLabel(">");
-    private JLabel setaEsquerda = new JLabel("<");
-    private JLabel lbVoltar = new JLabel("voltar");
-    private JLabel lbSave = new JLabel("salvar");
-    private JLabel lbPrint = new JLabel("imprimir");
-    private Timer animacao;
+    
+    private Timer animacao;    
     private final int DELAY = 500;
+    
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
 
     /**
@@ -93,6 +81,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         todas.setNome("Todas as turmas");
         todas.setId("");
         todas.setClickEvent(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 gerarTodasTurmas();
             }
@@ -102,6 +91,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         turmas.setNome("Escolher turma");
         turmas.setId("");
         turmas.setClickEvent(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 show("TURMAS");
             }
@@ -109,8 +99,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
         pnGerar.add(turmas);
         pnGerar.add(todas);
-
-        createCalendarComponents();
 
         lbLoading.setPreferredSize(new Dimension(250, 120));
         lbLoading.setFont(new Font("Segoe UI", Font.PLAIN, 36));
@@ -124,141 +112,13 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
         add(scrollTurmas, "TURMAS");
         add(pnGerar, "GERAR");
 
-        try { CronosAPI.subscribe(Turma.class, this);
+        try {
+            CronosAPI.subscribe(Turma.class, this);
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
 
         show("GERAR");
-    }
-
-    /**
-     * inicializa os components voltados para calendarios
-     */
-    private void createCalendarComponents() {
-        lbVoltar.setPreferredSize(new Dimension(100, 25));
-        lbVoltar.setOpaque(true);
-        lbVoltar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lbVoltar.setHorizontalAlignment(JLabel.CENTER);
-        lbVoltar.setForeground(Color.white);
-        lbVoltar.setBackground(ColorManager.getColor("button"));
-        lbVoltar.addMouseListener(new HorariosUI.LinkHandler());
-        lbVoltar.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                show("TURMAS");
-            }
-        });
-
-        lbPrint.setPreferredSize(new Dimension(100, 25));
-        lbPrint.setOpaque(true);
-        lbPrint.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lbPrint.setHorizontalAlignment(JLabel.CENTER);
-        lbPrint.setForeground(Color.white);
-        lbPrint.setBackground(ColorManager.getColor("button"));
-        lbPrint.addMouseListener(new HorariosUI.LinkHandler());
-        lbPrint.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                print();
-            }
-        });
-
-        lbSave.setPreferredSize(new Dimension(100, 25));
-        lbSave.setOpaque(true);
-        lbSave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lbSave.setHorizontalAlignment(JLabel.CENTER);
-        lbSave.setForeground(Color.white);
-        lbSave.setBackground(ColorManager.getColor("button"));
-        lbSave.addMouseListener(new HorariosUI.LinkHandler());
-        lbSave.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                saveHorario();
-            }
-        });
-
-        JPanel toolbox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        toolbox.setPreferredSize(new Dimension(1366, 40));
-        toolbox.setOpaque(false);
-        toolbox.add(lbVoltar);
-        toolbox.add(lbSave);
-        toolbox.add(lbPrint);
-
-        pnHorarios.setLayout(new CardLayout());
-
-        Dimension setaDIM = new Dimension(40, 150);
-
-        setaDireita.setHorizontalAlignment(JLabel.CENTER);
-        setaDireita.setOpaque(true);
-        setaDireita.setBackground(Color.white);
-        setaDireita.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaDireita.setPreferredSize(setaDIM);
-        setaDireita.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                next();
-            }
-            
-             @Override
-            public void mouseEntered(MouseEvent evt) {
-                JLabel lb = (JLabel) evt.getSource();
-                lb.setForeground(Color.WHITE);
-                lb.setBackground(Color.BLUE);
-            }
-            
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                JLabel lb = (JLabel) evt.getSource();
-                lb.setForeground(Color.BLACK);
-                lb.setBackground(Color.WHITE);
-            }
-        });
-
-        setaEsquerda.setHorizontalAlignment(JLabel.CENTER);
-        setaEsquerda.setOpaque(true);
-        setaEsquerda.setBackground(Color.white);
-        setaEsquerda.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaEsquerda.setPreferredSize(setaDIM);
-        setaEsquerda.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                previous();
-            }
-            
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                JLabel lb = (JLabel) evt.getSource();
-                lb.setForeground(Color.WHITE);
-                lb.setBackground(Color.BLUE);
-            }
-            
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                JLabel lb = (JLabel) evt.getSource();
-                lb.setForeground(Color.BLACK);
-                lb.setBackground(Color.WHITE);
-            }
-        });
-
-        JScrollPane scrollLegendas = new JScrollPane(pnLegendas);
-        scrollLegendas.setBorder(null);
-        scrollLegendas.setMaximumSize(new Dimension(810, 200));
-        scrollLegendas.setPreferredSize(new Dimension(810, 200));
-        scrollLegendas.setMinimumSize(new Dimension(810, 200));
-        scrollLegendas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        pnLegendas.setPreferredSize(new Dimension(810, 800));
-        pnLegendas.setBackground(Color.WHITE);
-        pnLegendas.setOpaque(true);
-
-        pnCalendarios.setLayout(new BorderLayout());
-        pnCalendarios.setOpaque(false);
-
-        pnCalendarios.add(toolbox, BorderLayout.NORTH);
-        pnCalendarios.add(setaDireita, BorderLayout.EAST);
-        pnCalendarios.add(setaEsquerda, BorderLayout.WEST);
-        pnCalendarios.add(pnHorarios, BorderLayout.CENTER);
-        pnCalendarios.add(scrollLegendas, BorderLayout.SOUTH);
     }
 
     /**
@@ -295,47 +155,6 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
      */
     public void show(String panel) {
         ((CardLayout) getLayout()).show(this, panel);
-    }
-
-    /**
-     * vai um calendario pra frente
-     */
-    private void next() {
-        ((CardLayout) pnHorarios.getLayout()).next(pnHorarios);
-    }
-
-    /**
-     * vai um calendario para tras
-     */
-    private void previous() {
-        ((CardLayout) pnHorarios.getLayout()).previous(pnHorarios);
-    }
-
-    /**
-     * Salva o horario no banco de dados
-     */
-    private void saveHorario() {
-        try {
-            DAOTurma dao = (DAOTurma) DAOFactory.getDao(Turma.class);
-            dao.addHorario(actualTurma);
-
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
-        } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "FAIL! Erro ao Salvar Horario:\n" + e);
-            show("TURMAS");
-        }
-    }
-
-    /**
-     * Imprime o horario em PDF
-     */
-    private void print() {
-        try {
-            new Export(actualTurma).generate();
-            JOptionPane.showMessageDialog(null, "Arquivo enviado para a Área de Trabalho");
-        } catch (Exception ex) {
-            Alerta.jogarAviso("Nao foi possivel gerar o arquivo Excel:\n" + ex);
-        }
     }
 
     /**
@@ -391,8 +210,8 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
 
                     stopLoading();
                     show("CALENDARIOS");
-                    
-                    HorariosUI.getInstance().exibir(actualTurma.getId() );
+
+                    HorariosUI.getInstance().exibir(actualTurma.getId());
 
                 } catch (Exception e) {
                     stopLoading();

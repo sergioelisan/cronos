@@ -32,9 +32,9 @@ public class HorarioDocente {
 
         for (Date dia : Main.CALENDARIO.getDiasUteis()) {
             Map<Turno, Tupla<Aula, Aula>> diaDeTrabalho = new HashMap<>();
-            diaDeTrabalho.put(Turno.MANHA, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
-            diaDeTrabalho.put(Turno.TARDE, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
-            diaDeTrabalho.put(Turno.NOITE, new Tupla<>(Aula.PADRAO, Aula.PADRAO));
+            diaDeTrabalho.put(Turno.MANHA, new Tupla<>(Aula.VAZIA, Aula.VAZIA));
+            diaDeTrabalho.put(Turno.TARDE, new Tupla<>(Aula.VAZIA, Aula.VAZIA));
+            diaDeTrabalho.put(Turno.NOITE, new Tupla<>(Aula.VAZIA, Aula.VAZIA));
             horario.put(dia, diaDeTrabalho);
         }
 
@@ -60,7 +60,7 @@ public class HorarioDocente {
      * @param half
      */
     public void remove(Date dia, Turno turno, Integer half) {
-        horario.get(dia).get(turno).set(Aula.PADRAO, half);
+        horario.get(dia).get(turno).set(Aula.VAZIA, half);
     }
 
     /**
@@ -94,10 +94,10 @@ public class HorarioDocente {
         for (Date dia : horario.keySet() ) {
             for (Turno turno : horario.get(dia).keySet() ) {
                 Tupla<Aula, Aula> aulas = horario.get(dia).get(turno);
-                if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.PADRAO) )
+                if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.VAZIA) )
                     ocupacao++;
 
-                if (!aulas.get(Tupla.SEGUNDA).equals(Aula.PADRAO) )
+                if (!aulas.get(Tupla.SEGUNDA).equals(Aula.VAZIA) )
                     ocupacao++;
             }
         }
@@ -113,7 +113,7 @@ public class HorarioDocente {
      * @return
      */
     public boolean isDisponivel(Date dia, Turno tn, Integer metade) {
-        return getAula(dia, tn, metade).equals(Aula.PADRAO);
+        return getAula(dia, tn, metade).equals(Aula.VAZIA);
     }
 
     /**
@@ -123,8 +123,8 @@ public class HorarioDocente {
      * @return
      */
     public boolean isDisponivel(Date dia, Turno tn) {
-        return ( getAula(dia, tn, Tupla.PRIMEIRA).equals(Aula.PADRAO) &&
-                 getAula(dia, tn, Tupla.SEGUNDA) .equals(Aula.PADRAO) );
+        return ( getAula(dia, tn, Tupla.PRIMEIRA).equals(Aula.VAZIA) &&
+                 getAula(dia, tn, Tupla.SEGUNDA) .equals(Aula.VAZIA) );
     }
 
     /**

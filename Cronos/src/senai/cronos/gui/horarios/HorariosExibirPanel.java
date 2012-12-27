@@ -12,12 +12,14 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
 import senai.cronos.CronosAPI;
+import senai.cronos.database.dao.DAOFactory;
+import senai.cronos.database.dao.DAOTurma;
 import senai.cronos.horario.Horario;
 import senai.cronos.entidades.Turma;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.custom.LinkEffectHandler;
-import senai.cronos.util.Export;
+import senai.cronos.util.ExportaHorario;
 import senai.util.Observador;
 
 /**
@@ -27,18 +29,24 @@ import senai.util.Observador;
 public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
     private static HorariosExibirPanel instance = new HorariosExibirPanel();
+    
     private List<HorarioUI> calendarios;
+    
     private Turma turma;
-    private JPanel pnTurmas = new JPanel();
+    
+    private JPanel pnTurmas      = new JPanel();
     private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios = new JPanel();
-    private JPanel pnLegendas = new JPanel();
-    private JPanel pnLoading = new JPanel();
-    private JLabel lbLoading = new JLabel();
-    private JLabel setaDireita = new JLabel(">");
-    private JLabel setaEsquerda = new JLabel("<");
-    private JLabel lbVoltar = new JLabel("voltar");
-    private JLabel lbPrint = new JLabel("imprimir");
+    private JPanel pnHorarios    = new JPanel();
+    private JPanel pnLegendas    = new JPanel();
+    private JPanel pnLoading     = new JPanel();
+    
+    private JLabel lbLoading     = new JLabel();
+    private JLabel setaDireita   = new JLabel(">");
+    private JLabel setaEsquerda  = new JLabel("<");
+    private JLabel lbVoltar      = new JLabel("voltar");
+    private JLabel lbSalvar      = new JLabel("salvar");
+    private JLabel lbPrint       = new JLabel("imprimir");
+    
     private Timer animacao;
     private final int DELAY = 500;
 
@@ -112,6 +120,20 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                 show("TURMAS");
             }
         });
+        
+        lbSalvar.setPreferredSize(new Dimension(100, 25));
+        lbSalvar.setOpaque(true);
+        lbSalvar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lbSalvar.setHorizontalAlignment(JLabel.CENTER);
+        lbSalvar.setForeground(Color.white);
+        lbSalvar.setBackground(ColorManager.getColor("button"));
+        lbSalvar.addMouseListener(new HorariosUI.LinkHandler());
+        lbSalvar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                saveHorario();
+            }
+        });
 
         lbPrint.setPreferredSize(new Dimension(100, 25));
         lbPrint.setOpaque(true);
@@ -140,7 +162,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         setaDireita.setOpaque(true);
         setaDireita.setBackground(Color.white);
         setaDireita.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaDireita.setPreferredSize(new Dimension(80, 150));
+        setaDireita.setPreferredSize(new Dimension(40, 150));
         setaDireita.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -166,7 +188,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
         setaEsquerda.setOpaque(true);
         setaEsquerda.setBackground(Color.white);
         setaEsquerda.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        setaEsquerda.setPreferredSize(new Dimension(80, 150));
+        setaEsquerda.setPreferredSize(new Dimension(40, 150));
         setaEsquerda.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
@@ -258,16 +280,32 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
     private void previous() {
         ((CardLayout) pnHorarios.getLayout()).previous(pnHorarios);
     }
+    
+    /**
+     * Salva o horario no banco de dados
+     */
+    private void saveHorario() {
+        try {
+            DAOTurma dao = (DAOTurma) DAOFactory.getDao(Turma.class);
+            dao.addHorario(turma);
 
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "FAIL! Erro ao Salvar Horario:\n" + e);
+            show("TURMAS");
+        }
+    }
+    
     /**
      * Imprime o horario em PDF
      */
     private void print() {
         try {
-            new Export(turma).generate();
+            new ExportaHorario().exportarHorarioTurma(turma);
             JOptionPane.showMessageDialog(null, "Arquivo enviado para a Área de Trabalho");
         } catch (Exception ex) {
             Alerta.jogarAviso("Nao foi possivel gerar o arquivo Excel:\n" + ex);
+            ex.printStackTrace(System.out);
         }
     }
 

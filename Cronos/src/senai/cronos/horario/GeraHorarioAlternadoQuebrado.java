@@ -28,7 +28,7 @@ public class GeraHorarioAlternadoQuebrado extends GeraHorario {
                             case DateUtil.SEG:
                             case DateUtil.QUA:
                             case DateUtil.SEX:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                                     horario.get(dia).setPrimeiro(aula);
 
                                     break OUTER;
@@ -39,7 +39,7 @@ public class GeraHorarioAlternadoQuebrado extends GeraHorario {
                             case DateUtil.SEG:
                             case DateUtil.QUA:
                             case DateUtil.SEX:
-                                if (horario.get(dia).getSegundo().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getSegundo().equals(Aula.VAZIA)) {
                                     horario.get(dia).setSegundo(aula);
 
                                     break OUTER;
@@ -49,7 +49,7 @@ public class GeraHorarioAlternadoQuebrado extends GeraHorario {
                         switch (diaSemana) {
                             case DateUtil.TER:
                             case DateUtil.QUI:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
                                     horario.get(dia).setPrimeiro(aula);
 
                                     break OUTER;
@@ -59,7 +59,7 @@ public class GeraHorarioAlternadoQuebrado extends GeraHorario {
                         switch (diaSemana) {
                             case DateUtil.TER:
                             case DateUtil.QUI:
-                                if (horario.get(dia).getSegundo().equals(Aula.PADRAO)) {
+                                if (horario.get(dia).getSegundo().equals(Aula.VAZIA)) {
                                     horario.get(dia).setSegundo(aula);
 
                                     break OUTER;

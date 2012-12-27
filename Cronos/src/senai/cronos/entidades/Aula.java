@@ -11,7 +11,7 @@ public class Aula {
     /**
      * Aula padrao, vazia, usada para ocupar um espaço e evitar nulos
      */
-    public static final Aula PADRAO = Aula.create();
+    public static final Aula VAZIA = Aula.create();
     
     /**
      * Cria uma instancia padrao de Aula
