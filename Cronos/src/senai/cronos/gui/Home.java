@@ -29,7 +29,7 @@ public class Home extends javax.swing.JPanel {
         initComponents();
         rotinas();
         initEffects();
-        lbuser.setText(Main.VERSAO);
+        
     }
 
     @Override
@@ -57,10 +57,7 @@ public class Home extends javax.swing.JPanel {
         lbcadastro.addMouseListener(new BlinkEffectHandler());
         lbdisciplinas.addMouseListener(new BlinkEffectHandler());
         lbdocentes.addMouseListener(new BlinkEffectHandler());
-        lbdocentesicon.addMouseListener(new BlinkEffectHandler());
-        lbhorario.addMouseListener(new BlinkEffectHandler());
-        lbhorarioicon.addMouseListener(new BlinkEffectHandler());
-        lbrelatorio.addMouseListener(new BlinkEffectHandler());
+        lbhorarios.addMouseListener(new BlinkEffectHandler());
         lbturmas.addMouseListener(new BlinkEffectHandler());
     }
 
@@ -94,32 +91,22 @@ public class Home extends javax.swing.JPanel {
         lbtitle = new javax.swing.JLabel();
         lbhora = new javax.swing.JLabel();
         lbdata = new javax.swing.JLabel();
-        lbuser = new javax.swing.JLabel();
         btConfig = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         magicScroll1 = new br.ufrpe.bcc.continuous.components.MagicScroll();
         pnApps = new javax.swing.JPanel();
         horariotile = new javax.swing.JPanel();
-        lbhorarioicon = new javax.swing.JLabel();
-        lbhorario = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lbhorarios = new javax.swing.JLabel();
         docentestile = new javax.swing.JPanel();
         lbdocentes = new javax.swing.JLabel();
-        lbdocentesicon = new javax.swing.JLabel();
         turmastile = new javax.swing.JPanel();
         lbturmas = new javax.swing.JLabel();
         cadastrotile = new javax.swing.JPanel();
         lbcadastro = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         disciplinastile = new javax.swing.JPanel();
         lbdisciplinas = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         reportstile = new javax.swing.JPanel();
-        lbrelatorio = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbrelatorios = new javax.swing.JLabel();
         helptile = new javax.swing.JPanel();
         lbajuda = new javax.swing.JLabel();
         lbajudaicon = new javax.swing.JLabel();
@@ -133,15 +120,12 @@ public class Home extends javax.swing.JPanel {
         lbtitle.setForeground(ColorManager.getColor("foreground"));
         lbtitle.setText("página inicial");
 
-        lbhora.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbhora.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbhora.setForeground(ColorManager.getColor("foreground"));
         lbhora.setText("carregando...");
 
         lbdata.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lbdata.setText("carregando...");
-
-        lbuser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbuser.setText("versão");
 
         btConfig.setBackground(ColorManager.getColor("button"));
         btConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -179,81 +163,25 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbhorarioicon.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lbhorarioicon.setForeground(new java.awt.Color(255, 255, 255));
-        lbhorarioicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbhorarioicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/clock_2.png"))); // NOI18N
-        lbhorarioicon.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbhorarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbhorarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/horarios.png"))); // NOI18N
+        lbhorarios.setToolTipText("");
+        lbhorarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbhorarioiconMouseClicked(evt);
+                lbhorariosMouseClicked(evt);
             }
         });
-
-        lbhorario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbhorario.setForeground(new java.awt.Color(255, 255, 255));
-        lbhorario.setText("horários");
-        lbhorario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbhorarioMouseClicked(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("exibir horário");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("gerar horário");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("imprimir horário");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("salvar horário");
 
         javax.swing.GroupLayout horariotileLayout = new javax.swing.GroupLayout(horariotile);
         horariotile.setLayout(horariotileLayout);
         horariotileLayout.setHorizontalGroup(
             horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(horariotileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbhorario)
-                    .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(lbhorarioicon, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(lbhorarios, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
         );
-
-        horariotileLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel5, jLabel6, jLabel7});
-
         horariotileLayout.setVerticalGroup(
             horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(horariotileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(horariotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbhorarioicon)
-                    .addGroup(horariotileLayout.createSequentialGroup()
-                        .addComponent(lbhorario)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
-                .addContainerGap(22, Short.MAX_VALUE))
+            .addComponent(lbhorarios, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
-
-        horariotileLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, jLabel5, jLabel6, jLabel7});
 
         pnApps.add(horariotile);
 
@@ -265,23 +193,11 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbdocentes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbdocentes.setForeground(new java.awt.Color(255, 255, 255));
         lbdocentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbdocentes.setText("docentes");
+        lbdocentes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/docentes.png"))); // NOI18N
         lbdocentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbdocentesMouseClicked(evt);
-            }
-        });
-
-        lbdocentesicon.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbdocentesicon.setForeground(new java.awt.Color(255, 255, 255));
-        lbdocentesicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbdocentesicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/docente.png"))); // NOI18N
-        lbdocentesicon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbdocentesiconMouseClicked(evt);
             }
         });
 
@@ -289,21 +205,11 @@ public class Home extends javax.swing.JPanel {
         docentestile.setLayout(docentestileLayout);
         docentestileLayout.setHorizontalGroup(
             docentestileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(docentestileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(docentestileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                    .addComponent(lbdocentesicon, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(lbdocentes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
         );
         docentestileLayout.setVerticalGroup(
             docentestileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(docentestileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbdocentesicon, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(lbdocentes, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         pnApps.add(docentestile);
@@ -317,9 +223,8 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbturmas.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbturmas.setForeground(new java.awt.Color(255, 255, 255));
-        lbturmas.setText("turmas");
+        lbturmas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbturmas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/turmas.png"))); // NOI18N
         lbturmas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbturmasMouseClicked(evt);
@@ -330,17 +235,11 @@ public class Home extends javax.swing.JPanel {
         turmastile.setLayout(turmastileLayout);
         turmastileLayout.setHorizontalGroup(
             turmastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, turmastileLayout.createSequentialGroup()
-                .addContainerGap(247, Short.MAX_VALUE)
-                .addComponent(lbturmas)
-                .addContainerGap())
+            .addComponent(lbturmas, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
         turmastileLayout.setVerticalGroup(
             turmastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(turmastileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbturmas)
-                .addContainerGap(122, Short.MAX_VALUE))
+            .addComponent(lbturmas, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         pnApps.add(turmastile);
@@ -354,40 +253,23 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbcadastro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbcadastro.setForeground(new java.awt.Color(255, 255, 255));
-        lbcadastro.setText("cadastro");
+        lbcadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbcadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/cadastro.png"))); // NOI18N
         lbcadastro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbcadastroMouseClicked(evt);
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/people.png"))); // NOI18N
-
         javax.swing.GroupLayout cadastrotileLayout = new javax.swing.GroupLayout(cadastrotile);
         cadastrotile.setLayout(cadastrotileLayout);
         cadastrotileLayout.setHorizontalGroup(
             cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cadastrotileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cadastrotileLayout.createSequentialGroup()
-                        .addComponent(lbcadastro)
-                        .addGap(0, 134, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
-                        .addGap(0, 110, Short.MAX_VALUE)
-                        .addComponent(jLabel1)))
-                .addContainerGap())
+            .addComponent(lbcadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
         );
         cadastrotileLayout.setVerticalGroup(
             cadastrotileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrotileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(lbcadastro)
-                .addGap(12, 12, 12))
+            .addComponent(lbcadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         pnApps.add(cadastrotile);
@@ -400,36 +282,23 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbdisciplinas.setForeground(new java.awt.Color(255, 255, 255));
-        lbdisciplinas.setText("disciplinas");
+        lbdisciplinas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbdisciplinas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/disciplinas.png"))); // NOI18N
         lbdisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbdisciplinasMouseClicked(evt);
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/book1.png"))); // NOI18N
-
         javax.swing.GroupLayout disciplinastileLayout = new javax.swing.GroupLayout(disciplinastile);
         disciplinastile.setLayout(disciplinastileLayout);
         disciplinastileLayout.setHorizontalGroup(
             disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, disciplinastileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
         );
         disciplinastileLayout.setVerticalGroup(
             disciplinastileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(disciplinastileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbdisciplinas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+            .addComponent(lbdisciplinas, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         pnApps.add(disciplinastile);
@@ -442,40 +311,23 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        lbrelatorio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbrelatorio.setForeground(new java.awt.Color(255, 255, 255));
-        lbrelatorio.setText("relatórios");
-        lbrelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbrelatorios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbrelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/tiles/relatorios.png"))); // NOI18N
+        lbrelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbrelatorioMouseClicked(evt);
+                lbrelatoriosMouseClicked(evt);
             }
         });
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/relatorios (1).png"))); // NOI18N
 
         javax.swing.GroupLayout reportstileLayout = new javax.swing.GroupLayout(reportstile);
         reportstile.setLayout(reportstileLayout);
         reportstileLayout.setHorizontalGroup(
             reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(reportstileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(reportstileLayout.createSequentialGroup()
-                        .addComponent(lbrelatorio)
-                        .addGap(0, 197, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reportstileLayout.createSequentialGroup()
-                        .addGap(0, 204, Short.MAX_VALUE)
-                        .addComponent(jLabel3)))
-                .addContainerGap())
+            .addComponent(lbrelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
         );
         reportstileLayout.setVerticalGroup(
             reportstileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(reportstileLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbrelatorio)
-                .addGap(15, 15, 15)
-                .addComponent(jLabel3)
-                .addContainerGap())
+            .addComponent(lbrelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
         );
 
         pnApps.add(reportstile);
@@ -539,22 +391,20 @@ public class Home extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lbtitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1167, Short.MAX_VALUE)
                         .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbuser))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbhora)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbdata)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbdata)
-                    .addComponent(lbhora))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,13 +414,11 @@ public class Home extends javax.swing.JPanel {
                     .addComponent(btConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbtitle))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(lbhora)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbdata)
-                    .addComponent(lbuser))
+                    .addComponent(lbhora))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -583,49 +431,17 @@ public class Home extends javax.swing.JPanel {
         main.Switch(CronosFrame.DOCENTES);
     }//GEN-LAST:event_docentestileMouseClicked
 
-    private void lbdocentesiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbdocentesiconMouseClicked
-        main.Switch(CronosFrame.DOCENTES);
-    }//GEN-LAST:event_lbdocentesiconMouseClicked
-
-    private void lbdocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbdocentesMouseClicked
-        main.Switch(CronosFrame.DOCENTES);
-    }//GEN-LAST:event_lbdocentesMouseClicked
-
-    private void lbhorarioiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbhorarioiconMouseClicked
-        main.Switch(CronosFrame.HORARIOS);
-    }//GEN-LAST:event_lbhorarioiconMouseClicked
-
-    private void lbhorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbhorarioMouseClicked
-        main.Switch(CronosFrame.HORARIOS);
-    }//GEN-LAST:event_lbhorarioMouseClicked
-
-    private void lbturmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbturmasMouseClicked
-        main.Switch(CronosFrame.TURMAS);
-    }//GEN-LAST:event_lbturmasMouseClicked
-
     private void turmastileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_turmastileMouseClicked
         main.Switch(CronosFrame.TURMAS);
     }//GEN-LAST:event_turmastileMouseClicked
-
-    private void lbcadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbcadastroMouseClicked
-        main.Switch(CronosFrame.CADASTROS);
-    }//GEN-LAST:event_lbcadastroMouseClicked
 
     private void cadastrotileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrotileMouseClicked
         main.Switch(CronosFrame.CADASTROS);
     }//GEN-LAST:event_cadastrotileMouseClicked
 
-    private void lbrelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbrelatorioMouseClicked
-        main.Switch(CronosFrame.RELATORIOS);
-    }//GEN-LAST:event_lbrelatorioMouseClicked
-
     private void reportstileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportstileMouseClicked
         main.Switch(CronosFrame.RELATORIOS);
     }//GEN-LAST:event_reportstileMouseClicked
-
-    private void lbdisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbdisciplinasMouseClicked
-        main.Switch(CronosFrame.DISCIPLINAS);
-    }//GEN-LAST:event_lbdisciplinasMouseClicked
 
     private void disciplinastileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disciplinastileMouseClicked
         main.Switch(CronosFrame.DISCIPLINAS);
@@ -646,6 +462,31 @@ public class Home extends javax.swing.JPanel {
     private void btConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btConfigMouseClicked
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btConfigMouseClicked
+
+    private void lbhorariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbhorariosMouseClicked
+        horariotileMouseClicked(evt);
+    }//GEN-LAST:event_lbhorariosMouseClicked
+
+    private void lbdocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbdocentesMouseClicked
+        docentestileMouseClicked(evt);
+    }//GEN-LAST:event_lbdocentesMouseClicked
+
+    private void lbturmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbturmasMouseClicked
+        turmastileMouseClicked(evt);
+    }//GEN-LAST:event_lbturmasMouseClicked
+
+    private void lbcadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbcadastroMouseClicked
+        cadastrotileMouseClicked(evt);
+    }//GEN-LAST:event_lbcadastroMouseClicked
+
+    private void lbdisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbdisciplinasMouseClicked
+        disciplinastileMouseClicked(evt);
+    }//GEN-LAST:event_lbdisciplinasMouseClicked
+
+    private void lbrelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbrelatoriosMouseClicked
+        reportstileMouseClicked(evt);
+    }//GEN-LAST:event_lbrelatoriosMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btConfig;
     private javax.swing.JPanel cadastrotile;
@@ -653,13 +494,6 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JPanel docentestile;
     private javax.swing.JPanel helptile;
     private javax.swing.JPanel horariotile;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbajuda;
     private javax.swing.JLabel lbajudaicon;
@@ -667,14 +501,11 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JLabel lbdata;
     private javax.swing.JLabel lbdisciplinas;
     private javax.swing.JLabel lbdocentes;
-    private javax.swing.JLabel lbdocentesicon;
     private javax.swing.JLabel lbhora;
-    private javax.swing.JLabel lbhorario;
-    private javax.swing.JLabel lbhorarioicon;
-    private javax.swing.JLabel lbrelatorio;
+    private javax.swing.JLabel lbhorarios;
+    private javax.swing.JLabel lbrelatorios;
     private javax.swing.JLabel lbtitle;
     private javax.swing.JLabel lbturmas;
-    private javax.swing.JLabel lbuser;
     private br.ufrpe.bcc.continuous.components.MagicScroll magicScroll1;
     private javax.swing.JPanel pnApps;
     private javax.swing.JPanel reportstile;

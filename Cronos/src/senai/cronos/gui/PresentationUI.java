@@ -8,6 +8,7 @@ package senai.cronos.gui;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import senai.cronos.Main;
 import senai.cronos.gui.custom.ImageLoader;
 
 /**
@@ -21,6 +22,7 @@ public class PresentationUI extends javax.swing.JPanel {
     public PresentationUI(CronosFrame main) {
         this.main = main;
         initComponents();
+        lbuser.setText(Main.VERSAO);
     }
 
     @Override
@@ -38,6 +40,7 @@ public class PresentationUI extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         homeButton = new javax.swing.JLabel();
+        lbuser = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1366, 728));
         setMinimumSize(new java.awt.Dimension(1024, 728));
@@ -69,6 +72,10 @@ public class PresentationUI extends javax.swing.JPanel {
         });
         jPanel2.add(homeButton);
 
+        lbuser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        lbuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbuser.setText("versão");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,8 +83,9 @@ public class PresentationUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1342, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbuser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -87,7 +95,9 @@ public class PresentationUI extends javax.swing.JPanel {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addComponent(lbuser)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -99,5 +109,6 @@ public class PresentationUI extends javax.swing.JPanel {
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbuser;
     // End of variables declaration//GEN-END:variables
 }
