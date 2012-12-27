@@ -83,6 +83,7 @@ public class Horario {
             }
         }
 
+        aulas.remove(Aula.VAZIA);
         return aulas;
     }
 

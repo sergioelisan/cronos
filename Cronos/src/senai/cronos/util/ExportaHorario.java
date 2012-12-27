@@ -147,14 +147,14 @@ public class ExportaHorario {
         // imprime as barras cinzas q vao conter os dias do mes
         for (short r : new short[]{2, 3, 6, 9, 12, 15, 18}) {
             for (short c = 0; c < ROW_LENGHT; c++) {
-                paintCell(sheet.getRow(r).getCell(c), IndexedColors.GREY_25_PERCENT);
+                ExportUtils.paintCell(wb, sheet.getRow(r).getCell(c), IndexedColors.GREY_25_PERCENT);
             }
         }
 
         // imprime as barras cinzas que separam as semanas
         for (short r = 2; r < 21; r++) {
             for (short c : new short[]{7, 13, 19, 25, 31}) {
-                paintCell(sheet.getRow(r).getCell(c), IndexedColors.GREY_25_PERCENT);
+                ExportUtils.paintCell(wb, sheet.getRow(r).getCell(c), IndexedColors.GREY_25_PERCENT);
             }
         }
 
@@ -171,30 +171,13 @@ public class ExportaHorario {
             for (short dia : semana) {
                 Cell cell = sheet.getRow(2).getCell(dia);
                 cell.setCellValue(diasSemana[i]);
-                alignCell(cell);
+                ExportUtils.alignCell(cell);
                 ++i;
             }
         }
     }
 
-    private void paintCell(Cell cell, IndexedColors background) {
-        CellStyle cs = wb.createCellStyle();
-        cs.setFillForegroundColor(background.getIndex());
-        cs.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        cs.setBorderBottom(CellStyle.BORDER_THIN);
-        cs.setBorderTop(CellStyle.BORDER_THIN);
-        cs.setBorderLeft(CellStyle.BORDER_THIN);
-        cs.setBorderRight(CellStyle.BORDER_THIN);
-        cell.setCellStyle(cs);
-        alignCell(cell);
-    }
-
-    private void alignCell(Cell cell) {
-        CellStyle cs = cell.getCellStyle();
-        cs.setAlignment(CellStyle.ALIGN_CENTER);
-        cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        cell.setCellStyle(cs);
-    }
+    
 
     private void setCellsData(Sheet sheet, Map<Integer, Map<Date, Tupla<Aula, Aula>>> horario, int semestre) {
         // coloca o nome da turma
@@ -216,17 +199,17 @@ public class ExportaHorario {
         for (Integer mes : horario.keySet()) {
             // coloca o nome do mes
             Cell cell = sheet.getRow(meses_rows[i] + 1).getCell(0);
-            alignCell(cell);
+            ExportUtils.alignCell(cell);
             cell.setCellValue(DateUtil.getNomeMes(mes));
 
             // coloca as horas das aulas do primeiro horario
             cell = sheet.getRow(meses_rows[i] + 1).getCell(1);
-            alignCell(cell);
+            ExportUtils.alignCell(cell);
             cell.setCellValue(turma.getTurno().getHorario().getPrimeiro());
 
             // coloca as horas das aulas do segundo horario
             cell = sheet.getRow(meses_rows[i] + 2).getCell(1);
-            alignCell(cell);
+            ExportUtils.alignCell(cell);
             cell.setCellValue(turma.getTurno().getHorario().getSegundo());
 
             // aloca os dias nas celulas devidas
@@ -240,8 +223,8 @@ public class ExportaHorario {
 
                 Aula a1 = horario.get(mes).get(date).getPrimeiro();
                 Aula a2 = horario.get(mes).get(date).getSegundo();
-                paintCell(sheet.getRow(r + 1).getCell(c), dicAulaCor.get(a1));
-                paintCell(sheet.getRow(r + 2).getCell(c), dicAulaCor.get(a2));
+                ExportUtils.paintCell(wb, sheet.getRow(r + 1).getCell(c), dicAulaCor.get(a1));
+                ExportUtils.paintCell(wb, sheet.getRow(r + 2).getCell(c), dicAulaCor.get(a2));
             }
             ++i;
         }
@@ -257,7 +240,7 @@ public class ExportaHorario {
                                   + aula.getDocente().getNome() + " ("
                                   + aula.getLab().getNome() + ")"
             );
-            paintCell(cell, dicAulaCor.get(aula));
+            ExportUtils.paintCell(wb, cell, dicAulaCor.get(aula));
             CellStyle cs = cell.getCellStyle();
             cs.setAlignment(CellStyle.ALIGN_LEFT);
             cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);

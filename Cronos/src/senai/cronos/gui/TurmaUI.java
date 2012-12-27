@@ -45,16 +45,19 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
     public TurmaUI(CronosFrame main) {
         this.main = main;
         initComponents();
-        
+
         btgerar.addMouseListener(new LinkEffectHandler());
         btver.addMouseListener(new LinkEffectHandler());
+        btdisciplinas.addMouseListener(new LinkEffectHandler());
         btgerar.setVisible(false);
         btver.setVisible(false);
-        
+        btdisciplinas.setVisible(false);
+
         try {
             CronosAPI.subscribe(Turma.class, this);
+            reloadPNShow();
         } catch (Exception ex) {
-            Alerta.jogarAviso(ex.getMessage() );
+            Alerta.jogarAviso(ex.getMessage());
         }
     }
 
@@ -75,7 +78,6 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
     private void loadTurmas() {
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -102,7 +104,6 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
      */
     private void showTurmaInfo(final String nome) {
         Thread t = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -117,6 +118,12 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
                     lbhabilitacao.setText("habilitacao: " + String.valueOf(turma.getHabilitacao()));
                     btgerar.setVisible(true);
                     btver.setVisible(true);
+                    btdisciplinas.setVisible(true);
+
+                    reloadPNShow();
+
+                    pnturmasinfo.updateUI();
+                    TurmaUI.this.updateUI();
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes da turma:\n" + ex);
                 }
@@ -125,6 +132,12 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         t.start();
         btgerar.setVisible(false);
         btver.setVisible(false);
+    }
+
+    private void reloadPNShow() throws ClassNotFoundException, SQLException {
+        int w = pnShow.getPreferredSize().width;
+        int turmas = CronosAPI.<Turma>get(Turma.class).size();
+        pnShow.setPreferredSize(new Dimension(w, ((110 * turmas) / 3)));
     }
 
     @Override
@@ -157,21 +170,20 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         jLabel1 = new javax.swing.JLabel();
         bthome = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        scroll = new br.ufrpe.bcc.continuous.components.MagicScroll();
+        pnShow = new javax.swing.JPanel();
+        btconfig = new javax.swing.JLabel();
+        pnturmasinfo = new javax.swing.JPanel();
         lbhabilitacao = new javax.swing.JLabel();
         lbsaida = new javax.swing.JLabel();
         lbturno = new javax.swing.JLabel();
         lbentrada = new javax.swing.JLabel();
         lbnucleo = new javax.swing.JLabel();
         lbnome = new javax.swing.JLabel();
-        btgerar = new javax.swing.JLabel();
-        btver = new javax.swing.JLabel();
         lbid = new javax.swing.JLabel();
-        editarDisciplinas = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        scroll = new br.ufrpe.bcc.continuous.components.MagicScroll();
-        pnShow = new javax.swing.JPanel();
-        btconfig = new javax.swing.JLabel();
+        btver = new javax.swing.JLabel();
+        btgerar = new javax.swing.JLabel();
+        btdisciplinas = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1366, 728));
@@ -200,7 +212,30 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setOpaque(false);
+        scroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scroll.setActiveWheelGesture(true);
+
+        pnShow.setMaximumSize(new java.awt.Dimension(835, 1080));
+        pnShow.setMinimumSize(new java.awt.Dimension(600, 1080));
+        pnShow.setOpaque(false);
+        pnShow.setPreferredSize(new java.awt.Dimension(600, 1080));
+        pnShow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        scroll.setViewportView(pnShow);
+
+        btconfig.setBackground(ColorManager.getColor("button"));
+        btconfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btconfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/config.png"))); // NOI18N
+        btconfig.setMaximumSize(new java.awt.Dimension(35, 35));
+        btconfig.setMinimumSize(new java.awt.Dimension(35, 35));
+        btconfig.setOpaque(true);
+        btconfig.setPreferredSize(new java.awt.Dimension(35, 35));
+        btconfig.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btconfigMouseClicked(evt);
+            }
+        });
+
+        pnturmasinfo.setBackground(new Color(50,50,200,20));
 
         lbhabilitacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbhabilitacao.setText("habilitação");
@@ -221,126 +256,74 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         lbnome.setForeground(ColorManager.getColor("foreground"));
         lbnome.setText("turma");
 
-        btgerar.setBackground(new java.awt.Color(255, 255, 255));
-        btgerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btgerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btgerar.setText("gerar horário");
-        btgerar.setBorder(javax.swing.BorderFactory.createLineBorder(ColorManager.getColor("border")));
-        btgerar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btgerarMouseClicked(evt);
-            }
-        });
+        lbid.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbid.setText("id");
+
+        javax.swing.GroupLayout pnturmasinfoLayout = new javax.swing.GroupLayout(pnturmasinfo);
+        pnturmasinfo.setLayout(pnturmasinfoLayout);
+        pnturmasinfoLayout.setHorizontalGroup(
+            pnturmasinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnturmasinfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnturmasinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbnome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnturmasinfoLayout.createSequentialGroup()
+                        .addGroup(pnturmasinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbnucleo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbentrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbsaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbturno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbhabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 74, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnturmasinfoLayout.setVerticalGroup(
+            pnturmasinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnturmasinfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbnome, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbid)
+                .addGap(6, 6, 6)
+                .addComponent(lbnucleo)
+                .addGap(6, 6, 6)
+                .addComponent(lbentrada)
+                .addGap(6, 6, 6)
+                .addComponent(lbsaida)
+                .addGap(6, 6, 6)
+                .addComponent(lbturno)
+                .addGap(6, 6, 6)
+                .addComponent(lbhabilitacao)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         btver.setBackground(new java.awt.Color(255, 255, 255));
         btver.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btver.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btver.setText("ver horário");
-        btver.setBorder(javax.swing.BorderFactory.createLineBorder(ColorManager.getColor("border")));
         btver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btverMouseClicked(evt);
             }
         });
 
-        lbid.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbid.setText("id");
-
-        editarDisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        editarDisciplinas.setText("Disciplinas");
-        editarDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+        btgerar.setBackground(new java.awt.Color(255, 255, 255));
+        btgerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btgerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btgerar.setText("gerar horário");
+        btgerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editarDisciplinasMouseClicked(evt);
+                btgerarMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(editarDisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 209, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lbnome, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbid, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbnucleo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbsaida, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbturno, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbhabilitacao, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btgerar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(343, Short.MAX_VALUE)
-                .addComponent(editarDisciplinas)
-                .addGap(21, 21, 21))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 44, Short.MAX_VALUE)
-                    .addComponent(lbnome)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbid)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbnucleo)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbentrada)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbsaida)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbturno)
-                    .addGap(6, 6, 6)
-                    .addComponent(lbhabilitacao)
-                    .addGap(18, 18, 18)
-                    .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(btgerar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 45, Short.MAX_VALUE)))
-        );
-
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 1, 330, 380));
-
-        jPanel3.setBackground(new Color(50,50,200,20));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 380));
-
-        scroll.setActiveWheelGesture(true);
-
-        pnShow.setMaximumSize(new java.awt.Dimension(835, 1080));
-        pnShow.setMinimumSize(new java.awt.Dimension(835, 1080));
-        pnShow.setOpaque(false);
-        pnShow.setPreferredSize(new java.awt.Dimension(835, 1080));
-        pnShow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        scroll.setViewportView(pnShow);
-
-        btconfig.setBackground(ColorManager.getColor("button"));
-        btconfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btconfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/senai/cronos/gui/images/config.png"))); // NOI18N
-        btconfig.setMaximumSize(new java.awt.Dimension(35, 35));
-        btconfig.setMinimumSize(new java.awt.Dimension(35, 35));
-        btconfig.setOpaque(true);
-        btconfig.setPreferredSize(new java.awt.Dimension(35, 35));
-        btconfig.addMouseListener(new java.awt.event.MouseAdapter() {
+        btdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btdisciplinas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btdisciplinas.setText("disciplinas");
+        btdisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btconfigMouseClicked(evt);
+                btdisciplinasMouseClicked(evt);
             }
         });
 
@@ -358,11 +341,21 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1167, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
-                        .addGap(128, 128, 128)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(pnturmasinfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btgerar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btdisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btdisciplinas, btgerar});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -374,10 +367,23 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
                         .addComponent(bthome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(301, 301, 301))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnturmasinfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btgerar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btdisciplinas)
+                        .addGap(0, 296, Short.MAX_VALUE))
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btdisciplinas, btgerar});
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void bthomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bthomeMouseClicked
@@ -400,11 +406,11 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btconfigMouseClicked
 
-    private void editarDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editarDisciplinasMouseClicked
+    private void btdisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btdisciplinasMouseClicked
         List<ucCheck> listaCheck = new ArrayList<>();
         Turma t = null;
-        Acumulador acc=new Acumulador();
-       
+        Acumulador acc = new Acumulador();
+
         try {
             t = CronosAPI.buscaTurma(lbnome.getText());
         } catch (ClassNotFoundException ex) {
@@ -412,41 +418,38 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         } catch (SQLException ex) {
             Logger.getLogger(TurmaUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {     
+        try {
             List<UnidadeCurricular> u = CronosAPI.buscaDisciplinas(t.getNucleo());
-           
-        for(UnidadeCurricular uc:u){
-             
-            listaCheck.add(new ucCheck(uc,acc) );
-        }
-         JDialog ucd = new JDialog();
-         ucd.setSize(new Dimension(750, 450) );
-         ucd.setLocationRelativeTo(null);
-         CheckDisciplina ckUI = new CheckDisciplina(ucd, listaCheck ,CronosAPI.buscaTurma(lbnome.getText()),acc);
-         ucd.setContentPane(ckUI);
-         ucd.setVisible(true);
-        
-        
-        
+
+            for (UnidadeCurricular uc : u) {
+
+                listaCheck.add(new ucCheck(uc, acc));
+            }
+            JDialog ucd = new JDialog();
+            ucd.setSize(new Dimension(750, 450));
+            ucd.setLocationRelativeTo(null);
+            CheckDisciplina ckUI = new CheckDisciplina(ucd, listaCheck, CronosAPI.buscaTurma(lbnome.getText()), acc);
+            ucd.setContentPane(ckUI);
+            ucd.setVisible(true);
+
+
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TurmaUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(TurmaUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-           
-    }//GEN-LAST:event_editarDisciplinasMouseClicked
 
+
+    }//GEN-LAST:event_btdisciplinasMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
+    private javax.swing.JLabel btdisciplinas;
     private javax.swing.JLabel btgerar;
     private javax.swing.JLabel bthome;
     private javax.swing.JLabel btver;
-    private javax.swing.JLabel editarDisciplinas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbentrada;
     private javax.swing.JLabel lbhabilitacao;
     private javax.swing.JLabel lbid;
@@ -455,6 +458,7 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
     private javax.swing.JLabel lbsaida;
     private javax.swing.JLabel lbturno;
     private javax.swing.JPanel pnShow;
+    private javax.swing.JPanel pnturmasinfo;
     private br.ufrpe.bcc.continuous.components.MagicScroll scroll;
     // End of variables declaration//GEN-END:variables
 }

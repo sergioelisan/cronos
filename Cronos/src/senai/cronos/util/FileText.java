@@ -42,7 +42,7 @@ public class FileText {
                 Logger.getLogger(FileText.class.getName()).log(Level.SEVERE, null, ex);
             }
             }else{
-              System.out.println("aqui");
+              
             }
             
                

@@ -6,7 +6,9 @@ package senai.cronos.horario;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Turno;
@@ -55,6 +57,7 @@ public class HorarioDocente {
 
     /**
      * Remove uma aula para o docente
+     *
      * @param dia
      * @param turno
      * @param half
@@ -65,6 +68,7 @@ public class HorarioDocente {
 
     /**
      * Retorna uma aula em um determinado momento do dia
+     *
      * @param dia
      * @param turno
      * @param half
@@ -83,22 +87,38 @@ public class HorarioDocente {
         return horario;
     }
 
+    public Set<Aula> getAulas() {
+        Set<Aula> aulas = new HashSet<>();
+
+        for (Date dia : horario.keySet()) {
+            for (Tupla<Aula,Aula> t_aulas : horario.get(dia).values()) {
+                aulas.add(t_aulas.getPrimeiro());
+                aulas.add(t_aulas.getSegundo());
+            }
+        }
+        
+        return aulas;
+    }
+
     /**
      * Calcula a percentagem de ocupação do docente
+     *
      * @return
      */
     public double getPercentualOcupacao() {
         int ocupacao = 0;
         int slots = horario.keySet().size() * 2 * 2;
 
-        for (Date dia : horario.keySet() ) {
-            for (Turno turno : horario.get(dia).keySet() ) {
+        for (Date dia : horario.keySet()) {
+            for (Turno turno : horario.get(dia).keySet()) {
                 Tupla<Aula, Aula> aulas = horario.get(dia).get(turno);
-                if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.VAZIA) )
+                if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.VAZIA)) {
                     ocupacao++;
+                }
 
-                if (!aulas.get(Tupla.SEGUNDA).equals(Aula.VAZIA) )
+                if (!aulas.get(Tupla.SEGUNDA).equals(Aula.VAZIA)) {
                     ocupacao++;
+                }
             }
         }
 
@@ -107,6 +127,7 @@ public class HorarioDocente {
 
     /**
      * Verifica se o docente ja possui uma ocupacao em determinado horario
+     *
      * @param tn
      * @param dia
      * @param metade
@@ -118,15 +139,15 @@ public class HorarioDocente {
 
     /**
      * Verifica disponibilidade de um docente
+     *
      * @param dia
      * @param tn
      * @return
      */
     public boolean isDisponivel(Date dia, Turno tn) {
-        return ( getAula(dia, tn, Tupla.PRIMEIRA).equals(Aula.VAZIA) &&
-                 getAula(dia, tn, Tupla.SEGUNDA) .equals(Aula.VAZIA) );
+        return (getAula(dia, tn, Tupla.PRIMEIRA).equals(Aula.VAZIA)
+                && getAula(dia, tn, Tupla.SEGUNDA).equals(Aula.VAZIA));
     }
-
     /**
      * Estrutura de dados que armazena o horario do docente
      */
