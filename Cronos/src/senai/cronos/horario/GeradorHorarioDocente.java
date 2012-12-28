@@ -26,7 +26,7 @@ public class GeradorHorarioDocente {
      * @return
      */
     public HorarioDocente generate(Docente doc) throws Exception {
-        HorarioDocente horarioDocente = HorarioDocente.create();
+        HorarioDocente horarioDocente = HorarioDocente.create(doc);
 
         for (Turma turma : CronosAPI.<Turma>get(Turma.class)) {
             Turno turno = turma.getTurno();
