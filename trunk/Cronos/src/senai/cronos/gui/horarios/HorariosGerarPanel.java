@@ -171,6 +171,7 @@ public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUI
                     HorariosUI.getInstance().move("exibir");
                 } catch (Exception e) {
                     Alerta.jogarAviso("Problemas ao gerar horario para todas as turmas:" + e);
+                    e.printStackTrace(System.out);
                 }
             }
         }).start();

@@ -212,9 +212,9 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
 
         JScrollPane scrollLegendas = new JScrollPane(pnLegendas);
         scrollLegendas.setBorder(null);
-        scrollLegendas.setMaximumSize(new Dimension(810, 200));
-        scrollLegendas.setPreferredSize(new Dimension(810, 200));
-        scrollLegendas.setMinimumSize(new Dimension(810, 200));
+        scrollLegendas.setMaximumSize(new Dimension(810, 300));
+        scrollLegendas.setPreferredSize(new Dimension(810, 300));
+        scrollLegendas.setMinimumSize(new Dimension(810, 300));
         scrollLegendas.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         pnLegendas.setPreferredSize(new Dimension(810, 800));
         pnLegendas.setBackground(Color.WHITE);

@@ -4,11 +4,9 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import senai.cronos.Main;
 import senai.cronos.CronosAPI;
 import senai.cronos.entidades.*;
 import senai.util.Tupla;
-import senai.util.date.DateUtil;
 
 /**
  * Classe abstrata que armazena a ordem e algumas partes do algoritmo de geração
@@ -44,7 +42,6 @@ public abstract class GeraHorario {
         this.turma = turma;
         alocarAulas(turma.getHorario().getHorario());
         alocarDocentes(turma.getHorario().getHorario());
-
     }
 
     /**

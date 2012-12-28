@@ -175,7 +175,7 @@ public class HorarioUIFactory {
         ResourceBundle rb = ResourceBundle.getBundle("senai/cronos/properties/colorschema");
 
         List<Color> cores = new ArrayList<>();
-        for (int i = 1; i <= 15; i++) {
+        for (int i = 1; i <= 19; i++) {
             cores.add(Color.decode(rb.getString("disciplina." + (i) ) ) );
         }
 
