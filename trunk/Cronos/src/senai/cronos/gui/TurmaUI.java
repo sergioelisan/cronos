@@ -52,6 +52,7 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
         btgerar.setVisible(false);
         btver.setVisible(false);
         btdisciplinas.setVisible(false);
+        lbid.setVisible(false);
 
         try {
             CronosAPI.subscribe(Turma.class, this);
@@ -298,29 +299,33 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btver.setBackground(new java.awt.Color(255, 255, 255));
+        btver.setBackground(new java.awt.Color(50, 50, 200,20));
         btver.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btver.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btver.setText("ver horário");
+        btver.setOpaque(true);
         btver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btverMouseClicked(evt);
             }
         });
 
-        btgerar.setBackground(new java.awt.Color(255, 255, 255));
+        btgerar.setBackground(new java.awt.Color(50, 50, 200,20));
         btgerar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btgerar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btgerar.setText("gerar horário");
+        btgerar.setOpaque(true);
         btgerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btgerarMouseClicked(evt);
             }
         });
 
+        btdisciplinas.setBackground(new java.awt.Color(50, 50, 200,20));
         btdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btdisciplinas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btdisciplinas.setText("disciplinas");
+        btdisciplinas.setOpaque(true);
         btdisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btdisciplinasMouseClicked(evt);

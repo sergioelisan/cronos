@@ -18,13 +18,20 @@ public class LinkEffectHandler extends MouseAdapter {
         com.setOpaque(true);
         com.setBackground(overbackgroundcolor);
         com.setForeground(overforegroundcolor);
+        com.updateUI();
+        ((JComponent) com.getParent()).updateUI();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         JComponent com = (JComponent) e.getSource();
-        com.setOpaque(false);
+        
+        com.setBackground(new Color(50,50,200,20));
+        com.setOpaque(true);
+        
         com.setForeground(outforegroundcolor);
+        com.updateUI();
+        ((JComponent) com.getParent()).updateUI();
     }
 
     public static final Color overbackgroundcolor = ColorManager.getColor("background");
