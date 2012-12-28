@@ -19,13 +19,12 @@ import senai.util.date.Feriado;
 public class Feriados implements Observador, Cache<Feriado> {
 
     private List<Feriado> feriados;
-
     private static Feriados instance;
 
     public static Feriados instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -66,5 +65,10 @@ public class Feriados implements Observador, Cache<Feriado> {
     @Override
     public Feriado get(Class c, Integer id) {
         return null;
+    }
+
+    @Override
+    public void clear() {
+        feriados.clear();
     }
 }

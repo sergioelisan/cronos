@@ -62,12 +62,12 @@ public class CronosFrame extends javax.swing.JFrame {
         HorariosUI.getInstance().setMain(this);
 
         getContentPane().add(new DocenteUI(this), DOCENTES);
-        getContentPane().add(new CadastroUI(this), CADASTROS);
         getContentPane().add(new ReportUI(this), RELATORIOS);
         getContentPane().add(new TurmaUI(this), TURMAS);
         getContentPane().add(new DisciplinaUI(this), DISCIPLINAS);
         getContentPane().add(new HelpUI(this), AJUDA);
         getContentPane().add(new ConfigUI(this), CONFIG);
+        getContentPane().add(new CadastroUI(this), CADASTROS);
         getContentPane().add(new PresentationUI(this), PRESENTATION);
     }
 

@@ -209,11 +209,12 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
                         }
                     }
 
+                    pnShow.repaint();
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas o docente:\n" + ex);
                 }
                 
-                pnShow.repaint();
+                
             }
         }).start();
     }

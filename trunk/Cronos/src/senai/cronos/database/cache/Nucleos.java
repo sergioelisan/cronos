@@ -13,13 +13,12 @@ import senai.cronos.entidades.Nucleo;
 public class Nucleos implements Observador, Cache<Nucleo> {
 
     private List<Nucleo> nucleos;
-
     private static Nucleos instance;
 
     public static Nucleos instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -32,7 +31,7 @@ public class Nucleos implements Observador, Cache<Nucleo> {
             DAOFactory.getDao(Nucleo.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex.getMessage() );
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -52,9 +51,16 @@ public class Nucleos implements Observador, Cache<Nucleo> {
 
     @Override
     public Nucleo get(Class c, Integer id) {
-        for(Nucleo nucleo : nucleos)
-            if(nucleo.getId().equals(id))
+        for (Nucleo nucleo : nucleos) {
+            if (nucleo.getId().equals(id)) {
                 return nucleo;
+            }
+        }
         return null;
+    }
+
+    @Override
+    public void clear() {
+        nucleos.clear();
     }
 }

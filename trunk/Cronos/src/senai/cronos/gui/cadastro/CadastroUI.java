@@ -8,6 +8,11 @@ package senai.cronos.gui.cadastro;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import senai.cronos.CronosAPI;
+import senai.cronos.entidades.Docente;
 import senai.cronos.gui.ColorManager;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.gui.custom.ImageLoader;
@@ -204,6 +209,7 @@ public class CadastroUI extends javax.swing.JPanel {
 
     private void lkdocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lkdocentesMouseClicked
         Switch(DOCENTE);
+        
     }//GEN-LAST:event_lkdocentesMouseClicked
 
     private void lkturmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lkturmasMouseClicked

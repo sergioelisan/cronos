@@ -57,4 +57,9 @@ public class Laboratorios implements Observador, Cache<Laboratorio> {
                 return lab;
         return null;
     }
+
+    @Override
+    public void clear() {
+        laboratorios.clear();
+    }
 }

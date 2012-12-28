@@ -114,7 +114,7 @@ public class DAODocente extends DAO<Docente> {
     public List<Docente> get() throws SQLException {
         open();
 
-        List<Docente> docentes = new LinkedList<>();
+        List<Docente> docentes = new ArrayList<>();
         String query = DatabaseUtil.query("docente.select");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
