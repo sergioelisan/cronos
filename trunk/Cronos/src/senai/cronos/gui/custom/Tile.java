@@ -20,43 +20,43 @@ public class Tile extends JPanel {
     public Tile() {
         initComponents();
         addMouseListener(new MouseHandler());
-        lbnome.addMouseListener(new MouseHandler() );
-        lbid.addMouseListener(new MouseHandler() );        
+        lbnome.addMouseListener(new MouseHandler());
+        lbid.addMouseListener(new MouseHandler());
     }
 
     public void setNome(String nome) {
         lbnome.setText(nome);
     }
-    
+
     public void setId(String id) {
         lbid.setText(id);
     }
-    
+
     public String getNome() {
         return lbnome.getText();
     }
-    
+
     public String getId() {
         return lbid.getText();
     }
-    
+
     public void setClickEvent(MouseAdapter eventhandler) {
         addMouseListener(eventhandler);
         lbnome.addMouseListener(eventhandler);
         lbid.addMouseListener(eventhandler);
     }
-    
+
     private class MouseHandler extends MouseAdapter {
-        
+
         public void mouseEntered(MouseEvent e) {
             setBackground(over);
         }
-        
+
         public void mouseExited(MouseEvent e) {
             setBackground(standard);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -110,7 +110,6 @@ public class Tile extends JPanel {
     private javax.swing.JLabel lbid;
     private javax.swing.JLabel lbnome;
     // End of variables declaration//GEN-END:variables
-
     private Color standard = ColorManager.getColor("tile");
-    private Color over = ColorManager.claro(ColorManager.getColor("tile") );
+    private Color over = ColorManager.claro(ColorManager.getColor("tile"));
 }

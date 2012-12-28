@@ -14,12 +14,13 @@ public class DatabaseUtil {
         ResourceBundle rb = ResourceBundle.getBundle("senai/cronos/properties/queries");
         return rb.getString(key);
     }
-    
+
     /**
      * encapsula a chamada de metodo para obtencao de uma conexao
+     *
      * @return
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public static Connection conexao() throws SQLException {
         return new ConnectionFactory().getConnection();

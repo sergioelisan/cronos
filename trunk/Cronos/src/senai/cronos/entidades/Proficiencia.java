@@ -4,7 +4,9 @@ import java.util.Objects;
 
 /**
  *
- * Classe que representa a experiencia do professor em uma determinada unidade curricular
+ * Classe que representa a experiencia do professor em uma determinada unidade
+ * curricular
+ *
  * @author Carlos Melo e Sergio Lisan
  */
 public class Proficiencia implements Comparable<Proficiencia> {
@@ -26,7 +28,7 @@ public class Proficiencia implements Comparable<Proficiencia> {
     public void setDocente(Docente docente) {
         this.docente = docente;
     }
-    
+
     public int getLecionado() {
         return lecionado;
     }
@@ -89,10 +91,8 @@ public class Proficiencia implements Comparable<Proficiencia> {
     public int compareTo(Proficiencia o) {
         return scoretemp > o.scoretemp ? 1 : (scoretemp == o.scoretemp ? 0 : -1);
     }
-    
     private Docente docente = new Docente();
     private UnidadeCurricular unidadecurricular = new UnidadeCurricular();
     private int scoretemp = 0;
     private int lecionado = 0;
-
 }

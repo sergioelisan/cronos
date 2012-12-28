@@ -21,47 +21,49 @@ import senai.cronos.gui.Alerta;
  * @author Carlos Melo
  */
 public class TurmasConfig {
-    
+
     public TurmasConfig() {
     }
 
     /**
      * importa as configuracoes de turma
+     *
      * @param nomeTurma
-     * @return 
+     * @return
      */
     public List<UnidadeCurricular> importar(String nomeTurma) {
         List<UnidadeCurricular> unidadesCurriculares = new ArrayList<>();
-        
+
         File file = new File(nomeTurma + ".tur");
-        if (file.exists() ) {
+        if (file.exists()) {
             try {
                 ObjectInputStream ob = new ObjectInputStream(new FileInputStream(file));
-                unidadesCurriculares = (List<UnidadeCurricular>) ob.readObject();                
+                unidadesCurriculares = (List<UnidadeCurricular>) ob.readObject();
             } catch (IOException | ClassNotFoundException ex) {
-                Alerta.jogarAviso(ex.getMessage() );
+                Alerta.jogarAviso(ex.getMessage());
             }
-        } 
+        }
 
         Collections.sort(unidadesCurriculares);
         return unidadesCurriculares;
     }
-    
+
     /**
      * exporta a configuracao de uma turma para um arquivo
+     *
      * @param nome
-     * @param uc 
+     * @param uc
      */
     public void exportar(String nome, List<UnidadeCurricular> unidadesCurriculares) {
         ObjectOutputStream ob;
         Collections.sort(unidadesCurriculares);
-        
+
         try {
             ob = new ObjectOutputStream(new FileOutputStream(nome + ".tur"));
             ob.writeObject(unidadesCurriculares);
             ob.close();
         } catch (IOException ex) {
-            Alerta.jogarAviso(ex.getMessage() );
+            Alerta.jogarAviso(ex.getMessage());
         }
     }
 }

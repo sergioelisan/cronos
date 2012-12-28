@@ -23,7 +23,7 @@ public class GeraHorarioAlternado extends GeraHorario {
     public void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException {
 
         List<UnidadeCurricular> list = new TurmasConfig().importar(getTurma().getNome());
-        
+
         Set<Date> keySet = null;
         for (int modulo = 1; modulo < 5; modulo++) {
             List<UnidadeCurricular> sl = new ArrayList<>();

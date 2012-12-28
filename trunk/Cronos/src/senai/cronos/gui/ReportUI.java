@@ -17,12 +17,12 @@ import senai.cronos.gui.custom.ImageLoader;
 public class ReportUI extends javax.swing.JPanel {
 
     private CronosFrame main;
-    
+
     public ReportUI(CronosFrame main) {
         this.main = main;
         initComponents();
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Image wallpaper = ImageLoader.loadBackground();
@@ -107,7 +107,6 @@ public class ReportUI extends javax.swing.JPanel {
     private void btconfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btconfigMouseClicked
         main.Switch(CronosFrame.CONFIG);
     }//GEN-LAST:event_btconfigMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btconfig;
     private javax.swing.JLabel bthome;

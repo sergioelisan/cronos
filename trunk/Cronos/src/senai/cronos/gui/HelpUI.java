@@ -28,10 +28,10 @@ public class HelpUI extends javax.swing.JPanel {
     public HelpUI(CronosFrame main) {
         this.main = main;
         initComponents();
-        
-        btContato.addMouseListener(new LinkEffectHandler() );
-        btSobre.addMouseListener(new LinkEffectHandler() );
-        btAtualizar.addMouseListener(new LinkEffectHandler() );
+
+        btContato.addMouseListener(new LinkEffectHandler());
+        btSobre.addMouseListener(new LinkEffectHandler());
+        btAtualizar.addMouseListener(new LinkEffectHandler());
     }
 
     @Override
@@ -316,17 +316,14 @@ public class HelpUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btconfigMouseClicked
 
     private void btAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAtualizarMouseClicked
-        
     }//GEN-LAST:event_btAtualizarMouseClicked
 
     private void btContatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btContatoMouseClicked
-        
     }//GEN-LAST:event_btContatoMouseClicked
 
     private void btSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSobreMouseClicked
         Alerta.showMensagem("SENAI Cronos - " + Main.VERSAO, "Sistema de Geração de Horários");
     }//GEN-LAST:event_btSobreMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btAtualizar;
     private javax.swing.JLabel btContato;

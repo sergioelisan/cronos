@@ -23,32 +23,31 @@ public class DAOFactory {
      */
     public static DAO getDao(Class c) throws ClassNotFoundException, SQLException {
 
-        switch(c.getName() ) {
-            case "senai.cronos.entidades.Docente": 
+        switch (c.getName()) {
+            case "senai.cronos.entidades.Docente":
                 return DAODocente.getInstance();
-                
-            case "senai.cronos.entidades.Laboratorio": 
+
+            case "senai.cronos.entidades.Laboratorio":
                 return DAOLaboratorio.getInstance();
-                
-            case "senai.cronos.entidades.Nucleo": 
+
+            case "senai.cronos.entidades.Nucleo":
                 return DAONucleo.getInstance();
-                
-            case "senai.cronos.entidades.Turma": 
+
+            case "senai.cronos.entidades.Turma":
                 return DAOTurma.getInstance();
-                
-            case "senai.cronos.entidades.Proficiencia": 
+
+            case "senai.cronos.entidades.Proficiencia":
                 return DAOProficiencia.getInstance();
-                
-            case "senai.cronos.entidades.UnidadeCurricular": 
+
+            case "senai.cronos.entidades.UnidadeCurricular":
                 return DAOUnidadeCurricular.getInstance();
-                
-            case "senai.util.date.Feriado": 
+
+            case "senai.util.date.Feriado":
                 return DAOFeriado.getInstance();
-                
+
             default:
                 throw new IllegalArgumentException(c.getName() + " não possui DAO");
-        }       
-        
+        }
+
     }
-    
 }

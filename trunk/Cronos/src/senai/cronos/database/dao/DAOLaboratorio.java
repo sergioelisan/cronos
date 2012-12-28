@@ -113,5 +113,4 @@ public class DAOLaboratorio extends DAO<Laboratorio> {
 
         return lb;
     }
-    
 }

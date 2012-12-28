@@ -49,7 +49,7 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
         // Remove da tabela de proficiencias antes de remover a disciplina
         DAOProficiencia daoprof = (DAOProficiencia) DAOProficiencia.getInstance();
         daoprof.removeUC(id);
-        
+
         open();
         String query = DatabaseUtil.query("disciplina.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -90,7 +90,7 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
 
             DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
             DAO<Laboratorio> daolab = DAOFactory.getDao(Laboratorio.class);
-            
+
             while (rs.next()) {
                 UnidadeCurricular uc = new UnidadeCurricular();
                 uc.setId(rs.getInt("id"));
@@ -122,7 +122,7 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
 
             DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
             DAO<Laboratorio> daolab = DAOFactory.getDao(Laboratorio.class);
-            
+
             while (rs.next()) {
                 uc.setId(rs.getInt("id"));
                 uc.setNome(rs.getString("nome"));
@@ -139,6 +139,4 @@ public class DAOUnidadeCurricular extends DAO<UnidadeCurricular> {
 
         return uc;
     }
-
-    
 }

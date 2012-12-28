@@ -74,7 +74,7 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void loadFeriados() {
         try {
-            ((DefaultListModel<Feriado>)listFeriados.getModel()).clear();
+            ((DefaultListModel<Feriado>) listFeriados.getModel()).clear();
 
             // logica de carregamento de feriados
             List<Feriado> feriados = CronosAPI.<Feriado>get(Feriado.class);
@@ -128,7 +128,7 @@ public class ConfigUI extends javax.swing.JPanel {
      */
     private void loadNucleos() {
         try {
-            ((DefaultListModel<Nucleo>)listaNucleos.getModel()).clear();
+            ((DefaultListModel<Nucleo>) listaNucleos.getModel()).clear();
 
             // logica de carregamento de feriados
             List<Nucleo> nucleos = CronosAPI.<Nucleo>get(Nucleo.class);
@@ -651,10 +651,11 @@ public class ConfigUI extends javax.swing.JPanel {
     private void datepickerFimPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_datepickerFimPropertyChange
         if (evt.getPropertyName().equals("date")) {
 
-            if (datepickerInicio.getDate().compareTo(datepickerFim.getDate()) < 0)
+            if (datepickerInicio.getDate().compareTo(datepickerFim.getDate()) < 0) {
                 CronosAPI.setFimCalendario(datepickerFim.getDate());
-            else
+            } else {
                 JOptionPane.showMessageDialog(null, "O fim do calendario nao pode ser antes do inicio");
+            }
         }
     }//GEN-LAST:event_datepickerFimPropertyChange
 
@@ -712,12 +713,11 @@ public class ConfigUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNucleoFocusGained
 
     private void txtNucleoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNucleoFocusLost
-       if (!txtNucleo.getText().trim().equals("novo núcleo")) {
+        if (!txtNucleo.getText().trim().equals("novo núcleo")) {
             txtNucleo.setText("novo núcleo");
             txtNucleo.setForeground(Color.GRAY);
         }
     }//GEN-LAST:event_txtNucleoFocusLost
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btaddferiado;
     private javax.swing.JLabel btaddnucleo;

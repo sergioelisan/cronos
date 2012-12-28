@@ -9,13 +9,13 @@ package senai.util.concurrency;
  * @author Sergio
  */
 public class Paralell {
-    
+
     /**
      * paraleliza uma funcoa
-     * @param run 
+     *
+     * @param run
      */
     public static void start(Runnable run) {
         new Thread(run).start();
     }
-    
 }

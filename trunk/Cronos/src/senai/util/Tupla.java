@@ -14,7 +14,6 @@ public class Tupla<K, V> {
 
     public static final Integer PRIMEIRA = 0;
     public static final Integer SEGUNDA = 1;
-
     /**
      * vetor que armazena os elementos da tupla
      */
@@ -32,6 +31,7 @@ public class Tupla<K, V> {
 
     /**
      * Insere de acordo com a posicao passada com parametro
+     *
      * @param objeto
      * @param posicao
      */
@@ -41,6 +41,7 @@ public class Tupla<K, V> {
 
     /**
      * Retorna um objeto alocado na posicao passada como parametro
+     *
      * @param posicao
      * @return
      */
@@ -59,7 +60,9 @@ public class Tupla<K, V> {
         return elementos;
     }
 
-    /** verifica a existencia de um objeto na tupla */
+    /**
+     * verifica a existencia de um objeto na tupla
+     */
     public boolean contains(Object obj) {
         return list().contains(obj);
     }
@@ -115,5 +118,4 @@ public class Tupla<K, V> {
         return "Tupla{" + "elementos=" + elementos + '}';
     }
     // </editor-fold>
-
 }

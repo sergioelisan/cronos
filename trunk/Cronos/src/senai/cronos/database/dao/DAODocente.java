@@ -44,10 +44,10 @@ public class DAODocente extends DAO<Docente> {
         }
 
         close();
-        
+
         DAOProficiencia daoprof = (DAOProficiencia) DAOProficiencia.getInstance();
         daoprof.addAll(u.getProficiencias());
-        
+
         notifica();
     }
 
@@ -55,19 +55,19 @@ public class DAODocente extends DAO<Docente> {
     public void remove(Serializable id) throws SQLException {
         open();
         String query;
-        
+
         query = DatabaseUtil.query("horario.delete.docente1");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
-        
+
         query = DatabaseUtil.query("horario.delete.docente2");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
-        
+
         query = DatabaseUtil.query("docente.delete");
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, (Integer) id);
@@ -101,12 +101,12 @@ public class DAODocente extends DAO<Docente> {
         }
 
         close();
-        
+
         DAO<Proficiencia> daoprof = DAOProficiencia.getInstance();
-        for (Proficiencia p : u.getProficiencias() ) {
+        for (Proficiencia p : u.getProficiencias()) {
             daoprof.update(p);
         }
-        
+
         notifica();
     }
 

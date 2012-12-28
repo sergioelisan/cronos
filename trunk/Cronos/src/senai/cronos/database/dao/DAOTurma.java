@@ -85,7 +85,7 @@ public class DAOTurma extends DAO<Turma> {
     @Override
     public void remove(Serializable id) throws SQLException {
         removeHorario(id);
-        
+
         open();
         String query = DatabaseUtil.query("turma.delete");
 
@@ -93,7 +93,7 @@ public class DAOTurma extends DAO<Turma> {
             ps.setInt(1, (Integer) id);
             ps.execute();
         }
-        
+
         close();
         notifica();
     }
@@ -170,12 +170,12 @@ public class DAOTurma extends DAO<Turma> {
             ResultSet rs = ps.executeQuery();
 
             DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
-            
+
             while (rs.next()) {
                 Turma t = new Turma();
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));                
+                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));
@@ -204,11 +204,11 @@ public class DAOTurma extends DAO<Turma> {
             ResultSet rs = ps.executeQuery();
 
             DAO<Nucleo> daonucleo = DAOFactory.getDao(Nucleo.class);
-            
+
             while (rs.next()) {
                 t.setId(rs.getInt("id"));
                 t.setNome(rs.getString("nome"));
-                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));                
+                t.setNucleo(daonucleo.get(rs.getInt("nucleo")));
                 t.setEntrada(rs.getDate("entrada"));
                 t.setSaida(rs.getDate("saida"));
                 t.setTurno(Turno.getTurno(rs.getInt("turno")));

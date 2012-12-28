@@ -29,24 +29,19 @@ import senai.util.Observador;
 public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
     private static HorariosExibirPanel instance = new HorariosExibirPanel();
-    
     private List<HorarioUI> calendarios;
-    
     private Turma turma;
-    
-    private JPanel pnTurmas      = new JPanel();
+    private JPanel pnTurmas = new JPanel();
     private JPanel pnCalendarios = new JPanel();
-    private JPanel pnHorarios    = new JPanel();
-    private JPanel pnLegendas    = new JPanel();
-    private JPanel pnLoading     = new JPanel();
-    
-    private JLabel lbLoading     = new JLabel();
-    private JLabel setaDireita   = new JLabel(">");
-    private JLabel setaEsquerda  = new JLabel("<");
-    private JLabel lbVoltar      = new JLabel("voltar");
-    private JLabel lbSalvar      = new JLabel("salvar");
-    private JLabel lbPrint       = new JLabel("imprimir");
-    
+    private JPanel pnHorarios = new JPanel();
+    private JPanel pnLegendas = new JPanel();
+    private JPanel pnLoading = new JPanel();
+    private JLabel lbLoading = new JLabel();
+    private JLabel setaDireita = new JLabel(">");
+    private JLabel setaEsquerda = new JLabel("<");
+    private JLabel lbVoltar = new JLabel("voltar");
+    private JLabel lbSalvar = new JLabel("salvar");
+    private JLabel lbPrint = new JLabel("imprimir");
     private Timer animacao;
     private final int DELAY = 500;
 
@@ -120,7 +115,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
                 show("TURMAS");
             }
         });
-        
+
         lbSalvar.setPreferredSize(new Dimension(100, 25));
         lbSalvar.setOpaque(true);
         lbSalvar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -280,7 +275,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
     private void previous() {
         ((CardLayout) pnHorarios.getLayout()).previous(pnHorarios);
     }
-    
+
     /**
      * Salva o horario no banco de dados
      */
@@ -295,7 +290,7 @@ public class HorariosExibirPanel extends javax.swing.JPanel implements HorariosU
             show("TURMAS");
         }
     }
-    
+
     /**
      * Imprime o horario em PDF
      */

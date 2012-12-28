@@ -37,12 +37,12 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
-        
+
         try {
             CronosAPI.subscribe(UnidadeCurricular.class, this);
             reloadPNShow();
         } catch (Exception ex) {
-            Alerta.jogarAviso(ex.getMessage() );
+            Alerta.jogarAviso(ex.getMessage());
         }
 
     }
@@ -51,7 +51,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
     public void update() {
         initData();
     }
-    
+
     private void reloadPNShow() throws ClassNotFoundException, SQLException {
         int w = pnShow.getPreferredSize().width;
         int turmas = CronosAPI.<UnidadeCurricular>get(UnidadeCurricular.class).size();
@@ -145,7 +145,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
                     pnementa.setText(uc.getConteudoProgramatico());
 
                     reloadPNShow();
-                    
+
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao exibir informacoes da turma:\n" + ex);
                 }

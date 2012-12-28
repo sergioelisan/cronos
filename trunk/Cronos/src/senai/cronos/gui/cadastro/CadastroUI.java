@@ -55,10 +55,10 @@ public class CadastroUI extends javax.swing.JPanel {
     }
 
     private void loadEffects() {
-        lkdisciplinas.addMouseListener(new LinkEffectHandler() );
-        lkdocentes.addMouseListener(new LinkEffectHandler() );
-        lklaboratorio.addMouseListener(new LinkEffectHandler() );
-        lkturmas.addMouseListener(new LinkEffectHandler() );
+        lkdisciplinas.addMouseListener(new LinkEffectHandler());
+        lkdocentes.addMouseListener(new LinkEffectHandler());
+        lklaboratorio.addMouseListener(new LinkEffectHandler());
+        lkturmas.addMouseListener(new LinkEffectHandler());
     }
 
     @SuppressWarnings("unchecked")
@@ -209,7 +209,6 @@ public class CadastroUI extends javax.swing.JPanel {
 
     private void lkdocentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lkdocentesMouseClicked
         Switch(DOCENTE);
-        
     }//GEN-LAST:event_lkdocentesMouseClicked
 
     private void lkturmasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lkturmasMouseClicked
@@ -241,7 +240,6 @@ public class CadastroUI extends javax.swing.JPanel {
     private javax.swing.JLabel lkturmas;
     private javax.swing.JPanel pnContainer;
     // End of variables declaration//GEN-END:variables
-
     public static final String DOCENTE = "docente";
     public static final String TURMAS = "turmas";
     public static final String DISCIPLINAS = "disciplinas";

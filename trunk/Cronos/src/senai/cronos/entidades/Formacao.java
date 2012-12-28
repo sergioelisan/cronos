@@ -16,9 +16,7 @@ public enum Formacao {
     DOUTORADO,
     PHD;
 
-    public static Formacao getFormacao(Integer i){
+    public static Formacao getFormacao(Integer i) {
         return values()[i];
     }
-
-
 }

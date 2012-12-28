@@ -125,7 +125,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      */
     private void remove() {
         JDialog dialog = Dialog.getDialog("Removendo Turma. Aguarde...");
-        
+
         String code = lbcodigo.getText();
         if (!code.equals("código")) {
             try {
@@ -191,7 +191,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                 }
                 pnShow.repaint();
             }
-        }).start();        
+        }).start();
     }
 
     /**

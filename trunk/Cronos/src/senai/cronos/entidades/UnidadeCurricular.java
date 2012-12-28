@@ -12,7 +12,7 @@ import senai.cronos.entidades.Docente;
  *
  * @author sergio lisan e carlos melo
  */
-public class UnidadeCurricular implements Comparable<UnidadeCurricular>, Serializable{
+public class UnidadeCurricular implements Comparable<UnidadeCurricular>, Serializable {
 
     public UnidadeCurricular() {
     }
@@ -88,16 +88,16 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular>, Seriali
         if (obj == null) {
             return false;
         }
-        
+
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
+
         final UnidadeCurricular other = (UnidadeCurricular) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        
+
         if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
@@ -115,8 +115,6 @@ public class UnidadeCurricular implements Comparable<UnidadeCurricular>, Seriali
         }
         return true;
     }
-
-    
 
     @Override
     public int hashCode() {

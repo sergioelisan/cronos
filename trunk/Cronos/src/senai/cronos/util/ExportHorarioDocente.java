@@ -115,14 +115,14 @@ public class ExportHorarioDocente {
      */
     private void createBlocoDoMes(Sheet sheet, int mes, Map<Date, Tupla<Aula, Aula>> horario, short row) {
         sheet.addMergedRegion(new CellRangeAddress(row, row, 0, 6));
-        sheet.getRow(row).getCell((short)  0).setCellValue(DateUtil.getNomeMes(mes));
-        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short)  0), IndexedColors.GREY_25_PERCENT);
-        sheet.getRow(row).getCell((short)  9).setCellValue("Unidade Curricular");
-        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short)  9), IndexedColors.GREY_25_PERCENT);
+        sheet.getRow(row).getCell((short) 0).setCellValue(DateUtil.getNomeMes(mes));
+        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short) 0), IndexedColors.GREY_25_PERCENT);
+        sheet.getRow(row).getCell((short) 9).setCellValue("Unidade Curricular");
+        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short) 9), IndexedColors.GREY_25_PERCENT);
         sheet.getRow(row).getCell((short) 10).setCellValue("Turma");
-        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short)  10), IndexedColors.GREY_25_PERCENT);
+        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short) 10), IndexedColors.GREY_25_PERCENT);
         sheet.getRow(row).getCell((short) 11).setCellValue("Sala");
-        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short)  11), IndexedColors.GREY_25_PERCENT);
+        ExportUtils.paintCell(wb, sheet.getRow(row).getCell((short) 11), IndexedColors.GREY_25_PERCENT);
 
         // preenche o mini calendario
         int c = 0;
@@ -138,7 +138,7 @@ public class ExportHorarioDocente {
             dia = DateUtil.getDiaSemana(date) - 1;
             Cell cell = sheet.getRow((row + 2) + semana).getCell(dia);
             cell.setCellValue(DateUtil.getDia(date));
-            ExportUtils.paintCell(wb, cell, dicAulaCor.get(horario.get(date).getPrimeiro() ) );
+            ExportUtils.paintCell(wb, cell, dicAulaCor.get(horario.get(date).getPrimeiro()));
 
         }
 
@@ -148,15 +148,15 @@ public class ExportHorarioDocente {
             Cell cell = sheet.getRow(row + i).getCell((short) 9);
             cell.setCellValue(aula.getDisciplina().getNome());
             ExportUtils.paintCell(wb, cell, dicAulaCor.get(aula));
-            
+
             cell = sheet.getRow(row + i).getCell((short) 10);
             cell.setCellValue(aula.getTurma().getNome());
             ExportUtils.paintCell(wb, cell, dicAulaCor.get(aula));
-            
+
             cell = sheet.getRow(row + i).getCell((short) 11);
             cell.setCellValue(aula.getLab().getNome());
             ExportUtils.paintCell(wb, cell, dicAulaCor.get(aula));
-            
+
             ++i;
         }
     }

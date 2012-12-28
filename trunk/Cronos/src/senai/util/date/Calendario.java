@@ -38,13 +38,11 @@ public class Calendario {
     public List<Date> getDiasUteis() {
         return diasUteis;
     }
-    
-    public Map<Integer, List<Date> > getDiasUteisSeparadosEmMeses() {
+
+    public Map<Integer, List<Date>> getDiasUteisSeparadosEmMeses() {
         return DateUtil.getDiasUteisSeparadosPorMes(inicio, fim, feriados);
     }
-
     private List<Date> diasUteis;
-    
     private Date inicio;
     private Date fim;
     private List<Date> feriados;

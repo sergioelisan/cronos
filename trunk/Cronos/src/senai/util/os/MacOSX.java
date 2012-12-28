@@ -15,10 +15,9 @@ public class MacOSX implements OperatingSystem {
     public String getName() {
         return OperatingSystem.MacOSX;
     }
-    
+
     @Override
     public String getLookAndFeel() {
         return "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
     }
-
 }

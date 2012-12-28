@@ -109,5 +109,4 @@ public class DAONucleo extends DAO<Nucleo> {
 
         return lb;
     }
-    
 }

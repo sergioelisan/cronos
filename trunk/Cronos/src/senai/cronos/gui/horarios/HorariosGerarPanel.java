@@ -25,16 +25,12 @@ import senai.util.Observador;
 public class HorariosGerarPanel extends javax.swing.JPanel implements HorariosUIClient, Observador {
 
     private Turma actualTurma;
-    
-    private JPanel pnGerar = new JPanel();    
-    private JPanel pnTurmas = new JPanel();    
+    private JPanel pnGerar = new JPanel();
+    private JPanel pnTurmas = new JPanel();
     private JPanel pnLoading = new JPanel();
-    
     private JLabel lbLoading = new JLabel();
-    
-    private Timer animacao;    
+    private Timer animacao;
     private final int DELAY = 500;
-    
     private static HorariosGerarPanel instance = new HorariosGerarPanel();
 
     /**

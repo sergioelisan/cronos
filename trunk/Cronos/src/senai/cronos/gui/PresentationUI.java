@@ -104,7 +104,6 @@ public class PresentationUI extends javax.swing.JPanel {
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
         main.Switch(CronosFrame.HOME);
     }//GEN-LAST:event_homeButtonMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel homeButton;
     private javax.swing.JLabel jLabel2;

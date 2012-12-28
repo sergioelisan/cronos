@@ -13,12 +13,13 @@ public class Linux implements OperatingSystem {
 
         int diretorios = 0;
         int actual = -1;
-        while(diretorios < 3) {
+        while (diretorios < 3) {
             char c = userPath.charAt(++actual);
             sb.append(c);
 
-            if (c == '/')
+            if (c == '/') {
                 diretorios++;
+            }
         }
 
         return sb.toString();
@@ -28,10 +29,9 @@ public class Linux implements OperatingSystem {
     public String getName() {
         return OperatingSystem.LINUX;
     }
-    
+
     @Override
     public String getLookAndFeel() {
         return "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
     }
-
 }

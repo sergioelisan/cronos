@@ -28,7 +28,7 @@ public class ExportUtils {
             wb.write(fo);
         }
     }
-    
+
     public static void paintCell(Workbook wb, Cell cell, IndexedColors background) {
         CellStyle cs = wb.createCellStyle();
         cs.setFillForegroundColor(background.getIndex());
@@ -47,7 +47,7 @@ public class ExportUtils {
         cs.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         cell.setCellStyle(cs);
     }
-    
+
     public static IndexedColors[] getColors() {
         IndexedColors[] cores = new IndexedColors[19];
         cores[0] = IndexedColors.AQUA;
@@ -69,7 +69,7 @@ public class ExportUtils {
         cores[16] = IndexedColors.LAVENDER;
         cores[17] = IndexedColors.LEMON_CHIFFON;
         cores[18] = IndexedColors.PINK;
-        
+
         return cores;
     }
 }

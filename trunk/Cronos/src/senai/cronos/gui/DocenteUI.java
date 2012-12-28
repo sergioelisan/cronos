@@ -45,7 +45,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
-        lbProficiencias.setBackground(new Color(50,50,200,20));
+        lbProficiencias.setBackground(new Color(50, 50, 200, 20));
         lbProficiencias.addMouseListener(new LinkEffectHandler());
         lbProficiencias.setVisible(false);
 
@@ -57,8 +57,6 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
-
-        update();
 
     }
 
@@ -97,27 +95,21 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
      *
      * @param nucleo
      */
-    private void loadDocentes() {        
+    private void loadDocentes() {
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                
                 List<Docente> docentes;
                 try {
                     if (posicao == -1) {
                         docentes = CronosAPI.<Docente>get(Docente.class);
-                        
-                        System.out.println("\n\nDepois: " + Thread.currentThread().getName());
-                        for(Docente dc : docentes)
-                            System.out.println(dc.getNome() );
-                        
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
                         docentes = CronosAPI.buscaDocentes(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
-                    }                    
+                    }
 
                     for (Docente d : docentes) {
                         Tile ct = new Tile();
@@ -126,15 +118,15 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
-                    
+
                     pnShow.repaint();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas os docentes:\n" + ex);
                 }
             }
-        });
+        }, "Load Docentes");
         t.start();
-        
+
     }
 
     /**
