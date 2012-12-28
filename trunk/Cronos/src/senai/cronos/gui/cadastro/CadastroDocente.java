@@ -9,16 +9,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import senai.cronos.CronosAPI;
-import senai.cronos.database.cache.CacheFactory;
-import senai.cronos.database.cache.Docentes;
-import senai.cronos.database.dao.DAODocente;
-import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Nucleo;
 import senai.cronos.entidades.Proficiencia;
@@ -46,6 +42,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * Lista de nucleos que agrupam os docentes
      */
     private List<Nucleo> nucleos;
+    
     /**
      * posicao atual da lista usada para armazenar os nucleos
      */
@@ -192,13 +189,13 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             @Override
             public void run() {
                 try {
-                    List<Docente> docentes;
+                    Set<Docente> docentes;
                     if (posicao == -1) {
-                        docentes = CronosAPI.<Docente>get(Docente.class);
+                        docentes = new TreeSet<>(CronosAPI.<Docente>get(Docente.class) );
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = CronosAPI.buscaDocentes(nucleo);
+                        docentes = new TreeSet<>(CronosAPI.buscaDocentes(nucleo) );
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 

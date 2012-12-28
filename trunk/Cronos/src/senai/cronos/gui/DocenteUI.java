@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -102,14 +104,14 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Docente> docentes;
+                Set<Docente> docentes;
                 try {
                     if (posicao == -1) {
-                        docentes = CronosAPI.<Docente>get(Docente.class);
+                        docentes = new TreeSet<>(CronosAPI.<Docente>get(Docente.class) );
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = CronosAPI.buscaDocentes(nucleo);
+                        docentes = new TreeSet<>(CronosAPI.buscaDocentes(nucleo) );
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 
