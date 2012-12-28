@@ -11,15 +11,15 @@ public class HorarioTile extends javax.swing.JPanel {
     public HorarioTile() {
         initComponents();
     }
-    
+
     public void setPrimeiroHorario(Color cor) {
         lbhora1.setBackground(cor);
     }
-    
+
     public Color getPrimeiroHorario() {
         return lbhora1.getBackground();
     }
-    
+
     public void setSegundoHorario(Color cor) {
         lbhora2.setBackground(cor);
     }
@@ -27,23 +27,23 @@ public class HorarioTile extends javax.swing.JPanel {
     public Color getSegundoHorario() {
         return lbhora2.getBackground();
     }
-    
+
     public void setDia(String dia) {
         lbdia.setText(dia);
     }
-    
+
     public String getDia() {
         return lbdia.getText();
     }
-    
+
     public int getDiaSemana() {
         return diaSemana;
     }
-    
+
     public void setDiaSemana(int diaSemana) {
         this.diaSemana = diaSemana;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -89,6 +89,5 @@ public class HorarioTile extends javax.swing.JPanel {
     private javax.swing.JLabel lbhora1;
     private javax.swing.JLabel lbhora2;
     // End of variables declaration//GEN-END:variables
-
     private int diaSemana;
 }

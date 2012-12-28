@@ -129,11 +129,6 @@ public final class Docentes implements Observador, Cache<Docente> {
     public void update() {
         try {
             docentes = DAOFactory.getDao(Docente.class).get();
-
-            System.out.println("Antes:");
-            for (Docente dc : docentes) {
-                System.out.println(dc.getNome());
-            }
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }

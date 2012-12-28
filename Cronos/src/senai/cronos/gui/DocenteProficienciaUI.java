@@ -41,13 +41,21 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
             public void run() {
                 for (ProficienciaSlider slider : sliders) {
                     int mod = slider.getProficiencia().getDisciplina().getModulo();
-                    switch(mod) {
-                        case 1: pnProficiencias.add(slider); break;
-                        case 2: pnProficiencias2.add(slider); break;
-                        case 3: pnProficiencias3.add(slider); break; 
-                        case 4: pnProficiencias4.add(slider); break;
+                    switch (mod) {
+                        case 1:
+                            pnProficiencias.add(slider);
+                            break;
+                        case 2:
+                            pnProficiencias2.add(slider);
+                            break;
+                        case 3:
+                            pnProficiencias3.add(slider);
+                            break;
+                        case 4:
+                            pnProficiencias4.add(slider);
+                            break;
                     }
-                    
+
                 }
             }
         });
@@ -168,7 +176,7 @@ public class DocenteProficienciaUI extends javax.swing.JPanel {
 
             }
         }).start();
-        
+
         lbOK.setVisible(false);
         lbstatus.setText("Atualizando, aguarde...");
         abaProficiencias.removeAll();

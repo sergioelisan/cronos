@@ -15,7 +15,8 @@ import javax.swing.JOptionPane;
 public class Preferencias {
 
     /**
-     * Construtor privado que carrega as preferencias do sistema logo que inicializa o objeto
+     * Construtor privado que carrega as preferencias do sistema logo que
+     * inicializa o objeto
      */
     private Preferencias() {
         load();
@@ -23,14 +24,16 @@ public class Preferencias {
 
     /**
      * retorna a opcao de quantas aulas por dia foram selecionadas
+     *
      * @return
      */
     public int getAulasDia() {
-        return Integer.parseInt(horariosProperties.getProperty("horario.aulaspordia") );
+        return Integer.parseInt(horariosProperties.getProperty("horario.aulaspordia"));
     }
 
     /**
      * insere uma quantidade de aulas por dia
+     *
      * @param aulasDia
      */
     public void setAulasDia(int aulasDia) {
@@ -40,14 +43,16 @@ public class Preferencias {
 
     /**
      * retorna se o horario deve ser alternado ou continuo
+     *
      * @return
      */
     public int getAlternancia() {
-        return Integer.parseInt(horariosProperties.getProperty("horario.alternancia") );
+        return Integer.parseInt(horariosProperties.getProperty("horario.alternancia"));
     }
 
     /**
      * seta a opcao do horario ser continuo ou alternado
+     *
      * @param horarioAlternado
      */
     public void setAlternancia(int horarioAlternado) {
@@ -57,6 +62,7 @@ public class Preferencias {
 
     /**
      * retorna o fim do calendario
+     *
      * @return
      * @throws ParseException
      */
@@ -66,6 +72,7 @@ public class Preferencias {
 
     /**
      * seta o fim do calendario
+     *
      * @param fimCalendario
      */
     public void setFimCalendario(Date fimCalendario) {
@@ -75,6 +82,7 @@ public class Preferencias {
 
     /**
      * retorna o dia do inicio do calendario
+     *
      * @return
      * @throws ParseException
      */
@@ -84,6 +92,7 @@ public class Preferencias {
 
     /**
      * seta o inicio do calendario
+     *
      * @param inicioCalendario
      */
     public void setInicioCalendario(Date inicioCalendario) {
@@ -93,6 +102,7 @@ public class Preferencias {
 
     /**
      * retorna uma instancia unica dessa classe
+     *
      * @return
      */
     public static Preferencias instance() {
@@ -101,6 +111,7 @@ public class Preferencias {
 
     /**
      * Retorna as propriedades de conexao
+     *
      * @return
      */
     public Properties getConexao() {
@@ -158,37 +169,30 @@ public class Preferencias {
     private OutputStream getOutput(String url) throws FileNotFoundException {
         return new FileOutputStream(new File(url));
     }
-
     /**
      * instancia unica desta classe
      */
     private static Preferencias instance = new Preferencias();
-
     /**
      * url e nome do arquivo que armazena as preferencias do calendario
      */
     private String calendarioURL = "./conf/calendario.properties";
-
     /**
      * url e nome do arquivo que armazena as preferencias de horario
      */
     private String horarioURL = "./conf/horario.properties";
-
     /**
      * url e nome do arquivo que armazena as preferencias de conexao
      */
     private String connectionURL = "./conf/connection.properties";
-
     /**
      * objeto que armazena as propriedades de conexao
      */
     private Properties connectionProperties;
-
     /**
      * objeto que armazena as propriedades de horarios
      */
     private Properties horariosProperties;
-
     /**
      * objeto que armazena as propriedades de calendarios
      */

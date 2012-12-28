@@ -12,11 +12,14 @@ import java.util.Objects;
  */
 public class Nucleo implements Comparable<Nucleo>, Serializable {
 
-    /** Nucleo comum a todas as disciplinas  */
+    /**
+     * Nucleo comum a todas as disciplinas
+     */
     public static final Nucleo COMUM = Nucleo.getCommon();
 
     /**
      * metodo que gera um nucleo padrao
+     *
      * @return nucleo comum
      */
     private static Nucleo getCommon() {
@@ -90,11 +93,7 @@ public class Nucleo implements Comparable<Nucleo>, Serializable {
     public int compareTo(Nucleo t) {
         return nome.compareTo(t.nome);
     }
-
     private Integer id = 0;
-
     private String nome = "";
-
     private String desc = "";
-
 }

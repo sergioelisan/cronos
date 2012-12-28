@@ -29,7 +29,7 @@ public class Home extends javax.swing.JPanel {
         initComponents();
         rotinas();
         initEffects();
-        
+
     }
 
     @Override
@@ -41,8 +41,8 @@ public class Home extends javax.swing.JPanel {
     }
 
     /**
-     * insere o uma instacia do objeto que faz os efeitos de iluminacao quando o mouse passa por cima
-     * de cada um desses objetos
+     * insere o uma instacia do objeto que faz os efeitos de iluminacao quando o
+     * mouse passa por cima de cada um desses objetos
      */
     private void initEffects() {
         horariotile.addMouseListener(new BlinkEffectHandler());
@@ -63,7 +63,6 @@ public class Home extends javax.swing.JPanel {
 
     private void rotinas() {
         Timer data = new Timer(1000, new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent ae) {
                 DateFormat fmt = DateFormat.getDateInstance(DateFormat.LONG);
@@ -72,7 +71,6 @@ public class Home extends javax.swing.JPanel {
         });
 
         Timer clock = new Timer(1000, new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent ae) {
                 DateFormat fmt = DateFormat.getTimeInstance(DateFormat.SHORT);
@@ -609,7 +607,6 @@ public class Home extends javax.swing.JPanel {
     private void lbrelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbrelatoriosMouseClicked
         reportstileMouseClicked(evt);
     }//GEN-LAST:event_lbrelatoriosMouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btConfig;
     private javax.swing.JPanel cadastrotile;

@@ -69,7 +69,7 @@ public class CronosAPI {
         DAO dao = DAOFactory.getDao(c);
         dao.remove(id);
     }
-    
+
     /**
      * Altera um objeto da classe T no banco de dados
      *
@@ -111,15 +111,15 @@ public class CronosAPI {
         Cache<T> repositorio = CacheFactory.getRepository(c);
         return repositorio.get(c, id);
     }
-    
+
     /**
-     * 
+     *
      * @param <T>
      * @param c
      * @param id
      * @return
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     public static <T> void clear(Class c) throws ClassNotFoundException, SQLException {
         Cache<T> repositorio = CacheFactory.getRepository(c);
@@ -176,12 +176,14 @@ public class CronosAPI {
     public static List<Docente> buscaDocentes(Nucleo nucleo) throws ClassNotFoundException, SQLException {
         return Docentes.instance().buscaDocentes(nucleo);
     }
-    
+
     /**
-     * retorna uma lista com os melhores docentes para uma determinada disciplina
+     * retorna uma lista com os melhores docentes para uma determinada
+     * disciplina
+     *
      * @param uc
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public static List<Docente> bestDocentes(UnidadeCurricular uc) throws Exception {
         return Docentes.instance().bestDocentes(uc);

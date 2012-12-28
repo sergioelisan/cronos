@@ -73,7 +73,7 @@ public abstract class GeraHorario {
         disciplinas.addAll(CronosAPI.buscaDisciplinas(turma.getNucleo(), modulo));
         return disciplinas;
     }
-    
+
     /**
      * Retorna as disciplinas de um curso
      *
@@ -88,14 +88,15 @@ public abstract class GeraHorario {
     }
 
     /**
-     *      */
+     *
+     */
     public Aula getAula(UnidadeCurricular uc) {
         Aula aula = Aula.create();
         aula.setDisciplina(uc);
         aula.setLab(uc.getLab());
         aula.setDocente(Docente.PADRAO);
         aula.setTurma(turma);
-        
+
         return aula;
     }
 
@@ -111,7 +112,8 @@ public abstract class GeraHorario {
     }
 
     /**
-     *      */
+     *
+     */
     public Turma getTurma() {
         return turma;
     }

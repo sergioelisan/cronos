@@ -93,12 +93,12 @@ public class HorarioDocente {
         Set<Aula> aulas = new HashSet<>();
 
         for (Date dia : horario.keySet()) {
-            for (Tupla<Aula,Aula> t_aulas : horario.get(dia).values()) {
+            for (Tupla<Aula, Aula> t_aulas : horario.get(dia).values()) {
                 aulas.add(t_aulas.getPrimeiro());
                 aulas.add(t_aulas.getSegundo());
             }
         }
-        
+
         return aulas;
     }
 
@@ -112,8 +112,8 @@ public class HorarioDocente {
         int slots = horario.keySet().size() * 2;
 
         for (Date dia : horario.keySet()) {
-            
-            for (Turno turno : new Turno[] {docente.getPrimeiroTurno(), docente.getSegundoTurno()} ) {
+
+            for (Turno turno : new Turno[]{docente.getPrimeiroTurno(), docente.getSegundoTurno()}) {
                 Tupla<Aula, Aula> aulas = horario.get(dia).get(turno);
                 if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.VAZIA)) {
                     ocupacao++;
@@ -155,6 +155,5 @@ public class HorarioDocente {
      * Estrutura de dados que armazena o horario do docente
      */
     private Map<Date, Map<Turno, Tupla<Aula, Aula>>> horario;
-    
     private Docente docente;
 }

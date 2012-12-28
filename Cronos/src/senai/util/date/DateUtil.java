@@ -12,7 +12,6 @@ public class DateUtil {
 
     // numero de milissegundos em um dia
     public static final int DAY_FACTOR = (24 * 60 * 60 * 1000);
-
     // Nomes dos dias da semana
     public static final String DOM = "Domingo";
     public static final String SEG = "Segunda";
@@ -24,6 +23,7 @@ public class DateUtil {
 
     /**
      * Recebe um dia e retorna o nome dele
+     *
      * @param dia
      * @return
      */
@@ -38,6 +38,7 @@ public class DateUtil {
 
     /**
      * recebe uma data e retorna um dia do mes referente a ela
+     *
      * @param dia
      * @return
      */
@@ -47,6 +48,7 @@ public class DateUtil {
 
     /**
      * recebe uma data e retorna o mes referente a ela
+     *
      * @param dia
      * @return
      */
@@ -56,6 +58,7 @@ public class DateUtil {
 
     /**
      * recebe uma data e retorna o ano referente a ela
+     *
      * @param dia
      * @return
      */
@@ -72,6 +75,7 @@ public class DateUtil {
 
     /**
      * recebe uma data e um campo e extrai um dado referente a isso
+     *
      * @param dia
      * @param field
      * @return
@@ -85,6 +89,7 @@ public class DateUtil {
 
     /**
      * Retorna o nome do mes
+     *
      * @param dia
      * @return
      */
@@ -97,6 +102,7 @@ public class DateUtil {
 
     /**
      * Retorna o nome do mes
+     *
      * @param dia
      * @return
      */
@@ -109,6 +115,7 @@ public class DateUtil {
 
     /**
      * Converte uma string para um Date
+     *
      * @param data
      * @return
      */
@@ -117,13 +124,14 @@ public class DateUtil {
             return DateFormat.getDateInstance().parse(data);
         } catch (Exception e) {
             System.err.println("Problema ao converter datas");
-            System.err.println(e.getMessage() );
+            System.err.println(e.getMessage());
         }
         return null;
     }
 
     /**
      * Retorna o numero de semestres a partir de uma Data inicial
+     *
      * @param init data inicial
      * @return a quantidade de semestres entre hoje e uma data inicial
      */
@@ -134,6 +142,7 @@ public class DateUtil {
 
     /**
      * Retorna a diferenca entre dois dias distintos
+     *
      * @param init
      * @param end
      * @return
@@ -143,7 +152,9 @@ public class DateUtil {
     }
 
     /**
-     * Retorna um vetor de objetos Data, de um periodo inicial a um periodo final
+     * Retorna um vetor de objetos Data, de um periodo inicial a um periodo
+     * final
+     *
      * @param dataInicial
      * @param dataFinal
      * @return
@@ -164,7 +175,7 @@ public class DateUtil {
             // Se nao for Domingo ou Sabado, dai insere na lista de dias uteis
             int diasemana = init.get(Calendar.DAY_OF_WEEK);
             if ((diasemana != Calendar.SUNDAY && diasemana != Calendar.SATURDAY)) {
-                diasUteis.add(new Date(init.getTime().getTime()) );
+                diasUteis.add(new Date(init.getTime().getTime()));
             }
 
             // incrementa em 1 dia o calendario inicial, ate que ele chegue o final
@@ -176,6 +187,7 @@ public class DateUtil {
 
     /**
      * Retorna uma Lista de Data's que representam os dias uteis de um periodo
+     *
      * @param inicio do periodo
      * @param fim do periodo
      * @return lista com Data uteis
@@ -183,17 +195,18 @@ public class DateUtil {
     public static List<Date> getDiasUteis(Date inicio, Date fim, List<Date> feriados) {
         List<Date> diasUteis = DateUtil.getDiasUteis(inicio, fim);
 
-        for (Date feriado : feriados)
+        for (Date feriado : feriados) {
             diasUteis.remove(feriado);
+        }
 
         return diasUteis;
     }
-    
+
     public static Map<Integer, List<Date>> getDiasUteisSeparadosPorMes(Date inicio, Date fim, List<Date> feriados) {
         Map<Integer, List<Date>> meses = new TreeMap<>();
         List<Date> diasUteis = getDiasUteis(inicio, fim, feriados);
-        
-        for (Integer mes = DateUtil.getMes(diasUteis.get(0)); 
+
+        for (Integer mes = DateUtil.getMes(diasUteis.get(0));
                 mes <= DateUtil.getMes(diasUteis.get(diasUteis.size() - 1)); mes++) {
             meses.put(mes, new ArrayList<Date>());
         }
@@ -201,8 +214,7 @@ public class DateUtil {
         for (Date dia : diasUteis) {
             meses.get(DateUtil.getMes(dia)).add(dia);
         }
-        
+
         return meses;
     }
-
 }

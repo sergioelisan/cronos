@@ -12,5 +12,4 @@ public enum Habilitacao {
     public static Habilitacao getHabilitacao(int i) {
         return values()[i];
     }
-
 }

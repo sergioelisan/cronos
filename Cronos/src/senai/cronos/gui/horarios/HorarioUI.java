@@ -38,8 +38,8 @@ public class HorarioUI extends javax.swing.JPanel {
         lbturma.setText(turma.getNome());
         createSlots();
 
-        int semana   = 0;
-        int dia      = 0;
+        int semana = 0;
+        int dia = 0;
         for (HorarioTile ct : tiles) {
             semana = (ct.getDiaSemana() <= dia) ? (semana + 7) : semana;
             dia = ct.getDiaSemana();

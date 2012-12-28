@@ -6,6 +6,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import org.apache.derby.impl.drda.NetworkServerControlImpl;
 import senai.cronos.database.cache.Docentes;
@@ -19,7 +21,7 @@ import senai.cronos.database.dao.DAOFactory;
 import senai.cronos.gui.Alerta;
 import senai.cronos.gui.CronosFrame;
 import senai.cronos.util.CronosFiles;
-import senai.util.concurrency.Paralell;
+import senai.util.Observador;
 import senai.util.date.Calendario;
 import senai.util.date.Feriado;
 import static senai.util.debug.Debug.println;
@@ -28,12 +30,12 @@ import static senai.util.debug.Debug.println;
  *
  * @author sergio lisan e carlos melo
  */
-public class Main {
+public class Main implements Observador {
 
     /**
      * Versao atual do codigo
      */
-    public static final String VERSAO = Versoes.RTM;
+    public static final String VERSAO = "1.0.1.103";
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */
@@ -50,6 +52,9 @@ public class Main {
         new Main().init();
     }
 
+    public Main() {
+    }
+
     /**
      * Metodo que carrega o sistema, começando pela base de dados, as
      * preferencias e por fim a UI.
@@ -59,10 +64,14 @@ public class Main {
             splash.start();
             // updateSystem();
             loadDatabase();
+            splash.upBar();
             loadCalendar();
             loadCache();
             loadUI();
             splash.stop();
+
+            CronosAPI.subscribe(Feriado.class, this);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Alerta.jogarAviso(ex.getMessage());
@@ -106,15 +115,13 @@ public class Main {
         Nucleos.start();
         UnidadesCurriculares.start();
         Docentes.start();
-        Turmas.start();        
+        Turmas.start();
     }
 
     /**
      * Carrega as configuracoes do sistema
      */
     private void loadCalendar() throws ClassNotFoundException, SQLException, ParseException {
-        splash.upBar();
-
         Date inicio = CronosAPI.getInicioCalendario();
         Date fim = CronosAPI.getFimCalendario();
 
@@ -182,6 +189,15 @@ public class Main {
                 Runtime.getRuntime().exec(System.getProperty("user.dir") + "\\update.exe");
                 System.exit(0);
             }
+        }
+    }
+
+    @Override
+    public void update() {
+        try {
+            loadCalendar();
+        } catch (Exception ex) {
+            Alerta.jogarAviso(ex.getMessage());
         }
     }
 }

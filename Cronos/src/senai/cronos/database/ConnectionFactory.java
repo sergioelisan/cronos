@@ -15,11 +15,11 @@ import senai.cronos.properties.Preferencias;
 public class ConnectionFactory {
 
     ConnectionFactory() {
-        Properties pp   = Preferencias.instance().getConexao();
-        user            = pp.getProperty("user");
-        passwd          = pp.getProperty("passwd");
-        url             = pp.getProperty("url");
-        driver          = pp.getProperty("driver");
+        Properties pp = Preferencias.instance().getConexao();
+        user = pp.getProperty("user");
+        passwd = pp.getProperty("passwd");
+        url = pp.getProperty("url");
+        driver = pp.getProperty("driver");
     }
 
     /**
@@ -30,10 +30,12 @@ public class ConnectionFactory {
      * @throws SQLException
      */
     Connection getConnection() throws SQLException {
-        try { Class.forName(driver); } catch (Exception ex) {}
+        try {
+            Class.forName(driver);
+        } catch (Exception ex) {
+        }
         return DriverManager.getConnection(url, user, passwd);
     }
-
     private String user;
     private String passwd;
     private String url;

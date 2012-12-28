@@ -16,7 +16,6 @@ public class Splash extends JWindow {
     private JProgressBar progressBar;
     private int progressStage = 0;
     private static Splash instance = new Splash();
-
     public int MAX = 3;
 
     /**
@@ -88,11 +87,10 @@ public class Splash extends JWindow {
         int y = (int) (dim.height * 0.82);
 
         progressBar.setForeground(Color.white);
-        progressBar.setBackground(Color.decode("0x87AADE") );
+        progressBar.setBackground(Color.decode("0x87AADE"));
         progressBar.setBorder(null);
         progressBar.setBounds(x, y, width, height);
         progressBar.setMinimum(0);
         progressBar.setMaximum(MAX);
     }
-
 }

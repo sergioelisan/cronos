@@ -65,7 +65,7 @@ public class ExportaHorario {
             dicAulaCor.put(aula, cores[i]);
             ++i;
         }
-        
+
         dicAulaCor.put(Aula.VAZIA, IndexedColors.WHITE);
     }
 
@@ -76,7 +76,7 @@ public class ExportaHorario {
             rows[r] = sheet.createRow(r);
             rows[r].setHeight((short) 380);
             for (short c = 0; c < ROW_LENGHT; c++) {
-                rows[r].createCell(c);                
+                rows[r].createCell(c);
             }
         }
 
@@ -103,12 +103,12 @@ public class ExportaHorario {
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 0, 1));
 
         // separadores
-        sheet.addMergedRegion(new CellRangeAddress(2, 20,  7,  7));
+        sheet.addMergedRegion(new CellRangeAddress(2, 20, 7, 7));
         sheet.addMergedRegion(new CellRangeAddress(2, 20, 13, 13));
         sheet.addMergedRegion(new CellRangeAddress(2, 20, 19, 19));
         sheet.addMergedRegion(new CellRangeAddress(2, 20, 25, 25));
         sheet.addMergedRegion(new CellRangeAddress(2, 20, 31, 31));
-        
+
         sheet.addMergedRegion(new CellRangeAddress(6, 6, 0, 1));
         sheet.addMergedRegion(new CellRangeAddress(9, 9, 0, 1));
         sheet.addMergedRegion(new CellRangeAddress(12, 12, 0, 1));
@@ -177,8 +177,6 @@ public class ExportaHorario {
         }
     }
 
-    
-
     private void setCellsData(Sheet sheet, Map<Integer, Map<Date, Tupla<Aula, Aula>>> horario, int semestre) {
         // coloca o nome da turma
         sheet.getRow((short) 2).getCell(0).setCellValue(turma.getNome());
@@ -228,18 +226,17 @@ public class ExportaHorario {
             }
             ++i;
         }
-        
+
         // cria as legendas
         Set<Aula> aulas = turma.getHorario().getAulasSemestre(semestre);
         aulas.remove(Aula.VAZIA);
         int legendaRow = 23;
         for (Aula aula : aulas) {
             Cell cell = sheet.getRow(legendaRow).getCell(0);
-            cell.setCellValue("[" + aula.getDisciplina().getCargaHoraria() + "h] " 
-                                  + aula.getDisciplina().getNome() + " - "
-                                  + aula.getDocente().getNome() + " ("
-                                  + aula.getLab().getNome() + ")"
-            );
+            cell.setCellValue("[" + aula.getDisciplina().getCargaHoraria() + "h] "
+                    + aula.getDisciplina().getNome() + " - "
+                    + aula.getDocente().getNome() + " ("
+                    + aula.getLab().getNome() + ")");
             ExportUtils.paintCell(wb, cell, dicAulaCor.get(aula));
             CellStyle cs = cell.getCellStyle();
             cs.setAlignment(CellStyle.ALIGN_LEFT);
@@ -248,5 +245,4 @@ public class ExportaHorario {
             ++legendaRow;
         }
     }
-    
 }

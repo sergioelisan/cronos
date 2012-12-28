@@ -15,6 +15,7 @@ public class Alerta {
 
     /**
      * exibe um alerta com mensagem de erro
+     *
      * @param Exception
      */
     public static void jogarAviso(String exception) {
@@ -30,6 +31,7 @@ public class Alerta {
 
     /**
      * exibe um alerta com mensagens
+     *
      * @param titulo
      * @param mensagem
      */
@@ -47,5 +49,4 @@ public class Alerta {
         u.setTitulo(titulo);
         u.setAtualiza(mensagem);
     }
-
 }

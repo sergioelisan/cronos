@@ -42,7 +42,6 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      * Lista de nucleos que agrupam os docentes
      */
     private List<Nucleo> nucleos;
-    
     /**
      * posicao atual da lista usada para armazenar os nucleos
      */
@@ -53,7 +52,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
      */
     public CadastroDocente() {
         initComponents();
-    
+
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
         btnovo.addMouseListener(new LinkEffectHandler());
@@ -77,7 +76,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
         } catch (Exception ex) {
             Alerta.jogarAviso(ex.getMessage());
         }
-        
+
         update();
     }
 
@@ -108,21 +107,22 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             docente.setFormacao(Formacao.valueOf(((String) comboformacao.getSelectedItem()).toUpperCase()));
             docente.setNome(txtnome.getText().trim());
             docente.setTurno(Turno.getTurno(comboturnos.getSelectedIndex() - 1));
-            
+
             docente.setNucleo(CronosAPI.buscaNucleo(combonucleo.getSelectedItem().toString()));
-            
+
             docente.setScore(1);
             docente.limpaProficiencia();
             CronosAPI.remove(Proficiencia.class, docente.getMatricula());
-            if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {  
-                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo() ) ) 
-                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5) );                
+            if (CronosAPI.buscaDocenteMatricula(txtmatricula.getText()) == null) {
+                for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
+                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5));
+                }
                 CronosAPI.add(docente);
-                
+
             } else {
                 for (UnidadeCurricular uc : CronosAPI.buscaDisciplinas(docente.getNucleo())) {
                     Proficiencia proficiencia = new Proficiencia(docente, uc, 1, 1);
-                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5) );  
+                    docente.getProficiencias().add(new Proficiencia(docente, uc, 5, 5));
                     CronosAPI.add(proficiencia);
                 }
                 CronosAPI.update(docente);
@@ -130,27 +130,27 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
         } catch (ClassNotFoundException | SQLException e) {
             Alerta.jogarAviso(e.getMessage());
         } finally {
-           /*
-            try {
-                DAOFactory.getDao(Docente.class).notifica();
-                DAOFactory.getDao(Docente.class).close();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            /*
+             try {
+             DAOFactory.getDao(Docente.class).notifica();
+             DAOFactory.getDao(Docente.class).close();
+             } catch (ClassNotFoundException ex) {
+             Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
+             } catch (SQLException ex) {
+             Logger.getLogger(CadastroDocente.class.getName()).log(Level.SEVERE, null, ex);
+             }*/
             dialog.dispose();
-             novo();
+            novo();
         }
-     
-}
+
+    }
 
     /**
      * Trata com a fachada a remocao de um objeto Docente, por sua matricula
      */
     private void remove() {
         JDialog dialog = Dialog.getDialog("Salvando Docente. Aguarde...");
-        
+
         String code = txtmatricula.getText();
         if (!code.equals("matrícula")) {
             Integer id = Integer.parseInt(code);
@@ -191,11 +191,11 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
                 try {
                     Set<Docente> docentes;
                     if (posicao == -1) {
-                        docentes = new TreeSet<>(CronosAPI.<Docente>get(Docente.class) );
+                        docentes = new TreeSet<>(CronosAPI.<Docente>get(Docente.class));
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = new TreeSet<>(CronosAPI.buscaDocentes(nucleo) );
+                        docentes = new TreeSet<>(CronosAPI.buscaDocentes(nucleo));
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
 
@@ -213,8 +213,8 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas o docente:\n" + ex);
                 }
-                
-                
+
+
             }
         }).start();
     }
@@ -274,7 +274,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             load();
         }
     }
-    
+
     /**
      * passa para o proximo nucleo
      */

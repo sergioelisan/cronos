@@ -13,13 +13,12 @@ import senai.cronos.entidades.Laboratorio;
 public class Laboratorios implements Observador, Cache<Laboratorio> {
 
     private List<Laboratorio> laboratorios;
-
     private static Laboratorios instance;
 
     public static Laboratorios instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -32,19 +31,19 @@ public class Laboratorios implements Observador, Cache<Laboratorio> {
             DAOFactory.getDao(Laboratorio.class).registra(this);
             update();
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex.getMessage() );
+            System.out.println(ex.getMessage());
         }
     }
 
     @Override
     public void update() {
         try {
-            laboratorios = DAOFactory.getDao(Laboratorio.class).get();            
+            laboratorios = DAOFactory.getDao(Laboratorio.class).get();
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
     }
-  
+
     @Override
     public List<Laboratorio> get() {
         return laboratorios;
@@ -52,9 +51,11 @@ public class Laboratorios implements Observador, Cache<Laboratorio> {
 
     @Override
     public Laboratorio get(Class c, Integer id) {
-        for(Laboratorio lab : laboratorios)
-            if(lab.getId().equals(id))
+        for (Laboratorio lab : laboratorios) {
+            if (lab.getId().equals(id)) {
                 return lab;
+            }
+        }
         return null;
     }
 

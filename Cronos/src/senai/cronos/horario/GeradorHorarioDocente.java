@@ -22,6 +22,7 @@ public class GeradorHorarioDocente {
 
     /**
      * Recebe um docente como parametro e retorna o Horario dele
+     *
      * @param doc
      * @return
      */
@@ -35,16 +36,15 @@ public class GeradorHorarioDocente {
             for (Date dia : wrapper.getHorario().keySet()) {
                 Tupla<Aula, Aula> diaDeTrabalho = wrapper.getHorario().get(dia);
 
-                if (diaDeTrabalho.getPrimeiro().getDocente().equals(doc))
+                if (diaDeTrabalho.getPrimeiro().getDocente().equals(doc)) {
                     horarioDocente.add(dia, turno, diaDeTrabalho.getPrimeiro(), Tupla.PRIMEIRA);
-
-                else if (diaDeTrabalho.getSegundo().getDocente().equals(doc))
+                } else if (diaDeTrabalho.getSegundo().getDocente().equals(doc)) {
                     horarioDocente.add(dia, turno, diaDeTrabalho.getSegundo(), Tupla.SEGUNDA);
+                }
 
             }
         }
 
         return horarioDocente;
     }
-
 }

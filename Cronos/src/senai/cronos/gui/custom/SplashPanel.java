@@ -9,7 +9,7 @@ import javax.swing.JPanel;
  * @author sergio
  */
 public class SplashPanel extends JPanel {
-    
+
     @Override
     public void paintComponent(Graphics g) {
         Image wallpaper = ImageLoader.loadSplash();
@@ -17,5 +17,4 @@ public class SplashPanel extends JPanel {
             g.drawImage(wallpaper, 0, 0, null);
         }
     }
-    
 }

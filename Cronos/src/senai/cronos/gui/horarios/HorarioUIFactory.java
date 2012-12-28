@@ -155,7 +155,7 @@ public class HorarioUIFactory {
                 label.setForeground(Color.white);
                 label.setBackground(dicionarioCores.get(uc));
 
-                String text = " [" + uc.getCargaHoraria() + "h], módulo"+uc.getModulo()+" sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
+                String text = " [" + uc.getCargaHoraria() + "h], módulo" + uc.getModulo() + " sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
                 label.setText(text);
 
                 legendas.add(label);
@@ -176,34 +176,30 @@ public class HorarioUIFactory {
 
         List<Color> cores = new ArrayList<>();
         for (int i = 1; i <= 19; i++) {
-            cores.add(Color.decode(rb.getString("disciplina." + (i) ) ) );
+            cores.add(Color.decode(rb.getString("disciplina." + (i))));
         }
 
         return cores;
     }
-
     /**
      * Lista de calendarios
      */
     private List<HorarioUI> calendarios;
-
     /**
      * lista de cores determinadas pelo sistema
      */
     private List<Color> CORES = readSystemColors();
-
     /**
      * legendas de cada aula (disciplina, docente, laboratorio)
      */
     private List<JLabel> legendas = new ArrayList<>();
-
     /**
      * horario em que o algoritmo de fabricacao de calendarios vai trabalhar em
      * cima
      */
     private Horario horario;
-
     /**
-     *      */
+     *
+     */
     private Turma turma;
 }

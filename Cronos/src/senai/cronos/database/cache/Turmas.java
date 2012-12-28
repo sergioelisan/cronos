@@ -22,7 +22,7 @@ public final class Turmas implements Observador, Cache<Turma> {
     public static Turmas instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -54,7 +54,8 @@ public final class Turmas implements Observador, Cache<Turma> {
         return null;
     }
 
-    /** */
+    /**
+     *      */
     public Integer getIDTurma() throws ClassNotFoundException, SQLException {
         Integer id;
         Turma t = getTurmas().get(getTurmas().size());

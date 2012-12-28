@@ -56,7 +56,7 @@ public class Aula {
     public void setLab(Laboratorio lab) {
         this.lab = lab;
     }
-    
+
     public Turma getTurma() {
         return turma;
     }
@@ -107,7 +107,6 @@ public class Aula {
     public String toString() {
         return "Aula{" + "id=" + id + ", disciplina=" + disciplina + ", docente=" + docente + ", lab=" + lab + '}';
     }
-    
     private Integer id = 0;
     private UnidadeCurricular disciplina = new UnidadeCurricular();
     private Docente docente = new Docente();

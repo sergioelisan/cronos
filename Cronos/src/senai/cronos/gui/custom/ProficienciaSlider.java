@@ -22,8 +22,8 @@ public class ProficienciaSlider extends javax.swing.JPanel {
     public ProficienciaSlider(Proficiencia prof) {
         initComponents();
         this.proficiencia = prof;
-        lbDisciplina.setText(prof.getDisciplina().getNome() );
-        slider.setValue(prof.getLecionado() );
+        lbDisciplina.setText(prof.getDisciplina().getNome());
+        slider.setValue(prof.getLecionado());
     }
 
     /**
@@ -80,19 +80,16 @@ public class ProficienciaSlider extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderStateChanged
-        JSlider sld = (JSlider) evt.getSource();        
+        JSlider sld = (JSlider) evt.getSource();
         proficiencia.setLecionado(sld.getValue());
     }//GEN-LAST:event_sliderStateChanged
-    
+
     public Proficiencia getProficiencia() {
         return proficiencia;
     }
-    
     private Proficiencia proficiencia;
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lbDisciplina;
     private javax.swing.JSlider slider;
     // End of variables declaration//GEN-END:variables
-
 }

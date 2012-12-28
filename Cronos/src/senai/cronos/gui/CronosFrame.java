@@ -43,11 +43,13 @@ public class CronosFrame extends javax.swing.JFrame {
         setIconImage(ImageLoader.loadIcon());
     }
 
-    /** Verifica qual o sistema operacional e carrega a devida Look And Feel */
+    /**
+     * Verifica qual o sistema operacional e carrega a devida Look And Feel
+     */
     private void setLookAndFeel() {
         OperatingSystem os = OSFactory.getOperatingSystem();
         try {
-            UIManager.setLookAndFeel(os.getLookAndFeel() );
+            UIManager.setLookAndFeel(os.getLookAndFeel());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             Alerta.jogarAviso("problemas na definicao do estilo do sistema");
@@ -104,7 +106,6 @@ public class CronosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    
     public static final String HOME = "home";
     public static final String HORARIOS = "horarios";
     public static final String DOCENTES = "docentes";

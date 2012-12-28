@@ -11,13 +11,15 @@ import java.util.ArrayList;
  * @author Carlos Melo
  */
 public class Acumulador {
-   private int acc;
+
+    private int acc;
 
     public Acumulador() {
-    this.acc=0;
-        }
-    public int add(int valor){
-        return this.acc=+valor;
+        this.acc = 0;
+    }
+
+    public int add(int valor) {
+        return this.acc = +valor;
     }
 
     public int getAcc() {
@@ -27,6 +29,4 @@ public class Acumulador {
     public void setAcc(int acc) {
         this.acc = acc;
     }
-   
-    
 }

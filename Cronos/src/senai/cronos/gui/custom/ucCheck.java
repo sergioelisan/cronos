@@ -4,7 +4,6 @@
  */
 package senai.cronos.gui.custom;
 
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import senai.cronos.entidades.UnidadeCurricular;
@@ -16,26 +15,28 @@ import senai.cronos.util.Acumulador;
  * @author Carlos Melo
  */
 public class ucCheck extends javax.swing.JPanel {
-    UnidadeCurricular u=new UnidadeCurricular();
-    Acumulador acc=new Acumulador();
-    
+
+    UnidadeCurricular u = new UnidadeCurricular();
+    Acumulador acc = new Acumulador();
+
     public JCheckBox getCheckUc() {
         return checkUc;
     }
+
     /**
      * Creates new form ucCheck
      */
     public ucCheck(UnidadeCurricular uc, Acumulador acc) {
         initComponents();
-        this.u=uc;
+        this.u = uc;
         nomeUc.setText(uc.getNome());
-        ucCH.setText("C.H.:"+String.valueOf(uc.getCargaHoraria()));
-        this.acc=acc;
+        ucCH.setText("C.H.:" + String.valueOf(uc.getCargaHoraria()));
+        this.acc = acc;
     }
+
     public UnidadeCurricular getU() {
         return u;
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,7 +95,7 @@ public class ucCheck extends javax.swing.JPanel {
 
     private void checkUcMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkUcMousePressed
         acc.add(u.getCargaHoraria());
-       // ch.setAcumulador(u.getCargaHoraria());
+        // ch.setAcumulador(u.getCargaHoraria());
     }
 
     public String getNomeUc() {
@@ -104,7 +105,6 @@ public class ucCheck extends javax.swing.JPanel {
     public void setCheckUc(boolean estado) {
         this.checkUc.setSelected(estado);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checkUc;
     private javax.swing.JLabel nomeUc;

@@ -5,9 +5,10 @@ import java.util.Objects;
 
 /**
  * Representa uma sala de aula ou um laboratorio da escola
+ *
  * @author Carlos Melo e sergio lisan
  */
-public class Laboratorio implements Serializable{
+public class Laboratorio implements Serializable {
 
     public Laboratorio() {
     }
@@ -72,10 +73,7 @@ public class Laboratorio implements Serializable{
     public String toString() {
         return "Laboratorio{" + "id = " + id + ", nome = " + nome + ", descricao = " + descricao + '}';
     }
-    
     private Integer id = 0;
-    
     private String nome = "";
-    
     private String descricao = "";
 }

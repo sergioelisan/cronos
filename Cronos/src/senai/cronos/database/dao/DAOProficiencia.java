@@ -42,10 +42,11 @@ public class DAOProficiencia extends DAO<Proficiencia> {
         }
         close();
     }
-    
+
     public void addAll(List<Proficiencia> proficiencias) throws SQLException {
-        for (Proficiencia p : proficiencias)
+        for (Proficiencia p : proficiencias) {
             add(p);
+        }
     }
 
     @Override
@@ -59,11 +60,13 @@ public class DAOProficiencia extends DAO<Proficiencia> {
         }
         close();
     }
-    
+
     /**
-     * Remove as referencias de uma unidade curricular da tabela de proficiencias
+     * Remove as referencias de uma unidade curricular da tabela de
+     * proficiencias
+     *
      * @param id
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void removeUC(Serializable id) throws SQLException {
         open();
@@ -115,7 +118,7 @@ public class DAOProficiencia extends DAO<Proficiencia> {
             ResultSet rs = ps.executeQuery();
 
             DAO<UnidadeCurricular> dao = DAOFactory.getDao(UnidadeCurricular.class);
-            
+
             while (rs.next()) {
                 Proficiencia p = new Proficiencia();
                 p.setDocente(doc);
@@ -131,5 +134,4 @@ public class DAOProficiencia extends DAO<Proficiencia> {
         close();
         return profs;
     }
-
 }

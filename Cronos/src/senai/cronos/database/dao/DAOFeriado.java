@@ -14,7 +14,7 @@ import senai.util.date.Feriado;
  *
  * @author Sergio Lisan e Carlos Melo
  */
-public class DAOFeriado extends DAO<Feriado>{
+public class DAOFeriado extends DAO<Feriado> {
 
     private static DAO<Feriado> instance = new DAOFeriado();
 
@@ -31,7 +31,7 @@ public class DAOFeriado extends DAO<Feriado>{
         String query = DatabaseUtil.query("feriados.insert");
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, new java.sql.Date( u.getDia().getTime() ) );
+            ps.setDate(1, new java.sql.Date(u.getDia().getTime()));
             ps.setString(2, u.getDescricao());
 
             ps.execute();
@@ -45,8 +45,8 @@ public class DAOFeriado extends DAO<Feriado>{
         open();
         String query = DatabaseUtil.query("feriados.delete");
 
-        try(PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, new java.sql.Date( ((Date)id).getTime() ) );
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setDate(1, new java.sql.Date(((Date) id).getTime()));
             ps.execute();
         }
         close();
@@ -64,10 +64,10 @@ public class DAOFeriado extends DAO<Feriado>{
         Feriado feriados = new Feriado();
         String query = DatabaseUtil.query("feriados.get");
 
-        try(PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setDate(1, new java.sql.Date( ((Date)id).getTime() ) );
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setDate(1, new java.sql.Date(((Date) id).getTime()));
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 feriados.setDia(rs.getDate("dia"));
                 feriados.setDescricao(rs.getString("descricao"));
             }
@@ -83,9 +83,9 @@ public class DAOFeriado extends DAO<Feriado>{
         List<Feriado> feriados = new ArrayList<>();
         String query = DatabaseUtil.query("feriados.select");
 
-        try(PreparedStatement ps = con.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Feriado f = new Feriado();
                 f.setDia(rs.getDate("dia"));
                 f.setDescricao(rs.getString("descricao"));
@@ -97,5 +97,4 @@ public class DAOFeriado extends DAO<Feriado>{
 
         return feriados;
     }
-   
 }

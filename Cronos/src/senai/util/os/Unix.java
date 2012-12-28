@@ -15,10 +15,9 @@ public class Unix implements OperatingSystem {
     public String getName() {
         return OperatingSystem.UNIX;
     }
-    
+
     @Override
     public String getLookAndFeel() {
         return "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
     }
-
 }

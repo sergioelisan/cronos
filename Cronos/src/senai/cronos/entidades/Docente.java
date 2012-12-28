@@ -71,7 +71,7 @@ public class Docente implements Comparable<Docente> {
     public void setTurno(Turno turno) {
         if (turno.equals(Turno.MANHA) || turno.equals(Turno.TARDE) || turno.equals(Turno.NOITE)) {
             primeiroTurno = turno;
-            segundoTurno  = turno;
+            segundoTurno = turno;
         } else if (turno.equals(Turno.MANHA_TARDE)) {
             primeiroTurno = Turno.MANHA;
             segundoTurno = Turno.TARDE;
@@ -86,7 +86,8 @@ public class Docente implements Comparable<Docente> {
 
     /**
      * retorna o turno do docente de acordo com a enumeracao Turno
-     * @return 
+     *
+     * @return
      */
     public Turno getTurno() {
         if (segundoTurno.equals(primeiroTurno)) {
@@ -116,7 +117,7 @@ public class Docente implements Comparable<Docente> {
     public void setProficiencias(List<Proficiencia> proficiencias) {
         this.proficiencias = proficiencias;
     }
-    
+
     /**
      * retorna a proficiencia de uma disciplina
      *
@@ -140,9 +141,10 @@ public class Docente implements Comparable<Docente> {
         this.score = score;
     }
 
-    public void limpaProficiencia(){
+    public void limpaProficiencia() {
         this.proficiencias.removeAll(proficiencias);
     }
+
     public Turno getSegundoTurno() {
         return segundoTurno;
     }
@@ -160,13 +162,13 @@ public class Docente implements Comparable<Docente> {
             return false;
         }
         final Docente other = (Docente) obj;
-        if (!(this.matricula == other.matricula) ) {
+        if (!(this.matricula == other.matricula)) {
             return false;
         }
         if (!this.nome.equals(other.nome)) {
             return false;
         }
-        
+
         return true;
     }
 

@@ -121,11 +121,11 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
                 } catch (ClassNotFoundException | SQLException ex) {
                     Alerta.jogarAviso(ex.getMessage());
                 }
-                
+
                 pnShow.repaint();
             }
         }).start();
-        
+
     }
 
     /**
@@ -196,25 +196,25 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         try {
             UnidadeCurricular uc = new UnidadeCurricular();
             uc.setCargaHoraria(Integer.parseInt(txtcarga.getText().trim()));
-            
+
             String ementa = txtementa.getText().trim().equals("conteúdo programático") ? "" : txtementa.getText();
             uc.setConteudoProgramatico(ementa);
-            
-            uc.setNucleo(CronosAPI.buscaNucleo((String) combonucleo.getSelectedItem() ) );
+
+            uc.setNucleo(CronosAPI.buscaNucleo((String) combonucleo.getSelectedItem()));
             uc.setLab(labs.get(combolab.getSelectedIndex() - 1));
             uc.setModulo(Integer.parseInt(txtmodulo.getText().trim()));
             uc.setNome(txtnome.getText().trim());
-            
+
             String code = lbcodigo.getText();
-            
+
             if (code.equals("código")) {
                 CronosAPI.add(uc);
             } else {
-                
+
                 uc.setId(Integer.parseInt(code));
                 CronosAPI.update(uc);
             }
-            
+
         } catch (ClassNotFoundException | SQLException e) {
             Alerta.jogarAviso(e.getMessage());
         } finally {

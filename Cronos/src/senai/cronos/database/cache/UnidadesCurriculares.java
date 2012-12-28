@@ -16,13 +16,12 @@ import senai.util.Observador;
 public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurricular> {
 
     private List<UnidadeCurricular> disciplinas;
-
     private static UnidadesCurriculares instance;
 
     public static UnidadesCurriculares instance() {
         return instance;
     }
-    
+
     /**
      * Inicia o cache
      */
@@ -41,6 +40,7 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
     /**
      * retorna uma disciplina identificada pelo seu nome
+     *
      * @param nome
      * @return
      */
@@ -55,6 +55,7 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
     /**
      * metodo que retorna as disciplinas de uma turma
+     *
      * @param t a ser pesquisada
      * @return uma lista de unidades curriculares
      */
@@ -71,15 +72,17 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
         return unidades;
     }
+
     /**
      * metodo que retorna as disciplinas de uma turma
+     *
      * @param t a ser pesquisada
      * @return uma lista de unidades curriculares
      */
     public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, int modulo) throws ClassNotFoundException, SQLException {
         List<UnidadeCurricular> unidades = new ArrayList<>();
         for (UnidadeCurricular uc : get()) {
-            if (uc.getNucleo().equals(nucleo)&&uc.getModulo().equals(modulo)) {
+            if (uc.getNucleo().equals(nucleo) && uc.getModulo().equals(modulo)) {
                 unidades.add(uc);
             }
         }
@@ -92,11 +95,12 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
 
     /**
      * retorna as disciplinas de uma turma em um determinado modulo
+     *
      * @param t a ser pesquisada
      * @param modulo a ser pesquisado
      * @return uma lista de unidades curriculares
      */
-    public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, Integer modulo)  throws ClassNotFoundException, SQLException {
+    public List<UnidadeCurricular> buscaDisciplina(Nucleo nucleo, Integer modulo) throws ClassNotFoundException, SQLException {
         List<UnidadeCurricular> unidades = new ArrayList<>();
 
         for (UnidadeCurricular uc : get()) {
@@ -111,21 +115,21 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
     @Override
     public void update() {
         try {
-            disciplinas = DAOFactory.getDao(UnidadeCurricular.class).get();            
+            disciplinas = DAOFactory.getDao(UnidadeCurricular.class).get();
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace(System.err);
         }
     }
 
     @Override
-    public List<UnidadeCurricular> get() {        
+    public List<UnidadeCurricular> get() {
         return disciplinas;
     }
 
     @Override
     public UnidadeCurricular get(Class c, Integer id) {
-        for(UnidadeCurricular disciplina : disciplinas) {
-            if(disciplina.getId().equals(id)) {
+        for (UnidadeCurricular disciplina : disciplinas) {
+            if (disciplina.getId().equals(id)) {
                 return disciplina;
             }
         }
