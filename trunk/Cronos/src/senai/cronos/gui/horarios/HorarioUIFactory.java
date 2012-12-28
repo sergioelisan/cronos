@@ -155,7 +155,7 @@ public class HorarioUIFactory {
                 label.setForeground(Color.white);
                 label.setBackground(dicionarioCores.get(uc));
 
-                String text = " [" + uc.getCargaHoraria() + "h], módulo" + uc.getModulo() + " sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
+                String text = " [" + uc.getCargaHoraria() + "h], módulo " + uc.getModulo() + " sala: " + uc.getLab().getNome() + ", " + uc.getNome() + " - " + docs.get(uc).getNome();
                 label.setText(text);
 
                 legendas.add(label);
