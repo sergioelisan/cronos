@@ -13,7 +13,7 @@ import senai.cronos.CronosAPI;
 import senai.cronos.entidades.Aula;
 import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.UnidadeCurricular;
-import senai.cronos.util.FileText;
+import senai.cronos.util.TurmasConfig;
 import senai.util.Tupla;
 import senai.util.date.DateUtil;
 
@@ -21,106 +21,110 @@ public class GeraHorarioAlternado extends GeraHorario {
 
     @Override
     public void alocarAulas(Map<Date, Tupla<Aula, Aula>> horario) throws ClassNotFoundException, SQLException {
-       
-        List<UnidadeCurricular> list=new FileText().importar(getTurma().getNome()+".tur");
-        for(UnidadeCurricular l:list){
-           
-        }
+
+        List<UnidadeCurricular> list = new TurmasConfig().importar(getTurma().getNome());
+        
         Set<Date> keySet = null;
-       for(int modulo=1;modulo<5;modulo++){
-           List<UnidadeCurricular> sl=new ArrayList<>();
-           for(UnidadeCurricular slu:list){
-               if(slu.getModulo()==modulo){
-                   sl.add(slu);
-               }
-           }
-           if(keySet==null){
-              keySet=horario.keySet();
-           }
-           int modo = 0;
-           TreeSet ts=new TreeSet();
-           ts.addAll(keySet);
-           if(ts.first().toString().contains("fri")||ts.first().toString().contains("wed")||ts.first().toString().contains("mon")){
-                        modo=0;
-                    }else{
-                        modo=1;
-                    }
-           for (UnidadeCurricular uc : sl) {
-            Aula aula = getAula(uc);
-            int total = getQuantidadeDeDias(uc, GeraHorario.TURNO_INTEIRO);
+        for (int modulo = 1; modulo < 5; modulo++) {
+            List<UnidadeCurricular> sl = new ArrayList<>();
+            for (UnidadeCurricular slu : list) {
+                if (slu.getModulo() == modulo) {
+                    sl.add(slu);
+                }
+            }
+            if (keySet == null) {
+                keySet = horario.keySet();
+            }
+            int modo = 0;
+            TreeSet ts = new TreeSet();
+            ts.addAll(keySet);
+            if (ts.first().toString().contains("fri") || ts.first().toString().contains("wed") || ts.first().toString().contains("mon")) {
+                modo = 0;
+            } else {
+                modo = 1;
+            }
+            for (UnidadeCurricular uc : sl) {
+                Aula aula = getAula(uc);
+                int total = getQuantidadeDeDias(uc, GeraHorario.TURNO_INTEIRO);
 
-            for (int i = 0; i < total; i++) {
-                OUTER:
-                for (Date dia : keySet) {
-                   
-                    String diaSemana = DateUtil.getNomeDia(dia);
-                    if (modo == 0) {
-                        switch (diaSemana) {
-                            case DateUtil.SEG:
-                            case DateUtil.QUA:
-                            case DateUtil.SEX:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
-                                    horario.get(dia).setPrimeiro(aula);
-                                    horario.get(dia).setSegundo(aula);
+                for (int i = 0; i < total; i++) {
+                    OUTER:
+                    for (Date dia : keySet) {
 
-                                    break OUTER;
-                                }
-                                break;
-                        }
-                    } else {
-                        switch (diaSemana) {
-                            case DateUtil.TER:
-                            case DateUtil.QUI:
-                                if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
-                                    horario.get(dia).setPrimeiro(aula);
-                                    horario.get(dia).setSegundo(aula);
+                        String diaSemana = DateUtil.getNomeDia(dia);
+                        if (modo == 0) {
+                            switch (diaSemana) {
+                                case DateUtil.SEG:
+                                case DateUtil.QUA:
+                                case DateUtil.SEX:
+                                    if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
+                                        horario.get(dia).setPrimeiro(aula);
+                                        horario.get(dia).setSegundo(aula);
 
-                                    break OUTER;
-                                }
-                                break;
+                                        break OUTER;
+                                    }
+                                    break;
+                            }
+                        } else {
+                            switch (diaSemana) {
+                                case DateUtil.TER:
+                                case DateUtil.QUI:
+                                    if (horario.get(dia).getPrimeiro().equals(Aula.VAZIA)) {
+                                        horario.get(dia).setPrimeiro(aula);
+                                        horario.get(dia).setSegundo(aula);
+
+                                        break OUTER;
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }
-            }
 
-            modo = (modo == 0) ? 1 : 0;
+                modo = (modo == 0) ? 1 : 0;
+            }
+            if (modulo < 5) {
+                keySet = limparHorario(horario, modulo);
+            }
         }
-        if(modulo<5) keySet=limparHorario(horario,modulo);
-       }
     }
 
     public Set<Date> limparHorario(Map<Date, Tupla<Aula, Aula>> horario, int t) {
-        Set<Date> set=new LinkedHashSet();
+        Set<Date> set = new LinkedHashSet();
         Date[] datas = new Date[500];
         Map<Date, Tupla<Aula, Aula>> temp = new TreeMap<>();
-        temp=Horario.create();
+        temp = Horario.create();
         temp.keySet().toArray(datas);
-        int cont=0;
-        for (int j = 0; j <= temp.size()-1; j++) {
-             if(cont>=2) break;
-             for (int i = 0; i <= horario.size()-1; i++) {
-                 if (horario.get(datas[i]).getPrimeiro().equals(Aula.VAZIA)
+        int cont = 0;
+        for (int j = 0; j <= temp.size() - 1; j++) {
+            if (cont >= 2) {
+                break;
+            }
+            for (int i = 0; i <= horario.size() - 1; i++) {
+                if (horario.get(datas[i]).getPrimeiro().equals(Aula.VAZIA)
                         && horario.get(datas[i]).getSegundo().equals(Aula.VAZIA)) {
-                     cont++;
-                 } else {
-                    if(j>=temp.size()) break;
+                    cont++;
+                } else {
+                    if (j >= temp.size()) {
+                        break;
+                    }
                     temp.put(datas[j], horario.get(datas[i]));
                     j++;
-                    cont=0;
-                 }
-             }
-        }
-       horario.clear();
-       horario.putAll(temp);
-     
-       for (Date dia2 : horario.keySet()) {
-           
-           if (horario.get(dia2).getPrimeiro().equals(Aula.VAZIA)) {
-               set.add(dia2);
+                    cont = 0;
+                }
             }
         }
-       
-    
+        horario.clear();
+        horario.putAll(temp);
+
+        for (Date dia2 : horario.keySet()) {
+
+            if (horario.get(dia2).getPrimeiro().equals(Aula.VAZIA)) {
+                set.add(dia2);
+            }
+        }
+
+
         return set;
     }
     private Docente lastDocente = Docente.PADRAO;

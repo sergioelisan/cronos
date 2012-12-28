@@ -7,13 +7,12 @@ package senai.cronos.gui;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import senai.cronos.entidades.Turma;
 import senai.cronos.entidades.UnidadeCurricular;
 import senai.cronos.gui.custom.LinkEffectHandler;
 import senai.cronos.gui.custom.ucCheck;
 import senai.cronos.util.Acumulador;
-import senai.cronos.util.FileText;
+import senai.cronos.util.TurmasConfig;
 import senai.util.concurrency.Paralell;
 
 /**
@@ -21,29 +20,28 @@ import senai.util.concurrency.Paralell;
  * @author Sergio e Carlos Melo
  */
 public class CheckDisciplina extends javax.swing.JPanel {
+
     List<UnidadeCurricular> lu;
     List<ucCheck> check;
     private Turma turma;
-    private Acumulador acc=new Acumulador();
+    private Acumulador acc = new Acumulador();
 
     /**
-     * 
+     *
      * @param container
      * @param check
-     * @param turma 
+     * @param turma
      */
-    public CheckDisciplina(JDialog container,  List<ucCheck> check,Turma turma,Acumulador acc) {
+    public CheckDisciplina(JDialog container, List<ucCheck> check, Turma turma, Acumulador acc) {
         initComponents();
         lbOK.addMouseListener(new LinkEffectHandler());
-        this.check=check;
+        this.check = check;
         this.container = container;
-        this.turma=turma;
+        this.turma = turma;
         this.alocateUnidadesCurriculares(check);
-        this.acc=acc;
-        
-    }
+        this.acc = acc;
 
-   
+    }
 
     public void setCheck(List<ucCheck> check) {
         this.check.addAll(check);
@@ -57,8 +55,6 @@ public class CheckDisciplina extends javax.swing.JPanel {
         this.container = container;
     }
 
-   
-
     /**
      * Aloca as disciplinas na aba dedicada de cada modulo
      *
@@ -68,25 +64,32 @@ public class CheckDisciplina extends javax.swing.JPanel {
         Paralell.start(new Runnable() {
             @Override
             public void run() {
-                List<UnidadeCurricular> ul=new FileText().importar(turma.getNome()+".tur");
-                
-                if(ul==null){
-                    
+                List<UnidadeCurricular> ul = new TurmasConfig().importar(turma.getNome() + ".tur");
+
+                if (ul == null) {
                 }
                 for (ucCheck u : check) {
-                    int mod=u.getU().getModulo();
-                    for(UnidadeCurricular ui:ul){
-                        if(u.getNomeUc().equals(ui.getNome())){
+                    int mod = u.getU().getModulo();
+                    for (UnidadeCurricular ui : ul) {
+                        if (u.getNomeUc().equals(ui.getNome())) {
                             u.setCheckUc(true);
                         }
                     }
-                    switch(mod) {
-                        case 1: pnProficiencias.add(u); break;
-                        case 2: pnProficiencias2.add(u); break;
-                        case 3: pnProficiencias3.add(u); break; 
-                        case 4: pnProficiencias4.add(u); break;
+                    switch (mod) {
+                        case 1:
+                            pnProficiencias.add(u);
+                            break;
+                        case 2:
+                            pnProficiencias2.add(u);
+                            break;
+                        case 3:
+                            pnProficiencias3.add(u);
+                            break;
+                        case 4:
+                            pnProficiencias4.add(u);
+                            break;
                     }
-                    
+
                 }
             }
         });
@@ -204,14 +207,14 @@ public class CheckDisciplina extends javax.swing.JPanel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<UnidadeCurricular> uc =new ArrayList<>();
-                for(ucCheck uk:check){
-                       if(uk.getCheckUc().isSelected()){
-                          uc.add(uk.getU()); 
-                       }
-                   }
-                new FileText().exportar(turma.getNome(),uc);
-              container.dispose();
+                List<UnidadeCurricular> uc = new ArrayList<>();
+                for (ucCheck uk : check) {
+                    if (uk.getCheckUc().isSelected()) {
+                        uc.add(uk.getU());
+                    }
+                }
+                new TurmasConfig().exportar(turma.getNome(), uc);
+                container.dispose();
             }
         }).start();
         lbOK.setVisible(false);
@@ -225,9 +228,8 @@ public class CheckDisciplina extends javax.swing.JPanel {
     }
 
     public void setAcumulador(int valor) {
-        this.acumulador.setText(String.valueOf(Integer.parseInt(acumulador.getText()+valor)));
+        this.acumulador.setText(String.valueOf(Integer.parseInt(acumulador.getText() + valor)));
     }
-   
     private JDialog container;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abaProficiencias;
