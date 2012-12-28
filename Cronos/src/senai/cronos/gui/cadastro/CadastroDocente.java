@@ -83,7 +83,7 @@ public class CadastroDocente extends javax.swing.JPanel implements Observador {
             Alerta.jogarAviso(ex.getMessage());
         }
 
-        update();
+       // update();
     }
 
     /**
