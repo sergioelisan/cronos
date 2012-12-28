@@ -6,6 +6,7 @@
 package senai.cronos.gui.cadastro;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.sql.SQLException;
@@ -59,6 +60,10 @@ public class CadastroUI extends javax.swing.JPanel {
         lkdocentes.addMouseListener(new LinkEffectHandler());
         lklaboratorio.addMouseListener(new LinkEffectHandler());
         lkturmas.addMouseListener(new LinkEffectHandler());
+        lkdisciplinas.setBackground(new Color(50,50,200,20));
+        lkdocentes.setBackground(new Color(50,50,200,20));
+        lklaboratorio.setBackground(new Color(50,50,200,20));
+        lkturmas.setBackground(new Color(50,50,200,20));
     }
 
     @SuppressWarnings("unchecked")
@@ -113,6 +118,7 @@ public class CadastroUI extends javax.swing.JPanel {
         lkdocentes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lkdocentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lkdocentes.setText("docentes");
+        lkdocentes.setOpaque(true);
         lkdocentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lkdocentesMouseClicked(evt);
@@ -123,6 +129,7 @@ public class CadastroUI extends javax.swing.JPanel {
         lkturmas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lkturmas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lkturmas.setText("turmas");
+        lkturmas.setOpaque(true);
         lkturmas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lkturmasMouseClicked(evt);
@@ -133,6 +140,7 @@ public class CadastroUI extends javax.swing.JPanel {
         lkdisciplinas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lkdisciplinas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lkdisciplinas.setText("disciplinas");
+        lkdisciplinas.setOpaque(true);
         lkdisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lkdisciplinasMouseClicked(evt);
@@ -143,6 +151,7 @@ public class CadastroUI extends javax.swing.JPanel {
         lklaboratorio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lklaboratorio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lklaboratorio.setText("laboratório");
+        lklaboratorio.setOpaque(true);
         lklaboratorio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lklaboratorioMouseClicked(evt);
@@ -167,7 +176,7 @@ public class CadastroUI extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btconfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lkdocentes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -197,7 +206,7 @@ public class CadastroUI extends javax.swing.JPanel {
                     .addComponent(lkdisciplinas, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lklaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+                .addComponent(pnContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

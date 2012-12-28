@@ -5,6 +5,7 @@
  */
 package senai.cronos.gui.cadastro;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -60,6 +61,11 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         btnovo.addMouseListener(new LinkEffectHandler());
         btremove.addMouseListener(new LinkEffectHandler());
         btsave.addMouseListener(new LinkEffectHandler());
+         lbproximo.setBackground(new Color(50,50,200,20));
+        lbanterior.setBackground(new Color(50,50,200,20));
+        btnovo.setBackground(new Color(50,50,200,20));
+        btremove.setBackground(new Color(50,50,200,20));
+        btsave.setBackground(new Color(50,50,200,20));
 
         try {
             CronosAPI.subscribe(Nucleo.class, this);
@@ -387,6 +393,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         lbanterior.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbanterior.setMaximumSize(new java.awt.Dimension(100, 25));
         lbanterior.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbanterior.setOpaque(true);
         lbanterior.setPreferredSize(new java.awt.Dimension(100, 25));
         lbanterior.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -401,6 +408,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         lbproximo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbproximo.setMaximumSize(new java.awt.Dimension(100, 25));
         lbproximo.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbproximo.setOpaque(true);
         lbproximo.setPreferredSize(new java.awt.Dimension(100, 25));
         lbproximo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -428,6 +436,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         btsave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btsave.setMaximumSize(new java.awt.Dimension(100, 25));
         btsave.setMinimumSize(new java.awt.Dimension(100, 25));
+        btsave.setOpaque(true);
         btsave.setPreferredSize(new java.awt.Dimension(100, 25));
         btsave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -442,6 +451,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         btremove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btremove.setMaximumSize(new java.awt.Dimension(100, 25));
         btremove.setMinimumSize(new java.awt.Dimension(100, 25));
+        btremove.setOpaque(true);
         btremove.setPreferredSize(new java.awt.Dimension(100, 25));
         btremove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -456,6 +466,7 @@ public class CadastroDisciplinas extends javax.swing.JPanel implements Observado
         btnovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnovo.setMaximumSize(new java.awt.Dimension(100, 25));
         btnovo.setMinimumSize(new java.awt.Dimension(100, 25));
+        btnovo.setOpaque(true);
         btnovo.setPreferredSize(new java.awt.Dimension(100, 25));
         btnovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

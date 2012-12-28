@@ -5,6 +5,7 @@
  */
 package senai.cronos.gui.cadastro;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -34,6 +35,9 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
         btnovo.addMouseListener(new LinkEffectHandler());
         btremove.addMouseListener(new LinkEffectHandler());
         btsave.addMouseListener(new LinkEffectHandler());
+        btnovo.setBackground(new Color(50,50,200,20));
+        btremove.setBackground(new Color(50,50,200,20));
+        btsave.setBackground(new Color(50,50,200,20));
 
         novo();
     }
@@ -198,6 +202,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
         btremove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btremove.setMaximumSize(new java.awt.Dimension(100, 25));
         btremove.setMinimumSize(new java.awt.Dimension(100, 25));
+        btremove.setOpaque(true);
         btremove.setPreferredSize(new java.awt.Dimension(100, 25));
         btremove.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -212,6 +217,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
         btsave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btsave.setMaximumSize(new java.awt.Dimension(100, 25));
         btsave.setMinimumSize(new java.awt.Dimension(100, 25));
+        btsave.setOpaque(true);
         btsave.setPreferredSize(new java.awt.Dimension(100, 25));
         btsave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -238,6 +244,7 @@ public class CadastroLaboratorios extends javax.swing.JPanel {
         btnovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnovo.setMaximumSize(new java.awt.Dimension(100, 25));
         btnovo.setMinimumSize(new java.awt.Dimension(100, 25));
+        btnovo.setOpaque(true);
         btnovo.setPreferredSize(new java.awt.Dimension(100, 25));
         btnovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

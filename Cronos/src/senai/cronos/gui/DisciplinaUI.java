@@ -5,6 +5,7 @@
  */
 package senai.cronos.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -36,8 +37,10 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
         this.main = main;
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
+        lbproximo.setBackground(new Color(50,50,200,20));
         lbanterior.addMouseListener(new LinkEffectHandler());
-
+        lbanterior.setBackground(new Color(50,50,200,20));
+        
         try {
             CronosAPI.subscribe(UnidadeCurricular.class, this);
             reloadPNShow();
@@ -327,6 +330,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
         lbproximo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbproximo.setMaximumSize(new java.awt.Dimension(100, 25));
         lbproximo.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbproximo.setOpaque(true);
         lbproximo.setPreferredSize(new java.awt.Dimension(100, 25));
         lbproximo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -351,6 +355,7 @@ public class DisciplinaUI extends javax.swing.JPanel implements Observador {
         lbanterior.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbanterior.setMaximumSize(new java.awt.Dimension(100, 25));
         lbanterior.setMinimumSize(new java.awt.Dimension(100, 25));
+        lbanterior.setOpaque(true);
         lbanterior.setPreferredSize(new java.awt.Dimension(100, 25));
         lbanterior.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
