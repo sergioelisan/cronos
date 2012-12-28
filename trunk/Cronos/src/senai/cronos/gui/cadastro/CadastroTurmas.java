@@ -64,7 +64,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             ex.printStackTrace(System.out);
         }
 
-        update();
+      //  update();
     }
 
     /**
@@ -100,6 +100,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
      * salva uma nova turma no banco
      */
     private void save() {
+         pnShow.removeAll();
         JDialog dialog = Dialog.getDialog("Salvando Turma. Aguarde...");
         try {
             Turma turma = new Turma();
@@ -123,7 +124,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
             novo();
             dialog.dispose();
         }
-        load();
+       // load();
     }
 
     /**
@@ -145,7 +146,7 @@ public class CadastroTurmas extends javax.swing.JPanel implements Observador {
                 dialog.dispose();
             }
         }
-        load();
+       // load();
     }
 
     /**
