@@ -550,6 +550,7 @@ public class Home extends javax.swing.JPanel {
 
     private void docentestileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_docentestileMouseClicked
         main.Switch(CronosFrame.DOCENTES);
+        
     }//GEN-LAST:event_docentestileMouseClicked
 
     private void turmastileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_turmastileMouseClicked

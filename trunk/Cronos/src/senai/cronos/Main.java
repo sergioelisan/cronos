@@ -35,7 +35,7 @@ public class Main implements Observador {
     /**
      * Versao atual do codigo
      */
-    public static final String VERSAO = "1.0.1.103";
+    public static final String VERSAO = "1.0.1.104";
     /**
      * objeto que armazena o CALENDARIO de dias uteis usados pela escola
      */

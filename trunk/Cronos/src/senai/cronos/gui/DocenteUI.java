@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -45,12 +46,23 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
-        lbProficiencias.setBackground(new Color(50, 50, 200, 20));
+        lbproximo.setBackground(new Color(50,50,200,20));
+        lbproximo.updateUI();
+        lbanterior.setBackground(new Color(50,50,200,20));
+              lbanterior.updateUI();
+        lbproximo.setOpaque(true);
+        lbanterior.setOpaque(true);
+        lbProficiencias.setBackground(new Color(50,50,200,20));
+        lbProficiencias.setOpaque(true);
         lbProficiencias.addMouseListener(new LinkEffectHandler());
         lbProficiencias.setVisible(false);
-
+        btexport.setBackground(new Color(50,50,200,20));
+        btexport.setOpaque(true);
         btexport.addMouseListener(new LinkEffectHandler());
         btexport.setVisible(false);
+        lbproximo.updateUI();
+  
+        
 
         try {
             CronosAPI.subscribe(Docente.class, this);
@@ -106,21 +118,21 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         docentes = CronosAPI.<Docente>get(Docente.class);
                         lbnucleoatual.setText("todos");
                     } else {
+                        
                         Nucleo nucleo = nucleos.get(posicao);
                         docentes = CronosAPI.buscaDocentes(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
                     }
-
                     for (Docente d : docentes) {
+                        
                         Tile ct = new Tile();
                         ct.setNome(d.getNome());
                         ct.setId(String.valueOf(d.getMatricula()));
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
-
                     pnShow.repaint();
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas os docentes:\n" + ex);
                 }
             }
@@ -141,7 +153,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                 try {
                     Integer matricula = Integer.parseInt(id);
                     docenteSelecionado = CronosAPI.<Docente>get(Docente.class, matricula);
-
+                    System.out.println(docenteSelecionado.getNome());
                     lbformacao.setText("formação: " + docenteSelecionado.getFormacao().name());
                     lbmatricula.setText("matricula: " + docenteSelecionado.getMatricula().toString());
                     lbnome.setText(docenteSelecionado.getNome());
@@ -157,6 +169,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
 
                     lbProficiencias.setVisible(true);
                     btexport.setVisible(true);
+                    updateUI();
 
                 } catch (Exception ex) {
                     ex.printStackTrace();

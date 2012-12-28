@@ -45,14 +45,22 @@ public class ConfigUI extends javax.swing.JPanel {
             panelAddNucleo.setVisible(false);
 
             btaddferiado.addMouseListener(new LinkEffectHandler());
+            btaddferiado.setBackground(new Color(50,50,200,20));
             btremoveferiado.addMouseListener(new LinkEffectHandler());
+            btremoveferiado.setBackground(new Color(50,50,200,20));
             btcancelarferiado.addMouseListener(new LinkEffectHandler());
+            btcancelarferiado.setBackground(new Color(50,50,200,20));
             btsaveferiado.addMouseListener(new LinkEffectHandler());
-
+            btsaveferiado.setBackground(new Color(50,50,200,20));
+            
             btaddnucleo.addMouseListener(new LinkEffectHandler());
+            btaddnucleo.setBackground(new Color(50,50,200,20));
             btremovenucleo.addMouseListener(new LinkEffectHandler());
+            btremovenucleo.setBackground(new Color(50,50,200,20));
             btcancelarnucleo.addMouseListener(new LinkEffectHandler());
+            btcancelarnucleo.setBackground(new Color(50,50,200,20));
             btsavenucleo.addMouseListener(new LinkEffectHandler());
+            btsavenucleo.setBackground(new Color(50,50,200,20));
 
             Date inicio = CronosAPI.getInicioCalendario();
             Date fim = CronosAPI.getFimCalendario();
@@ -283,7 +291,7 @@ public class ConfigUI extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(datepickerInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(datepickerInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                             .addComponent(datepickerFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -325,6 +333,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btaddferiado.setText("novo");
         btaddferiado.setMaximumSize(new java.awt.Dimension(80, 22));
         btaddferiado.setMinimumSize(new java.awt.Dimension(80, 22));
+        btaddferiado.setOpaque(true);
         btaddferiado.setPreferredSize(new java.awt.Dimension(80, 22));
         btaddferiado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -337,6 +346,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btremoveferiado.setText("remover");
         btremoveferiado.setMaximumSize(new java.awt.Dimension(80, 22));
         btremoveferiado.setMinimumSize(new java.awt.Dimension(80, 22));
+        btremoveferiado.setOpaque(true);
         btremoveferiado.setPreferredSize(new java.awt.Dimension(80, 22));
         btremoveferiado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -363,6 +373,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btcancelarferiado.setText("cancelar");
         btcancelarferiado.setMaximumSize(new java.awt.Dimension(80, 22));
         btcancelarferiado.setMinimumSize(new java.awt.Dimension(80, 22));
+        btcancelarferiado.setOpaque(true);
         btcancelarferiado.setPreferredSize(new java.awt.Dimension(80, 22));
         btcancelarferiado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -375,6 +386,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btsaveferiado.setText("salvar");
         btsaveferiado.setMaximumSize(new java.awt.Dimension(80, 22));
         btsaveferiado.setMinimumSize(new java.awt.Dimension(80, 22));
+        btsaveferiado.setOpaque(true);
         btsaveferiado.setPreferredSize(new java.awt.Dimension(80, 22));
         btsaveferiado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -465,7 +477,7 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addComponent(btaddferiado, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelferiadoadd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         jPanel3.setOpaque(false);
@@ -482,6 +494,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btaddnucleo.setText("novo");
         btaddnucleo.setMaximumSize(new java.awt.Dimension(80, 22));
         btaddnucleo.setMinimumSize(new java.awt.Dimension(80, 22));
+        btaddnucleo.setOpaque(true);
         btaddnucleo.setPreferredSize(new java.awt.Dimension(80, 22));
         btaddnucleo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -494,6 +507,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btremovenucleo.setText("remover");
         btremovenucleo.setMaximumSize(new java.awt.Dimension(80, 22));
         btremovenucleo.setMinimumSize(new java.awt.Dimension(80, 22));
+        btremovenucleo.setOpaque(true);
         btremovenucleo.setPreferredSize(new java.awt.Dimension(80, 22));
         btremovenucleo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -520,6 +534,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btsavenucleo.setText("salvar");
         btsavenucleo.setMaximumSize(new java.awt.Dimension(80, 22));
         btsavenucleo.setMinimumSize(new java.awt.Dimension(80, 22));
+        btsavenucleo.setOpaque(true);
         btsavenucleo.setPreferredSize(new java.awt.Dimension(80, 22));
         btsavenucleo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -532,6 +547,7 @@ public class ConfigUI extends javax.swing.JPanel {
         btcancelarnucleo.setText("cancelar");
         btcancelarnucleo.setMaximumSize(new java.awt.Dimension(80, 22));
         btcancelarnucleo.setMinimumSize(new java.awt.Dimension(80, 22));
+        btcancelarnucleo.setOpaque(true);
         btcancelarnucleo.setPreferredSize(new java.awt.Dimension(80, 22));
         btcancelarnucleo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -616,7 +632,7 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(95, 95, 95)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addContainerGap(510, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,7 +646,7 @@ public class ConfigUI extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))

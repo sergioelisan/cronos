@@ -73,8 +73,11 @@ public class HorariosUI extends javax.swing.JPanel {
 
     private void loadEffects() {
         btexibir.addMouseListener(new LinkEffectHandler());
+        btexibir.setBackground(new Color(50,50,200,20));
         btgerar.addMouseListener(new LinkEffectHandler());
+        btgerar.setBackground(new Color(50,50,200,20));
         btopcoes.addMouseListener(new LinkEffectHandler());
+        btopcoes.setBackground(new Color(50,50,200,20));
     }
 
     /**
@@ -264,6 +267,7 @@ public class HorariosUI extends javax.swing.JPanel {
         btgerar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btgerar.setMaximumSize(new java.awt.Dimension(100, 25));
         btgerar.setMinimumSize(new java.awt.Dimension(100, 25));
+        btgerar.setOpaque(true);
         btgerar.setPreferredSize(new java.awt.Dimension(100, 25));
         btgerar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -278,6 +282,7 @@ public class HorariosUI extends javax.swing.JPanel {
         btexibir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btexibir.setMaximumSize(new java.awt.Dimension(100, 25));
         btexibir.setMinimumSize(new java.awt.Dimension(100, 25));
+        btexibir.setOpaque(true);
         btexibir.setPreferredSize(new java.awt.Dimension(100, 25));
         btexibir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -292,6 +297,7 @@ public class HorariosUI extends javax.swing.JPanel {
         btopcoes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btopcoes.setMaximumSize(new java.awt.Dimension(100, 25));
         btopcoes.setMinimumSize(new java.awt.Dimension(100, 25));
+        btopcoes.setOpaque(true);
         btopcoes.setPreferredSize(new java.awt.Dimension(100, 25));
         btopcoes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

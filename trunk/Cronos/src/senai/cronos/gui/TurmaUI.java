@@ -93,6 +93,7 @@ public class TurmaUI extends javax.swing.JPanel implements Observador {
                 } catch (ClassNotFoundException | SQLException ex) {
                     JOptionPane.showMessageDialog(null, "FAIL! Problema ao carregar turmas:\n" + ex);
                 }
+            updateUI();
             }
         });
         t.start();
