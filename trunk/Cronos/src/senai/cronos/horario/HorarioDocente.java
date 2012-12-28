@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import senai.cronos.Main;
 import senai.cronos.entidades.Aula;
+import senai.cronos.entidades.Docente;
 import senai.cronos.entidades.Turno;
 import senai.util.Tupla;
 
@@ -20,8 +21,9 @@ import senai.util.Tupla;
  */
 public class HorarioDocente {
 
-    private HorarioDocente(Map<Date, Map<Turno, Tupla<Aula, Aula>>> horario) {
+    private HorarioDocente(Map<Date, Map<Turno, Tupla<Aula, Aula>>> horario, Docente docente) {
         this.horario = horario;
+        this.docente = docente;
     }
 
     /**
@@ -29,7 +31,7 @@ public class HorarioDocente {
      *
      * @return horarioDocente
      */
-    public static HorarioDocente create() {
+    public static HorarioDocente create(Docente docente) {
         Map<Date, Map<Turno, Tupla<Aula, Aula>>> horario = new HashMap<>();
 
         for (Date dia : Main.CALENDARIO.getDiasUteis()) {
@@ -40,7 +42,7 @@ public class HorarioDocente {
             horario.put(dia, diaDeTrabalho);
         }
 
-        return new HorarioDocente(horario);
+        return new HorarioDocente(horario, docente);
     }
 
     /**
@@ -107,10 +109,11 @@ public class HorarioDocente {
      */
     public double getPercentualOcupacao() {
         int ocupacao = 0;
-        int slots = horario.keySet().size() * 2 * 2;
+        int slots = horario.keySet().size() * 2;
 
         for (Date dia : horario.keySet()) {
-            for (Turno turno : horario.get(dia).keySet()) {
+            
+            for (Turno turno : new Turno[] {docente.getPrimeiroTurno(), docente.getSegundoTurno()} ) {
                 Tupla<Aula, Aula> aulas = horario.get(dia).get(turno);
                 if (!aulas.get(Tupla.PRIMEIRA).equals(Aula.VAZIA)) {
                     ocupacao++;
@@ -152,4 +155,6 @@ public class HorarioDocente {
      * Estrutura de dados que armazena o horario do docente
      */
     private Map<Date, Map<Turno, Tupla<Aula, Aula>>> horario;
+    
+    private Docente docente;
 }
