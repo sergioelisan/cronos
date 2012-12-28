@@ -21,7 +21,7 @@ public class Docente implements Comparable<Docente> {
 
     @Override
     public int compareTo(Docente o) {
-        return score > o.score ? 1 : score == o.score ? 0 : -1;
+        return this.nome.compareTo(o.nome);
     }
 
     public Date getContratacao() {
@@ -160,21 +160,13 @@ public class Docente implements Comparable<Docente> {
             return false;
         }
         final Docente other = (Docente) obj;
-        if (!Objects.equals(this.matricula, other.matricula)) {
+        if (!(this.matricula == other.matricula) ) {
             return false;
         }
-        if (!Objects.equals(this.nome, other.nome)) {
+        if (!this.nome.equals(other.nome)) {
             return false;
         }
-        if (this.formacao != other.formacao) {
-            return false;
-        }
-        if (!Objects.equals(this.contratacao, other.contratacao)) {
-            return false;
-        }
-        if (!Objects.equals(this.nucleo, other.nucleo)) {
-            return false;
-        }
+        
         return true;
     }
 
