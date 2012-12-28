@@ -45,6 +45,7 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
         initComponents();
         lbproximo.addMouseListener(new LinkEffectHandler());
         lbanterior.addMouseListener(new LinkEffectHandler());
+        lbProficiencias.setBackground(new Color(50,50,200,20));
         lbProficiencias.addMouseListener(new LinkEffectHandler());
         lbProficiencias.setVisible(false);
 
