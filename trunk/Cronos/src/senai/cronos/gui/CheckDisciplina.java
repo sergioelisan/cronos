@@ -64,7 +64,7 @@ public class CheckDisciplina extends javax.swing.JPanel {
         Paralell.start(new Runnable() {
             @Override
             public void run() {
-                List<UnidadeCurricular> ul = new TurmasConfig().importar(turma.getNome() + ".tur");
+                List<UnidadeCurricular> ul = new TurmasConfig().importar(turma.getNome());
 
                 if (ul == null) {
                 }
