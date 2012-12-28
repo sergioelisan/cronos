@@ -14,8 +14,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -99,21 +97,27 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
      *
      * @param nucleo
      */
-    private void loadDocentes() {
+    private void loadDocentes() {        
         pnShow.removeAll();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                Set<Docente> docentes;
+                
+                List<Docente> docentes;
                 try {
                     if (posicao == -1) {
-                        docentes = new TreeSet<>(CronosAPI.<Docente>get(Docente.class) );
+                        docentes = CronosAPI.<Docente>get(Docente.class);
+                        
+                        System.out.println("\n\nDepois: " + Thread.currentThread().getName());
+                        for(Docente dc : docentes)
+                            System.out.println(dc.getNome() );
+                        
                         lbnucleoatual.setText("todos");
                     } else {
                         Nucleo nucleo = nucleos.get(posicao);
-                        docentes = new TreeSet<>(CronosAPI.buscaDocentes(nucleo) );
+                        docentes = CronosAPI.buscaDocentes(nucleo);
                         lbnucleoatual.setText(nucleo.getNome().toLowerCase());
-                    }
+                    }                    
 
                     for (Docente d : docentes) {
                         Tile ct = new Tile();
@@ -122,13 +126,15 @@ public class DocenteUI extends javax.swing.JPanel implements Observador {
                         ct.setClickEvent(new TileClickedHandler());
                         pnShow.add(ct);
                     }
-                } catch (ClassNotFoundException | SQLException ex) {
+                    
+                    pnShow.repaint();
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Problemas ao carregas os docentes:\n" + ex);
                 }
             }
         });
         t.start();
-        pnShow.repaint();
+        
     }
 
     /**

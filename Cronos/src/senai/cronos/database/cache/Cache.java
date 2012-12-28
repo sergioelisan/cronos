@@ -15,4 +15,6 @@ public interface Cache<T> {
     
     T get(Class c, Integer id);
     
+    void clear();
+    
 }

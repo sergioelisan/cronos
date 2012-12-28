@@ -111,6 +111,20 @@ public class CronosAPI {
         Cache<T> repositorio = CacheFactory.getRepository(c);
         return repositorio.get(c, id);
     }
+    
+    /**
+     * 
+     * @param <T>
+     * @param c
+     * @param id
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+    public static <T> void clear(Class c) throws ClassNotFoundException, SQLException {
+        Cache<T> repositorio = CacheFactory.getRepository(c);
+        repositorio.clear();
+    }
 
     /*
      * 

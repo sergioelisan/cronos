@@ -113,4 +113,9 @@ public final class Turmas implements Observador, Cache<Turma> {
         }
         return null;
     }
+
+    @Override
+    public void clear() {
+        turmas.clear();
+    }
 }

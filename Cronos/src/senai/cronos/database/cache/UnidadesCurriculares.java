@@ -131,4 +131,9 @@ public final class UnidadesCurriculares implements Observador, Cache<UnidadeCurr
         }
         return null;
     }
+
+    @Override
+    public void clear() {
+        disciplinas.clear();
+    }
 }
