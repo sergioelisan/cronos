@@ -1,7 +1,11 @@
 -- CRONOS
 ---------------------------
 
-Calendario de aulas
+Calendario de aulas. Projetinho feito em 2011/2012 pro SENAI  
+que acabou nao usando (so uma vez) =\
+
+Desenvolvido em conjunto com meu professor na época  
+https://twitter.com/carlosvmelo
 
 Pre-requisitos de execução
   - MySQL
@@ -9,11 +13,11 @@ Pre-requisitos de execução
   - JDK 8+
 
 Pra rodar ele só precisa rodar o "cronos.sql" e depois  
-entrar na pasta marko/ e executar na linha de comando:
+dentro da pasta do projeto executar na linha de comando:
 
 ```mvn clean install```
 
-o aplicativo vai estar dentro da parta marko/target  
+o aplicativo vai estar dentro da parta cronos/target  
 dai só rodar:
 
 ```java - jar cronos-desktop.jar```

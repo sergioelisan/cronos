@@ -1,5 +1,5 @@
--- create database cr00n0s;
--- use cr00n0s;
+create database cr00n0s;
+use cr00n0s;
 
 -- OK
 create table docente (
